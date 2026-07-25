@@ -1,0 +1,55 @@
+/* ---------------------------------------------------------------------------
+ * Design-Tokens – die EINZIGE Quelle der Wahrheit für Farben, Radien,
+ * Schatten und Bewegung.
+ *
+ * Regel: Kein Komponenten-Code definiert eigene Farbwerte, Radien oder
+ * Schatten. Alles kommt von hier (über die Tailwind-Utilities, die in
+ * `globals.css` per `@theme inline` auf diese Variablen gemappt werden).
+ *
+ * Akzentfarbe tauschen? Nur --accent und --accent-600 ändern.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* Das Design ist bewusst als reines Light-Theme angelegt (ein Akzent,
+     ein Payoff-Moment). `color-scheme` verhindert, dass der Browser
+     Formular-Controls dunkel einfärbt. */
+  color-scheme: light;
+
+  /* --- Farben ----------------------------------------------------------- */
+  --bg: #fbfbfe; /* Seiten-Hintergrund, minimal kühl */
+  --surface: #ffffff; /* Karten */
+  --ink: #17161c; /* Text, warmes Fast-Schwarz */
+  --muted: #6a6975; /* Sekundärtext, Labels */
+  --line: #ececf3; /* feine Trennlinien (1px, niedrige Deckkraft) */
+  --accent: #6c4ce0; /* Primär / CTA / Fokus (Violett) */
+  --accent-600: #5a3bd0; /* Hover */
+  /* NUR für positive Ergebniszahlen.
+     Bewusst dunkler als ein reines Mint (#12B981): das erreicht auf hellem
+     Grund nur 2,3:1 und fällt damit durch die Kontrastprüfung. Dieser Ton
+     hält denselben Grünton, schafft aber 3,7:1 auf --positive-soft und
+     4,1:1 auf Weiß – die Payoff-Zahl bleibt lesbar. */
+  --positive: #0b8f63;
+
+  /* Abgeleitete, sehr zurückhaltende Flächen. Bewusst aus den Basisfarben
+     gemischt, damit ein Akzent-Tausch automatisch mitzieht. */
+  --accent-soft: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  --accent-ring: color-mix(in srgb, var(--accent) 22%, transparent);
+  --positive-soft: color-mix(in srgb, var(--positive) 9%, var(--surface));
+  --ink-soft: color-mix(in srgb, var(--ink) 4%, var(--surface));
+
+  /* --- Radien ----------------------------------------------------------- */
+  --rad-card: 16px;
+  --rad-control: 12px;
+  --rad-pill: 999px;
+
+  /* --- Tiefe: mehrschichtig und weich, nie eine harte 1px-Box ----------- */
+  --elev-soft: 0 1px 2px rgba(23, 22, 28, 0.04), 0 8px 24px rgba(23, 22, 28, 0.06);
+  --elev-lift: 0 2px 4px rgba(23, 22, 28, 0.05), 0 16px 40px rgba(23, 22, 28, 0.1);
+  --elev-inset: inset 0 0 0 1px var(--line);
+
+  /* --- Bewegung (wird bei prefers-reduced-motion neutralisiert) --------- */
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-payoff: 620ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

@@ -1,0 +1,106 @@
+@import "tailwindcss";
+@import "../design/tokens.css";
+
+/* Tokens -> Tailwind-Utilities. `inline` bedeutet: die Utility referenziert
+   die CSS-Variable direkt, statt ihren Wert zu kopieren. Damit bleibt
+   tokens.css die einzige Quelle der Wahrheit. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-600: var(--accent-600);
+  --color-accent-soft: var(--accent-soft);
+  --color-positive: var(--positive);
+  --color-positive-soft: var(--positive-soft);
+  --color-ink-soft: var(--ink-soft);
+
+  --font-display: var(--font-bricolage), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-card: var(--rad-card);
+  --radius-control: var(--rad-control);
+  --radius-pill: var(--rad-pill);
+
+  --shadow-soft: var(--elev-soft);
+  --shadow-lift: var(--elev-lift);
+
+  --ease-out: var(--ease-out);
+}
+
+@layer base {
+  html {
+    /* Kein smooth-scroll erzwingen – respektiert Nutzer-Präferenz unten. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem; /* Body-Minimum: 16px */
+    line-height: 1.65; /* großzügige Zeilenhöhe */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Sichtbarer Tastatur-Fokus – Qualitäts-Floor, nicht verhandelbar. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent-ring);
+    color: var(--ink);
+  }
+
+  /* Zahlen laufen nicht, sie stehen: gleiche Ziffernbreite überall. */
+  input[type="number"],
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Der eine schmale Lesekanal für den Tool-Kern. */
+  .tool-column {
+    width: 100%;
+    max-width: 45rem; /* ~720px */
+    margin-inline: auto;
+  }
+
+  /* Weiche Abgrenzung: Schatten trägt, die Linie ist nur eine Andeutung. */
+  .surface-soft {
+    background-color: var(--surface);
+    border-radius: var(--rad-card);
+    box-shadow: var(--elev-soft), var(--elev-inset);
+  }
+}
+
+/* Bewegung nur, wenn erwünscht. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
