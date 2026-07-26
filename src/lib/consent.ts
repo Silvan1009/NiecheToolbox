@@ -1,144 +1,141 @@
 /**
  * Einwilligungs-Verwaltung für Werbung.
  *
- * Grundsatz: Werbung lädt erst NACH aktiver Einwilligung. "Ablehnen" ist
- * gleichwertig erreichbar, und Nicht-Entscheiden zählt als Ablehnung
- * (Datenschutz-Default). Google Consent Mode v2 wird mit "denied" als
- * Default initialisiert und erst bei Einwilligung aktualisiert.
+ * Die Einwilligung erhebt eine zertifizierte Consent-Management-Plattform:
+ * Google Funding Choices, nach IAB TCF v2.2 zertifiziert. Das ist keine
+ * Geschmacksfrage – Google liefert AdSense im EWR und im Vereinigten Königreich
+ * seit Januar 2024 nur noch an Seiten mit zertifizierter CMP aus. Ein
+ * selbstgebauter Banner erfüllt die Anforderung nicht, egal wie sauber er ist.
+ *
+ * Die Wahrheit über den Consent liegt damit in der TCF-API (`window.__tcfapi`)
+ * und nicht mehr in einem eigenen Local-Storage-Eintrag. Dieses Modul hört dort
+ * zu und übersetzt das Ergebnis in einen Status, den React abonnieren kann.
+ *
+ * WICHTIG: Hier wird **kein** `gtag('consent','update')` gesendet. Funding
+ * Choices ist selbst eine Google-CMP und schreibt Consent Mode v2 eigenständig.
+ * Zwei Schreiber auf demselben Signal sind der klassische Grund dafür, dass
+ * Einwilligungen scheinbar grundlos verloren gehen. Wir setzen nur die Defaults
+ * (siehe lib/adsBootstrap.ts) und lesen danach ausschließlich.
  *
  * Bewusst frei von React – der Hook liegt in components/consent/useConsent.ts.
  *
- * Analytics ist davon unabhängig: Umami/Plausible arbeiten cookiefrei und
- * legen nichts auf dem Endgerät ab, brauchen also keine Einwilligung nach
- * § 25 TDDDG.
+ * Analytics ist davon unabhängig: Umami/Plausible arbeiten cookiefrei und legen
+ * nichts auf dem Endgerät ab, brauchen also keine Einwilligung nach § 25 TDDDG.
  */
+
+import { ads } from "@/config/site";
+import { deriveConsentStatus, type TcfData } from "./tcf";
 
 export type ConsentDecision = "granted" | "denied";
 
 /** "unknown" = noch nicht entschieden. Verhält sich wie "denied". */
 export type ConsentStatus = ConsentDecision | "unknown";
 
-export interface ConsentRecord {
-  version: number;
-  /** ISO-Zeitstempel der Entscheidung – Nachweisbarkeit. */
-  decidedAt: string;
-  /** Deckt ad_storage, ad_user_data und ad_personalization ab. */
-  ads: ConsentDecision;
-}
-
-export const CONSENT_VERSION = 1;
-const STORAGE_KEY = "nuetzlich.consent.v1";
-
 type Listener = (status: ConsentStatus) => void;
 const listeners = new Set<Listener>();
 
-/* --- Google Consent Mode v2 ---------------------------------------------- */
-
-type GtagArgs = [string, ...unknown[]];
-
-interface ConsentWindow extends Window {
-  dataLayer?: GtagArgs[];
-  gtag?: (...args: unknown[]) => void;
-}
-
-function gtag(...args: unknown[]): void {
-  if (typeof window === "undefined") return;
-  const w = window as ConsentWindow;
-  w.dataLayer = w.dataLayer ?? [];
-  // Google erwartet echte `arguments`-Objekte im dataLayer.
-  w.dataLayer.push(args as unknown as GtagArgs);
-}
-
-let defaultsInitialised = false;
-
 /**
- * Muss laufen, bevor irgendein Google-Tag lädt. Setzt alle werbebezogenen
- * Signale auf "denied".
+ * Zwischengespeicherter Status.
+ *
+ * `useSyncExternalStore` ruft den Snapshot bei jedem Rendern auf und vergleicht
+ * ihn per Identität – deshalb muss er ein stabiler Wert sein und darf nicht bei
+ * jedem Aufruf neu berechnet werden.
  */
-export function initConsentMode(): void {
-  if (typeof window === "undefined" || defaultsInitialised) return;
-  defaultsInitialised = true;
-
-  gtag("consent", "default", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-    wait_for_update: 500,
-  });
-
-  const record = readConsent();
-  if (record) applyToConsentMode(record.ads);
-}
-
-function applyToConsentMode(decision: ConsentDecision): void {
-  gtag("consent", "update", {
-    ad_storage: decision,
-    ad_user_data: decision,
-    ad_personalization: decision,
-  });
-}
-
-/* --- Persistenz ----------------------------------------------------------- */
-
-export function readConsent(): ConsentRecord | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<ConsentRecord>;
-    if (parsed.version !== CONSENT_VERSION) return null;
-    if (parsed.ads !== "granted" && parsed.ads !== "denied") return null;
-    return {
-      version: CONSENT_VERSION,
-      decidedAt: parsed.decidedAt ?? new Date().toISOString(),
-      ads: parsed.ads,
-    };
-  } catch {
-    // Privater Modus / Storage blockiert -> wie "nicht entschieden".
-    return null;
-  }
-}
+let current: ConsentStatus = "unknown";
 
 export function getConsentStatus(): ConsentStatus {
-  return readConsent()?.ads ?? "unknown";
+  return current;
 }
-
-export function setConsent(decision: ConsentDecision): void {
-  if (typeof window === "undefined") return;
-  const record: ConsentRecord = {
-    version: CONSENT_VERSION,
-    decidedAt: new Date().toISOString(),
-    ads: decision,
-  };
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
-  } catch {
-    /* Entscheidung gilt für diese Sitzung, auch wenn sie nicht persistiert. */
-  }
-  applyToConsentMode(decision);
-  notify(decision);
-}
-
-/** Setzt die Entscheidung zurück, damit der Banner erneut erscheint. */
-export function resetConsent(): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* ignorieren */
-  }
-  applyToConsentMode("denied");
-  notify("unknown");
-}
-
-/* --- Abonnement (für useSyncExternalStore) -------------------------------- */
 
 function notify(status: ConsentStatus): void {
   for (const listener of listeners) listener(status);
 }
 
+function update(next: ConsentStatus): void {
+  if (next === current) return;
+  current = next;
+  notify(next);
+}
+
+/* --- Anbindung an die CMP -------------------------------------------------- */
+
+type TcfApi = (
+  command: string,
+  version: number,
+  callback: (data: unknown, success: boolean) => void,
+  parameter?: unknown,
+) => void;
+
+interface ConsentWindow extends Window {
+  __tcfapi?: TcfApi;
+  googlefc?: {
+    callbackQueue?: Array<(() => void) | Record<string, unknown>>;
+    showRevocationMessage?: () => void;
+  };
+}
+
+/** Wie lange auf die CMP gewartet wird, bevor wir aufgeben. */
+const POLL_INTERVAL_MS = 100;
+const POLL_TIMEOUT_MS = 10_000;
+
+let bridgeStarted = false;
+
+/**
+ * Hängt sich an die TCF-API, sobald die CMP sie bereitstellt.
+ *
+ * Wird faul aus dem ersten `subscribeConsent` heraus gestartet, damit im
+ * Ruhezustand (keine Werbung konfiguriert) überhaupt nichts passiert.
+ *
+ * Kein eigener `__tcfapi`-Stub: Funding Choices bringt seinen eigenen mit, und
+ * ein zweiter würde die Warteschlange der CMP zerschießen. Deshalb pollen wir.
+ *
+ * Läuft die Zeit ab – Adblocker, Netzwerkfehler, CMP-Ausfall –, bleibt der
+ * Status `unknown` und es lädt keine Werbung. Das ist die richtige Richtung zu
+ * scheitern.
+ */
+function ensureTcfBridge(): void {
+  if (bridgeStarted || typeof window === "undefined") return;
+  if (!ads.enabled || !ads.clientId) return;
+  bridgeStarted = true;
+
+  const w = window as ConsentWindow;
+  const startedAt = Date.now();
+
+  const attach = () => {
+    if (typeof w.__tcfapi === "function") {
+      w.__tcfapi("addEventListener", 2, (data, success) => {
+        update(success ? deriveConsentStatus(data as TcfData) : "denied");
+      });
+      return;
+    }
+    if (Date.now() - startedAt >= POLL_TIMEOUT_MS) return;
+    window.setTimeout(attach, POLL_INTERVAL_MS);
+  };
+
+  attach();
+}
+
+/**
+ * Öffnet den Widerrufs-Dialog der CMP.
+ *
+ * Über die `callbackQueue` statt eines direkten Aufrufs: so funktioniert der
+ * Knopf auch, wenn Funding Choices noch lädt – der Wunsch wird dann einfach
+ * nachgeholt.
+ */
+export function openConsentSettings(): void {
+  if (typeof window === "undefined") return;
+  const w = window as ConsentWindow;
+  w.googlefc = w.googlefc ?? {};
+  w.googlefc.callbackQueue = w.googlefc.callbackQueue ?? [];
+  w.googlefc.callbackQueue.push(() => {
+    (window as ConsentWindow).googlefc?.showRevocationMessage?.();
+  });
+}
+
+/* --- Abonnement (für useSyncExternalStore) -------------------------------- */
+
 export function subscribeConsent(listener: Listener): () => void {
+  ensureTcfBridge();
   listeners.add(listener);
   return () => {
     listeners.delete(listener);

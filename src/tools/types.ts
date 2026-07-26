@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { AffiliateKey } from "@/config/site";
+import type { AdDensity } from "@/lib/adPlacement";
 
 export type ToolCategory =
   | "zeit"
@@ -60,8 +61,8 @@ export interface AffiliateSlot {
 }
 
 export interface ToolMonetization {
-  /** Default: "low" (ein Slot unter dem Ergebnis). */
-  adDensity?: "none" | "low" | "medium";
+  /** Default: "low" (ein Slot unter dem Ergebnis). Siehe lib/adPlacement.ts. */
+  adDensity?: AdDensity;
   affiliate?: AffiliateSlot[];
 }
 

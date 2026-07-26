@@ -77,22 +77,29 @@ export default function DatenschutzPage() {
 
       <Section heading="Einwilligung für Werbung (Consent)">
         <p>
-          Bevor Werbung geladen wird, fragen wir dich. Deine Entscheidung wird in
-          der lokalen Ablage deines Browsers (Local Storage) unter dem Schlüssel{" "}
-          <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[13px]">
-            nuetzlich.consent.v1
-          </code>{" "}
-          gespeichert – zusammen mit dem Zeitpunkt, damit wir die Einwilligung
-          nachweisen können. Dieser Eintrag verlässt dein Gerät nicht. Rechtsgrundlage
-          für die Speicherung ist § 25 Abs. 1 TDDDG in Verbindung mit Art. 6 Abs. 1
-          lit. a DSGVO.
+          Bevor Werbung geladen wird, fragen wir dich. Die Einwilligung erheben
+          wir über eine zertifizierte Consent-Management-Plattform: Google
+          Funding Choices, ein Dienst der Google Ireland Limited. Sie ist nach
+          dem Transparency &amp; Consent Framework (TCF) v2.2 des IAB Europe
+          zertifiziert. Deine Entscheidung wird als sogenannter TC-String auf
+          deinem Endgerät abgelegt, damit wir sie nachweisen und beim nächsten
+          Besuch berücksichtigen können. Rechtsgrundlage für das Speichern ist
+          § 25 Abs. 1 TDDDG in Verbindung mit Art. 6 Abs. 1 lit. a DSGVO.
         </p>
         <p>
           Lehnst du ab oder entscheidest du nichts, wird kein Werbe-Skript
-          geladen. Du kannst deine Entscheidung jederzeit ändern:
+          geladen – auch dann nicht, wenn die Plattform selbst nicht erreichbar
+          ist. Du kannst deine Entscheidung jederzeit ändern:
         </p>
         <p>
           <ConsentSettingsButton className="font-semibold text-accent" />
+        </p>
+        <p className="text-[15px]">
+          <strong className="font-semibold text-ink">Zu ergänzen:</strong> die
+          konkreten Bezeichnungen der von der Plattform gesetzten Einträge und
+          ihre Speicherdauer. Diese Angaben erst nach der Freischaltung aus den
+          Entwicklerwerkzeugen des Browsers übernehmen – geratene Schlüsselnamen
+          wären hier schlechter als eine offen benannte Lücke.
         </p>
       </Section>
 
@@ -109,14 +116,36 @@ export default function DatenschutzPage() {
           geladen. Wir setzen Google Consent Mode v2 ein und übermitteln deine
           Entscheidung an Google.
         </p>
-        <p className="text-[15px]">
-          <strong className="font-semibold text-ink">Zu ergänzen:</strong> Link
-          zur Datenschutzerklärung von Google sowie – falls eine zertifizierte
-          Consent-Management-Plattform eingesetzt wird – deren Anbieter und
-          Datenschutzhinweise.{" "}
-          {!ads.enabled &&
-            "Werbung ist derzeit nicht aktiviert; dieser Abschnitt gilt ab Freischaltung."}
+        <p>
+          Die eingesetzte Consent-Management-Plattform (Google Funding Choices)
+          stammt vom selben Anbieter. Welche Anbieter im Einzelnen um deine
+          Einwilligung bitten, kannst du im Einwilligungsdialog nachlesen; die
+          Liste folgt der Global Vendor List des IAB Europe. Näheres zur
+          Datenverarbeitung bei Google steht in dessen{" "}
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener"
+            className="underline decoration-line underline-offset-2 hover:text-ink"
+          >
+            Datenschutzerklärung
+          </a>
+          .
         </p>
+        <p>
+          Für die Auswahl und Messung von Anzeigen nutzt Google zusätzlich die
+          Schnittstellen der Privacy Sandbox des Chrome-Browsers – etwa die
+          Topics-API, mit der dein Browser grobe Interessenkategorien lokal
+          ermittelt, sowie Schnittstellen zur Erfolgsmessung. Auch diese
+          Verarbeitung findet nur nach deiner Einwilligung statt. Widersprechen
+          kannst du zusätzlich in den Einstellungen deines Browsers.
+        </p>
+        {!ads.enabled && (
+          <p className="text-[15px]">
+            <strong className="font-semibold text-ink">Hinweis:</strong> Werbung
+            ist derzeit nicht aktiviert; dieser Abschnitt gilt ab Freischaltung.
+          </p>
+        )}
       </Section>
 
       <Section heading="Reichweitenmessung">

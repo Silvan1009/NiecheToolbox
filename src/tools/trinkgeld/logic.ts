@@ -88,3 +88,72 @@ export function calculateTip(input: TipInput): TipResult {
     roundingExtra: toEuro(collectedCents - targetCents),
   };
 }
+
+export interface PersonEntry {
+  name: string;
+  /** Betrag dieser Person in Euro. */
+  bill: number;
+  /** Trinkgeld dieser Person in Prozent – kann vom Standard abweichen. */
+  tipPercent: number;
+}
+
+export interface PersonSplitEntry {
+  name: string;
+  bill: number;
+  tipPercent: number;
+  tip: number;
+  total: number;
+  effectiveTipPercent: number;
+  roundingExtra: number;
+}
+
+export interface PersonSplitResult {
+  people: PersonSplitEntry[];
+  totalBill: number;
+  tip: number;
+  total: number;
+  effectiveTipPercent: number;
+  roundingExtra: number;
+}
+
+/**
+ * Wie {@link calculateTip}, nur je Person mit eigenem Betrag und eigenem
+ * Prozentsatz. Jede Zeile läuft durch dieselbe Rundungslogik wie eine
+ * Ein-Personen-Rechnung – das hält beide Rechenwege konsistent.
+ */
+export function calculatePersonSplit(
+  entries: PersonEntry[],
+  rounding: Rounding,
+): PersonSplitResult {
+  const people = entries.map((entry) => {
+    const single = calculateTip({
+      bill: entry.bill,
+      tipPercent: entry.tipPercent,
+      people: 1,
+      rounding,
+    });
+    return {
+      name: entry.name,
+      bill: single.bill,
+      tipPercent: single.tipPercent,
+      tip: single.tip,
+      total: single.perPerson,
+      effectiveTipPercent: single.effectiveTipPercent,
+      roundingExtra: single.roundingExtra,
+    };
+  });
+
+  const totalBill = people.reduce((sum, p) => sum + p.bill, 0);
+  const tip = people.reduce((sum, p) => sum + p.tip, 0);
+  const total = people.reduce((sum, p) => sum + p.total, 0);
+  const roundingExtra = people.reduce((sum, p) => sum + p.roundingExtra, 0);
+
+  return {
+    people,
+    totalBill,
+    tip,
+    total,
+    effectiveTipPercent: totalBill === 0 ? 0 : (tip / totalBill) * 100,
+    roundingExtra,
+  };
+}

@@ -17,7 +17,13 @@ import { formatDecimal, formatEuro, plural } from "@/lib/format";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { trinkgeldAffiliate } from "./affiliate";
-import { calculateTip, roundingLabels, type Rounding } from "./logic";
+import {
+  calculatePersonSplit,
+  calculateTip,
+  roundingLabels,
+  type PersonEntry,
+  type Rounding,
+} from "./logic";
 
 type BillMode = "gesamt" | "person";
 
@@ -25,11 +31,11 @@ interface State extends Record<string, unknown> {
   billMode: BillMode;
   /** Rechnungsbetrag gesamt in Euro – maßgeblich, wenn billMode "gesamt" ist. */
   bill: number;
-  /** Betrag pro Person in Euro – maßgeblich, wenn billMode "person" ist. */
-  billPerPerson: number;
   tipPercent: number;
   people: number;
   rounding: Rounding;
+  /** Je-Person-Zeilen – maßgeblich, wenn billMode "person" ist. */
+  persons: PersonEntry[];
 }
 
 const TIP_PRESETS = [0, 5, 10, 15, 20];
@@ -50,19 +56,56 @@ function roundToCent(value: number) {
   return Math.round(value * 100) / 100;
 }
 
+function defaultPersons(bill: number, people: number, tipPercent: number): PersonEntry[] {
+  const perHead = roundToCent(bill / people);
+  return Array.from({ length: people }, (_, i) => ({
+    name: `Person ${i + 1}`,
+    bill: perHead,
+    tipPercent,
+  }));
+}
+
+function parsePersons(value: unknown, fallback: PersonEntry[]): PersonEntry[] {
+  if (typeof value !== "string" || value === "") return fallback;
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return fallback;
+    const persons = parsed
+      .slice(0, 50)
+      .map((entry): PersonEntry => {
+        const record = entry as Record<string, unknown>;
+        return {
+          name: typeof record.name === "string" ? record.name.slice(0, 40) : "",
+          bill: toNumber(record.bill, 0),
+          tipPercent: toNumber(record.tipPercent, 10),
+        };
+      });
+    return persons.length > 0 ? persons : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 const BILL_MODES = [
   { value: "gesamt", label: "Gesamtbetrag" },
   { value: "person", label: "Pro Person" },
 ] as const satisfies readonly { value: BillMode; label: string }[];
 
 function initialState(params: ToolParams | undefined): State {
+  const bill = toNumber(params?.betrag, 48.6);
+  const tipPercent = toNumber(params?.prozent, 10);
+  const people = Math.max(1, Math.trunc(toNumber(params?.personen, 3)));
+
   return {
     billMode: isBillMode(params?.modus) ? params.modus : "gesamt",
-    bill: toNumber(params?.betrag, 48.6),
-    billPerPerson: toNumber(params?.proPerson, 16.2),
-    tipPercent: toNumber(params?.prozent, 10),
-    people: Math.max(1, Math.trunc(toNumber(params?.personen, 3))),
+    bill,
+    tipPercent,
+    people,
     rounding: isRounding(params?.runden) ? params.runden : "cent",
+    persons: parsePersons(
+      params?.personenliste,
+      defaultPersons(bill, people, tipPercent),
+    ),
   };
 }
 
@@ -74,7 +117,6 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
         ? (search.get("modus") as BillMode)
         : fallback.billMode,
       bill: toNumber(search.get("betrag"), fallback.bill),
-      billPerPerson: toNumber(search.get("proPerson"), fallback.billPerPerson),
       tipPercent: toNumber(search.get("prozent"), fallback.tipPercent),
       people: Math.max(
         1,
@@ -83,14 +125,16 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
       rounding: isRounding(search.get("runden"))
         ? (search.get("runden") as Rounding)
         : fallback.rounding,
+      persons: parsePersons(search.get("personenliste"), fallback.persons),
     }),
     serialize: (next) => ({
       modus: next.billMode,
       betrag: String(next.bill),
-      proPerson: String(next.billPerPerson),
       prozent: String(next.tipPercent),
       personen: String(next.people),
       runden: next.rounding,
+      personenliste:
+        next.billMode === "person" ? JSON.stringify(next.persons) : "",
     }),
   });
 
@@ -99,31 +143,82 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
     if (mode === "person") {
       update({
         billMode: "person",
-        billPerPerson: roundToCent(state.bill / state.people),
+        persons: defaultPersons(state.bill, state.people, state.tipPercent),
       });
     } else {
+      const totalBill = state.persons.reduce((sum, p) => sum + p.bill, 0);
       update({
         billMode: "gesamt",
-        bill: roundToCent(state.billPerPerson * state.people),
+        bill: roundToCent(totalBill),
+        people: state.persons.length,
       });
     }
   }
 
-  // Bei "Pro Person" bestimmt der eingegebene Wert die Summe – ändert sich die
-  // Personenzahl, skaliert die Gesamtrechnung mit, statt fix zu bleiben.
-  const effectiveBill =
-    state.billMode === "person" ? state.billPerPerson * state.people : state.bill;
+  function updatePersonAt(index: number, patch: Partial<PersonEntry>) {
+    const persons = state.persons.map((person, i) =>
+      i === index ? { ...person, ...patch } : person,
+    );
+    update({ persons });
+  }
+
+  function addPerson() {
+    const persons = [
+      ...state.persons,
+      {
+        name: `Person ${state.persons.length + 1}`,
+        bill: 0,
+        tipPercent: state.tipPercent,
+      },
+    ];
+    update({ persons });
+  }
+
+  function removePersonAt(index: number) {
+    if (state.persons.length <= 1) return;
+    update({ persons: state.persons.filter((_, i) => i !== index) });
+  }
+
+  function applyPercentToAll() {
+    update({
+      persons: state.persons.map((person) => ({
+        ...person,
+        tipPercent: state.tipPercent,
+      })),
+    });
+  }
+
+  const isPersonMode = state.billMode === "person";
 
   const result = useMemo(
     () =>
       calculateTip({
-        bill: effectiveBill,
+        bill: state.bill,
         tipPercent: state.tipPercent,
         people: state.people,
         rounding: state.rounding,
       }),
-    [effectiveBill, state.tipPercent, state.people, state.rounding],
+    [state.bill, state.tipPercent, state.people, state.rounding],
   );
+
+  const split = useMemo(
+    () => calculatePersonSplit(state.persons, state.rounding),
+    [state.persons, state.rounding],
+  );
+
+  const summary = isPersonMode
+    ? {
+        total: split.total,
+        tip: split.tip,
+        effectiveTipPercent: split.effectiveTipPercent,
+        roundingExtra: split.roundingExtra,
+      }
+    : {
+        total: result.total,
+        tip: result.tip,
+        effectiveTipPercent: result.effectiveTipPercent,
+        roundingExtra: result.roundingExtra,
+      };
 
   return (
     <div className="flex flex-col gap-8">
@@ -138,67 +233,63 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
                 ariaLabel="Eingabeart"
               />
 
-              <div className="relative">
-                <TextInput
-                  id="tg-bill"
-                  type="text"
-                  inputMode="decimal"
-                  aria-label={
-                    state.billMode === "person"
-                      ? "Betrag pro Person"
-                      : "Rechnungsbetrag gesamt"
-                  }
-                  value={
-                    state.billMode === "person"
-                      ? state.billPerPerson === 0
-                        ? ""
-                        : String(state.billPerPerson).replace(".", ",")
-                      : state.bill === 0
-                        ? ""
-                        : String(state.bill).replace(".", ",")
-                  }
-                  placeholder="0,00"
-                  onChange={(event) => {
-                    const value = toNumber(event.target.value, 0);
-                    if (state.billMode === "person") {
-                      update({ billPerPerson: value });
-                    } else {
-                      update({ bill: value });
+              {!isPersonMode && (
+                <div className="relative">
+                  <TextInput
+                    id="tg-bill"
+                    type="text"
+                    inputMode="decimal"
+                    aria-label="Rechnungsbetrag gesamt"
+                    value={state.bill === 0 ? "" : String(state.bill).replace(".", ",")}
+                    placeholder="0,00"
+                    onChange={(event) =>
+                      update({ bill: toNumber(event.target.value, 0) })
                     }
-                  }}
-                  className="pr-9 font-mono"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-muted"
-                >
-                  €
-                </span>
-              </div>
+                    className="pr-9 font-mono"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-muted"
+                  >
+                    €
+                  </span>
+                </div>
+              )}
 
-              {state.billMode === "person" && (
+              {isPersonMode && (
                 <p className="text-[13px] text-muted">
-                  Macht {formatEuro(effectiveBill)} insgesamt für {state.people}{" "}
-                  {plural(state.people, "Person", "Personen")}.
+                  Jede Person mit eigenem Betrag und eigenem Trinkgeld – macht{" "}
+                  {formatEuro(split.totalBill)} insgesamt für {state.persons.length}{" "}
+                  {plural(state.persons.length, "Person", "Personen")}.
                 </p>
               )}
             </div>
           </Field>
 
-          <Field label="Personen" htmlFor="tg-people">
-            <Stepper
-              id="tg-people"
-              value={state.people}
-              min={1}
-              max={50}
-              onChange={(people) => update({ people })}
-              ariaLabel="Anzahl Personen"
-            />
-          </Field>
+          {!isPersonMode && (
+            <Field label="Personen" htmlFor="tg-people">
+              <Stepper
+                id="tg-people"
+                value={state.people}
+                min={1}
+                max={50}
+                onChange={(people) => update({ people })}
+                ariaLabel="Anzahl Personen"
+              />
+            </Field>
+          )}
 
           <div className="sm:col-span-2">
-            <Field label="Trinkgeld" htmlFor="tg-tip">
-              <div className="flex flex-wrap gap-2">
+            <Field
+              label={isPersonMode ? "Standard-Trinkgeld" : "Trinkgeld"}
+              htmlFor="tg-tip"
+              hint={
+                isPersonMode
+                  ? "Gilt für neu hinzugefügte Personen – jede Zeile kann abweichen."
+                  : undefined
+              }
+            >
+              <div className="flex flex-wrap items-center gap-2">
                 {TIP_PRESETS.map((preset) => {
                   const active = state.tipPercent === preset;
                   return (
@@ -236,9 +327,105 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
                     %
                   </span>
                 </div>
+                {isPersonMode && (
+                  <button
+                    type="button"
+                    onClick={applyPercentToAll}
+                    className="h-10 rounded-pill bg-ink-soft px-4 text-sm font-semibold text-ink transition-colors duration-(--dur-fast) hover:bg-ink-soft/70"
+                  >
+                    Auf alle anwenden
+                  </button>
+                )}
               </div>
             </Field>
           </div>
+
+          {isPersonMode && (
+            <div className="sm:col-span-2">
+              <Field label="Personen" htmlFor="tg-person-0-name">
+                <div className="flex flex-col gap-3">
+                  {state.persons.map((person, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-wrap items-center gap-2 rounded-control bg-ink-soft p-3"
+                    >
+                      <TextInput
+                        id={`tg-person-${index}-name`}
+                        type="text"
+                        aria-label={`Name Person ${index + 1}`}
+                        placeholder={`Person ${index + 1}`}
+                        value={person.name}
+                        onChange={(event) =>
+                          updatePersonAt(index, { name: event.target.value })
+                        }
+                        className="min-w-0 flex-1 basis-32 bg-surface"
+                      />
+                      <div className="relative w-28 shrink-0">
+                        <TextInput
+                          type="text"
+                          inputMode="decimal"
+                          aria-label={`Betrag Person ${index + 1}`}
+                          value={
+                            person.bill === 0 ? "" : String(person.bill).replace(".", ",")
+                          }
+                          placeholder="0,00"
+                          onChange={(event) =>
+                            updatePersonAt(index, {
+                              bill: toNumber(event.target.value, 0),
+                            })
+                          }
+                          className="bg-surface pr-8 text-right font-mono"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm text-muted"
+                        >
+                          €
+                        </span>
+                      </div>
+                      <div className="relative w-20 shrink-0">
+                        <TextInput
+                          type="text"
+                          inputMode="decimal"
+                          aria-label={`Trinkgeld Person ${index + 1} in Prozent`}
+                          value={String(person.tipPercent).replace(".", ",")}
+                          onChange={(event) =>
+                            updatePersonAt(index, {
+                              tipPercent: toNumber(event.target.value, 0),
+                            })
+                          }
+                          className="bg-surface pr-7 text-right font-mono"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-sm text-muted"
+                        >
+                          %
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removePersonAt(index)}
+                        disabled={state.persons.length <= 1}
+                        aria-label={`${person.name || `Person ${index + 1}`} entfernen`}
+                        className="grid size-9 shrink-0 place-items-center rounded-control text-lg text-muted transition-colors duration-(--dur-fast) hover:bg-surface hover:text-ink disabled:opacity-30"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+
+                  <button
+                    type="button"
+                    onClick={addPerson}
+                    className="self-start rounded-pill bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-[var(--elev-inset)] transition-colors duration-(--dur-fast) hover:bg-ink-soft"
+                  >
+                    + Person hinzufügen
+                  </button>
+                </div>
+              </Field>
+            </div>
+          )}
 
           <div className="sm:col-span-2">
             <Field
@@ -253,11 +440,13 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
                   update({ rounding: event.target.value as Rounding })
                 }
               >
-                {Object.entries(roundingLabels).map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
+                {Object.entries(roundingLabels)
+                  .filter(([value]) => !isPersonMode || value !== "total-100")
+                  .map(([value, label]) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
               </Select>
             </Field>
           </div>
@@ -268,47 +457,96 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
         footer={
           <ShareBar
             title="Rechnung teilen"
-            text={`${formatEuro(result.perPerson)} pro Person`}
+            text={
+              isPersonMode
+                ? `${formatEuro(summary.total)} insgesamt aufgeteilt`
+                : `${formatEuro(result.perPerson)} pro Person`
+            }
           />
         }
       >
-        <NumberDisplay
-          value={result.perPerson}
-          format={formatEuro}
-          suffix="pro Person"
-          caption={`Aufgeteilt auf ${result.people} ${plural(result.people, "Person", "Personen")}`}
-          announce={`${formatEuro(result.perPerson)} pro Person, insgesamt ${formatEuro(result.total)} inklusive ${formatEuro(result.tip)} Trinkgeld.`}
-          hint={
-            <>
-              Jede Person zahlt{" "}
-              <strong className="font-semibold text-ink">
-                {formatEuro(result.perPerson)}
-              </strong>
-              . Auf den Tisch kommen{" "}
-              <strong className="font-semibold text-ink">
-                {formatEuro(result.total)}
-              </strong>{" "}
-              – davon {formatEuro(result.tip)} Trinkgeld.
-            </>
-          }
-        />
+        {isPersonMode ? (
+          <NumberDisplay
+            value={summary.total}
+            format={formatEuro}
+            suffix="insgesamt"
+            caption={`Aufgeteilt auf ${state.persons.length} ${plural(state.persons.length, "Person", "Personen")}`}
+            announce={`${formatEuro(summary.total)} insgesamt, davon ${formatEuro(summary.tip)} Trinkgeld.`}
+            hint={
+              <>
+                Auf den Tisch kommen{" "}
+                <strong className="font-semibold text-ink">
+                  {formatEuro(summary.total)}
+                </strong>{" "}
+                – davon {formatEuro(summary.tip)} Trinkgeld.
+              </>
+            }
+          />
+        ) : (
+          <NumberDisplay
+            value={result.perPerson}
+            format={formatEuro}
+            suffix="pro Person"
+            caption={`Aufgeteilt auf ${result.people} ${plural(result.people, "Person", "Personen")}`}
+            announce={`${formatEuro(result.perPerson)} pro Person, insgesamt ${formatEuro(result.total)} inklusive ${formatEuro(result.tip)} Trinkgeld.`}
+            hint={
+              <>
+                Jede Person zahlt{" "}
+                <strong className="font-semibold text-ink">
+                  {formatEuro(result.perPerson)}
+                </strong>
+                . Auf den Tisch kommen{" "}
+                <strong className="font-semibold text-ink">
+                  {formatEuro(result.total)}
+                </strong>{" "}
+                – davon {formatEuro(result.tip)} Trinkgeld.
+              </>
+            }
+          />
+        )}
       </ResultPanel>
 
+      {isPersonMode && (
+        <section className="surface-soft p-6" aria-label="Aufteilung je Person">
+          <h2 className="font-display text-lg font-semibold tracking-tight">
+            Wer zahlt was
+          </h2>
+          <ul className="mt-4 flex flex-col gap-3">
+            {split.people.map((person, index) => (
+              <li
+                key={index}
+                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-line pt-3 first:border-0 first:pt-0"
+              >
+                <span className="text-[15px]">
+                  {person.name || `Person ${index + 1}`}
+                  <span className="ml-2 text-[13px] text-muted">
+                    {formatDecimal(person.tipPercent)} %
+                  </span>
+                </span>
+                <span className="font-mono font-semibold tabular-nums">
+                  {formatEuro(person.total)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <dl className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Gesamtbetrag" value={formatEuro(result.total)} hint="mit Trinkgeld" />
-        <Stat label="Trinkgeld" value={formatEuro(result.tip)} hint="für den Service" />
+        <Stat label="Gesamtbetrag" value={formatEuro(summary.total)} hint="mit Trinkgeld" />
+        <Stat label="Trinkgeld" value={formatEuro(summary.tip)} hint="für den Service" />
         <Stat
           label="Trinkgeld effektiv"
-          value={`${formatDecimal(result.effectiveTipPercent)} %`}
+          value={`${formatDecimal(summary.effectiveTipPercent)} %`}
           hint={
-            result.roundingExtra > 0
-              ? `davon ${formatEuro(result.roundingExtra)} durch Aufrunden`
+            summary.roundingExtra > 0
+              ? `davon ${formatEuro(summary.roundingExtra)} durch Aufrunden`
               : "genau wie eingestellt"
           }
         />
       </dl>
 
-      <AffiliateBlock slots={trinkgeldAffiliate} result={result} />
+      <AffiliateBlock slots={trinkgeldAffiliate} result={isPersonMode ? split : result} />
     </div>
   );
 }

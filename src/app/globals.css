@@ -91,6 +91,17 @@
     border-radius: var(--rad-card);
     box-shadow: var(--elev-soft), var(--elev-inset);
   }
+
+  /* Werbefläche ohne Füllung wieder einklappen.
+
+     Der Slot reserviert seine Höhe, damit ein einlaufender Banner den Text
+     nicht nach unten schiebt. Hat AdSense nichts zu liefern, setzt es selbst
+     data-ad-status="unfilled" – dann verschwindet die Reservierung samt
+     „Anzeige“-Beschriftung wieder. Rein deklarativ, ohne MutationObserver und
+     ohne zusätzliches Rendern. */
+  .ad-shell:has(> ins[data-ad-status="unfilled"]) {
+    display: none;
+  }
 }
 
 /* Bewegung nur, wenn erwünscht. */

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { analytics, site } from "@/config/site";
+import { ads, analytics, site } from "@/config/site";
 import { publicTools } from "@/tools/registry";
 import { ConsentSettingsButton } from "./consent/ConsentSettingsButton";
 
@@ -63,9 +63,13 @@ export function SiteFooter() {
                   Datenschutz
                 </Link>
               </li>
-              <li>
-                <ConsentSettingsButton />
-              </li>
+              {/* Ohne konfigurierte Werbung gibt es nichts zu widerrufen –
+                  dann entfällt der Listenpunkt ganz statt leer zu bleiben. */}
+              {ads.enabled && ads.clientId && (
+                <li>
+                  <ConsentSettingsButton />
+                </li>
+              )}
             </ul>
           </nav>
         </div>

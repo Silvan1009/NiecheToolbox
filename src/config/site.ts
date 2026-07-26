@@ -44,16 +44,39 @@ export const legal = {
   },
 } as const;
 
+const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "";
+
 /**
- * Google AdSense. `enabled` bleibt false, bis das Konto freigeschaltet ist –
- * ohne echte IDs rendert der AdSlot nur einen erkennbaren Platzhalter.
- * Geladen wird ohnehin erst nach Einwilligung (siehe lib/consent.ts).
+ * Google AdSense samt zertifizierter Einwilligungsverwaltung.
+ *
+ * `enabled` bleibt false, bis das Konto freigeschaltet ist – ohne echte IDs
+ * rendert der AdSlot nur einen erkennbaren Platzhalter und es lädt weder die
+ * CMP noch ein Werbe-Skript.
+ *
+ * Die CMP ist Google Funding Choices. Sie braucht keine eigene Kennung: ihre
+ * Publisher-ID ist dieselbe wie die von AdSense, nur ohne `ca-`-Präfix.
+ *
+ * ACHTUNG: `NEXT_PUBLIC_*` wird zur Buildzeit eingebacken. Das Umlegen von
+ * `NEXT_PUBLIC_ADS_ENABLED` verlangt einen Rebuild *und* das Leeren des
+ * ISR-Caches – sonst liegt bis zu 24 Stunden altes HTML ohne Bootstrap aus
+ * (`revalidate = 86400` auf den Tool-Routen).
  */
 export const ads = {
   enabled: process.env.NEXT_PUBLIC_ADS_ENABLED === "true",
   provider: "adsense",
   /** Format: "ca-pub-0000000000000000" */
-  clientId: process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "",
+  clientId: adsenseClient,
+  /** Dieselbe Kennung ohne `ca-` – so erwarten CMP und ads.txt sie. */
+  publisherId: adsenseClient.replace(/^ca-/, ""),
+  /**
+   * Testanzeigen auf einer Staging-Domain, ohne echte Auslieferung und ohne
+   * Risiko für die Kontofreigabe. Setzt `data-adtest="on"` am Slot.
+   */
+  testMode: process.env.NEXT_PUBLIC_ADS_TEST === "true",
+  cmp: {
+    /** Zertifiziert nach IAB TCF v2.2 – Voraussetzung für AdSense im EWR. */
+    provider: "google-funding-choices",
+  },
   slots: {
     /** Hauptplatzierung: direkt unter dem Ergebnis. */
     belowResult: process.env.NEXT_PUBLIC_ADSENSE_SLOT_BELOW_RESULT ?? "",

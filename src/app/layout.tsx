@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { site } from "@/config/site";
+import { ads, site } from "@/config/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { ConsentGate } from "@/components/consent/ConsentGate";
+import { AdsBootstrap } from "@/components/ads/AdsBootstrap";
+import { AdsenseLoader } from "@/components/ads/AdsenseLoader";
 import { Analytics } from "@/components/Analytics";
 
 const inter = Inter({
@@ -52,6 +53,12 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
+  // Seitenverifizierung für AdSense. Cookielos und ohne Einwilligung nötig –
+  // der übliche Weg über ein ungegatetes Werbe-Skript würde einem Prüfer, der
+  // ablehnt, gar nichts zeigen.
+  ...(ads.clientId
+    ? { other: { "google-adsense-account": ads.clientId } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -68,6 +75,8 @@ export default function RootLayout({
       className={`${inter.variable} ${bricolage.variable} ${plexMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-bg text-ink">
+        {/* Muss vor jedem Google-Tag laufen – daher ganz nach vorn. */}
+        <AdsBootstrap />
         <a
           href="#inhalt"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2 focus:shadow-lift"
@@ -79,7 +88,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
-        <ConsentGate />
+        <AdsenseLoader />
         <Analytics />
       </body>
     </html>
