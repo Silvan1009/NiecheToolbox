@@ -160,6 +160,22 @@ describe("Feiertage je Bundesland", () => {
     );
   });
 
+  it("berücksichtigt, bis wann ein Feiertag gilt", () => {
+    // Der 75. Jahrestag des Volksaufstands gilt einmalig 2028 in Berlin.
+    const jahrestag = "75. Jahrestag des Volksaufstands vom 17. Juni 1953";
+
+    expect(holidaysFor(2027, "be").map((h) => h.name)).not.toContain(jahrestag);
+    expect(holidaysFor(2029, "be").map((h) => h.name)).not.toContain(jahrestag);
+
+    const tag = holidaysFor(2028, "be").find((h) => h.name === jahrestag);
+    expect(tag?.date).toBe("2028-06-17");
+    // Ein Samstag – bringt also keinen zusätzlichen freien Tag.
+    expect(tag?.onWeekend).toBe(true);
+
+    // Nur Berlin, kein anderes Bundesland.
+    expect(holidaysFor(2028, "bb").map((h) => h.name)).not.toContain(jahrestag);
+  });
+
   it("liefert die Feiertage chronologisch und mit korrektem Wochentag", () => {
     const list = holidaysFor(2026, "by");
     for (let i = 1; i < list.length; i += 1) {

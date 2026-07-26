@@ -6,6 +6,10 @@
  * mit einer Bundesland-Matrix. Damit ist die Feiertagslogik über Jahre hinweg
  * wartungsfrei.
  *
+ * Die Tabelle ist trotzdem nicht unbeaufsichtigt: `holidays.drift.test.ts`
+ * gleicht sie gegen Nager.Date ab, damit eine Rechtsänderung auffällt. Der
+ * Abruf lebt allein im Test – dieses Modul bleibt netzwerkfrei.
+ *
  * Alle Datumsangaben sind reine Kalendertage als ISO-String "YYYY-MM-DD" und
  * werden intern als UTC-Mitternacht gerechnet – so gibt es keine Sommerzeit-
  * oder Zeitzonen-Verschiebungen.
@@ -141,6 +145,11 @@ interface HolidayDef {
   partialRegions?: readonly RegionCode[];
   /** Erst ab diesem Jahr gesetzlicher Feiertag (pro Bundesland). */
   since?: Partial<Record<RegionCode, number>>;
+  /**
+   * Letztes Jahr, in dem der Tag gilt (einschließlich, pro Bundesland).
+   * Zusammen mit `since` im selben Jahr ergibt das einen einmaligen Feiertag.
+   */
+  until?: Partial<Record<RegionCode, number>>;
   note?: string;
 }
 
@@ -180,6 +189,17 @@ const HOLIDAY_DEFS: readonly HolidayDef[] = [
     regions: ["bw", "by", "he", "nw", "rp", "sl"],
     partialRegions: ["sn", "th"],
     note: "In Sachsen und Thüringen nur in einzelnen Gemeinden.",
+  },
+  {
+    // Einmalig: das Abgeordnetenhaus hat den 75. Jahrestag des Volksaufstands
+    // zum gesetzlichen Feiertag erklärt – nur für 2028, nur für Berlin.
+    // Fällt auf einen Samstag, bringt also keinen freien Tag.
+    name: "75. Jahrestag des Volksaufstands vom 17. Juni 1953",
+    fixed: { month: 6, day: 17 },
+    regions: ["be"],
+    since: { be: 2028 },
+    until: { be: 2028 },
+    note: "Einmaliger Feiertag in Berlin zum 75. Jahrestag des Volksaufstands von 1953.",
   },
   {
     name: "Mariä Himmelfahrt",
@@ -260,6 +280,9 @@ export function holidaysFor(
 
     const since = def.since?.[region];
     if (since !== undefined && year < since) continue;
+
+    const until = def.until?.[region];
+    if (until !== undefined && year > until) continue;
 
     if (partialHere && !includePartial) {
       // Als Information behalten, aber nicht als freier Tag verrechnen.

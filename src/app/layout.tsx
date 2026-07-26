@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import { ads, site } from "@/config/site";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -21,17 +21,9 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
 });
 
-// IBM Plex Mono ist keine Variable-Font: jede Stärke ist eine eigene Datei.
-// Deshalb nur die zwei, die wirklich vorkommen – und ohne Preload: Mono trägt
-// nur Zahlen, die dank `swap` sofort in der Fallback-Schrift stehen. So bleibt
-// der kritische Pfad auf Inter und Bricolage beschränkt.
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "600"],
-  preload: false,
-});
+// Für Mono kein Webfont: siehe `--font-mono` in globals.css. IBM Plex Mono war
+// hier, ist aber keine Variable-Font und stellte allein 11 der 23 @font-face-
+// Regeln – für eine Schrift, die nur Ziffern trägt.
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -72,7 +64,7 @@ export default function RootLayout({
   return (
     <html
       lang={site.lang}
-      className={`${inter.variable} ${bricolage.variable} ${plexMono.variable} h-full`}
+      className={`${inter.variable} ${bricolage.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-bg text-ink">
         {/* Muss vor jedem Google-Tag laufen – daher ganz nach vorn. */}

@@ -19,7 +19,9 @@
 
   --font-display: var(--font-bricolage), "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* System-Mono statt Webfont: trägt nur Ziffern, die so ohne Nachladen und
+     ohne sichtbaren Swap schon beim ersten Paint richtig stehen. */
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   --radius-card: var(--rad-card);
   --radius-control: var(--rad-control);
