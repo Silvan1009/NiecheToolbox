@@ -20,7 +20,7 @@ export const site = {
   locale: "de-DE",
   /** Ohne abschließenden Slash. Für canonical-URLs, Sitemap und OG-Bilder. */
   url: rawUrl.replace(/\/+$/, ""),
-  contactEmail: "kontakt@nuetzlich.tools",
+  contactEmail: "comannsilvan@gmail.com",
 } as const;
 
 /**
@@ -32,11 +32,11 @@ export const site = {
 export const legal = {
   isPlaceholder: true,
   operator: {
-    name: "PLATZHALTER Vor- und Nachname",
+    name: "Silvan Comann",
     company: "",
-    street: "PLATZHALTER Straße und Hausnummer",
-    zip: "PLATZHALTER PLZ",
-    city: "PLATZHALTER Ort",
+    street: "Raiffeisenstr. 13",
+    zip: "84371",
+    city: "Triftern",
     country: "Deutschland",
     email: site.contactEmail,
     phone: "",
