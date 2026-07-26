@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ToolPageShell } from "@/components/ToolPageShell";
-import { ogImageUrl, toolSeo } from "@/lib/seo";
+import { ogImagePath, toolSeo } from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
 
 /**
@@ -17,7 +17,6 @@ export function generateStaticParams() {
   );
 }
 
-export const revalidate = 86_400;
 export const dynamicParams = false;
 
 function resolve(slug: string, variantSlug: string) {
@@ -36,7 +35,7 @@ export async function generateMetadata({
   if (!found) return {};
 
   const { title, description, heading, path } = toolSeo(found.tool, found.variant);
-  const image = ogImageUrl({ title: heading, subtitle: found.tool.name });
+  const image = ogImagePath(found.tool.slug, found.variant.slug);
 
   return {
     title,

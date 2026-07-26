@@ -1,37 +1,24 @@
-﻿import { ImageResponse } from "next/og";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { ImageResponse } from "next/og";
 import { site } from "@/config/site";
+import { toolSeo } from "@/lib/seo";
+import { publicTools } from "@/tools/registry";
 
 /**
- * Dynamisches Open-Graph-Bild für teilbare Links.
+ * Erzeugt die OG-Bilder einmalig beim Build als PNG-Dateien unter public/og/.
  *
- * Die Gestaltung folgt den Design-Tokens: kühles Fast-Weiß, warmes
- * Tinten-Schwarz, ein violetter Akzent. Satori (der Renderer hinter
- * ImageResponse) versteht nur ein Flexbox-Subset von CSS – daher alles
- * als Inline-Styles mit expliziten `display: flex`.
+ * Ersetzt die frühere Route `app/api/og/route.tsx`: bei `output: "export"`
+ * gibt es keinen Server mehr, der pro Request ein Bild rendern könnte. Titel
+ * und Untertitel stammen ohnehin nur aus der Tool-Registry – eine zur
+ * Build-Zeit bekannte, endliche Menge –, also lässt sich jedes Bild einmal
+ * hier erzeugen statt live nachzufragen.
  */
 
-export const contentType = "image/png";
-export const size = { width: 1200, height: 630 };
+const OUT_DIR = join(process.cwd(), "public", "og");
+const SIZE = { width: 1200, height: 630 };
 
-const TITLE_MAX = 90;
-const SUBTITLE_MAX = 140;
-
-/** Steuerzeichen entfernen und kürzen – die Route ist öffentlich aufrufbar. */
-function clean(value: string | null, fallback: string, max: number): string {
-  const raw = (value ?? "").replace(/[\u0000-\u001F\u007F]/g, " ").trim();
-  const text = raw.length > 0 ? raw : fallback;
-  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
-}
-
-export function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const title = clean(searchParams.get("title"), site.name, TITLE_MAX);
-  const subtitle = clean(
-    searchParams.get("subtitle"),
-    site.tagline,
-    SUBTITLE_MAX,
-  );
-
+function renderImage(title: string, subtitle: string) {
   return new ImageResponse(
     (
       <div
@@ -42,7 +29,6 @@ export function GET(request: Request) {
           backgroundColor: "#FBFBFE",
         }}
       >
-        {/* Akzentkante links – das Wiedererkennungszeichen. */}
         <div
           style={{
             width: 20,
@@ -129,6 +115,40 @@ export function GET(request: Request) {
         </div>
       </div>
     ),
-    size,
+    SIZE,
   );
 }
+
+async function writeImage(fileName: string, title: string, subtitle: string) {
+  const response = renderImage(title, subtitle);
+  const buffer = Buffer.from(await response.arrayBuffer());
+  writeFileSync(join(OUT_DIR, fileName), buffer);
+  console.log(`  ${fileName}`);
+}
+
+async function main() {
+  if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
+
+  console.log("OG-Bilder werden generiert...");
+
+  for (const tool of publicTools()) {
+    const { heading } = toolSeo(tool);
+    await writeImage(`${tool.slug}.png`, heading, tool.tagline);
+
+    for (const variant of tool.getVariants?.() ?? []) {
+      const { heading: variantHeading } = toolSeo(tool, variant);
+      await writeImage(
+        `${tool.slug}--${variant.slug}.png`,
+        variantHeading,
+        tool.name,
+      );
+    }
+  }
+
+  console.log("Fertig.");
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

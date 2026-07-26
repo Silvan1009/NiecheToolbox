@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl, toolPath, variantPath } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
 
+export const dynamic = "force-static";
+
 /**
  * Vollständig aus der Registry erzeugt: Startseite, jede Tool-Seite und jede
  * SEO-Variante. Ein neues Tool erscheint hier automatisch.

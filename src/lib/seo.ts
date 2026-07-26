@@ -10,17 +10,12 @@ export const toolPath = (slug: string) => `/tools/${slug}`;
 export const variantPath = (slug: string, variant: string) =>
   `/tools/${slug}/${variant}`;
 
-/** URL zum dynamisch gerenderten Open-Graph-Bild. */
-export function ogImageUrl({
-  title,
-  subtitle,
-}: {
-  title: string;
-  subtitle?: string;
-}): string {
-  const search = new URLSearchParams({ title });
-  if (subtitle) search.set("subtitle", subtitle);
-  return `/api/og?${search.toString()}`;
+/**
+ * Pfad zum vorgerenderten Open-Graph-Bild (erzeugt von
+ * scripts/generate-og-images.tsx beim Build, siehe public/og/).
+ */
+export function ogImagePath(slug: string, variantSlug?: string): string {
+  return variantSlug ? `/og/${slug}--${variantSlug}.png` : `/og/${slug}.png`;
 }
 
 interface JsonLdNode {

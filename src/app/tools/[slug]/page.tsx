@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ToolPageShell } from "@/components/ToolPageShell";
-import { ogImageUrl, toolSeo } from "@/lib/seo";
+import { ogImagePath, toolSeo } from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
 
 /** Statisch erzeugt aus der Registry – ein neues Tool braucht keine neue Route. */
 export function generateStaticParams() {
   return publicTools().map((tool) => ({ slug: tool.slug }));
 }
-
-/** Neu erzeugen, damit Laufzeit-Defaults wie das aktuelle Jahr nicht veralten. */
-export const revalidate = 86_400;
 
 export async function generateMetadata({
   params,
@@ -22,7 +19,7 @@ export async function generateMetadata({
   if (!tool) return {};
 
   const { title, description, heading, path } = toolSeo(tool);
-  const image = ogImageUrl({ title: heading, subtitle: tool.tagline });
+  const image = ogImagePath(tool.slug);
 
   return {
     title,
