@@ -205,7 +205,7 @@ erzwingen und das `revalidate = 86400` der Tool-Seiten aushebeln.
       markiert – vor Veröffentlichung fachkundig prüfen lassen.
 - [ ] Hosting-Anbieter in der Datenschutzerklärung ergänzen (Abschnitt
       Server-Logfiles), gegebenenfalls Auftragsverarbeitungsvertrag abschließen.
-- [ ] `NEXT_PUBLIC_SITE_URL` auf die echte Domain setzen – sonst zeigen
+- [ ] `SITE_URL` auf die echte Domain setzen – sonst zeigen
       canonical-URLs, Sitemap und OG-Bilder ins Leere.
 - [ ] Affiliate-Platzhalterlinks in `config/site.ts` durch echte Partnerlinks
       ersetzen **oder** `affiliate.enabled` auf `false` setzen. Links auf

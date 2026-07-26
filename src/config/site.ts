@@ -6,7 +6,7 @@
  * Der Projektname ist ein Platzhalter – hier einmal ändern reicht.
  */
 
-const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nuetzlich.tools";
+const rawUrl = process.env.SITE_URL ?? "https://nuetzlich.tools";
 
 export const site = {
   name: "Nützlich",
@@ -30,7 +30,7 @@ export const site = {
  * auf den Rechtsseiten.
  */
 export const legal = {
-  isPlaceholder: true,
+  isPlaceholder: false,
   operator: {
     name: "Silvan Comann",
     company: "",
@@ -109,7 +109,7 @@ export const analytics = {
  * PLATZHALTER: echte Partner-/Tracking-Links eintragen.
  */
 export const affiliate = {
-  enabled: true,
+  enabled: false,
   /** Pflicht-Kennzeichnung nach § 6 TMG / UWG. Wird an jedem Slot ausgegeben. */
   disclosureLabel: "Werbung",
   disclosureText:
