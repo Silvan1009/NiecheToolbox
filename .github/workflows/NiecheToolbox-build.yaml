@@ -39,7 +39,18 @@ jobs:
           NEXT_PUBLIC_ADS_ENABLED: false
           NEXT_PUBLIC_ADSENSE_CLIENT : ca-pub-4379452218973991
           NEXT_PUBLIC_ANALYTICS_PROVIDER : umami
-          SITE_URL: ${{ inputs.site-url }}
+          # Bewusst NICHT ${{ inputs.site-url }}: Deploy Now reicht dort den
+          # Platzhalter https://IONOS_DEPLOY_NOW_SITE_URL durch und ersetzt ihn
+          # erst nach dem Build per `sed` in allen Dateien. Das zerstört den
+          # RSC-Payload: Next streamt die JSON-LD-Blöcke als längenpräfigierte
+          # Flight-Zeilen (`26:Taec,` = 2796 Bytes). Wird der 33 Zeichen lange
+          # Platzhalter danach durch die 24 Zeichen kurze Domain ersetzt,
+          # stimmt die Byte-Länge nicht mehr, der Client liest über das
+          # Zeilenende hinaus und stirbt mit
+          # "Cannot read properties of null (reading 'enqueueModel')" –
+          # die Seite hydriert nicht mehr ("This page couldn't load").
+          # Die echte Domain gehört deshalb schon in den Build.
+          SITE_URL: https://rechnerkiste.app
         run: |
           npm ci
           npm run build
