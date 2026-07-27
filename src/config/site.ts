@@ -134,6 +134,9 @@ export const affiliate = {
     stromvergleich: "https://example.com/partner/strom?ref=PLATZHALTER",
     strommessgeraet: "https://example.com/partner/messgeraet?ref=PLATZHALTER",
     mietrechtsschutz: "https://example.com/partner/rechtsschutz?ref=PLATZHALTER",
+    baufinanzierung: "https://example.com/partner/baufinanzierung?ref=PLATZHALTER",
+    immobilienbewertung:
+      "https://example.com/partner/immobilienbewertung?ref=PLATZHALTER",
   },
 } as const;
 

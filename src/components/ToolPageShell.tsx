@@ -35,6 +35,11 @@ export function ToolPageShell({
   const density = tool.monetization?.adDensity ?? "low";
   const Component = tool.Component;
 
+  // Eine Variante darf eigenen Text mitbringen. Tut sie es nicht, gilt der des
+  // Tools – so bleiben alle bestehenden Varianten unverändert.
+  const about = variant?.about ?? tool.about;
+  const faq = variant?.faq ?? tool.faq;
+
   // Startparameter: Laufzeit-Defaults vom Server, von der Variante überschrieben.
   const params = { ...tool.getDefaultParams?.(), ...variant?.params };
 
@@ -87,7 +92,7 @@ export function ToolPageShell({
       </div>
 
       <div className="tool-column mt-14 flex flex-col gap-12">
-        {tool.about && tool.about.length > 0 && (
+        {about && about.length > 0 && (
           <section aria-labelledby="about-heading">
             <h2
               id="about-heading"
@@ -96,14 +101,14 @@ export function ToolPageShell({
               So funktioniert’s
             </h2>
             <div className="mt-4 flex flex-col gap-4 text-[17px] leading-relaxed text-muted">
-              {tool.about.map((paragraph) => (
+              {about.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)}>{paragraph}</p>
               ))}
             </div>
           </section>
         )}
 
-        {tool.faq && tool.faq.length > 0 && <Faq entries={tool.faq} />}
+        {faq && faq.length > 0 && <Faq entries={faq} />}
 
         <AdSlot placement="below-content" density={density} />
 
@@ -125,7 +130,7 @@ export function ToolPageShell({
         data={jsonLdGraph([
           toolNode(tool, { name: heading, description, path }),
           breadcrumbNode(crumbs),
-          ...(tool.faq && tool.faq.length > 0 ? [faqNode(tool.faq)] : []),
+          ...(faq && faq.length > 0 ? [faqNode(faq)] : []),
         ])}
       />
     </div>

@@ -35,6 +35,18 @@ export interface ToolVariant {
   heading?: string;
   /** Wird an Component/Logik übergeben. */
   params: ToolParams;
+
+  /**
+   * Eigener Erklärtext statt dem des Tools.
+   *
+   * Ohne das unterscheiden sich viele Variantenseiten nur in der Überschrift –
+   * und genau daran scheitern AdSense-Prüfungen mit "low value content". Wer
+   * Varianten erzeugt, die inhaltlich etwas Eigenes zu sagen haben, sagt es
+   * hier.
+   */
+  about?: string[];
+  /** Eigene FAQ statt der des Tools. Wird auch zu FAQPage-JSON-LD. */
+  faq?: FaqEntry[];
 }
 
 export interface FaqEntry {

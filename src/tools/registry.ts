@@ -2,6 +2,7 @@ import { arbeitstage } from "./arbeitstage/manifest";
 import { backform } from "./backform/manifest";
 import { brueckentage } from "./brueckentage/manifest";
 import { elternzeit } from "./elternzeit/manifest";
+import { immobilienrechner } from "./immobilienrechner/manifest";
 import { kuendigungsfrist } from "./kuendigungsfrist/manifest";
 import { lesezeit } from "./lesezeit/manifest";
 import { partymengen } from "./partymengen/manifest";
@@ -28,6 +29,7 @@ export const tools: ToolManifest[] = [
   umzug,
   partymengen,
   stromkosten,
+  immobilienrechner,
 ];
 
 /** Ein Tool per Slug. `draft` ist bewusst nicht auffindbar. */
