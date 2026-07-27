@@ -56,13 +56,16 @@ const htaccess = `# Automatisch erzeugt von scripts/generate-htaccess.ts – nic
 ${headerLines}
 </IfModule>
 
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\\.html -f
-  RewriteRule ^(.*)$ $1.html [L]
-</IfModule>
+# Kein Rewrite auf ".html" mehr, und bewusst kein "DirectorySlash"/"Options":
+#
+# Seit \`trailingSlash: true\` (next.config.ts) exportiert Next jede Seite als
+# "<pfad>/index.html". Apache findet die über DirectoryIndex von allein – die
+# frühere Regel "/pfad -> /pfad.html" hat keinen Fall mehr zu behandeln.
+#
+# "DirectorySlash Off" und "Options -Indexes" stehen hier absichtlich nicht:
+# beide gehören zur AllowOverride-Klasse "Indexes", die Shared Hosting nicht
+# garantiert. Ist sie nicht freigegeben, beantwortet Apache *jede* Anfrage mit
+# 500 – ein Totalausfall, um eine Kleinigkeit abzusichern.
 
 ErrorDocument 404 /404.html
 `;

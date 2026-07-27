@@ -5,7 +5,7 @@ import { legal, site } from "@/config/site";
 export const metadata: Metadata = {
   title: "Impressum",
   description: `Impressum und Anbieterkennzeichnung nach § 5 DDG für ${site.name}.`,
-  alternates: { canonical: "/rechtliches/impressum" },
+  alternates: { canonical: "/rechtliches/impressum/" },
 };
 
 export default function ImpressumPage() {

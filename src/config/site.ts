@@ -3,15 +3,18 @@
  * nachjustieren lässt, steht hier: Name, Domain, Werbe-IDs, Affiliate-Links,
  * Analytics.
  *
- * Der Projektname ist ein Platzhalter – hier einmal ändern reicht.
+ * Der Projektname steht hier einmal – er muss zur Domain passen. Ein Name,
+ * der nicht zur Domain passt, ist bei der AdSense-Prüfung ein Negativsignal
+ * ("site identity"), und Besucher lesen ihn als Hinweis auf eine geparkte
+ * oder verwaiste Seite.
  */
 
-const rawUrl = process.env.SITE_URL ?? "https://nuetzlich.tools";
+const rawUrl = process.env.SITE_URL ?? "https://rechnerkiste.app";
 
 export const site = {
-  name: "Nützlich",
+  name: "Rechnerkiste",
   /** Für <title>-Suffixe und Footer. */
-  shortName: "Nützlich",
+  shortName: "Rechnerkiste",
   tagline: "Kleine Rechner für echte Alltagsfragen.",
   // Bewusst ohne Aufzählung aller Tools: die Liste wächst, der Text nicht mit.
   description:

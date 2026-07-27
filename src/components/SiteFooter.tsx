@@ -44,12 +44,20 @@ export function SiteFooter() {
               id="footer-legal"
               className="text-xs font-semibold tracking-wide text-muted uppercase"
             >
-              Rechtliches
+              Über &amp; Rechtliches
             </h2>
             <ul className="mt-3 space-y-2 text-sm text-muted">
               <li>
                 <Link
-                  href="/rechtliches/impressum"
+                  href="/ueber/"
+                  className="transition-colors duration-(--dur-fast) hover:text-ink"
+                >
+                  Über uns &amp; Kontakt
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/rechtliches/impressum/"
                   className="transition-colors duration-(--dur-fast) hover:text-ink"
                 >
                   Impressum
@@ -57,7 +65,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link
-                  href="/rechtliches/datenschutz"
+                  href="/rechtliches/datenschutz/"
                   className="transition-colors duration-(--dur-fast) hover:text-ink"
                 >
                   Datenschutz

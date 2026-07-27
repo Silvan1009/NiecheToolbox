@@ -1,11 +1,12 @@
-# Nützlich
+# Rechnerkiste
 
 Eine Sammlung kleiner Web-Rechner, die echte Alltagsfragen beantworten. Alles
 rechnet im Browser, jedes Ergebnis ist über die URL teilbar, jede Seite wird
 statisch vorgerendert.
 
-Der Name ist ein Platzhalter – er steht an genau einer Stelle:
-[`src/config/site.ts`](src/config/site.ts).
+Name und Domain stehen an genau einer Stelle:
+[`src/config/site.ts`](src/config/site.ts). Sie müssen zueinander passen –
+`rechnerkiste.app` heißt „Rechnerkiste“.
 
 ## Loslegen
 

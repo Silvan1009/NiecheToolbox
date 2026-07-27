@@ -21,6 +21,28 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   output: "export",
+  /*
+   * Pflicht auf Apache, nicht Geschmackssache.
+   *
+   * Ohne diese Zeile exportiert Next die Tool-Seite als `tools/foo.html` und
+   * legt *daneben* ein gleichnamiges Verzeichnis `tools/foo/` mit den
+   * RSC-Payloads ab. Apache löst `/tools/foo` dann auf das Verzeichnis auf,
+   * mod_dir schickt einen 301 auf `/tools/foo/`, dort liegt kein Index – und
+   * jede Unterseite antwortet mit 403. Genau daran ist die erste
+   * AdSense-Prüfung gescheitert: erreichbar war nur die Startseite.
+   *
+   * Per .htaccess ist das nicht zuverlässig zu reparieren: mod_rewrite-Regeln
+   * aus dem Wurzel-Verzeichnis gelten nicht in Unterverzeichnissen (auch nicht
+   * mit `RewriteOptions InheritDown`), und `DirectorySlash Off` verlangt ein
+   * `AllowOverride Indexes`, das Shared Hosting nicht garantiert – fehlt es,
+   * antwortet Apache auf *jede* Anfrage mit 500. Beides in Docker gegen
+   * httpd:2.4 nachgestellt.
+   *
+   * Mit `trailingSlash` schreibt Next `tools/foo/index.html`. Damit gibt es
+   * keine Kollision mehr, und Apache liefert die Seite über DirectoryIndex
+   * ganz von selbst aus – ohne eine einzige Rewrite-Regel.
+   */
+  trailingSlash: true,
 };
 
 export default nextConfig;

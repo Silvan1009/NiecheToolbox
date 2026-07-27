@@ -6,9 +6,23 @@ export function absoluteUrl(path: string): string {
   return `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export const toolPath = (slug: string) => `/tools/${slug}`;
+/**
+ * Seitenpfade enden auf "/" – so und nicht anders exportiert Next sie
+ * (`trailingSlash: true` in next.config.ts) und so liefert Apache sie aus.
+ * Canonical, Sitemap und tatsächliche URL müssen dieselbe Schreibweise haben,
+ * sonst crawlt Google zwei Fassungen derselben Seite.
+ *
+ * Gilt nur für Seiten. Dateien mit Endung (/sitemap.xml, /ads.txt) und die
+ * Bilder unter /og/ bleiben unverändert.
+ */
+export function pagePath(path: string): string {
+  const withLeading = path.startsWith("/") ? path : `/${path}`;
+  return withLeading.endsWith("/") ? withLeading : `${withLeading}/`;
+}
+
+export const toolPath = (slug: string) => `/tools/${slug}/`;
 export const variantPath = (slug: string, variant: string) =>
-  `/tools/${slug}/${variant}`;
+  `/tools/${slug}/${variant}/`;
 
 /**
  * Pfad zum vorgerenderten Open-Graph-Bild (erzeugt von

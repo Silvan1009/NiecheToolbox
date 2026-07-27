@@ -15,19 +15,25 @@ export function SiteHeader() {
             aria-hidden="true"
             className="grid size-8 place-items-center rounded-[10px] bg-accent font-display text-[15px] font-bold text-white shadow-soft transition-colors duration-(--dur-fast) group-hover:bg-accent-600"
           >
-            N
+            {site.name.charAt(0)}
           </span>
           <span className="font-display text-[17px] font-semibold tracking-tight">
             {site.name}
           </span>
         </Link>
 
-        <nav aria-label="Hauptnavigation">
+        <nav aria-label="Hauptnavigation" className="flex items-center gap-1">
           <Link
             href="/#tools"
             className="rounded-pill px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
           >
             Alle Rechner
+          </Link>
+          <Link
+            href="/ueber/"
+            className="rounded-pill px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
+          >
+            Über uns
           </Link>
         </nav>
       </div>

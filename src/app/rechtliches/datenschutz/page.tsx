@@ -6,7 +6,7 @@ import { affiliate, ads, analytics, legal, site } from "@/config/site";
 export const metadata: Metadata = {
   title: "Datenschutzerklärung",
   description: `Wie ${site.name} mit Daten umgeht: Berechnungen im Browser, cookiefreie Statistik, Werbung nur nach Einwilligung.`,
-  alternates: { canonical: "/rechtliches/datenschutz" },
+  alternates: { canonical: "/rechtliches/datenschutz/" },
 };
 
 export default function DatenschutzPage() {
@@ -66,12 +66,13 @@ export default function DatenschutzPage() {
           DSGVO (berechtigtes Interesse an einem stabilen, sicheren Betrieb). Die
           Daten werden nicht mit anderen Quellen zusammengeführt.
         </p>
-        <p className="text-[15px]">
-          <strong className="font-semibold text-ink">Zu ergänzen:</strong> Name
-          und Sitz des Hosting-Anbieters sowie – bei Anbietern außerhalb der EU –
-          die Grundlage des Datentransfers (in der Regel
-          Standardvertragsklauseln). Gegebenenfalls ist ein Vertrag über
-          Auftragsverarbeitung nach Art. 28 DSGVO abzuschließen.
+        <p>
+          Gehostet wird die Seite bei der IONOS SE, Elgendorfer Straße 57, 56410
+          Montabaur, Deutschland. Die Verarbeitung findet auf Servern innerhalb
+          der Europäischen Union statt; eine Übermittlung in Drittländer ist
+          damit nicht verbunden. Mit IONOS besteht ein Vertrag über
+          Auftragsverarbeitung nach Art. 28 DSGVO. Die Logfiles werden nach
+          kurzer Zeit automatisch gelöscht.
         </p>
       </Section>
 
@@ -94,12 +95,22 @@ export default function DatenschutzPage() {
         <p>
           <ConsentSettingsButton className="font-semibold text-accent" />
         </p>
-        <p className="text-[15px]">
-          <strong className="font-semibold text-ink">Zu ergänzen:</strong> die
-          konkreten Bezeichnungen der von der Plattform gesetzten Einträge und
-          ihre Speicherdauer. Diese Angaben erst nach der Freischaltung aus den
-          Entwicklerwerkzeugen des Browsers übernehmen – geratene Schlüsselnamen
-          wären hier schlechter als eine offen benannte Lücke.
+        <p>
+          Google Funding Choices legt deine Entscheidung im lokalen Speicher
+          deines Browsers ab – unter den Bezeichnungen{" "}
+          <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[13px]">
+            FCCDCF
+          </code>{" "}
+          und{" "}
+          <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[13px]">
+            FCNEC
+          </code>
+          . Darin stehen der TC-String und der Zeitpunkt deiner Entscheidung.
+          Diese Einträge laufen nicht von selbst ab; sie bleiben, bis du sie
+          über die Einstellungen deines Browsers löschst oder deine Entscheidung
+          über den obenstehenden Knopf änderst. Welche Einträge die einzelnen
+          Anbieter darüber hinaus setzen und wie lange sie gelten, ist im
+          Einwilligungsdialog unter „Anbieter“ im Einzelnen aufgeführt.
         </p>
       </Section>
 

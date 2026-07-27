@@ -38,7 +38,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  for (const path of ["/rechtliches/impressum", "/rechtliches/datenschutz"]) {
+  entries.push({
+    url: absoluteUrl("/ueber/"),
+    lastModified,
+    changeFrequency: "yearly",
+    priority: 0.5,
+  });
+
+  for (const path of ["/rechtliches/impressum/", "/rechtliches/datenschutz/"]) {
     entries.push({
       url: absoluteUrl(path),
       lastModified,
