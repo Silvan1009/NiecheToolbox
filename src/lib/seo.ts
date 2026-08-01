@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { site } from "@/config/site";
 import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
 
@@ -109,4 +110,29 @@ export function toolSeo(tool: ToolManifest, variant?: ToolVariant) {
     : toolPath(tool.slug);
 
   return { title, heading, description, path };
+}
+
+/**
+ * Das komplette Metadata-Objekt für Tool- und Variantenseiten. Beide Routen
+ * müssen exakt dieselben Werte liefern – der einzige Unterschied ist, ob eine
+ * Variante mitkommt.
+ */
+export function toolMetadata(tool: ToolManifest, variant?: ToolVariant): Metadata {
+  const { title, heading, description, path } = toolSeo(tool, variant);
+  const image = ogImagePath(tool.slug, variant?.slug);
+
+  return {
+    title,
+    description,
+    keywords: tool.keywords,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      url: path,
+      images: [{ url: image, width: 1200, height: 630, alt: heading }],
+    },
+    twitter: { card: "summary_large_image", images: [image] },
+  };
 }

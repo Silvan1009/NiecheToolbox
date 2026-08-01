@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ToolPageShell } from "@/components/ToolPageShell";
-import { ogImagePath, toolSeo } from "@/lib/seo";
+import { toolMetadata } from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
 
 /** Statisch erzeugt aus der Registry – ein neues Tool braucht keine neue Route. */
 export function generateStaticParams() {
   return publicTools().map((tool) => ({ slug: tool.slug }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -18,23 +20,7 @@ export async function generateMetadata({
   const tool = getTool(slug);
   if (!tool) return {};
 
-  const { title, description, heading, path } = toolSeo(tool);
-  const image = ogImagePath(tool.slug);
-
-  return {
-    title,
-    description,
-    keywords: tool.keywords,
-    alternates: { canonical: path },
-    openGraph: {
-      type: "website",
-      title,
-      description,
-      url: path,
-      images: [{ url: image, width: 1200, height: 630, alt: heading }],
-    },
-    twitter: { card: "summary_large_image", images: [image] },
-  };
+  return toolMetadata(tool);
 }
 
 export default async function ToolPage({
