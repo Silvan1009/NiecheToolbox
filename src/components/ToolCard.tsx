@@ -2,7 +2,19 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { categoryLabels, type ToolManifest } from "@/tools/types";
 
-export function ToolCard({ tool }: { tool: ToolManifest }) {
+export function ToolCard({
+  tool,
+  showCategory = true,
+}: {
+  tool: ToolManifest;
+  /**
+   * Auf /rechner/ steht die Karte schon unter einer thematischen Gruppe –
+   * ein zusätzlicher Kategorie-Pill mit abweichendem Wort (z. B. "Geld"
+   * unter der Überschrift "Wohnen & Verträge") würde dort zwei Taxonomien
+   * gegeneinander ausspielen.
+   */
+  showCategory?: boolean;
+}) {
   const Icon = tool.icon;
 
   return (
@@ -14,9 +26,11 @@ export function ToolCard({ tool }: { tool: ToolManifest }) {
         <span className="grid size-10 shrink-0 place-items-center rounded-control bg-accent-soft text-accent transition-colors duration-(--dur-fast) group-hover:bg-accent group-hover:text-white">
           <Icon className="size-5" aria-hidden="true" />
         </span>
-        <span className="rounded-pill bg-ink-soft px-2.5 py-1 text-[11px] font-semibold tracking-wide text-muted uppercase">
-          {categoryLabels[tool.category]}
-        </span>
+        {showCategory && (
+          <span className="rounded-pill bg-ink-soft px-2.5 py-1 text-[11px] font-semibold tracking-wide text-muted uppercase">
+            {categoryLabels[tool.category]}
+          </span>
+        )}
         {tool.status === "beta" && (
           <span className="rounded-pill bg-accent-soft px-2.5 py-1 text-[11px] font-semibold tracking-wide text-accent uppercase">
             Beta

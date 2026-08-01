@@ -36,8 +36,22 @@
  * Progressionseffekte und Verlustverrechnungsgrenzen bleiben außen vor.
  */
 
+import {
+  anteil,
+  cents,
+  clamp,
+  internerZinsfuss,
+  nn,
+  toEuro,
+  MONATE_PRO_JAHR,
+} from "@/lib/finanzmath";
 import type { RegionCode } from "@/tools/brueckentage/logic";
 import { grestFor } from "./grunderwerbsteuer";
+
+// Der interne Zinsfuß lebt seit dem Sparplan- und Kreditrechner in
+// lib/finanzmath.ts. Hier bleibt er exportiert, damit die öffentliche Fläche
+// dieses Moduls unverändert ist.
+export { internerZinsfuss };
 
 export type Modus = "kapitalanlage" | "eigennutzung";
 
@@ -91,31 +105,6 @@ export const ANSCHAFFUNGSNAH_GRENZE_PROZENT = 15;
 
 /** Der Tilgungsplan wird nie länger als ein Berufsleben gerechnet. */
 const MAX_JAHRE = 50;
-const MONATE_PRO_JAHR = 12;
-
-/* ---------------------------------------------------------------------------
- * Cent-Arithmetik
- * ------------------------------------------------------------------------- */
-
-const cents = (euro: number) => Math.round(euro * 100);
-const anteil = (c: number, prozent: number) => Math.round((c * prozent) / 100);
-
-/**
- * Cent zurück in Euro – und dabei die negative Null einfangen.
- *
- * `Math.round(-0.4)` ist `-0`, und `Intl.NumberFormat` schreibt das als
- * "-0,00 €". Ein Vorzeichen vor einer Null, die keine ist, sieht nach einem
- * Rechenfehler aus. Hier ist die einzige Stelle, an der Cent zu Euro werden –
- * also die richtige Stelle, das einmal geradezuziehen.
- */
-const toEuro = (c: number) => (c === 0 ? 0 : c / 100);
-
-/** Nicht-negative Zahl; NaN und Infinity werden zu 0. */
-const nn = (n: number) => (Number.isFinite(n) && n > 0 ? n : 0);
-
-/** Wert in ein Intervall zwingen; NaN und Infinity fallen auf `min`. */
-const clamp = (n: number, min: number, max: number) =>
-  Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : min;
 
 /* ---------------------------------------------------------------------------
  * Ein- und Ausgabe
@@ -275,46 +264,6 @@ export interface ImmobilienResult {
 
   jahre: Jahreszeile[];
   warnings: string[];
-}
-
-/* ---------------------------------------------------------------------------
- * Interner Zinsfuß
- * ------------------------------------------------------------------------- */
-
-const npv = (rate: number, flows: number[]) =>
-  flows.reduce((sum, flow, t) => sum + flow / (1 + rate) ** t, 0);
-
-/**
- * Interner Zinsfuß per Bisektion.
- *
- * Bewusst keine Newton-Iteration: die divergiert bei Zahlungsreihen mit
- * mehreren Vorzeichenwechseln, wie sie hier durch negative Cashflows und
- * einen großen Verkaufserlös am Ende entstehen. Die Bisektion konvergiert
- * immer – sofern es überhaupt eine Nullstelle im Intervall gibt.
- */
-export function internerZinsfuss(flows: number[]): number | null {
-  let lo = -0.9999;
-  let hi = 10;
-  let fLo = npv(lo, flows);
-  const fHi = npv(hi, flows);
-
-  if (!Number.isFinite(fLo) || !Number.isFinite(fHi)) return null;
-  if (fLo === 0) return lo;
-  if (fHi === 0) return hi;
-  if (fLo * fHi > 0) return null;
-
-  for (let i = 0; i < 200; i++) {
-    const mid = (lo + hi) / 2;
-    const fMid = npv(mid, flows);
-    if (fMid === 0) return mid;
-    if (fLo * fMid < 0) {
-      hi = mid;
-    } else {
-      lo = mid;
-      fLo = fMid;
-    }
-  }
-  return (lo + hi) / 2;
 }
 
 /* ---------------------------------------------------------------------------

@@ -132,11 +132,21 @@ export const affiliate = {
     getraenkelieferung: "https://example.com/partner/getraenke?ref=PLATZHALTER",
     grillzubehoer: "https://example.com/partner/grill?ref=PLATZHALTER",
     stromvergleich: "https://example.com/partner/strom?ref=PLATZHALTER",
+    gasvergleich: "https://example.com/partner/gas?ref=PLATZHALTER",
     strommessgeraet: "https://example.com/partner/messgeraet?ref=PLATZHALTER",
+    reiseversicherung: "https://example.com/partner/reiseversicherung?ref=PLATZHALTER",
+    steuersoftware: "https://example.com/partner/steuersoftware?ref=PLATZHALTER",
     mietrechtsschutz: "https://example.com/partner/rechtsschutz?ref=PLATZHALTER",
     baufinanzierung: "https://example.com/partner/baufinanzierung?ref=PLATZHALTER",
     immobilienbewertung:
       "https://example.com/partner/immobilienbewertung?ref=PLATZHALTER",
+    depotvergleich: "https://example.com/partner/depot?ref=PLATZHALTER",
+    aktienanalyse: "https://example.com/partner/aktienanalyse?ref=PLATZHALTER",
+    kreditvergleich: "https://example.com/partner/kredit?ref=PLATZHALTER",
+    umschuldung: "https://example.com/partner/umschuldung?ref=PLATZHALTER",
+    kfzversicherung: "https://example.com/partner/kfzversicherung?ref=PLATZHALTER",
+    haftpflichtversicherung: "https://example.com/partner/haftpflicht?ref=PLATZHALTER",
+    berufsunfaehigkeitsversicherung: "https://example.com/partner/bu?ref=PLATZHALTER",
   },
 } as const;
 

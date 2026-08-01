@@ -1,14 +1,28 @@
+import { abfindung } from "./abfindung/manifest";
+import { aktienkennzahlen } from "./aktienkennzahlen/manifest";
 import { arbeitstage } from "./arbeitstage/manifest";
+import { autokosten } from "./autokosten/manifest";
 import { backform } from "./backform/manifest";
 import { brueckentage } from "./brueckentage/manifest";
+import { bruttonetto } from "./bruttonetto/manifest";
+import { elterngeld } from "./elterngeld/manifest";
 import { elternzeit } from "./elternzeit/manifest";
+import { energiekosten } from "./energiekosten/manifest";
+import { erbschaftsteuer } from "./erbschaftsteuer/manifest";
 import { immobilienrechner } from "./immobilienrechner/manifest";
+import { kindergeld } from "./kindergeld/manifest";
+import { kreditrechner } from "./kreditrechner/manifest";
 import { kuendigungsfrist } from "./kuendigungsfrist/manifest";
 import { lesezeit } from "./lesezeit/manifest";
 import { partymengen } from "./partymengen/manifest";
+import { rentenabschlag } from "./rentenabschlag/manifest";
+import { rentenluecke } from "./rentenluecke/manifest";
+import { sparplan } from "./sparplan/manifest";
 import { stromkosten } from "./stromkosten/manifest";
 import { trinkgeld } from "./trinkgeld/manifest";
 import { umzug } from "./umzug/manifest";
+import { urlaubsbudget } from "./urlaubsbudget/manifest";
+import { versicherungsvergleich } from "./versicherungsvergleich/manifest";
 import type { ToolManifest } from "./types";
 
 /**
@@ -20,16 +34,30 @@ import type { ToolManifest } from "./types";
  */
 export const tools: ToolManifest[] = [
   brueckentage,
+  urlaubsbudget,
   trinkgeld,
   lesezeit,
   elternzeit,
+  kindergeld,
   kuendigungsfrist,
   arbeitstage,
   backform,
   umzug,
   partymengen,
   stromkosten,
+  energiekosten,
   immobilienrechner,
+  aktienkennzahlen,
+  sparplan,
+  kreditrechner,
+  bruttonetto,
+  rentenluecke,
+  autokosten,
+  versicherungsvergleich,
+  erbschaftsteuer,
+  elterngeld,
+  rentenabschlag,
+  abfindung,
 ];
 
 /** Ein Tool per Slug. `draft` ist bewusst nicht auffindbar. */

@@ -39,6 +39,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   entries.push({
+    url: absoluteUrl("/rechner/"),
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  });
+
+  entries.push({
     url: absoluteUrl("/ueber/"),
     lastModified,
     changeFrequency: "yearly",

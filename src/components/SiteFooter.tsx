@@ -25,6 +25,14 @@ export function SiteFooter() {
                 Rechner
               </h2>
               <ul className="mt-3 space-y-2 text-sm">
+                <li>
+                  <Link
+                    href="/rechner/"
+                    className="font-medium text-ink transition-colors duration-(--dur-fast) hover:text-accent"
+                  >
+                    Rechner nach Thema
+                  </Link>
+                </li>
                 {tools.map((tool) => (
                   <li key={tool.slug}>
                     <Link
