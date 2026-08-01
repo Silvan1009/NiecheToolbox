@@ -11,7 +11,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
-import { urlValue } from "@/lib/parse";
+import { parseNumberInput, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { aktienAffiliate } from "./affiliate";
@@ -52,36 +52,15 @@ const tendenzTon: Record<Tendenz, PayoffTone> = {
 };
 
 /**
- * Deutsches Zahlenformat lesen – mit Vorzeichen und mit Tausenderpunkten.
+ * Wert aus URL oder Variante lesen; alles Unbrauchbare fällt auf `fallback`.
  *
- * Anders als bei den übrigen Rechnern sind negative Werte hier keine
- * Fehleingabe: Verlustjahre, negatives Eigenkapital und schrumpfende Gewinne
- * gehören zum Gegenstand. Und weil Zahlen aus einem Geschäftsbericht kopiert
- * werden, muss „4.800“ viertausendachthundert bedeuten und nicht 4,8.
- *
- * `null` heißt „noch keine lesbare Zahl“ – etwa während des Tippens, wenn erst
- * das Minuszeichen steht. Nur so lässt sich ein negativer Wert überhaupt
- * eingeben, ohne dass das erste Zeichen sofort verworfen wird.
+ * Anders als das globale `toNumber` verwirft dieses hier keine negativen
+ * Werte: Verlustjahre und negatives Eigenkapital gehören bei Aktienkennzahlen
+ * zum Gegenstand, nicht zur Fehleingabe.
  */
-export function parseZahl(text: string): number | null {
-  const roh = text.trim().replace(/[\s€%]/g, "");
-  if (roh === "") return null;
-
-  const normalisiert = roh.includes(",")
-    ? roh.replace(/\./g, "").replace(",", ".")
-    : /^-?\d{1,3}(\.\d{3})+$/.test(roh)
-      ? roh.replace(/\./g, "")
-      : roh;
-
-  if (!/^-?\d*\.?\d*$/.test(normalisiert)) return null;
-  const parsed = Number(normalisiert);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-/** Wert aus URL oder Variante lesen; alles Unbrauchbare fällt auf `fallback`. */
 function toNumber(value: unknown, fallback: number): number {
   if (value === null || value === undefined || value === "") return fallback;
-  const parsed = typeof value === "string" ? parseZahl(value) : Number(value);
+  const parsed = typeof value === "string" ? parseNumberInput(value) : Number(value);
   return parsed !== null && Number.isFinite(parsed) ? parsed : fallback;
 }
 
@@ -936,7 +915,7 @@ function UnitInput({
         onChange={(event) => {
           const text = event.target.value;
           setRoh(text);
-          const parsed = parseZahl(text);
+          const parsed = parseNumberInput(text);
           if (parsed !== null) onChange(parsed);
         }}
         onBlur={() => setRoh(null)}

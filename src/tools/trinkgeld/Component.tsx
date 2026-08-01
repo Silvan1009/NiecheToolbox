@@ -15,6 +15,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, plural } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { trinkgeldAffiliate } from "./affiliate";
@@ -46,12 +47,6 @@ const isRounding = (value: unknown): value is Rounding =>
 
 const isBillMode = (value: unknown): value is BillMode =>
   value === "gesamt" || value === "person";
-
-function toNumber(value: unknown, fallback: number) {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function roundToCent(value: number) {
   return Math.round(value * 100) / 100;

@@ -15,6 +15,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatInteger, plural } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { umzugAffiliate } from "./affiliate";
@@ -38,12 +39,6 @@ const STYLE_OPTIONS = [
 
 const isStyle = (value: unknown): value is HouseholdStyle =>
   typeof value === "string" && value in householdStyles;
-
-function toNumber(value: unknown, fallback: number): number {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {

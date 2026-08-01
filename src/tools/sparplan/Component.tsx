@@ -17,7 +17,7 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { urlValue } from "@/lib/parse";
+import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { sparplanAffiliate } from "./affiliate";
@@ -50,21 +50,6 @@ const isModus = (value: unknown): value is SparplanModus =>
 
 const isAnlageart = (value: unknown): value is Anlageart =>
   typeof value === "string" && value in anlagearten;
-
-/**
- * Deutsches Dezimalkomma erlauben; alles Unbrauchbare fällt auf `fallback`.
- *
- * Der fehlende Wert muss ausdrücklich abgefangen werden: `URLSearchParams.get`
- * liefert `null`, wenn ein Schlüssel nicht in der URL steht, und `Number(null)`
- * ist 0 – ohne diese Prüfung würde ein geteilter Link jedes nicht enthaltene
- * Feld auf null setzen.
- */
-function toNumber(value: unknown, fallback: number): number {
-  if (value === null || value === undefined || value === "") return fallback;
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 /** Schalter kommen als 0/1 aus der URL und aus den Varianten-Params. */
 function toBool(value: unknown, fallback: boolean): boolean {

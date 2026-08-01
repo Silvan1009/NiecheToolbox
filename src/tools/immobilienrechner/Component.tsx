@@ -16,7 +16,7 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
-import { urlValue } from "@/lib/parse";
+import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/tools/brueckentage/logic";
 import type { ToolParams } from "@/tools/types";
@@ -46,22 +46,6 @@ const isModus = (value: unknown): value is Modus =>
 
 const isAfaArt = (value: unknown): value is AfaArt =>
   typeof value === "string" && value in afaArten;
-
-/**
- * Deutsches Dezimalkomma erlauben; alles Unbrauchbare fällt auf `fallback`.
- *
- * Der fehlende Wert muss ausdrücklich abgefangen werden: `URLSearchParams.get`
- * liefert `null`, wenn ein Schlüssel nicht in der URL steht, und `Number(null)`
- * ist 0 – ohne diese Prüfung würde ein geteilter Link jedes nicht enthaltene
- * Feld auf null setzen. Da hier bewusst nur Abweichungen vom Default in der URL
- * landen, wäre das der Normalfall und nicht die Ausnahme.
- */
-function toNumber(value: unknown, fallback: number): number {
-  if (value === null || value === undefined || value === "") return fallback;
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   // Die Bundesland-Varianten liefern das Land; der Steuersatz kommt aus der

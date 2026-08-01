@@ -19,7 +19,7 @@ import { ShareBar } from "@/components/ui/ShareBar";
 import { toEuro } from "@/lib/finanzmath";
 import { formatDate, formatEuro, plural } from "@/lib/format";
 import { isValidIso } from "@/lib/date";
-import { urlValue } from "@/lib/parse";
+import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { regions, type RegionCode } from "@/tools/brueckentage/logic";
 import type { ToolParams } from "@/tools/types";
@@ -53,21 +53,6 @@ const isStatus = (value: unknown): value is KindStatus =>
 
 const isRegion = (value: unknown): value is RegionCode =>
   typeof value === "string" && regions.some((r) => r.code === value);
-
-/**
- * Deutsches Dezimalkomma erlauben; alles Unbrauchbare fällt auf `fallback`.
- *
- * Der fehlende Wert muss ausdrücklich abgefangen werden: `URLSearchParams.get`
- * liefert `null`, wenn ein Schlüssel nicht in der URL steht, und `Number(null)`
- * ist 0 – ohne diese Prüfung würde ein geteilter Link jedes nicht enthaltene
- * Feld auf null setzen.
- */
-function toNumber(value: unknown, fallback: number): number {
-  if (value === null || value === undefined || value === "") return fallback;
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function toBool(value: unknown, fallback: boolean): boolean {
   if (value === null || value === undefined || value === "") return fallback;

@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatInteger } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { backformAffiliate } from "./affiliate";
@@ -45,12 +46,6 @@ const SHAPE_ORDER: ShapeKind[] = [
 
 const isShape = (value: unknown): value is ShapeKind =>
   typeof value === "string" && value in shapes;
-
-function toNumber(value: unknown, fallback: number): number {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {

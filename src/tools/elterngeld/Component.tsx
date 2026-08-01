@@ -9,7 +9,7 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { urlValue } from "@/lib/parse";
+import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { elterngeldAffiliate } from "./affiliate";
@@ -31,13 +31,6 @@ const MODUS_OPTIONS = [
 
 const isModus = (value: unknown): value is ElterngeldModus =>
   value === "basis" || value === "plus";
-
-function toNumber(value: unknown, fallback: number): number {
-  if (value === null || value === undefined || value === "") return fallback;
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
 
 function toBool(value: unknown, fallback: boolean): boolean {
   if (value === null || value === undefined || value === "") return fallback;

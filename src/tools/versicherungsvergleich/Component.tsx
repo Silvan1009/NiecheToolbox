@@ -9,7 +9,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatEuro } from "@/lib/format";
-import { urlValue } from "@/lib/parse";
+import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { versicherungsvergleichAffiliate } from "./affiliate";
@@ -91,13 +91,6 @@ const isKreis = (value: unknown): value is HaftpflichtPersonenkreis =>
   typeof value === "string" && value in haftpflichtPersonenkreisLabels;
 const isRisikogruppe = (value: unknown): value is BuRisikogruppe =>
   typeof value === "string" && value in buRisikogruppeLabels;
-
-function toNumber(value: unknown, fallback: number): number {
-  if (value === null || value === undefined || value === "") return fallback;
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
 
 function toBool(value: unknown, fallback: boolean): boolean {
   if (value === null || value === undefined || value === "") return fallback;
