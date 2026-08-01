@@ -40,6 +40,7 @@ import {
   tilgungsplan,
   toEuro,
 } from "@/lib/finanzmath";
+import { formatEuroRounded, formatRate } from "@/lib/format";
 
 /** Kein Ratenkredit läuft länger als ein Berufsleben. */
 const MAX_JAHRE = 40;
@@ -218,19 +219,19 @@ export function calculateKredit(input: KreditInput): KreditResult {
 
   if (tilgtNicht) {
     warnings.push(
-      `Die Rate von ${euro(toEuro(monatsrateC))} deckt die Zinsen nicht oder tilgt so langsam, dass der Kredit über ${MAX_JAHRE} Jahre liefe. Allein an Zinsen fallen im ersten Monat ${euro(toEuro(Math.round((darlehenC * sollzins) / 100 / MONATE_PRO_JAHR)))} an – darunter wird die Schuld nie kleiner.`,
+      `Die Rate von ${formatEuroRounded(toEuro(monatsrateC))} deckt die Zinsen nicht oder tilgt so langsam, dass der Kredit über ${MAX_JAHRE} Jahre liefe. Allein an Zinsen fallen im ersten Monat ${formatEuroRounded(toEuro(Math.round((darlehenC * sollzins) / 100 / MONATE_PRO_JAHR)))} an – darunter wird die Schuld nie kleiner.`,
     );
   }
 
   if (rsvC > 0) {
     warnings.push(
-      `Die Restschuldversicherung von ${euro(toEuro(rsvC))} wird mitfinanziert: Sie erhöht die Schuld, aber nicht die Auszahlung, und wird selbst mitverzinst. Genau deshalb steigt der effektive Jahreszins durch sie stärker, als die Prämie vermuten lässt.`,
+      `Die Restschuldversicherung von ${formatEuroRounded(toEuro(rsvC))} wird mitfinanziert: Sie erhöht die Schuld, aber nicht die Auszahlung, und wird selbst mitverzinst. Genau deshalb steigt der effektive Jahreszins durch sie stärker, als die Prämie vermuten lässt.`,
     );
   }
 
   if (gebuehrC > 0) {
     warnings.push(
-      `Die Bearbeitungsgebühr von ${euro(toEuro(gebuehrC))} mindert die Auszahlung, verzinst und getilgt wird aber der volle Betrag. Bei Verbraucherkrediten hat der Bundesgerichtshof laufzeitunabhängige Bearbeitungsgebühren für unwirksam erklärt – ein solcher Posten im Angebot ist einen Rückfrage wert.`,
+      `Die Bearbeitungsgebühr von ${formatEuroRounded(toEuro(gebuehrC))} mindert die Auszahlung, verzinst und getilgt wird aber der volle Betrag. Bei Verbraucherkrediten hat der Bundesgerichtshof laufzeitunabhängige Bearbeitungsgebühren für unwirksam erklärt – ein solcher Posten im Angebot ist einen Rückfrage wert.`,
     );
   }
 
@@ -239,19 +240,19 @@ export function calculateKredit(input: KreditInput): KreditResult {
     effektiverJahreszins - sollzins >= 0.5
   ) {
     warnings.push(
-      `Der effektive Jahreszins liegt mit ${fmt(effektiverJahreszins)} Prozent deutlich über dem Sollzins von ${fmt(sollzins)} Prozent. Vergleiche Angebote immer über den Effektivzins – nur er enthält die Nebenkosten.`,
+      `Der effektive Jahreszins liegt mit ${formatRate(effektiverJahreszins)} Prozent deutlich über dem Sollzins von ${formatRate(sollzins)} Prozent. Vergleiche Angebote immer über den Effektivzins – nur er enthält die Nebenkosten.`,
     );
   }
 
   if (restschuldNachZinsbindung !== null && restschuldNachZinsbindung > 0) {
     warnings.push(
-      `Am Ende der Zinsbindung nach ${zinsbindung} Jahren sind noch ${euro(restschuldNachZinsbindung)} offen. Dieser Betrag muss zu einem heute unbekannten Zins anschlussfinanziert werden – das ist das eigentliche Risiko, nicht die heutige Rate.`,
+      `Am Ende der Zinsbindung nach ${zinsbindung} Jahren sind noch ${formatEuroRounded(restschuldNachZinsbindung)} offen. Dieser Betrag muss zu einem heute unbekannten Zins anschlussfinanziert werden – das ist das eigentliche Risiko, nicht die heutige Rate.`,
     );
   }
 
   if (sondertilgungVerkuerzungMonate > 0) {
     warnings.push(
-      `Die Sondertilgung von ${euro(toEuro(sondertilgungC))} im Jahr spart ${euro(sondertilgungZinsersparnis)} Zinsen und verkürzt die Laufzeit um ${monateText(sondertilgungVerkuerzungMonate)}. Ein Recht auf Sondertilgung ist im Vertrag oft kostenlos vereinbar – aber nur, wenn man danach fragt.`,
+      `Die Sondertilgung von ${formatEuroRounded(toEuro(sondertilgungC))} im Jahr spart ${formatEuroRounded(sondertilgungZinsersparnis)} Zinsen und verkürzt die Laufzeit um ${monateText(sondertilgungVerkuerzungMonate)}. Ein Recht auf Sondertilgung ist im Vertrag oft kostenlos vereinbar – aber nur, wenn man danach fragt.`,
     );
   }
 
@@ -331,12 +332,3 @@ export function monateText(monate: number): string {
   if (rest === 0) return jahrTeil;
   return `${jahrTeil} und ${monatTeil}`;
 }
-
-const fmt = (n: number) =>
-  n.toLocaleString("de-DE", { maximumFractionDigits: 2 });
-const euro = (n: number) =>
-  n.toLocaleString("de-DE", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  });

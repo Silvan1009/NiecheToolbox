@@ -25,6 +25,7 @@
  */
 
 import { clamp, nn } from "@/lib/finanzmath";
+import { formatInteger } from "@/lib/format";
 import {
   SOLI_FREIGRENZE,
   SOLI_FREIGRENZE_SPLITTING,
@@ -115,7 +116,7 @@ export function calculateAbfindung(input: AbfindungInput): AbfindungResult {
     );
   } else if (ersparnisEinkommensteuer > 0) {
     warnings.push(
-      `Die Fünftelregelung spart hier ${Math.round(ersparnisEinkommensteuer).toLocaleString("de-DE")} € Einkommensteuer gegenüber einer sofortigen vollen Versteuerung im selben Jahr.`,
+      `Die Fünftelregelung spart hier ${formatInteger(ersparnisEinkommensteuer)} € Einkommensteuer gegenüber einer sofortigen vollen Versteuerung im selben Jahr.`,
     );
   }
 

@@ -20,6 +20,7 @@
  */
 
 import { cents, clamp, nn, toEuro } from "@/lib/finanzmath";
+import { formatInteger } from "@/lib/format";
 
 export type Antrieb = "benzin" | "diesel" | "elektro";
 
@@ -129,7 +130,7 @@ export function calculateAutokosten(input: AutokostenInput): AutokostenResult {
   const wertverlustAnteil = posten[0]?.anteilProzent ?? 0;
   if (wertverlustAnteil > 30) {
     warnings.push(
-      `Der Wertverlust macht ${fmt(wertverlustAnteil)} Prozent der Gesamtkosten aus – mit Abstand der größte Posten, obwohl dafür nie eine Rechnung kommt. Ein älteres oder länger gehaltenes Auto senkt genau diesen Anteil am stärksten.`,
+      `Der Wertverlust macht ${formatInteger(wertverlustAnteil)} Prozent der Gesamtkosten aus – mit Abstand der größte Posten, obwohl dafür nie eine Rechnung kommt. Ein älteres oder länger gehaltenes Auto senkt genau diesen Anteil am stärksten.`,
     );
   }
 
@@ -188,6 +189,3 @@ export function defaultInput(): AutokostenInput {
     sonstigesJahr: 0,
   };
 }
-
-/* Formatierung nur für die Hinweistexte – die UI formatiert selbst. */
-const fmt = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });

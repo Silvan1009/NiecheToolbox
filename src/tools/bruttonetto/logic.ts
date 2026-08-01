@@ -35,6 +35,7 @@
 
 import type { RegionCode } from "@/tools/brueckentage/logic";
 import { clamp, nn } from "@/lib/finanzmath";
+import { formatEuroRounded } from "@/lib/format";
 import {
   ARBEITNEHMER_PAUSCHBETRAG,
   BBG_KRANKEN,
@@ -499,13 +500,13 @@ export function calculateBruttoNetto(
 
   if (bruttoJahr > BBG_KRANKEN) {
     warnings.push(
-      `Über der Beitragsbemessungsgrenze von ${euro(BBG_KRANKEN)} steigen Kranken- und Pflegebeiträge nicht weiter. Jeder Euro darüber wird deshalb geringer belastet – das ist der Grund, warum die Abgabenquote mit steigendem Einkommen wieder sinkt.`,
+      `Über der Beitragsbemessungsgrenze von ${formatEuroRounded(BBG_KRANKEN)} steigen Kranken- und Pflegebeiträge nicht weiter. Jeder Euro darüber wird deshalb geringer belastet – das ist der Grund, warum die Abgabenquote mit steigendem Einkommen wieder sinkt.`,
     );
   }
 
   if (bruttoJahr > VERSICHERUNGSPFLICHTGRENZE && input.gesetzlichVersichert) {
     warnings.push(
-      `Mit ${euro(bruttoJahr)} liegst du über der Versicherungspflichtgrenze von ${euro(VERSICHERUNGSPFLICHTGRENZE)} und könntest in die private Krankenversicherung wechseln. Das ist eine Entscheidung für Jahrzehnte, nicht für den nächsten Gehaltszettel – der Rückweg in die gesetzliche Kasse ist als Angestellter faktisch versperrt.`,
+      `Mit ${formatEuroRounded(bruttoJahr)} liegst du über der Versicherungspflichtgrenze von ${formatEuroRounded(VERSICHERUNGSPFLICHTGRENZE)} und könntest in die private Krankenversicherung wechseln. Das ist eine Entscheidung für Jahrzehnte, nicht für den nächsten Gehaltszettel – der Rückweg in die gesetzliche Kasse ist als Angestellter faktisch versperrt.`,
     );
   }
 
@@ -601,10 +602,3 @@ export function defaultInput(): BruttoNettoInput {
     rentenversicherungspflichtig: true,
   };
 }
-
-const euro = (n: number) =>
-  n.toLocaleString("de-DE", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  });

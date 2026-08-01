@@ -22,10 +22,30 @@ const euro = new Intl.NumberFormat("de-DE", {
  */
 const amount = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
 
+/**
+ * Ganze Euro für den Fließtext: "1.234 €" statt "1.234,00 €".
+ *
+ * In Hinweissätzen („kostet über 30 Jahre 12.400 €“) sind Centbeträge
+ * Scheingenauigkeit – die Zahl ist eine Projektion, keine Rechnung.
+ */
+const euroRounded = new Intl.NumberFormat("de-DE", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+});
+
+/**
+ * Zinssätze und Quoten im Fließtext: höchstens zwei Dezimalen, ohne
+ * angehängte Nullen – "3,42", aber "2" statt "2,00".
+ */
+const rate = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 2 });
+
 export const formatInteger = (n: number) => integer.format(n);
 export const formatDecimal = (n: number) => decimal.format(n);
 export const formatAmount = (n: number) => amount.format(n);
 export const formatEuro = (n: number) => euro.format(n);
+export const formatEuroRounded = (n: number) => euroRounded.format(n);
+export const formatRate = (n: number) => rate.format(n);
 
 /**
  * "6,5 %" – wie eine Mengenangabe, plus Zeichen.

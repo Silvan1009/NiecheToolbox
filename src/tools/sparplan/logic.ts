@@ -47,6 +47,7 @@ import {
   toEuro,
   verdopplungsdauer,
 } from "@/lib/finanzmath";
+import { formatEuroRounded, formatRate } from "@/lib/format";
 import {
   BASISERTRAG_FAKTOR,
   BASISZINS_PROZENT,
@@ -439,7 +440,7 @@ export function calculateSparplan(input: SparplanInput): SparplanResult {
 
   if (rendite <= inflation) {
     warnings.push(
-      `Die Rendite von ${fmt(rendite)} Prozent liegt nicht über der Inflation von ${fmt(inflation)} Prozent. Real verlierst du damit Kaufkraft, auch wenn der Betrag auf dem Papier wächst.`,
+      `Die Rendite von ${formatRate(rendite)} Prozent liegt nicht über der Inflation von ${formatRate(inflation)} Prozent. Real verlierst du damit Kaufkraft, auch wenn der Betrag auf dem Papier wächst.`,
     );
   }
 
@@ -447,13 +448,13 @@ export function calculateSparplan(input: SparplanInput): SparplanResult {
     const ohneKosten = simuliere({ ...params, kosten: 0 });
     const differenzC = ohneKosten.wertEndeC - verlauf.wertEndeC;
     warnings.push(
-      `${fmt(kosten)} Prozent laufende Kosten klingen nach wenig, kosten über ${jahre} Jahre aber ${euro(toEuro(differenzC))}. Die Gebühr wirkt nicht auf die Einzahlung, sondern jedes Jahr auf den gesamten Bestand.`,
+      `${formatRate(kosten)} Prozent laufende Kosten klingen nach wenig, kosten über ${jahre} Jahre aber ${formatEuroRounded(toEuro(differenzC))}. Die Gebühr wirkt nicht auf die Einzahlung, sondern jedes Jahr auf den gesamten Bestand.`,
     );
   }
 
   if (aufschlag > 0) {
     warnings.push(
-      `Der Ausgabeaufschlag von ${fmt(aufschlag)} Prozent kostet über die Laufzeit ${euro(toEuro(verlauf.aufschlagC))}. Bei ETF-Sparplänen vieler Broker fällt er nicht an.`,
+      `Der Ausgabeaufschlag von ${formatRate(aufschlag)} Prozent kostet über die Laufzeit ${formatEuroRounded(toEuro(verlauf.aufschlagC))}. Bei ETF-Sparplänen vieler Broker fällt er nicht an.`,
     );
   }
 
@@ -461,14 +462,14 @@ export function calculateSparplan(input: SparplanInput): SparplanResult {
     const letzte = verlauf.jahre[verlauf.jahre.length - 1];
     if (letzte) {
       warnings.push(
-        `Mit ${fmt(dynamik)} Prozent Dynamik steigt die Rate bis zum letzten Jahr auf ${euro(letzte.sparrateMonat)} im Monat. Prüf, ob das dauerhaft zu deinem Einkommen passt.`,
+        `Mit ${formatRate(dynamik)} Prozent Dynamik steigt die Rate bis zum letzten Jahr auf ${formatEuroRounded(letzte.sparrateMonat)} im Monat. Prüf, ob das dauerhaft zu deinem Einkommen passt.`,
       );
     }
   }
 
   if (params.steuern && verlauf.steuerLaufendC > 0) {
     warnings.push(
-      `Über die Laufzeit fallen ${euro(toEuro(verlauf.steuerLaufendC))} Vorabpauschale an. Sie wird jedes Jahr im Januar vom Verrechnungskonto eingezogen – dafür sollte dort Geld liegen, sonst verkauft die Bank Anteile.`,
+      `Über die Laufzeit fallen ${formatEuroRounded(toEuro(verlauf.steuerLaufendC))} Vorabpauschale an. Sie wird jedes Jahr im Januar vom Verrechnungskonto eingezogen – dafür sollte dort Geld liegen, sonst verkauft die Bank Anteile.`,
     );
   }
 
@@ -538,13 +539,3 @@ export function defaultInput(): SparplanInput {
     entnahmeJahre: 25,
   };
 }
-
-/* Formatierung nur für die Hinweistexte – die UI formatiert selbst. */
-const fmt = (n: number) =>
-  n.toLocaleString("de-DE", { maximumFractionDigits: 2 });
-const euro = (n: number) =>
-  n.toLocaleString("de-DE", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  });

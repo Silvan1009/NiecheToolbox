@@ -31,6 +31,7 @@ import {
   nn,
   toEuro,
 } from "@/lib/finanzmath";
+import { formatAmount } from "@/lib/format";
 
 const MAX_JAHRE = 70;
 
@@ -330,7 +331,7 @@ export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeRes
 
   if (realeRenditeAnsparphase <= 0 && renteneintrittsalter > aktuellesAlter) {
     warnings.push(
-      `Die reale Rendite in der Ansparphase liegt bei ${fmt(realeRenditeAnsparphase)} Prozent – nach Abzug der Inflation bleibt also kein Kaufkraftgewinn. Das vergrößert die nötige Sparrate deutlich gegenüber einer Rechnung mit positiver Realrendite.`,
+      `Die reale Rendite in der Ansparphase liegt bei ${formatAmount(realeRenditeAnsparphase)} Prozent – nach Abzug der Inflation bleibt also kein Kaufkraftgewinn. Das vergrößert die nötige Sparrate deutlich gegenüber einer Rechnung mit positiver Realrendite.`,
     );
   }
 
@@ -406,6 +407,3 @@ export function defaultInput(): RentenlueckeInput {
     inflationPercent: 2,
   };
 }
-
-/* Formatierung nur für die Hinweistexte – die UI formatiert selbst. */
-const fmt = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 1 });

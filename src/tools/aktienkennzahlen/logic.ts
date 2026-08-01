@@ -33,6 +33,8 @@
  * Kursgewinne bleiben außen vor.
  */
 
+import { clamp, nn } from "@/lib/finanzmath";
+
 /** Multiplikator der Graham-Zahl: KGV 15 × KBV 1,5. */
 export const GRAHAM_FAKTOR = 22.5;
 
@@ -54,15 +56,8 @@ const MAX_HORIZONT = 30;
  * Hilfsfunktionen
  * ------------------------------------------------------------------------- */
 
-/** Nicht-negative Zahl; NaN und Infinity werden zu 0. */
-const nn = (n: number) => (Number.isFinite(n) && n > 0 ? n : 0);
-
 /** Endliche Zahl, Vorzeichen erlaubt – Verluste sind kein Eingabefehler. */
 const zahl = (n: number) => (Number.isFinite(n) ? n : 0);
-
-/** Wert in ein Intervall zwingen; NaN und Infinity fallen auf `min`. */
-const clamp = (n: number, min: number, max: number) =>
-  Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : min;
 
 /**
  * Quotient, der nur bei echt positivem Nenner ein Ergebnis liefert.

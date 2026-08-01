@@ -17,6 +17,7 @@
  */
 
 import { cents, clamp, nn, toEuro } from "@/lib/finanzmath";
+import { formatInteger } from "@/lib/format";
 
 const ABSCHLAG_PRO_MONAT = 0.3;
 const ZUSCHLAG_PRO_MONAT = 0.5;
@@ -107,7 +108,7 @@ export function calculateRentenabschlag(input: RentenabschlagInput): Rentenabsch
 
   if (abschlagProzent > 0) {
     warnings.push(
-      `Der Abschlag gilt lebenslang für jede einzelne Rentenzahlung, nicht nur übergangsweise – bei ${jahreRentenbezug} Jahren angenommener Rentenbezugsdauer summiert er sich auf ${Math.round(Math.abs(kumulierterEffektC) / 100).toLocaleString("de-DE")} €.`,
+      `Der Abschlag gilt lebenslang für jede einzelne Rentenzahlung, nicht nur übergangsweise – bei ${jahreRentenbezug} Jahren angenommener Rentenbezugsdauer summiert er sich auf ${formatInteger(toEuro(Math.abs(kumulierterEffektC)))} €.`,
     );
   }
 

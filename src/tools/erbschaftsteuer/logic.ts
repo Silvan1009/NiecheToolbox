@@ -29,6 +29,7 @@
  */
 
 import { clamp, nn } from "@/lib/finanzmath";
+import { formatInteger } from "@/lib/format";
 
 export type ErbschaftModus = "erbschaft" | "schenkung";
 
@@ -214,7 +215,7 @@ export function calculateErbschaftsteuer(input: ErbschaftInput): ErbschaftResult
 
   if (haerteausgleich > 0) {
     warnings.push(
-      `Der Härteausgleich senkt die Steuer um ${Math.round(haerteausgleich).toLocaleString("de-DE")} €, weil der steuerpflichtige Erwerb die nächstniedrigere Wertgrenze nur um ${Math.round(steuerpflichtigerErwerb - (STUFEN[stufenIndex - 1]?.bis ?? 0)).toLocaleString("de-DE")} € überschreitet.`,
+      `Der Härteausgleich senkt die Steuer um ${formatInteger(haerteausgleich)} €, weil der steuerpflichtige Erwerb die nächstniedrigere Wertgrenze nur um ${formatInteger(steuerpflichtigerErwerb - (STUFEN[stufenIndex - 1]?.bis ?? 0))} € überschreitet.`,
     );
   }
 
