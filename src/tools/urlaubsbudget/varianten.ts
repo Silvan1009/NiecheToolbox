@@ -11,28 +11,17 @@
  * damit ein Besucher das Gelesene auf dem Bildschirm wiederfindet.
  */
 
-import type { FaqEntry, ToolParams } from "@/tools/types";
+import type { VariantContent } from "@/tools/variants";
 
-export interface VariantenText {
-  slug: string;
-  titel: string;
-  beschreibung: string;
-  heading: string;
-  params: ToolParams;
-  /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
-  absaetze: string[];
-  faq: FaqEntry[];
-}
-
-export const variantenTexte: VariantenText[] = [
+export const variantenTexte: VariantContent[] = [
   {
     slug: "urlaubskasse-sparen",
-    titel: "Urlaubskasse: Wie viel muss ich monatlich für den Urlaub sparen?",
-    beschreibung:
+    title: "Urlaubskasse: Wie viel muss ich monatlich für den Urlaub sparen?",
+    description:
       "Aus dem Reisebudget die monatliche Sparrate bis zur Abreise berechnen – mit vorhandener Rücklage und realistischem Puffer.",
     heading: "Für den Urlaub sparen",
     params: { monate: 10, naechte: 7, erw: 2 },
-    absaetze: [
+    about: [
       "Eine Urlaubskasse funktioniert wie jeder andere Sparplan mit festem Ziel: Man kennt den Betrag und das Datum, gesucht ist die Rate. Für eine Woche zu zweit mit Flug, Mittelklassehotel und normalem Essen sind das hier 2.271,50 Euro. Verteilt auf zehn Monate bis zur Abreise ergibt das 227,15 Euro im Monat – ein Betrag, der sich als Dauerauftrag einrichten lässt und danach nicht mehr auffällt.",
       "Der entscheidende Unterschied zu einem Sparplan auf Rendite: Hier wird nicht verzinst gerechnet. Zehn Monate auf einem Tagesgeldkonto bringen bei zwei Prozent etwa 20 Euro – weniger, als der Wechselkurs am Reisetag ausmacht. Wer die Zinsen einrechnet, täuscht eine Genauigkeit vor, die es nicht gibt. Deshalb teilt dieser Rechner schlicht und rundet dabei auf, damit die Kasse am Ende nicht knapp danebenliegt.",
       "Sinnvoll ist ein eigenes Konto, von dem sonst nichts abgeht. Der Grund ist kein finanzieller, sondern ein praktischer: Geld auf dem Girokonto wird ausgegeben, ohne dass jemand eine Entscheidung trifft. Ein separates Tagesgeldkonto mit Dauerauftrag am Tag nach dem Gehaltseingang löst das Problem vollständig – und macht nebenbei sichtbar, ob die Rate wirklich tragbar ist oder das Konto am Monatsende regelmäßig leer läuft.",
@@ -58,12 +47,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "budget-2-wochen-urlaub",
-    titel: "Budget für 2 Wochen Urlaub: Was kostet eine zweiwöchige Reise?",
-    beschreibung:
+    title: "Budget für 2 Wochen Urlaub: Was kostet eine zweiwöchige Reise?",
+    description:
       "Kosten für zwei Wochen Urlaub zu zweit berechnen – Anreise, Unterkunft, Verpflegung und Tagesbudget vor Ort, mit Puffer.",
     heading: "Budget für zwei Wochen Urlaub",
     params: { naechte: 14, erw: 2, nacht: 90, essen: 35 },
-    absaetze: [
+    about: [
       "Zwei Wochen kosten nicht das Doppelte einer Woche. Die Anreise fällt nur einmal an, und genau das macht die längere Reise pro Tag günstiger. Für zwei Personen, vierzehn Nächte zu 90 Euro und 35 Euro Verpflegung je Person und Tag ergibt sich hier ein Budget von 3.696 Euro – also 1.848 Euro pro Person und 246,40 Euro pro Tag. Bei einer Woche unter sonst gleichen Bedingungen liegt der Tagessatz spürbar höher, weil sich die 440 Euro Flug auf halb so viele Tage verteilen.",
       "Vierzehn Nächte bedeuten fünfzehn Tage, an denen gegessen wird – der Anreisetag zählt mit. Das klingt nach einer Kleinigkeit, macht bei zwei Personen und 35 Euro aber 70 Euro aus, und dieselbe Verwechslung steckt in fast jedem selbst gebauten Reisebudget. Der Rechner unterscheidet deshalb konsequent zwischen Nächten für die Unterkunft und Tagen für alles, was vor Ort ausgegeben wird.",
       "Der Puffer von zehn Prozent, hier 336 Euro, ist bei langen Reisen wichtiger als bei kurzen. Nicht weil mehr schiefgeht, sondern weil mehr Gelegenheiten entstehen: der Tagesausflug, der sich erst vor Ort ergibt, das teurere Restaurant am letzten Abend, die zweite Runde Mitbringsel. Ein Budget ohne Puffer wird an genau diesen Stellen gerissen – und dann fühlt sich der Urlaub nach Verzicht an, obwohl das Geld eigentlich da war.",
@@ -89,12 +78,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "familienurlaub-kosten",
-    titel: "Familienurlaub Kosten: Was kostet Urlaub mit zwei Kindern?",
-    beschreibung:
+    title: "Familienurlaub Kosten: Was kostet Urlaub mit zwei Kindern?",
+    description:
       "Urlaubskosten für eine vierköpfige Familie berechnen – mit anteiliger Rechnung für Kinder bei Verpflegung und Aktivitäten.",
     heading: "Familienurlaub: die Kosten",
     params: { erw: 2, kind: 2, naechte: 7, nacht: 140, essen: 30 },
-    absaetze: [
+    about: [
       "Bei einer Familie geht die einfache Multiplikation mit der Kopfzahl schief, weil Kinder nicht überall gleich viel kosten. Beim Flug zahlen sie ab zwei Jahren fast den vollen Preis, beim Essen und bei Eintritten deutlich weniger, und im Familienzimmer kosten sie oft gar nichts extra. Dieser Rechner trennt das: Die Anreise zählt jeden Kopf voll, Verpflegung und Aktivitäten nur zu 60 Prozent, und die Unterkunft läuft ohnehin pro Nacht statt pro Person.",
       "Für zwei Erwachsene und zwei Kinder, sieben Nächte im Familienzimmer zu 140 Euro und 30 Euro Verpflegung je Person und Tag ergibt das 3.489,20 Euro – 872,30 Euro pro Kopf. Der größte Posten ist mit 980 Euro die Unterkunft, dicht gefolgt von 880 Euro Anreise. Die 60-Prozent-Regel für die Kinder senkt die Verpflegung von 960 auf 768 Euro; wer mit Teenagern reist, sollte den Faktor auf 90 oder 100 Prozent stellen.",
       "Der Zeitpunkt entscheidet bei Familien stärker über den Preis als bei allen anderen. Wer an Ferientermine gebunden ist, zahlt für dieselbe Woche regelmäßig 30 bis 50 Prozent mehr – bei diesem Budget also bis zu 1.700 Euro Aufschlag. Die einzigen echten Hebel dagegen sind die erste und die letzte Ferienwoche, Ziele mit abweichenden Schulferien und eine Buchung mehr als ein halbes Jahr im Voraus. Alle drei wirken deutlich stärker als jedes Sparen vor Ort.",
@@ -120,8 +109,8 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "tagesbudget-urlaub",
-    titel: "Tagesbudget im Urlaub berechnen: Wie viel Geld pro Tag?",
-    beschreibung:
+    title: "Tagesbudget im Urlaub berechnen: Wie viel Geld pro Tag?",
+    description:
       "Wie viel Geld pro Tag im Urlaub eingeplant werden sollte – Verpflegung, Aktivitäten und Nahverkehr, ohne Anreise und Unterkunft.",
     heading: "Tagesbudget im Urlaub",
     params: {
@@ -134,7 +123,7 @@ export const variantenTexte: VariantenText[] = [
       transport: 60,
       vers: 0,
     },
-    absaetze: [
+    about: [
       "Das Tagesbudget ist nicht das Gesamtbudget geteilt durch die Tage. Anreise und Unterkunft sind vorab bezahlt und liegen nicht mehr in der Geldbörse – sie gehören deshalb nicht in die Zahl, an der man sich vor Ort orientiert. Diese Seite blendet beides aus und zeigt nur, was tatsächlich täglich ausgegeben wird: Verpflegung, Aktivitäten und Nahverkehr. Für eine Person mit 40 Euro Essen und 20 Euro Aktivitäten am Tag sind das 67,50 Euro.",
       "Sieben Nächte bedeuten acht Tage. Diese Unterscheidung ist der häufigste Fehler in selbst gerechneten Reisebudgets, und sie geht immer in dieselbe Richtung: Wer mit den Nächten multipliziert, plant einen ganzen Tag Verpflegung zu wenig ein. Bei 60 Euro am Tag fehlen so 60 Euro – genug für den letzten Abend, an dem man üblicherweise essen geht.",
       "Als Größenordnung für Europa: 50 bis 70 Euro je Person und Tag in Süd- und Osteuropa, 80 bis 110 in Skandinavien, der Schweiz und Island, 60 bis 90 in Frankreich, Italien und Spanien außerhalb der Touristenzentren. Diese Spannen gelten für Selbstverpflegung am Morgen und ein Restaurantessen am Tag. Wer dreimal täglich auswärts isst, landet am oberen Rand oder darüber – und wer ein All-inclusive-Hotel gebucht hat, braucht vor Ort fast nichts und sollte hier nur die Ausflüge eintragen.",

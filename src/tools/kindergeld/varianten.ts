@@ -13,28 +13,17 @@
  * Redaktion und Abruf und stehen deshalb nicht im Text.
  */
 
-import type { FaqEntry, ToolParams } from "@/tools/types";
+import type { VariantContent } from "@/tools/variants";
 
-export interface VariantenText {
-  slug: string;
-  titel: string;
-  beschreibung: string;
-  heading: string;
-  params: ToolParams;
-  /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
-  absaetze: string[];
-  faq: FaqEntry[];
-}
-
-export const variantenTexte: VariantenText[] = [
+export const variantenTexte: VariantContent[] = [
   {
     slug: "kindergeld-2026",
-    titel: "Kindergeld 2026: 259 Euro pro Kind – Höhe, Dauer und Anspruch",
-    beschreibung:
+    title: "Kindergeld 2026: 259 Euro pro Kind – Höhe, Dauer und Anspruch",
+    description:
       "Kindergeld 2026 beträgt 259 Euro je Kind und Monat. Rechner für alle Kinder, die Restlaufzeit je Kind und die Summe bis zum Ende des Anspruchs.",
     heading: "Kindergeld 2026",
     params: { jahr: 2026, kinder: "2019-05-10r" },
-    absaetze: [
+    about: [
       "Zum 1. Januar 2026 ist das Kindergeld von 255 auf 259 Euro je Kind und Monat gestiegen. Der Betrag gilt einheitlich für jedes Kind – die früheren Staffelungen nach Reihenfolge sind seit 2023 abgeschafft. Für ein Kind sind das 3.108 Euro im Jahr, und über die vollen achtzehn Jahre bis zur Volljährigkeit summiert sich der Anspruch auf 55.944 Euro. Damit ist Kindergeld für die meisten Familien die größte planbare Einnahme überhaupt.",
       "Die Erhöhung erfolgt automatisch. Wer bereits Kindergeld bezieht, muss nichts tun und bekommt ab Januar den höheren Betrag überwiesen – ein neuer Antrag ist ausdrücklich nicht nötig. Ausgezahlt wird von der Familienkasse der Bundesagentur für Arbeit, bei Beschäftigten im öffentlichen Dienst teils von der eigenen Bezügestelle.",
       "Interessanter als der Monatsbetrag ist bei einem laufenden Anspruch die Restlaufzeit. Gezahlt wird bis einschließlich des Monats, in dem das Kind achtzehn wird – bei Ausbildung oder Studium bis 25, bei gemeldeter Arbeitsuche bis 21. Der Rechner weist deshalb je Kind aus, bis wann der Anspruch läuft, wie viele Zahlungsmonate das noch sind und welche Summe daraus folgt.",
@@ -60,12 +49,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "kinderfreibetrag-berechnen",
-    titel: "Kinderfreibetrag 2026 berechnen: 9.756 Euro und was sie bringen",
-    beschreibung:
+    title: "Kinderfreibetrag 2026 berechnen: 9.756 Euro und was sie bringen",
+    description:
       "Kinderfreibetrag 2026 berechnen: 6.828 Euro plus 2.928 Euro Betreuungsfreibetrag. Mit Steuervorteil, Günstigerprüfung und Wirkung auf Soli und Kirchensteuer.",
     heading: "Kinderfreibetrag berechnen",
     params: { zve: 90000, ver: "zusammen", kinder: "2019-05-10r" },
-    absaetze: [
+    about: [
       "Der Kinderfreibetrag besteht 2026 aus zwei Teilen: 6.828 Euro für das sächliche Existenzminimum des Kindes und 2.928 Euro für Betreuung, Erziehung und Ausbildung. Zusammen sind das 9.756 Euro je Kind für beide Elternteile. Bei Einzelveranlagung steht jedem Elternteil die Hälfte zu, also 4.878 Euro. Der Freibetrag mindert nicht die Auszahlung, sondern das zu versteuernde Einkommen – seine Wirkung hängt deshalb vom Steuersatz ab.",
       "Bei 90.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung sieht die Rechnung so aus: ohne Freibetrag 17.670 Euro Einkommensteuer, mit Freibetrag 14.496 Euro. Der Steuervorteil beträgt damit 3.174 Euro – gerade eben mehr als die 3.108 Euro Kindergeld. Das Finanzamt setzt hier also den Freibetrag an und rechnet das gezahlte Kindergeld gegen; unterm Strich bleiben 66 Euro mehr im Jahr.",
       "Dieses Beispiel liegt fast genau auf dem Umschlagpunkt, der 2026 bei Zusammenveranlagung mit einem Kind bei rund 86.000 Euro zu versteuerndem Einkommen liegt. Darunter gewinnt das Kindergeld, darüber der Freibetrag – und je weiter darüber, desto deutlicher, weil der Grenzsteuersatz steigt. Wichtig dabei: Das ist zu versteuerndes Einkommen, nicht Bruttogehalt. Zwischen beiden liegen Werbungskosten, Vorsorgeaufwendungen und Sonderausgaben, bei Angestellten typischerweise ein gutes Stück.",
@@ -91,8 +80,8 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "guenstigerpruefung-kinderfreibetrag",
-    titel: "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
-    beschreibung:
+    title: "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
+    description:
       "Die Günstigerprüfung des Finanzamts nachrechnen: Kinderfreibetrag gegen Kindergeld, inklusive der Wirkung auf Solidaritätszuschlag und Kirchensteuer.",
     heading: "Günstigerprüfung: Freibetrag oder Kindergeld",
     params: {
@@ -100,7 +89,7 @@ export const variantenTexte: VariantenText[] = [
       ver: "zusammen",
       kinder: "2019-05-10r,2022-01-20r",
     },
-    absaetze: [
+    about: [
       "Die Günstigerprüfung ist kein Antrag, sondern ein Automatismus: Das Finanzamt rechnet bei jeder Steuererklärung beide Varianten durch und setzt die bessere an. Verglichen wird der Steuervorteil aus dem Kinderfreibetrag mit dem Anspruch auf Kindergeld – nicht mit dem tatsächlich Gezahlten. Wer Kindergeld zu beantragen vergessen hat, verliert deshalb doppelt: Das Geld fließt nicht, wird aber trotzdem gegengerechnet.",
       "Für zwei Kinder und 120.000 Euro zu versteuerndes Einkommen bei Zusammenveranlagung ergibt sich: Freibeträge von zusammen 19.512 Euro senken die Einkommensteuer von 28.466 auf 21.268 Euro, also um 7.198 Euro. Dem stehen 6.216 Euro Kindergeld für zwei Kinder gegenüber. Der Freibetrag gewinnt hier um 982 Euro im Jahr – ein Betrag, der ohne Steuererklärung schlicht verfällt.",
       "Eine Feinheit, an der viele Rechner scheitern: Solidaritätszuschlag und Kirchensteuer bemessen sich nach § 3 Abs. 2 SolZG immer nach der Steuer mit Kinderfreibetrag – unabhängig davon, wie die Günstigerprüfung ausgeht. Diese Entlastung kommt also zum Kindergeld hinzu und nicht statt dessen. Sie fällt allerdings erst ins Gewicht, wenn die Einkommensteuer die Soli-Freigrenze überschreitet, die bei Zusammenveranlagung bei 40.700 Euro Steuer liegt. Bei der Kirchensteuer wirkt sie dagegen ab dem ersten Euro.",
@@ -126,12 +115,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "kindergeld-3-kinder",
-    titel: "Kindergeld für 3 Kinder: 777 Euro im Monat – Höhe und Freibeträge",
-    beschreibung:
+    title: "Kindergeld für 3 Kinder: 777 Euro im Monat – Höhe und Freibeträge",
+    description:
       "Kindergeld für drei Kinder berechnen: 777 Euro im Monat, 9.324 Euro im Jahr. Mit Günstigerprüfung gegen den dreifachen Kinderfreibetrag.",
     heading: "Kindergeld für 3 Kinder",
     params: { kinder: "2015-04-02r,2018-09-11r,2021-06-30r" },
-    absaetze: [
+    about: [
       "Seit 2023 ist das Kindergeld für alle Kinder gleich hoch – die frühere Staffelung, bei der das dritte Kind mehr brachte als das erste, gibt es nicht mehr. Für drei Kinder sind das 2026 dreimal 259 Euro, also 777 Euro im Monat und 9.324 Euro im Jahr. Weil die Kinder unterschiedlich alt sind, endet der Anspruch gestaffelt: Der Rechner weist deshalb je Kind aus, bis wann gezahlt wird und welche Summe für dieses Kind noch aussteht.",
       "Bei der Günstigerprüfung dreht die Kinderzahl das Ergebnis zugunsten des Kindergelds. Der Grund ist der progressive Tarif: Drei Freibeträge von zusammen 29.268 Euro schieben das zu versteuernde Einkommen weit nach unten, in Zonen mit niedrigerem Grenzsteuersatz – der Vorteil je Freibetrag sinkt also mit jedem weiteren. Das Kindergeld dagegen wächst linear. Bei 60.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung stehen 7.424 Euro Steuervorteil gegen 9.324 Euro Kindergeld: Das Kindergeld gewinnt um 1.900 Euro.",
       "Ab drei Kindern kommen Leistungen in Betracht, die dieser Rechner bewusst nicht abbildet, weil sie von Wohnkosten und Einkommen im Einzelfall abhängen: der Kinderzuschlag für Familien mit kleinem Erwerbseinkommen, das Bildungs- und Teilhabepaket sowie in einigen Bundesländern eigene Familienleistungen. Wer nahe an den jeweiligen Einkommensgrenzen liegt, sollte sie prüfen lassen – die Familienkasse berät dazu kostenfrei.",
@@ -157,12 +146,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "kindergeld-studium",
-    titel: "Kindergeld im Studium: bis 25 Jahre – Voraussetzungen und Dauer",
-    beschreibung:
+    title: "Kindergeld im Studium: bis 25 Jahre – Voraussetzungen und Dauer",
+    description:
       "Kindergeld für Studierende und Auszubildende bis zum 25. Geburtstag: Anspruchsdauer, Zweitausbildung und was bei einem Nebenjob gilt.",
     heading: "Kindergeld im Studium",
     params: { kinder: "2005-03-15a" },
-    absaetze: [
+    about: [
       "Für ein Kind in Ausbildung oder Studium wird Kindergeld bis einschließlich des Monats gezahlt, in dem es 25 Jahre alt wird. Das sind gegenüber der regulären Grenze von 18 sieben zusätzliche Jahre und damit 21.756 Euro. Anders als bis zur Volljährigkeit läuft das nicht automatisch: Die Familienkasse braucht einen Nachweis – die Immatrikulationsbescheinigung oder den Ausbildungsvertrag – und fordert ihn in der Regel jährlich erneut an.",
       "Als Ausbildung zählt jede Maßnahme, die auf einen Beruf vorbereitet: Studium, betriebliche Ausbildung, Schule, Fachschule, aber auch ein freiwilliges soziales oder ökologisches Jahr und der Bundesfreiwilligendienst. Zwischen zwei Ausbildungsabschnitten überbrückt die Familienkasse bis zu vier Monate. Wird diese Lücke länger – etwa durch ein Wartesemester –, entfällt der Anspruch für die dazwischenliegenden Monate und lebt danach wieder auf.",
       "Ein Nebenjob ist während der ersten Ausbildung unschädlich, unabhängig vom Verdienst. Nach einem abgeschlossenen Erststudium oder einer abgeschlossenen Erstausbildung wird es strenger: Dann darf die Erwerbstätigkeit 20 Wochenstunden nicht dauerhaft überschreiten, sonst entfällt der Anspruch. Ausbildungsdienstverhältnisse und Minijobs bleiben dabei außen vor. Ein Masterstudium, das auf den Bachelor aufbaut, gilt in der Regel noch als Teil der Erstausbildung – diese Einordnung entscheidet über mehrere tausend Euro und lohnt die genaue Prüfung.",

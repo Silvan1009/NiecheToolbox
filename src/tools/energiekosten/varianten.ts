@@ -11,28 +11,17 @@
  * damit ein Besucher das Gelesene auf dem Bildschirm wiederfindet.
  */
 
-import type { FaqEntry, ToolParams } from "@/tools/types";
+import type { VariantContent } from "@/tools/variants";
 
-export interface VariantenText {
-  slug: string;
-  titel: string;
-  beschreibung: string;
-  heading: string;
-  params: ToolParams;
-  /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
-  absaetze: string[];
-  faq: FaqEntry[];
-}
-
-export const variantenTexte: VariantenText[] = [
+export const variantenTexte: VariantContent[] = [
   {
     slug: "gaskosten-berechnen",
-    titel: "Gaskosten berechnen: Jahresrechnung mit Grundpreis und Abschlag",
-    beschreibung:
+    title: "Gaskosten berechnen: Jahresrechnung mit Grundpreis und Abschlag",
+    description:
       "Gaskosten für das Jahr aus Verbrauch, Arbeitspreis und Grundpreis – mit Effektivpreis je kWh und der Nachzahlung, die daraus folgt. Kostenlos und ohne Anmeldung.",
     heading: "Gaskosten berechnen",
     params: { modus: "gas", gkwh: 18000, gct: 11, ggrund: 12 },
-    absaetze: [
+    about: [
       "Gas wird in Kubikmetern gemessen und in Kilowattstunden abgerechnet. Auf der Rechnung steht deshalb beides, und nur die Kilowattstunden gehören in einen Rechner. Der Umrechnungsfaktor dazwischen heißt Brennwert und liegt je nach Netzgebiet zwischen 9,8 und 11,5 – multipliziert mit der sogenannten Zustandszahl von etwa 0,95 ergibt das rund 10 Kilowattstunden je Kubikmeter. Wer nur den Zählerstand kennt, rechnet mit diesem Faktor und liegt damit selten mehr als fünf Prozent daneben.",
       "Mit 18.000 Kilowattstunden, 11 Cent Arbeitspreis und 12 Euro Grundpreis im Monat kostet das Gas 2.124 Euro im Jahr: 1.980 Euro für die verbrauchte Energie und 144 Euro allein dafür, dass der Zähler hängt. Das sind 177 Euro im Monat. Der Effektivpreis, also Arbeits- und Grundpreis zusammen auf die Kilowattstunden verteilt, liegt bei 11,8 Cent – und genau diese Zahl ist die, mit der sich Angebote vergleichen lassen.",
       "18.000 Kilowattstunden entsprechen einem teilsanierten Haus mit etwa 120 Quadratmetern. Wer deutlich darüber liegt, hat es fast immer mit einem von drei Dingen zu tun: einer Heizung, die zu heiß fährt, unzureichender Dämmung an Dach oder Kellerdecke, oder einem hydraulisch nicht abgeglichenen System, bei dem einzelne Räume überversorgt werden und andere kalt bleiben. Ein hydraulischer Abgleich kostet einige hundert Euro und spart erfahrungsgemäß fünf bis fünfzehn Prozent.",
@@ -58,12 +47,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "stromkosten-haushalt-berechnen",
-    titel: "Stromkosten für den Haushalt berechnen: Jahresrechnung und Abschlag",
-    beschreibung:
+    title: "Stromkosten für den Haushalt berechnen: Jahresrechnung und Abschlag",
+    description:
       "Stromkosten des ganzen Haushalts aus Jahresverbrauch, Arbeitspreis und Grundpreis – mit Effektivpreis, Vergleichsverbrauch und Nachzahlung.",
     heading: "Stromkosten für den Haushalt berechnen",
     params: { modus: "strom", skwh: 3000, sct: 35, sgrund: 12 },
-    absaetze: [
+    about: [
       "Die Stromrechnung besteht aus zwei Teilen, und nur einer davon hängt am Verbrauch. Bei 3.000 Kilowattstunden, 35 Cent Arbeitspreis und 12 Euro Grundpreis im Monat sind das 1.050 Euro für den Strom und 144 Euro für den Zähler, zusammen 1.194 Euro im Jahr oder 99,50 Euro im Monat. Der Effektivpreis liegt damit bei 39,80 Cent je Kilowattstunde und nicht bei den 35, die im Tarif stehen.",
       "Dieser Unterschied ist der Grund, warum Tarifvergleiche über den Arbeitspreis allein in die Irre führen. Ein Angebot mit 32 Cent Arbeitspreis und 20 Euro Grundpreis kostet bei diesem Verbrauch 1.200 Euro – also mehr als der teurere Tarif. Erst ab etwa 3.600 Kilowattstunden dreht sich das Verhältnis. Wer wenig verbraucht, sollte auf den Grundpreis schauen; wer viel verbraucht, auf den Arbeitspreis.",
       "3.000 Kilowattstunden passen zu einem Zwei- bis Dreipersonenhaushalt ohne elektrische Warmwasserbereitung. Kommt das Warmwasser aus einem Durchlauferhitzer, sind 500 bis 600 Kilowattstunden je Person zusätzlich normal – bei drei Personen also fast 5.000 insgesamt. Dieser Posten ist der einzige im Haushalt, der die Verbrauchsspanne so stark verschiebt, dass ein Vergleich ohne ihn nichts aussagt.",
@@ -89,12 +78,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "abschlag-berechnen",
-    titel: "Abschlag berechnen: Wie hoch sollte die monatliche Zahlung sein?",
-    beschreibung:
+    title: "Abschlag berechnen: Wie hoch sollte die monatliche Zahlung sein?",
+    description:
       "Den richtigen monatlichen Abschlag für Strom oder Gas aus dem Jahresverbrauch berechnen – und sehen, ob der aktuelle Abschlag zu hoch oder zu niedrig ist.",
     heading: "Abschlag berechnen",
     params: { modus: "strom", skwh: 3000, sct: 35, sgrund: 12, sab: 80 },
-    absaetze: [
+    about: [
       "Der Abschlag ist keine Rechnung, sondern eine Schätzung: Der Versorger teilt die erwarteten Jahreskosten auf zwölf Monate auf und zieht diesen Betrag monatlich ein. Am Jahresende wird gegengerechnet. Der richtige Abschlag ist deshalb schlicht ein Zwölftel der Jahreskosten. Bei 3.000 Kilowattstunden, 35 Cent Arbeitspreis und 12 Euro Grundpreis sind das 1.194 Euro im Jahr, also 99,50 Euro im Monat.",
       "Diese Seite ist auf 80 Euro Abschlag voreingestellt – und damit auf einen Fall, der in Deutschland Millionen Mal vorkommt. Über das Jahr kommen so 960 Euro zusammen, es fehlen 234 Euro. Die landen als Nachzahlung in der Jahresabrechnung, und zwar in einer Summe. Wer stattdessen 20 Euro mehr im Monat zahlt, hat am Jahresende nichts nachzuzahlen und im Alltag nichts gemerkt.",
       "Der Abschlag lässt sich in beide Richtungen anpassen, und zwar jederzeit und ohne Begründung. Nach oben ist das der einfachere Weg, eine Nachzahlung zu vermeiden. Nach unten hat es einen anderen Grund: Ein deutlich überhöhter Abschlag ist ein zinsloser Kredit an den Versorger. Weicht die Zahlung mehr als zehn Prozent von den tatsächlichen Kosten ab, ist eine Anpassung angebracht – nach einer Preiserhöhung ebenso wie nach dem Auszug eines Mitbewohners.",
@@ -120,12 +109,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "nachzahlung-stromrechnung",
-    titel: "Nachzahlung Stromrechnung berechnen: Was kommt auf mich zu?",
-    beschreibung:
+    title: "Nachzahlung Stromrechnung berechnen: Was kommt auf mich zu?",
+    description:
       "Nachzahlung oder Guthaben aus Jahresverbrauch und gezahltem Abschlag berechnen – vor der Jahresabrechnung, nicht danach.",
     heading: "Nachzahlung bei der Stromrechnung berechnen",
     params: { modus: "strom", skwh: 4200, sct: 38, sgrund: 14, sab: 95 },
-    absaetze: [
+    about: [
       "Eine Nachzahlung entsteht nicht, weil zu viel verbraucht wurde, sondern weil zu wenig gezahlt wurde. Die Rechnung dahinter ist einfach: tatsächliche Jahreskosten minus zwölf Abschläge. Bei 4.200 Kilowattstunden, 38 Cent Arbeitspreis und 14 Euro Grundpreis kostet der Strom 1.764 Euro im Jahr. Bei 95 Euro Abschlag sind über das Jahr 1.140 Euro geflossen. Es fehlen 624 Euro – und die kommen in einer Summe.",
       "Der häufigste Grund für eine Lücke dieser Größe ist eine Preiserhöhung, die im Abschlag nicht nachgezogen wurde. Der Abschlag von 95 Euro passt zu einem Arbeitspreis von etwa 24 Cent; bei 38 Cent deckt er nur noch zwei Drittel der Kosten. Der zweite Grund ist ein gestiegener Verbrauch, etwa durch ein Kind, einen neuen Mitbewohner oder ein Homeoffice. Beides zeigt sich sofort, wenn man Kosten und Abschlag nebeneinanderlegt.",
       "Eine Nachzahlung ist zahlbar, aber nicht sofort fällig zu stemmen: Auf Anfrage gewähren Versorger in der Regel eine Ratenzahlung, und bei Zahlungsschwierigkeiten müssen sie das vor einer Sperre sogar anbieten. Wichtiger ist der zweite Schritt – den Abschlag auf 147 Euro anzupassen, also ein Zwölftel der echten Kosten. Sonst wiederholt sich dasselbe im nächsten Jahr, nur mit einer größeren Summe.",
@@ -151,12 +140,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "stromverbrauch-4-personen-haushalt",
-    titel: "Stromverbrauch 4-Personen-Haushalt: Normalwert und Kosten",
-    beschreibung:
+    title: "Stromverbrauch 4-Personen-Haushalt: Normalwert und Kosten",
+    description:
       "Wie viel Strom eine vierköpfige Familie verbraucht, was das im Jahr kostet und ab wann der eigene Verbrauch auffällig hoch ist.",
     heading: "Stromverbrauch im 4-Personen-Haushalt",
     params: { modus: "strom", skwh: 4200, sct: 35, sgrund: 12, personen: 4 },
-    absaetze: [
+    about: [
       "Ein Vierpersonenhaushalt verbraucht ohne elektrische Warmwasserbereitung typischerweise rund 4.200 Kilowattstunden im Jahr. Der Wert entsteht nicht linear: Die erste Person bringt etwa 1.500 Kilowattstunden mit, jede weitere rund 900. Kühlschrank, Router, Heizungspumpe und Beleuchtung laufen nämlich unabhängig davon, wie viele Menschen im Haushalt wohnen – nur Waschmaschine, Trockner, Herd und Unterhaltung skalieren mit den Köpfen.",
       "Bei 35 Cent Arbeitspreis und 12 Euro Grundpreis kostet dieser Verbrauch 1.614 Euro im Jahr, also 134,50 Euro im Monat. Der Effektivpreis liegt bei 38,43 Cent je Kilowattstunde. Wer stattdessen über einen Durchlauferhitzer duscht, muss mit 500 bis 600 Kilowattstunden je Person zusätzlich rechnen – bei vier Personen also mit etwa 6.400 Kilowattstunden und rund 2.380 Euro.",
       "Deutlich über 6.000 Kilowattstunden ohne elektrisches Warmwasser sind ein Hinweis, dem sich nachgehen lohnt. Die üblichen Verursacher sind in dieser Reihenfolge: ein Wäschetrockner ohne Wärmepumpe, ein Kühl- oder Gefriergerät älter als fünfzehn Jahre, ein Gaming-PC oder Server im Dauerbetrieb, und eine alte Umwälzpumpe der Heizung. Jeder einzelne dieser Posten kann mehrere hundert Kilowattstunden im Jahr ausmachen.",
@@ -182,8 +171,8 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "gasverbrauch-einfamilienhaus",
-    titel: "Gasverbrauch Einfamilienhaus: Normalwert und Heizkosten im Jahr",
-    beschreibung:
+    title: "Gasverbrauch Einfamilienhaus: Normalwert und Heizkosten im Jahr",
+    description:
       "Wie viel Gas ein Einfamilienhaus verbraucht, was das Heizen im Jahr kostet und woran ein zu hoher Verbrauch liegt.",
     heading: "Gasverbrauch im Einfamilienhaus",
     params: {
@@ -194,7 +183,7 @@ export const variantenTexte: VariantenText[] = [
       qm: 150,
       standard: "teilsaniert",
     },
-    absaetze: [
+    about: [
       "Der Gasverbrauch eines Hauses hängt fast ausschließlich an zwei Größen: Wohnfläche und Dämmzustand. Ein teilsaniertes Einfamilienhaus mit 150 Quadratmetern braucht rund 150 Kilowattstunden je Quadratmeter und Jahr, insgesamt also etwa 22.500 Kilowattstunden. Unsaniert wären es 200 je Quadratmeter und damit 30.000, im Neubaustandard 60 und damit 9.000. Zwischen dem schlechtesten und dem besten Fall liegt bei gleicher Fläche also der Faktor drei.",
       "Bei 11 Cent Arbeitspreis und 14 Euro Grundpreis kosten die 22.500 Kilowattstunden 2.643 Euro im Jahr: 2.475 Euro Energie und 168 Euro Grundpreis. Das sind 220,25 Euro im Monat und ein Effektivpreis von 11,75 Cent je Kilowattstunde. Weil beim Heizen so viele Kilowattstunden zusammenkommen, wiegt ein Cent Preisunterschied hier schwer – ein Cent weniger sind 225 Euro im Jahr.",
       "Wer deutlich über dem Erwartungswert liegt, sollte in dieser Reihenfolge prüfen: die Vorlauftemperatur der Heizung, die bei vielen Anlagen unnötig hoch eingestellt ist; die Dämmung der obersten Geschossdecke, die günstigste Maßnahme überhaupt; den hydraulischen Abgleich, damit entfernte Räume nicht über eine höhere Pumpenleistung mitversorgt werden müssen; und schließlich die Fenster. Die Reihenfolge ist nach Kosten je gesparter Kilowattstunde sortiert, nicht nach Aufwand.",

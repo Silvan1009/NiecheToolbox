@@ -1,5 +1,6 @@
 import { ChartCandlestick } from "lucide-react";
-import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
+import type { FaqEntry, ToolManifest } from "@/tools/types";
+import { buildVariants } from "@/tools/variants";
 import { aktienAffiliate } from "./affiliate";
 import Component from "./Component";
 import { variantenTexte } from "./varianten";
@@ -64,26 +65,6 @@ const allgemeineFaq: FaqEntry[] = [
  * Kennzahl-Varianten
  * ------------------------------------------------------------------------- */
 
-/**
- * Eine Unterseite je Kennzahl, nach der wirklich gesucht wird.
- *
- * Die Variante setzt nur den Fokus des Rechners – die Rechnung ist dieselbe.
- * Was sie eigenständig macht, ist der Text: eigene Erklärung, eigene FAQ,
- * eigener Titel. Der allgemeine Teil hängt hinten dran, damit auch diese
- * Seiten den Rechner vollständig erklären.
- */
-function buildVariants(): ToolVariant[] {
-  return variantenTexte.map((text) => ({
-    slug: text.slug,
-    title: text.titel,
-    description: text.beschreibung,
-    heading: text.heading,
-    params: { fokus: text.key },
-    about: [...text.absaetze, ...about.slice(1)],
-    faq: [...text.faq, ...allgemeineFaq.slice(0, 4)],
-  }));
-}
-
 /* ---------------------------------------------------------------------------
  * Manifest
  * ------------------------------------------------------------------------- */
@@ -110,7 +91,7 @@ export const aktienkennzahlen: ToolManifest = {
   ],
 
   Component,
-  getVariants: buildVariants,
+  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
 
   about,
   faq: allgemeineFaq,

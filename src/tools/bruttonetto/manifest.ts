@@ -1,5 +1,6 @@
 import { Wallet } from "lucide-react";
-import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
+import type { FaqEntry, ToolManifest } from "@/tools/types";
+import { buildVariants } from "@/tools/variants";
 import { bruttonettoAffiliate } from "./affiliate";
 import Component from "./Component";
 import { STEUERJAHR } from "./steuerdaten";
@@ -65,18 +66,6 @@ const allgemeineFaq: FaqEntry[] = [
  * Varianten
  * ------------------------------------------------------------------------- */
 
-function buildVariants(): ToolVariant[] {
-  return variantenTexte.map((text) => ({
-    slug: text.slug,
-    title: text.titel,
-    description: text.beschreibung,
-    heading: text.heading,
-    params: text.params,
-    about: [...text.absaetze, ...about.slice(1)],
-    faq: [...text.faq, ...allgemeineFaq.slice(0, 4)],
-  }));
-}
-
 /* ---------------------------------------------------------------------------
  * Manifest
  * ------------------------------------------------------------------------- */
@@ -102,7 +91,7 @@ export const bruttonetto: ToolManifest = {
   ],
 
   Component,
-  getVariants: buildVariants,
+  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
 
   about,
   faq: allgemeineFaq,

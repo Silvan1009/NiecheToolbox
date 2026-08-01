@@ -11,32 +11,19 @@
  * damit ein Besucher das Gelesene auf dem Bildschirm wiederfindet.
  */
 
-import type { FaqEntry, ToolParams } from "@/tools/types";
+import type { VariantContent } from "@/tools/variants";
 
-export interface VariantenText {
-  /** URL-Segment unter /tools/sparplan/ */
-  slug: string;
-  titel: string;
-  beschreibung: string;
-  heading: string;
-  /** Startwerte des Rechners auf dieser Seite. */
-  params: ToolParams;
-  /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
-  absaetze: string[];
-  faq: FaqEntry[];
-}
-
-export const variantenTexte: VariantenText[] = [
+export const variantenTexte: VariantContent[] = [
   /* ----------------------------------------------------------------------- */
 
   {
     slug: "zinseszinsrechner",
-    titel: "Zinseszinsrechner: Kapital und Sparrate über die Jahre berechnen",
-    beschreibung:
+    title: "Zinseszinsrechner: Kapital und Sparrate über die Jahre berechnen",
+    description:
       "Zinseszins für Einmalanlage und monatliche Sparrate – mit Kosten, Steuern, Inflation und Verdopplungsdauer. Kostenlos und ohne Anmeldung.",
     heading: "Zinseszins berechnen",
     params: { start: 10000, rate: 0, jahre: 30, rendite: 7, kosten: 0, steuern: 0 },
-    absaetze: [
+    about: [
       "Der Zinseszins ist der Effekt, dass Erträge selbst wieder Erträge bringen. Zehntausend Euro zu sieben Prozent werden im ersten Jahr um siebenhundert Euro mehr, im zweiten Jahr aber schon um 749 Euro – weil die siebenhundert aus dem Vorjahr mitverdienen. Über dreißig Jahre werden aus den zehntausend Euro so 76.123 Euro, ohne dass ein einziger Euro nachgelegt wird. Von diesem Endbetrag stammen 66.123 Euro aus Erträgen und nur zehntausend aus der eigenen Einzahlung. Genau das ist der Grund, warum bei der Geldanlage die Zeit wichtiger ist als der Betrag.",
       "Die Formel dahinter ist kurz: Endkapital gleich Startkapital mal eins plus Zinssatz, hoch die Anzahl der Jahre. Was sie so schwer greifbar macht, ist ihr exponentieller Verlauf. Die ersten Jahre sehen enttäuschend aus, die letzten spektakulär: Im dreißigsten Jahr wächst dasselbe Kapital um 4.980 Euro, im ersten um siebenhundert. Wer einen Sparplan nach fünf Jahren abbricht, weil „nicht viel passiert“, steigt genau vor dem Teil aus, für den er die fünf Jahre gewartet hat.",
       "Für die Verdopplungsdauer kursiert die 72er-Regel: 72 geteilt durch den Zinssatz ergibt ungefähr die Jahre bis zur Verdopplung. Bei sieben Prozent sind das gut zehn Jahre, genau gerechnet 10,24. Der Rechner schätzt hier nicht, sondern nimmt den Logarithmus – und zieht die laufenden Kosten vorher ab, weil ein Fonds mit einem Prozent Gebühr eben nicht mit sieben, sondern mit sechs Prozent verdoppelt. Aus 10,24 Jahren werden dadurch 11,90.",
@@ -64,12 +51,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "etf-sparplan-rechner",
-    titel: "ETF-Sparplan-Rechner: Endkapital mit Kosten und Steuern berechnen",
-    beschreibung:
+    title: "ETF-Sparplan-Rechner: Endkapital mit Kosten und Steuern berechnen",
+    description:
       "ETF-Sparplan berechnen mit TER, Teilfreistellung, Vorabpauschale und Inflation – nicht nur der Bruttowert, sondern was am Ende wirklich ankommt.",
     heading: "ETF-Sparplan berechnen",
     params: { start: 0, rate: 250, jahre: 30, rendite: 7, kosten: 0.2 },
-    absaetze: [
+    about: [
       "Ein ETF-Sparplan über 250 Euro im Monat, dreißig Jahre lang, bei sieben Prozent Rendite und 0,2 Prozent laufenden Kosten: eingezahlt werden 90.000 Euro, am Ende stehen 274.853 Euro im Depot, nach Steuern bleiben 252.397 Euro. Gut zwei Drittel des Endbetrags stammen damit aus Erträgen und nur ein Drittel aus eigenem Geld. Das ist die eigentliche Rechnung hinter dem ETF-Sparplan – und sie funktioniert nur, wenn man dreißig Jahre lang nicht daran rührt.",
       "Der wichtigste Hebel neben der Laufzeit sind die Kosten, und zwar aus einem Grund, der selten ausgesprochen wird: Die Gebühr wird nicht auf die Einzahlung berechnet, sondern jedes Jahr auf den gesamten Bestand. Sie wächst also mit. Derselbe Sparplan mit 1,5 statt 0,2 Prozent laufender Kosten – der Unterschied zwischen einem breiten ETF und einem aktiv gemanagten Fonds – endet bei 214.496 statt 274.853 Euro. Das sind 60.357 Euro, also zwei Drittel der gesamten Einzahlungen, für eine Differenz von 1,3 Prozentpunkten im Jahr.",
       "Steuerlich ist ein Aktien-ETF günstiger, als die 26,375 Prozent Abgeltungsteuer vermuten lassen. Bei Fonds mit mindestens 51 Prozent Aktienanteil bleiben 30 Prozent des Ertrags über die Teilfreistellung steuerfrei, die effektive Belastung sinkt dadurch auf rund 18,5 Prozent des Gewinns. Dafür wird seit 2018 auch während der Laufzeit besteuert: Die Vorabpauschale greift jedes Jahr auf einen kleinen Teil der Wertsteigerung zu. Der Rechner bildet beides ab und rechnet die bereits gezahlte Vorabpauschale am Ende gegen die Verkaufssteuer, damit derselbe Ertrag nicht zweimal besteuert wird.",
@@ -97,12 +84,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "100-euro-sparplan",
-    titel: "100 Euro im Monat sparen: Was daraus in 10, 20 und 30 Jahren wird",
-    beschreibung:
+    title: "100 Euro im Monat sparen: Was daraus in 10, 20 und 30 Jahren wird",
+    description:
       "100 Euro monatlich anlegen – Endkapital nach Kosten, Steuern und Inflation. Mit Jahrestabelle und der Rechnung, was zehn Jahre früher anfangen bringt.",
     heading: "100 Euro im Monat sparen",
     params: { start: 0, rate: 100, jahre: 30, rendite: 7 },
-    absaetze: [
+    about: [
       "Hundert Euro im Monat klingen nach zu wenig, um etwas zu bewegen. Über dreißig Jahre bei sieben Prozent Rendite werden daraus 112.412 Euro, von denen nur 36.000 Euro aus der eigenen Tasche stammen – 68 Prozent des Endbetrags sind Ertrag. Nach Steuern bleiben 103.180 Euro. Der Betrag ist deshalb so hoch, weil hundert Euro dreißig Jahre lang jeden Monat neu anfangen zu arbeiten: Die erste Rate hat dreißig Jahre Zeit, die letzte einen Monat.",
       "Wie stark die Zeit wiegt, zeigt der Vergleich der Laufzeiten. Zehn Jahre mehr, also vierzig statt dreißig Jahre bei gleicher Rate, ergeben 228.719 statt 112.412 Euro. Die zusätzlichen zehn Jahre kosten 12.000 Euro Einzahlung und bringen 116.307 Euro mehr heraus – mehr als der komplette Ertrag der ersten dreißig Jahre. Wer mit zwanzig statt mit dreißig anfängt, muss deshalb nicht doppelt so viel sparen, um doppelt so weit zu kommen.",
       "Umgekehrt gilt: Wer später anfängt, muss deutlich mehr aufwenden. Um dieselben rund 103.000 Euro nach Steuern in zwanzig statt dreißig Jahren zu erreichen, braucht es bei sieben Prozent 222 Euro im Monat statt hundert. Die Rate mehr als verdoppelt sich für dieselbe Summe. Das ist keine Mahnung, sondern eine schlichte Eigenschaft der Zinseszinsformel – und ein guter Grund, lieber mit einem kleinen Betrag früh zu beginnen als auf den perfekten Zeitpunkt und die perfekte Rate zu warten.",
@@ -130,12 +117,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "500-euro-monatlich-sparen",
-    titel: "500 Euro monatlich anlegen: Endkapital in 20 und 30 Jahren",
-    beschreibung:
+    title: "500 Euro monatlich anlegen: Endkapital in 20 und 30 Jahren",
+    description:
       "500 Euro im Monat sparen – mit Kosten, Abgeltungsteuer und Inflation gerechnet. Inklusive der monatlichen Entnahme, die daraus später möglich ist.",
     heading: "500 Euro monatlich anlegen",
     params: { start: 0, rate: 500, jahre: 20, rendite: 7 },
-    absaetze: [
+    about: [
       "Fünfhundert Euro im Monat über zwanzig Jahre bei sieben Prozent ergeben 244.623 Euro, nach Steuern 229.424 Euro. Eingezahlt wurden davon 120.000 Euro. Die Verteilung ist bei zwanzig Jahren noch ausgeglichen – etwa die Hälfte Einzahlung, die Hälfte Ertrag. Bei dreißig Jahren kippt sie deutlich: Dann stehen 540.668 Euro im Depot bei 180.000 Euro Einzahlung, der Ertragsanteil steigt auf 67 Prozent.",
       "In dieser Größenordnung wird die Vorabpauschale spürbar. Sobald der Depotwert so weit gewachsen ist, dass der Basisertrag den Sparerpauschbetrag von 1.000 Euro übersteigt, zieht die Bank jedes Jahr im Januar Steuer vom Verrechnungskonto ein. Bei einem Aktien-ETF passiert das etwa ab einem Bestand von 64.000 Euro – vorher bleibt alles im Freibetrag. Auf dem Verrechnungskonto sollte dann Geld liegen, sonst verkauft die Bank Anteile, um die Steuer zu bedienen.",
       "Interessanter als das Endkapital ist bei dieser Summe die Frage, was davon später monatlich entnommen werden kann. Aus 229.424 Euro lassen sich bei fünf Prozent Rendite dreißig Jahre lang 1.216 Euro im Monat entnehmen, bis das Kapital aufgebraucht ist. Wer die Substanz nicht antasten will, kommt auf 935 Euro im Monat – dauerhaft, ohne Ende. Der Unterschied zwischen beiden Zahlen ist die Entscheidung, ob am Ende noch etwas übrig bleiben soll.",
@@ -163,12 +150,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "sparplan-1-million",
-    titel: "Eine Million sparen: Welche Sparrate dafür nötig ist",
-    beschreibung:
+    title: "Eine Million sparen: Welche Sparrate dafür nötig ist",
+    description:
       "Wie viel muss ich monatlich sparen, um Millionär zu werden? Rechner mit Laufzeit, Rendite, Steuern und Inflation – inklusive Realwert der Million.",
     heading: "Eine Million sparen",
     params: { modus: "sparrate", start: 0, ziel: 1000000, jahre: 30, rendite: 7 },
-    absaetze: [
+    about: [
       "Eine Million Euro nach Steuern, in dreißig Jahren, bei sieben Prozent Rendite: Dafür braucht es 1.018 Euro im Monat. Eingezahlt werden dabei 366.581 Euro – der Rest von 720.792 Euro kommt aus Erträgen. Bei vierzig Jahren Laufzeit halbiert sich die nötige Rate auf 507 Euro, und die Einzahlung sinkt auf 243.202 Euro. Zehn Jahre mehr Zeit ersetzen also gut 123.000 Euro eigenes Geld.",
       "Die Rechnung reagiert extrem empfindlich auf die Renditeannahme. Bei fünf statt sieben Prozent steigt die nötige Rate über dreißig Jahre von 1.018 auf 1.410 Euro. Ein Unterschied von zwei Prozentpunkten in der Annahme verschiebt die Rate also um gut ein Drittel. Wer diese Rechnung zur Lebensplanung benutzt, sollte sie deshalb mit mehreren Renditen durchspielen und nicht mit der optimistischsten planen – und die laufenden Kosten niedrig halten, weil sie direkt von der Rendite abgehen.",
       "Der unbequeme Teil ist die Inflation. Eine Million Euro in dreißig Jahren hat bei zwei Prozent Geldentwertung die Kaufkraft von heute 552.071 Euro. Wer sich unter „Millionär“ das vorstellt, was eine Million heute kauft, muss entsprechend auf rund 1,8 Millionen zielen. Der Rechner weist die Kaufkraft deshalb immer mit aus – nicht um zu entmutigen, sondern weil eine Zielzahl ohne Zeitbezug keine Zielzahl ist.",
@@ -196,12 +183,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "sparrate-berechnen",
-    titel: "Sparrate berechnen: Wie viel muss ich monatlich sparen?",
-    beschreibung:
+    title: "Sparrate berechnen: Wie viel muss ich monatlich sparen?",
+    description:
       "Sparziel eingeben, nötige Monatsrate erhalten – mit Startkapital, Rendite, Laufzeit, Kosten und Steuern. Für Auto, Eigenkapital oder Rücklage.",
     heading: "Sparrate berechnen",
     params: { modus: "sparrate", start: 0, ziel: 100000, jahre: 20, rendite: 6 },
-    absaetze: [
+    about: [
       "Der Zielmodus dreht die übliche Rechnung um: Statt zu fragen, was aus einer Rate wird, gibst du den Betrag vor, der am Ende dastehen soll – der Rechner sucht die passende Monatsrate. Für 100.000 Euro nach Steuern in zwanzig Jahren bei sechs Prozent Rendite sind das 238 Euro im Monat. Eingezahlt werden dabei 57.019 Euro, der Rest entsteht durch Erträge. Vorhandenes Startkapital wird angerechnet und senkt die nötige Rate entsprechend.",
       "Gesucht wird die Rate nicht über eine umgestellte Formel, sondern durch schrittweise Annäherung. Der Grund sind die Steuern: Sparerpauschbetrag und Teilfreistellung machen den Zusammenhang zwischen Rate und Endkapital abschnittsweise linear, aber eben nicht durchgehend – eine geschlossene Formel gäbe es nur für den steuerfreien Fall. Die Annäherung liefert dafür ein Ergebnis, das auch mit Steuern auf den Euro genau passt.",
       "Wichtig ist die Wahl der Rendite, und die hängt am Zeitraum. Für ein Ziel in zwei bis drei Jahren – Auto, Kaution, Urlaub – gehört das Geld auf Tagesgeld, und die realistische Annahme sind zwei bis drei Prozent ohne Kursrisiko. Für ein Ziel in fünfzehn oder zwanzig Jahren ist ein breiter Aktien-ETF sinnvoll, mit fünf bis sieben Prozent Erwartung und der ausdrücklichen Möglichkeit, zwischendurch dreißig Prozent im Minus zu stehen. Wer für ein kurzfristiges Ziel mit sieben Prozent plant, plant sich in ein Risiko hinein, das er zu diesem Termin nicht aussitzen kann.",
@@ -229,12 +216,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "vorabpauschale-berechnen",
-    titel: "Vorabpauschale berechnen 2026: Rechner mit Basiszins 3,20 Prozent",
-    beschreibung:
+    title: "Vorabpauschale berechnen 2026: Rechner mit Basiszins 3,20 Prozent",
+    description:
       "Vorabpauschale für thesaurierende ETFs berechnen – mit Basiszins 2026, Teilfreistellung und Sparerpauschbetrag. Was die Bank im Januar einzieht.",
     heading: "Vorabpauschale berechnen",
     params: { start: 100000, rate: 0, jahre: 10, rendite: 7, steuern: 1 },
-    absaetze: [
+    about: [
       "Die Vorabpauschale ist die Steuer auf einen Gewinn, den es noch gar nicht in bar gibt. Seit der Investmentsteuerreform 2018 will der Staat auch bei thesaurierenden Fonds nicht bis zum Verkauf warten, sondern jedes Jahr einen Mindestertrag besteuern. Berechnet wird sie so: Fondswert am 2. Januar mal Basiszins mal 0,7. Der Basiszins für 2026 beträgt 3,20 Prozent, macht also 2,24 Prozent des Depotwerts als Basisertrag. Gedeckelt ist das Ganze auf die tatsächliche Wertsteigerung des Jahres – wer Verlust macht, zahlt keine Vorabpauschale.",
       "Ein Beispiel mit 100.000 Euro im Depot: Der Basisertrag beträgt 2.240 Euro. Bei einem Aktien-ETF bleiben davon 30 Prozent über die Teilfreistellung steuerfrei, es verbleiben 1.568 Euro. Davon geht der Sparerpauschbetrag von 1.000 Euro ab, steuerpflichtig sind also 568 Euro. Darauf 26,375 Prozent Abgeltungsteuer und Soli ergeben 149,81 Euro, die im Januar vom Verrechnungskonto eingezogen werden. Das ist wenig – aber es muss dort liegen, sonst verkauft die Bank Anteile.",
       "Doppelt besteuert wird nichts. Alle über die Jahre gezahlten Vorabpauschalen werden beim späteren Verkauf vom steuerpflichtigen Gewinn abgezogen, sodass am Ende genau einmal Steuer auf denselben Ertrag anfällt. Wirtschaftlich ist die Vorabpauschale deshalb keine zusätzliche Steuer, sondern eine Vorverlegung: Geld, das sonst weiter im Depot mitgearbeitet hätte, wird früher abgeführt. Der Rechner zieht sie jedes Jahr ab und rechnet sie am Ende wieder an, damit dieser Effekt im Ergebnis sichtbar wird.",
@@ -262,12 +249,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "abgeltungssteuer-berechnen",
-    titel: "Abgeltungssteuer berechnen: 25 Prozent, Soli und Kirchensteuer",
-    beschreibung:
+    title: "Abgeltungssteuer berechnen: 25 Prozent, Soli und Kirchensteuer",
+    description:
       "Abgeltungsteuer auf Kapitalerträge berechnen – mit Sparerpauschbetrag, Teilfreistellung und der korrekten Kirchensteuerformel nach § 32d EStG.",
     heading: "Abgeltungssteuer berechnen",
     params: { start: 50000, rate: 0, jahre: 15, rendite: 7, steuern: 1 },
-    absaetze: [
+    about: [
       "Auf Kapitalerträge fallen 25 Prozent Abgeltungsteuer an, dazu 5,5 Prozent Solidaritätszuschlag auf diese Steuer – zusammen 26,375 Prozent. Der Soli wurde für die Einkommensteuer weitgehend abgeschafft, für Kapitalerträge gilt er unverändert weiter. Vor der Steuer steht der Sparerpauschbetrag von 1.000 Euro im Jahr, bei zusammen veranlagten Ehepaaren 2.000 Euro. Wer der Bank einen Freistellungsauftrag erteilt, bekommt diesen Betrag automatisch angerechnet; ohne Auftrag wird zunächst voll besteuert und erst über die Steuererklärung zurückgeholt.",
       "Bei der Kirchensteuer rechnen die meisten falsch, und zwar zu hoch. Sie kommt nicht einfach oben drauf, denn sie ist als Sonderausgabe abziehbar – § 32d Abs. 1 Satz 4 EStG erledigt das über eine eigene Formel, nach der die Kapitalertragsteuer nicht ein Viertel des Ertrags beträgt, sondern e geteilt durch 4 plus Kirchensteuersatz. Mit neun Prozent Kirchensteuer sinkt der Steuersatz dadurch von 25 auf 24,45 Prozent, und die Gesamtbelastung liegt bei 27,996 statt bei 26,375 Prozent. Der Aufschlag beträgt also rund 1,6 Prozentpunkte, nicht neun.",
       "Bei Fonds kommt die Teilfreistellung dazu, und sie ändert das Bild deutlich. Bei Aktienfonds mit mindestens 51 Prozent Aktienanteil bleiben 30 Prozent des Ertrags steuerfrei, bei Mischfonds 15 Prozent, bei Immobilienfonds 60 Prozent. Aus den 26,375 Prozent werden bei einem Aktien-ETF damit effektiv rund 18,5 Prozent auf den Gewinn. Bei Zinsanlagen wie Tages- oder Festgeld gibt es keine Teilfreistellung – dort bleibt es beim vollen Satz.",
@@ -295,12 +282,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "entnahmeplan-rechner",
-    titel: "Entnahmeplan-Rechner: Wie lange reicht mein Kapital?",
-    beschreibung:
+    title: "Entnahmeplan-Rechner: Wie lange reicht mein Kapital?",
+    description:
       "Monatliche Entnahme aus einem Vermögen berechnen – befristet oder dauerhaft aus den Erträgen. Mit Rendite, Laufzeit und Kaufkraftverlust.",
     heading: "Entnahmeplan berechnen",
     params: { start: 500000, rate: 0, jahre: 1, rendite: 5, entnahme: 30, steuern: 0, kosten: 0 },
-    absaetze: [
+    about: [
       "Ein Entnahmeplan ist mathematisch ein Kredit mit vertauschten Rollen: Statt eine Schuld mit Raten abzutragen, wird ein Kapital mit Entnahmen abgebaut, und beide Male verzinst sich der Rest weiter. Deshalb steckt hinter der Entnahme dieselbe Annuitätenformel wie hinter der Kreditrate. Aus 500.000 Euro lassen sich bei fünf Prozent Rendite dreißig Jahre lang 2.650 Euro im Monat entnehmen – am Ende ist das Kapital genau aufgebraucht.",
       "Wer die Substanz nicht antasten will, entnimmt nur die Erträge. Bei denselben 500.000 Euro und fünf Prozent sind das 2.037 Euro im Monat, dafür ohne zeitliche Begrenzung und mit dem vollen Kapital für die Erben. Die Differenz von gut 600 Euro im Monat ist der Preis dafür, dass am Ende noch etwas übrig bleibt. Bekannt ist diese Größenordnung als Vier-Prozent-Regel, die aus historischen US-Daten stammt und für dreißig Jahre Entnahme kalkuliert war – sie ist eine Faustregel und keine Garantie.",
       "Der Rechner lässt das Kapital vor der Entnahme noch ein Jahr laufen, weil die Ansparphase mindestens ein Jahr umfasst: Aus 500.000 Euro werden dadurch 525.000, und die Entnahme steigt entsprechend auf 2.783 beziehungsweise 2.139 Euro. Wer die reine Entnahme ohne dieses Jahr rechnen will, trägt einfach den Betrag ein, der nach Abzug eines Jahres Verzinsung übrig bleibt.",

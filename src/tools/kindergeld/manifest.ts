@@ -1,6 +1,7 @@
 import { Users } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
+import type { FaqEntry, ToolManifest } from "@/tools/types";
+import { buildVariants } from "@/tools/variants";
 import { kindergeldAffiliate } from "./affiliate";
 import Component from "./Component";
 import { defaultInput, encodeKinder } from "./logic";
@@ -58,36 +59,6 @@ const allgemeineFaq: FaqEntry[] = [
   },
 ];
 
-/**
- * Varianten aus den redaktionellen Texten – drei eigene Absätze je Seite,
- * danach der allgemeine Erklärtext ab dem zweiten Absatz. Der erste allgemeine
- * Absatz bleibt weg, weil die eigenen Absätze dessen Rolle übernehmen.
- */
-function buildVariants(): ToolVariant[] {
-  return variantenTexte.map((text) => {
-    /*
-     * Fragen, die die Variante selbst schon beantwortet, dürfen nicht ein
-     * zweites Mal aus dem allgemeinen Teil kommen: Der Besucher läse dieselbe
-     * Frage zweimal, und `Faq.tsx` schlüsselt die Einträge nach ihrem Text –
-     * ein Duplikat ist dort auch technisch ein Fehler.
-     */
-    const eigene = new Set(text.faq.map((eintrag) => eintrag.question));
-
-    return {
-      slug: text.slug,
-      title: text.titel,
-      description: text.beschreibung,
-      heading: text.heading,
-      params: text.params,
-      about: [...text.absaetze, ...about.slice(1)],
-      faq: [
-        ...text.faq,
-        ...allgemeineFaq.filter((e) => !eigene.has(e.question)).slice(0, 4),
-      ],
-    };
-  });
-}
-
 export const kindergeld: ToolManifest = {
   slug: "kindergeld",
   name: "Kindergeld-Rechner",
@@ -119,7 +90,7 @@ export const kindergeld: ToolManifest = {
     const start = defaultInput();
     return { heute: todayIso(), kinder: encodeKinder(start.kinder) };
   },
-  getVariants: buildVariants,
+  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
 
   about,
   faq: allgemeineFaq,

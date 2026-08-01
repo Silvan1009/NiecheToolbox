@@ -11,32 +11,19 @@
  * Kirchensteuer, mit dem durchschnittlichen Zusatzbeitrag von 2,9 Prozent.
  */
 
-import type { FaqEntry, ToolParams } from "@/tools/types";
+import type { VariantContent } from "@/tools/variants";
 
-export interface VariantenText {
-  /** URL-Segment unter /tools/bruttonetto/ */
-  slug: string;
-  titel: string;
-  beschreibung: string;
-  heading: string;
-  /** Startwerte des Rechners auf dieser Seite. */
-  params: ToolParams;
-  /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
-  absaetze: string[];
-  faq: FaqEntry[];
-}
-
-export const variantenTexte: VariantenText[] = [
+export const variantenTexte: VariantContent[] = [
   /* ----------------------------------------------------------------------- */
 
   {
     slug: "steuerklasse-1",
-    titel: "Steuerklasse 1: Brutto-Netto-Rechner 2026 für Ledige",
-    beschreibung:
+    title: "Steuerklasse 1: Brutto-Netto-Rechner 2026 für Ledige",
+    description:
       "Netto in Steuerklasse I berechnen – mit Sozialabgaben, Lohnsteuer und Kirchensteuer nach den Rechengrößen für 2026.",
     heading: "Netto in Steuerklasse 1 berechnen",
     params: { klasse: 1, brutto: 4000 },
-    absaetze: [
+    about: [
       "Steuerklasse I gilt für Ledige, Verwitwete und Geschiedene ohne Kind im Haushalt – es ist die häufigste Klasse und zugleich die, an der sich der Steuertarif am klarsten zeigt. Von 4.000 Euro brutto im Monat bleiben in Nordrhein-Westfalen ohne Kirchensteuer rund 2.606 Euro netto. Davon gehen 870 Euro an Sozialabgaben und gut 524 Euro an Lohnsteuer weg – die Sozialabgaben sind in dieser Gehaltsklasse also der größere Brocken.",
       "Die Abgabenquote steigt mit dem Einkommen, aber nicht gleichmäßig. Bei 3.000 Euro brutto liegt sie bei rund 31,5 Prozent, bei 4.000 Euro bei knapp 35 Prozent, bei 5.000 Euro bei gut 37 Prozent. Oberhalb der Beitragsbemessungsgrenze von 69.750 Euro im Jahr kehrt sich die Bewegung teilweise um: Kranken- und Pflegebeiträge steigen dann nicht weiter, sodass von jedem zusätzlichen Euro mehr übrig bleibt als vorher.",
       "Interessanter als der Durchschnitt ist die Grenzbelastung – was von hundert Euro mehr Brutto tatsächlich ankommt. Bei 4.000 Euro brutto sind das rund 54 Euro. Wer über eine Gehaltserhöhung, Überstunden oder einen Nebenjob nachdenkt, sollte mit dieser Zahl rechnen und nicht mit dem Durchschnittssatz. Der Rechner weist sie unter dem Ergebnis aus.",
@@ -64,12 +51,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "steuerklasse-3",
-    titel: "Steuerklasse 3: Netto berechnen und der Vergleich mit 4/4",
-    beschreibung:
+    title: "Steuerklasse 3: Netto berechnen und der Vergleich mit 4/4",
+    description:
       "Netto in Steuerklasse III mit Splittingtarif berechnen – und warum die Kombination III/V nur verschiebt, was am Jahresende ohnehin fällig wird.",
     heading: "Netto in Steuerklasse 3 berechnen",
     params: { klasse: 3, brutto: 5000 },
-    absaetze: [
+    about: [
       "Steuerklasse III ist die günstigste, aber sie ist keine Steuerersparnis. Sie rechnet mit dem Splittingtarif, also mit dem doppelten Grundfreibetrag, weil der Partner in Klasse V praktisch ohne Freibeträge dasteht. Von 5.000 Euro brutto bleiben in Klasse III rund 3.511 Euro netto statt 3.130 Euro in Klasse I – ein Plus von gut 380 Euro im Monat, das der Partner in Klasse V an anderer Stelle wieder verliert.",
       "Sinnvoll ist die Kombination III/V nur bei deutlich unterschiedlichen Einkommen; als Faustregel ab einem Verhältnis von etwa 60 zu 40. Bei ähnlichen Einkommen ist IV/IV besser, weil dort keine großen Nachzahlungen entstehen. Wer die monatliche Verteilung genauer treffen will, kann das Faktorverfahren IV/IV mit Faktor wählen: Es verteilt die Steuer nach dem tatsächlichen Verhältnis der Einkommen und vermeidet dadurch beides – die Überzahlung des einen und die Nachzahlung des anderen.",
       "Ein Punkt wird regelmäßig übersehen: Bei der Kombination III/V ist die Steuererklärung Pflicht, und sie endet häufig mit einer Nachzahlung. Der Grund ist genau der Vorteil, den Klasse III monatlich bringt – er ist nur vorgezogen. Wichtig ist die Klassenwahl trotzdem, denn Lohnersatzleistungen wie Elterngeld, Krankengeld und Arbeitslosengeld bemessen sich am Netto. Wer Nachwuchs plant, sollte rechtzeitig prüfen, ob ein Wechsel in Klasse III sinnvoll ist.",
@@ -97,12 +84,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "steuerklasse-4",
-    titel: "Steuerklasse 4: Brutto-Netto-Rechner für Verheiratete",
-    beschreibung:
+    title: "Steuerklasse 4: Brutto-Netto-Rechner für Verheiratete",
+    description:
       "Netto in Steuerklasse IV berechnen – mit Kinderfreibeträgen und dem Vergleich zum Faktorverfahren und zur Kombination III/V.",
     heading: "Netto in Steuerklasse 4 berechnen",
     params: { klasse: 4, brutto: 4000, kinder: 2, freibetraege: 1 },
-    absaetze: [
+    about: [
       "Steuerklasse IV ist die Voreinstellung nach der Heirat und rechnet steuerlich genau wie Klasse I: derselbe Grundtarif, dieselben Pauschbeträge. Der Unterschied liegt in den Kinderfreibeträgen, die hier eingetragen werden können, und in der Möglichkeit des Faktorverfahrens. Bei 4.000 Euro brutto und einem Kinderfreibetrag bleiben rund 2.629 Euro netto.",
       "Sinnvoll ist IV/IV, wenn beide Partner ähnlich viel verdienen. Dann zahlt jeder ungefähr das, was am Jahresende auch wirklich fällig wird, und es gibt weder große Erstattungen noch Nachzahlungen. Weichen die Einkommen deutlich voneinander ab – als Faustregel ab einem Verhältnis von 60 zu 40 –, bringt die Kombination III/V monatlich mehr Netto im Haushalt, verlagert dafür aber Steuer ins Folgejahr.",
       "Die Kinderfreibeträge wirken im Lohnsteuerabzug anders, als viele erwarten: Sie mindern nicht die Lohnsteuer, sondern nur die Bemessungsgrundlage für Solidaritätszuschlag und Kirchensteuer. Für die Lohnsteuer selbst gibt es stattdessen Kindergeld. Erst das Finanzamt prüft bei der Steuererklärung automatisch, ob die Freibeträge günstiger gewesen wären als das Kindergeld – bei höheren Einkommen ist das der Fall, und die Differenz wird dann erstattet.",
@@ -130,12 +117,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "steuerklasse-5",
-    titel: "Steuerklasse 5: Warum so wenig netto übrig bleibt",
-    beschreibung:
+    title: "Steuerklasse 5: Warum so wenig netto übrig bleibt",
+    description:
       "Netto in Steuerklasse V berechnen – mit der Erklärung, warum die Abzüge so hoch sind und wann sich der Wechsel lohnt.",
     heading: "Netto in Steuerklasse 5 berechnen",
     params: { klasse: 5, brutto: 2500 },
-    absaetze: [
+    about: [
       "Steuerklasse V hat die höchsten Abzüge aller Klassen für Verheiratete, und dafür gibt es einen einfachen Grund: Der Grundfreibetrag, der Arbeitnehmer-Pauschbetrag und der Sonderausgaben-Pauschbetrag sind vollständig dem Partner in Klasse III zugeordnet. In Klasse V fällt deshalb ab dem ersten Euro Lohnsteuer an. Von 2.500 Euro brutto bleiben so rund 1.472 Euro netto – die Abgabenquote liegt bei gut 41 Prozent, obwohl das Einkommen niedrig ist.",
       "Das wirkt ungerecht, ist aber nur die Kehrseite der Klasse III beim Partner. Über das Jahr gerechnet zahlt das Paar zusammen genau so viel, wie sich aus dem gemeinsamen Einkommen ergibt – die Aufteilung auf die Monate ist eine andere. Deshalb ist bei der Kombination III/V die Steuererklärung Pflicht: Erst dort wird richtiggestellt, was der Lohnsteuerabzug nur näherungsweise trifft.",
       "Praktisch problematisch wird Klasse V an einer anderen Stelle: Lohnersatzleistungen bemessen sich am Nettoentgelt. Wer in Klasse V steht und Elterngeld, Krankengeld oder Arbeitslosengeld beziehen wird, bekommt deutlich weniger als in Klasse III oder IV. Wer eine solche Leistung erwartet, sollte den Wechsel rechtzeitig prüfen – beim Elterngeld spätestens sieben Monate vor Beginn des Mutterschutzes, weil der Bemessungszeitraum zurückreicht.",
@@ -163,12 +150,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "lohnsteuer-berechnen",
-    titel: "Lohnsteuer berechnen 2026: Tarif, Freibeträge und Rechenweg",
-    beschreibung:
+    title: "Lohnsteuer berechnen 2026: Tarif, Freibeträge und Rechenweg",
+    description:
       "Lohnsteuer nach § 39b EStG berechnen – mit Vorsorgepauschale, Einkommensteuertarif 2026 und Solidaritätszuschlag.",
     heading: "Lohnsteuer berechnen",
     params: { brutto: 5000, klasse: 1 },
-    absaetze: [
+    about: [
       "Die Lohnsteuer ist keine eigene Steuerart, sondern eine Vorauszahlung auf die Einkommensteuer. Der Rechenweg nach § 39b EStG geht so: Vom Bruttojahreslohn werden der Arbeitnehmer-Pauschbetrag von 1.230 Euro, der Sonderausgaben-Pauschbetrag von 36 Euro und die Vorsorgepauschale abgezogen. Was übrig bleibt, ist der zu versteuernde Jahresbetrag, auf den der Einkommensteuertarif angewendet wird. Bei 5.000 Euro brutto im Monat sind das 46.644 Euro und daraus 9.389 Euro Lohnsteuer im Jahr.",
       "Der Tarif selbst besteht 2026 aus fünf Zonen. Bis zum Grundfreibetrag von 12.348 Euro fällt keine Steuer an. Darüber steigt der Grenzsteuersatz von 14 Prozent zunächst steil, dann flacher an, bis er ab 69.878 Euro konstant 42 Prozent beträgt; ab 277.826 Euro sind es 45 Prozent. Wichtig ist der Unterschied zwischen Grenz- und Durchschnittssteuersatz: Der Spitzensteuersatz gilt immer nur für den Teil des Einkommens oberhalb der Grenze, nie für das ganze Einkommen.",
       "Die Vorsorgepauschale ist der Posten, der am wenigsten bekannt ist und am meisten bewirkt. Sie ersetzt im Lohnsteuerabzug die tatsächlichen Vorsorgeaufwendungen und rechnet mit eigenen Sätzen – bei der Krankenversicherung etwa mit dem ermäßigten Beitragssatz von 14,0 statt 14,6 Prozent. Zum 1. Januar 2026 wurde sie umgebaut: Die Mindestvorsorgepauschale ist entfallen, dafür gibt es erstmals einen Teilbetrag für die Arbeitslosenversicherung, der allerdings nur bei niedrigen Löhnen wirksam wird.",
@@ -196,12 +183,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "sozialabgaben-berechnen",
-    titel: "Sozialabgaben berechnen 2026: Alle vier Zweige mit Grenzen",
-    beschreibung:
+    title: "Sozialabgaben berechnen 2026: Alle vier Zweige mit Grenzen",
+    description:
       "Renten-, Arbeitslosen-, Kranken- und Pflegeversicherung berechnen – mit Beitragsbemessungsgrenzen 2026 und Arbeitgeberanteil.",
     heading: "Sozialabgaben berechnen",
     params: { brutto: 4000, klasse: 1 },
-    absaetze: [
+    about: [
       "Die Sozialabgaben verteilen sich auf vier Zweige mit zusammen rund 21 Prozent Arbeitnehmeranteil: Rentenversicherung 9,3 Prozent, Krankenversicherung 7,3 Prozent plus die Hälfte des Zusatzbeitrags, Pflegeversicherung 1,8 Prozent und Arbeitslosenversicherung 1,3 Prozent. Bei 4.000 Euro brutto im Monat sind das zusammen 870 Euro – deutlich mehr als die Lohnsteuer in derselben Gehaltsklasse.",
       "Entscheidend sind die beiden Beitragsbemessungsgrenzen, denn oberhalb davon steigen die Beiträge nicht weiter. Für Renten- und Arbeitslosenversicherung liegt sie 2026 bei 101.400 Euro im Jahr, für Kranken- und Pflegeversicherung deutlich niedriger bei 69.750 Euro. Wer mehr verdient, zahlt auf den übersteigenden Teil keine Kranken- und Pflegebeiträge mehr. Genau deshalb sinkt die Abgabenquote bei hohen Einkommen wieder, obwohl der Steuersatz steigt.",
       "Zwei Sonderregeln fallen auf. Kinderlose ab 23 zahlen 0,6 Prozentpunkte mehr Pflegeversicherung, und diesen Zuschlag trägt der Arbeitnehmer allein – bei 4.000 Euro brutto sind das 24 Euro im Monat. Umgekehrt sinkt der Beitrag ab dem zweiten Kind um je 0,25 Punkte bis zum fünften Kind. Und Sachsen verteilt die Pflegeversicherung anders: Weil dort der Buß- und Bettag Feiertag blieb, zahlen Arbeitnehmer 0,5 Punkte mehr und Arbeitgeber entsprechend weniger.",
@@ -229,12 +216,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "kirchensteuer-berechnen",
-    titel: "Kirchensteuer berechnen: 8 oder 9 Prozent der Lohnsteuer",
-    beschreibung:
+    title: "Kirchensteuer berechnen: 8 oder 9 Prozent der Lohnsteuer",
+    description:
       "Kirchensteuer vom Gehalt berechnen – 8 Prozent in Bayern und Baden-Württemberg, 9 Prozent in den übrigen Ländern, mit Austrittsrechnung.",
     heading: "Kirchensteuer berechnen",
     params: { brutto: 4000, klasse: 1, kirche: 1, land: "nw" },
-    absaetze: [
+    about: [
       "Die Kirchensteuer bemisst sich nicht am Bruttolohn, sondern an der Lohnsteuer: 8 Prozent davon in Bayern und Baden-Württemberg, 9 Prozent in allen übrigen Bundesländern. Bei 4.000 Euro brutto in Steuerklasse I und rund 6.294 Euro Jahreslohnsteuer sind das in Nordrhein-Westfalen etwa 566 Euro im Jahr oder 47 Euro im Monat, in Bayern 504 Euro im Jahr.",
       "Weil die Bemessungsgrundlage die Lohnsteuer ist, wächst die Kirchensteuer überproportional mit dem Einkommen – sie folgt der Progression des Steuertarifs. Bei 3.000 Euro brutto sind es rund 26 Euro im Monat, bei 6.000 Euro schon rund 96 Euro. Gemindert wird sie durch Kinderfreibeträge: Anders als bei der Lohnsteuer wirken diese auf die Bemessungsgrundlage der Kirchensteuer voll durch.",
       "Ein Detail, das die Belastung dämpft: Die Kirchensteuer ist als Sonderausgabe vollständig von der Einkommensteuer abziehbar. Wer 566 Euro Kirchensteuer zahlt und einen Grenzsteuersatz von 35 Prozent hat, bekommt über die Steuererklärung rund 198 Euro zurück – die tatsächliche Belastung liegt damit bei etwa 368 Euro. Bei Kapitalerträgen läuft dieser Abzug automatisch über eine eigene Formel, weshalb dort aus 9 Prozent Kirchensteuer nur rund 1,6 Prozentpunkte zusätzliche Gesamtbelastung werden.",
@@ -262,12 +249,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "arbeitgeberkosten-berechnen",
-    titel: "Arbeitgeberkosten berechnen: Was eine Stelle wirklich kostet",
-    beschreibung:
+    title: "Arbeitgeberkosten berechnen: Was eine Stelle wirklich kostet",
+    description:
       "Arbeitgeberbrutto und Lohnnebenkosten berechnen – Arbeitgeberanteil zur Sozialversicherung, Gesamtkosten und der Abstand zum Netto.",
     heading: "Arbeitgeberkosten berechnen",
     params: { brutto: 4000, klasse: 1 },
-    absaetze: [
+    about: [
       "Zwischen dem, was eine Stelle kostet, und dem, was auf dem Konto ankommt, liegt ungefähr der Faktor zwei. Bei 4.000 Euro Bruttolohn zahlt der Arbeitgeber rund 846 Euro Sozialversicherungsanteil obendrauf, die Stelle kostet also etwa 4.846 Euro im Monat. Beim Arbeitnehmer kommen davon rund 2.606 Euro an. Von jedem Euro Arbeitgeberkosten landen damit knapp 54 Cent im Portemonnaie.",
       "Der Arbeitgeberanteil entspricht weitgehend dem des Arbeitnehmers, weil die Sozialversicherung paritätisch finanziert ist: je 9,3 Prozent Rentenversicherung, je 1,3 Prozent Arbeitslosenversicherung, je die Hälfte des Krankenkassenbeitrags samt Zusatzbeitrag und je 1,8 Prozent Pflegeversicherung. Nicht geteilt werden der Kinderlosenzuschlag, den der Arbeitnehmer allein trägt, und die sächsische Sonderverteilung bei der Pflegeversicherung.",
       "Nicht in dieser Rechnung enthalten sind die Umlagen U1 für Lohnfortzahlung im Krankheitsfall und U2 für Mutterschaftsaufwendungen, die Insolvenzgeldumlage sowie die Beiträge zur gesetzlichen Unfallversicherung – letztere trägt der Arbeitgeber allein, und ihre Höhe hängt von der Gefahrklasse der Branche ab. Zusammen machen diese Posten je nach Betrieb noch einmal etwa 1,5 bis 4 Prozent des Bruttolohns aus.",
@@ -295,12 +282,12 @@ export const variantenTexte: VariantenText[] = [
 
   {
     slug: "gehaltserhoehung-netto",
-    titel: "Gehaltserhöhung netto berechnen: Was von 100 Euro übrig bleibt",
-    beschreibung:
+    title: "Gehaltserhöhung netto berechnen: Was von 100 Euro übrig bleibt",
+    description:
       "Netto-Effekt einer Gehaltserhöhung berechnen – mit Grenzbelastung, Beitragsbemessungsgrenzen und dem Vergleich zu steuerfreien Extras.",
     heading: "Gehaltserhöhung netto berechnen",
     params: { brutto: 4000, klasse: 1 },
-    absaetze: [
+    about: [
       "Von hundert Euro mehr Brutto bleiben bei 4.000 Euro Ausgangsgehalt in Steuerklasse I rund 54 Euro netto. Diese Zahl – die Grenzbelastung – ist die einzige, die bei einer Gehaltsverhandlung zählt, und sie ist deutlich schlechter als der Durchschnittssatz von knapp 35 Prozent vermuten lässt. Der Rechner weist sie unter dem Ergebnis aus, indem er die gesamte Rechnung ein zweites Mal mit hundert Euro mehr durchführt.",
       "Der Verlauf ist nicht gleichmäßig. Bei 3.000 Euro brutto bleiben von hundert Euro noch rund 56 Euro, bei 5.000 Euro rund 51 Euro – und oberhalb der Beitragsbemessungsgrenze von 69.750 Euro im Jahr steigt der Wert wieder, weil Kranken- und Pflegebeiträge dort nicht weiter wachsen. Bei 12.500 Euro brutto im Monat bleiben deshalb wieder rund 56 Euro von hundert übrig – mehr als bei 5.000 Euro, obwohl der Steuersatz dort niedriger ist.",
       "Weil die Grenzbelastung so hoch ist, sind steuerfreie oder begünstigte Bestandteile oft mehr wert als mehr Brutto. Ein Sachbezug bis 50 Euro im Monat, das Deutschlandticket als Jobticket, ein steuerfreier Zuschuss zur Kinderbetreuung, Beiträge zur betrieblichen Altersvorsorge aus dem Bruttolohn oder die Inflationsausgleichs- und Erholungsbeihilfen kommen ganz oder überwiegend beim Arbeitnehmer an. Fünfzig Euro Sachbezug sind netto ungefähr so viel wert wie hundert Euro mehr Gehalt.",
