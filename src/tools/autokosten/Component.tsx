@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { autokostenAffiliate } from "./affiliate";
@@ -59,11 +60,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function AutokostenTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -86,18 +82,18 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
       };
     },
     serialize: (next) => ({
-      antrieb: diff(next.antrieb, DEFAULTS.antrieb),
-      verbrauch: diff(next.verbrauch, DEFAULTS.verbrauch),
-      preis: diff(next.kraftstoffpreis, DEFAULTS.kraftstoffpreis),
-      km: diff(next.kmProJahr, DEFAULTS.kmProJahr),
-      kaufpreis: diff(next.kaufpreis, DEFAULTS.kaufpreis),
-      restwert: diff(next.restwert, DEFAULTS.restwert),
-      haltedauer: diff(next.haltedauerJahre, DEFAULTS.haltedauerJahre),
-      steuer: diff(next.kfzSteuerJahr, DEFAULTS.kfzSteuerJahr),
-      versicherung: diff(next.versicherungJahr, DEFAULTS.versicherungJahr),
-      wartung: diff(next.wartungJahr, DEFAULTS.wartungJahr),
-      verschleiss: diff(next.verschleissJahr, DEFAULTS.verschleissJahr),
-      sonstiges: diff(next.sonstigesJahr, DEFAULTS.sonstigesJahr),
+      antrieb: urlValue(next.antrieb, DEFAULTS.antrieb),
+      verbrauch: urlValue(next.verbrauch, DEFAULTS.verbrauch),
+      preis: urlValue(next.kraftstoffpreis, DEFAULTS.kraftstoffpreis),
+      km: urlValue(next.kmProJahr, DEFAULTS.kmProJahr),
+      kaufpreis: urlValue(next.kaufpreis, DEFAULTS.kaufpreis),
+      restwert: urlValue(next.restwert, DEFAULTS.restwert),
+      haltedauer: urlValue(next.haltedauerJahre, DEFAULTS.haltedauerJahre),
+      steuer: urlValue(next.kfzSteuerJahr, DEFAULTS.kfzSteuerJahr),
+      versicherung: urlValue(next.versicherungJahr, DEFAULTS.versicherungJahr),
+      wartung: urlValue(next.wartungJahr, DEFAULTS.wartungJahr),
+      verschleiss: urlValue(next.verschleissJahr, DEFAULTS.verschleissJahr),
+      sonstiges: urlValue(next.sonstigesJahr, DEFAULTS.sonstigesJahr),
     }),
   });
 

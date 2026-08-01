@@ -17,6 +17,7 @@ import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatEuro, formatInteger } from "@/lib/format";
 import { toEuro } from "@/lib/finanzmath";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { energiekostenAffiliate } from "./affiliate";
@@ -125,7 +126,7 @@ function serialisiereTarif(
   const fallback = DEFAULTS[art];
   const out: Record<string, string> = {};
   for (const feld of Object.keys(keys) as (keyof TarifInput)[]) {
-    out[keys[feld]] = diff(tarif[feld], fallback[feld]);
+    out[keys[feld]] = urlValue(tarif[feld], fallback[feld]);
   }
   return out;
 }
@@ -169,10 +170,10 @@ export default function EnergiekostenTool({ params }: { params?: ToolParams }) {
     // Nur Abweichungen vom Default landen in der URL – bei achtzehn Feldern
     // wäre der Link sonst nicht mehr teilbar.
     serialize: (next) => ({
-      modus: diff(next.modus, DEFAULTS.modus),
-      personen: diff(next.personen, DEFAULTS.personen),
-      qm: diff(next.wohnflaecheM2, DEFAULTS.wohnflaecheM2),
-      standard: diff(next.standard, DEFAULTS.standard),
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      personen: urlValue(next.personen, DEFAULTS.personen),
+      qm: urlValue(next.wohnflaecheM2, DEFAULTS.wohnflaecheM2),
+      standard: urlValue(next.standard, DEFAULTS.standard),
       eww:
         next.warmwasserElektrisch === DEFAULTS.warmwasserElektrisch
           ? ""
@@ -626,11 +627,6 @@ function SparteCard({
       </details>
     </Card>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 /** Eingaben, die nicht jeder braucht, bleiben eingeklappt. */

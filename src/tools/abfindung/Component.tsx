@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { abfindungAffiliate } from "./affiliate";
@@ -44,11 +45,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function AbfindungTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -59,15 +55,15 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
       kirchensteuerPercent: toNumber(search.get("kirche"), fallback.kirchensteuerPercent),
     }),
     serialize: (next) => ({
-      zve: diff(next.zvEOhneAbfindung, DEFAULTS.zvEOhneAbfindung),
-      abfindung: diff(next.abfindungsbetrag, DEFAULTS.abfindungsbetrag),
+      zve: urlValue(next.zvEOhneAbfindung, DEFAULTS.zvEOhneAbfindung),
+      abfindung: urlValue(next.abfindungsbetrag, DEFAULTS.abfindungsbetrag),
       verheiratet:
         next.zusammenveranlagung === DEFAULTS.zusammenveranlagung
           ? ""
           : next.zusammenveranlagung
             ? "1"
             : "0",
-      kirche: diff(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
+      kirche: urlValue(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
     }),
   });
 

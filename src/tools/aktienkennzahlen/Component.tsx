@@ -10,6 +10,7 @@ import { PayoffDisplay, type PayoffTone } from "@/components/ui/PayoffDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { aktienAffiliate } from "./affiliate";
@@ -146,33 +147,33 @@ export default function AktienkennzahlenTool({
     // Nur Abweichungen vom Default landen in der URL – bei zwanzig Feldern
     // wäre ein vollständiger Query-String nicht mehr teilbar.
     serialize: (next) => ({
-      fokus: diff(next.fokus, DEFAULTS.fokus),
-      kurs: diff(next.kurs, DEFAULTS.kurs),
-      aktien: diff(next.aktienMio, DEFAULTS.aktienMio),
-      umsatz: diff(next.umsatzMio, DEFAULTS.umsatzMio),
-      ebitda: diff(next.ebitdaMio, DEFAULTS.ebitdaMio),
-      ebit: diff(next.ebitMio, DEFAULTS.ebitMio),
-      gewinn: diff(next.gewinnMio, DEFAULTS.gewinnMio),
-      ek: diff(next.eigenkapitalMio, DEFAULTS.eigenkapitalMio),
-      bilanz: diff(next.bilanzsummeMio, DEFAULTS.bilanzsummeMio),
-      schulden: diff(next.finanzschuldenMio, DEFAULTS.finanzschuldenMio),
-      cash: diff(next.liquiditaetMio, DEFAULTS.liquiditaetMio),
-      uv: diff(next.umlaufvermoegenMio, DEFAULTS.umlaufvermoegenMio),
-      kv: diff(
+      fokus: urlValue(next.fokus, DEFAULTS.fokus),
+      kurs: urlValue(next.kurs, DEFAULTS.kurs),
+      aktien: urlValue(next.aktienMio, DEFAULTS.aktienMio),
+      umsatz: urlValue(next.umsatzMio, DEFAULTS.umsatzMio),
+      ebitda: urlValue(next.ebitdaMio, DEFAULTS.ebitdaMio),
+      ebit: urlValue(next.ebitMio, DEFAULTS.ebitMio),
+      gewinn: urlValue(next.gewinnMio, DEFAULTS.gewinnMio),
+      ek: urlValue(next.eigenkapitalMio, DEFAULTS.eigenkapitalMio),
+      bilanz: urlValue(next.bilanzsummeMio, DEFAULTS.bilanzsummeMio),
+      schulden: urlValue(next.finanzschuldenMio, DEFAULTS.finanzschuldenMio),
+      cash: urlValue(next.liquiditaetMio, DEFAULTS.liquiditaetMio),
+      uv: urlValue(next.umlaufvermoegenMio, DEFAULTS.umlaufvermoegenMio),
+      kv: urlValue(
         next.kurzfristigeVerbindlichkeitenMio,
         DEFAULTS.kurzfristigeVerbindlichkeitenMio,
       ),
-      zins: diff(next.zinsaufwandMio, DEFAULTS.zinsaufwandMio),
-      ocf: diff(next.operativerCashflowMio, DEFAULTS.operativerCashflowMio),
-      capex: diff(next.investitionenMio, DEFAULTS.investitionenMio),
-      div: diff(next.dividendeJeAktie, DEFAULTS.dividendeJeAktie),
-      wachstum: diff(next.gewinnwachstumPercent, DEFAULTS.gewinnwachstumPercent),
-      fkgv: diff(next.faireKgv, DEFAULTS.faireKgv),
-      anspruch: diff(
+      zins: urlValue(next.zinsaufwandMio, DEFAULTS.zinsaufwandMio),
+      ocf: urlValue(next.operativerCashflowMio, DEFAULTS.operativerCashflowMio),
+      capex: urlValue(next.investitionenMio, DEFAULTS.investitionenMio),
+      div: urlValue(next.dividendeJeAktie, DEFAULTS.dividendeJeAktie),
+      wachstum: urlValue(next.gewinnwachstumPercent, DEFAULTS.gewinnwachstumPercent),
+      fkgv: urlValue(next.faireKgv, DEFAULTS.faireKgv),
+      anspruch: urlValue(
         next.renditeanspruchPercent,
         DEFAULTS.renditeanspruchPercent,
       ),
-      jahre: diff(next.horizontJahre, DEFAULTS.horizontJahre),
+      jahre: urlValue(next.horizontJahre, DEFAULTS.horizontJahre),
     }),
   });
 
@@ -757,11 +758,6 @@ export default function AktienkennzahlenTool({
 /* ---------------------------------------------------------------------------
  * Bausteine
  * ------------------------------------------------------------------------- */
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
 
 /** Millionenbetrag mit Einheit – Cent wären hier nur Rauschen. */
 const mio = (wert: number) => `${formatInteger(wert)} Mio. €`;

@@ -16,6 +16,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/tools/brueckentage/logic";
 import type { ToolParams } from "@/tools/types";
@@ -143,23 +144,23 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
     },
     // Nur Abweichungen vom Default landen in der URL – so bleibt der Link teilbar.
     serialize: (next) => ({
-      brutto: diff(next.brutto, DEFAULTS.brutto),
-      zeitraum: diff(next.zeitraum, DEFAULTS.zeitraum),
-      klasse: diff(next.steuerklasse, DEFAULTS.steuerklasse),
-      land: diff(next.region, DEFAULTS.region),
+      brutto: urlValue(next.brutto, DEFAULTS.brutto),
+      zeitraum: urlValue(next.zeitraum, DEFAULTS.zeitraum),
+      klasse: urlValue(next.steuerklasse, DEFAULTS.steuerklasse),
+      land: urlValue(next.region, DEFAULTS.region),
       kirche: bool(
         next.kirchensteuerpflichtig,
         DEFAULTS.kirchensteuerpflichtig,
       ),
-      freibetraege: diff(
+      freibetraege: urlValue(
         next.kinderfreibetraege,
         DEFAULTS.kinderfreibetraege,
       ),
-      kinder: diff(next.kinderZahl, DEFAULTS.kinderZahl),
+      kinder: urlValue(next.kinderZahl, DEFAULTS.kinderZahl),
       kinderlos: bool(next.kinderlos, DEFAULTS.kinderlos),
       gkv: bool(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
-      zusatz: diff(next.zusatzbeitragPercent, DEFAULTS.zusatzbeitragPercent),
-      pkv: diff(next.privatBeitragMonat, DEFAULTS.privatBeitragMonat),
+      zusatz: urlValue(next.zusatzbeitragPercent, DEFAULTS.zusatzbeitragPercent),
+      pkv: urlValue(next.privatBeitragMonat, DEFAULTS.privatBeitragMonat),
       rv: bool(
         next.rentenversicherungspflichtig,
         DEFAULTS.rentenversicherungspflichtig,
@@ -528,11 +529,6 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
       <AffiliateBlock slots={bruttonettoAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 /** Schalter als 0/1, damit ein bewusstes Aus vom Default unterscheidbar bleibt. */

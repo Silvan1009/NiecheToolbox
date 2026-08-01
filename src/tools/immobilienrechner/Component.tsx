@@ -15,6 +15,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/tools/brueckentage/logic";
 import type { ToolParams } from "@/tools/types";
@@ -156,35 +157,35 @@ export default function ImmobilienrechnerTool({
     // Nur Abweichungen vom Default landen in der URL. Bei sechsundzwanzig
     // Feldern wäre ein vollständiger Query-String nicht mehr teilbar.
     serialize: (next) => ({
-      modus: diff(next.modus, DEFAULTS.modus),
-      preis: diff(next.kaufpreis, DEFAULTS.kaufpreis),
-      qm: diff(next.wohnflaeche, DEFAULTS.wohnflaeche),
-      modern: diff(next.modernisierung, DEFAULTS.modernisierung),
-      land: diff(next.region, DEFAULTS.region),
-      grest: diff(next.grestPercent, DEFAULTS.grestPercent),
-      notar: diff(next.notarPercent, DEFAULTS.notarPercent),
-      makler: diff(next.maklerPercent, DEFAULTS.maklerPercent),
-      ek: diff(next.eigenkapital, DEFAULTS.eigenkapital),
-      zins: diff(next.sollzinsPercent, DEFAULTS.sollzinsPercent),
-      tilg: diff(next.tilgungPercent, DEFAULTS.tilgungPercent),
-      bindung: diff(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
-      miete: diff(next.kaltmieteMonat, DEFAULTS.kaltmieteMonat),
-      mietplus: diff(next.mietsteigerungPercent, DEFAULTS.mietsteigerungPercent),
-      hausgeld: diff(next.hausgeldMonat, DEFAULTS.hausgeldMonat),
-      instand: diff(next.instandhaltungProQmJahr, DEFAULTS.instandhaltungProQmJahr),
-      verwaltung: diff(next.verwaltungMonat, DEFAULTS.verwaltungMonat),
-      ausfall: diff(next.mietausfallPercent, DEFAULTS.mietausfallPercent),
-      gebaeude: diff(next.gebaeudeanteilPercent, DEFAULTS.gebaeudeanteilPercent),
-      afa: diff(next.afaArt, DEFAULTS.afaArt),
-      steuer: diff(next.grenzsteuersatzPercent, DEFAULTS.grenzsteuersatzPercent),
-      sparmiete: diff(next.ersparteMieteMonat, DEFAULTS.ersparteMieteMonat),
-      altrendite: diff(
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      preis: urlValue(next.kaufpreis, DEFAULTS.kaufpreis),
+      qm: urlValue(next.wohnflaeche, DEFAULTS.wohnflaeche),
+      modern: urlValue(next.modernisierung, DEFAULTS.modernisierung),
+      land: urlValue(next.region, DEFAULTS.region),
+      grest: urlValue(next.grestPercent, DEFAULTS.grestPercent),
+      notar: urlValue(next.notarPercent, DEFAULTS.notarPercent),
+      makler: urlValue(next.maklerPercent, DEFAULTS.maklerPercent),
+      ek: urlValue(next.eigenkapital, DEFAULTS.eigenkapital),
+      zins: urlValue(next.sollzinsPercent, DEFAULTS.sollzinsPercent),
+      tilg: urlValue(next.tilgungPercent, DEFAULTS.tilgungPercent),
+      bindung: urlValue(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
+      miete: urlValue(next.kaltmieteMonat, DEFAULTS.kaltmieteMonat),
+      mietplus: urlValue(next.mietsteigerungPercent, DEFAULTS.mietsteigerungPercent),
+      hausgeld: urlValue(next.hausgeldMonat, DEFAULTS.hausgeldMonat),
+      instand: urlValue(next.instandhaltungProQmJahr, DEFAULTS.instandhaltungProQmJahr),
+      verwaltung: urlValue(next.verwaltungMonat, DEFAULTS.verwaltungMonat),
+      ausfall: urlValue(next.mietausfallPercent, DEFAULTS.mietausfallPercent),
+      gebaeude: urlValue(next.gebaeudeanteilPercent, DEFAULTS.gebaeudeanteilPercent),
+      afa: urlValue(next.afaArt, DEFAULTS.afaArt),
+      steuer: urlValue(next.grenzsteuersatzPercent, DEFAULTS.grenzsteuersatzPercent),
+      sparmiete: urlValue(next.ersparteMieteMonat, DEFAULTS.ersparteMieteMonat),
+      altrendite: urlValue(
         next.alternativrenditePercent,
         DEFAULTS.alternativrenditePercent,
       ),
-      jahre: diff(next.horizontJahre, DEFAULTS.horizontJahre),
-      wertplus: diff(next.wertsteigerungPercent, DEFAULTS.wertsteigerungPercent),
-      verkauf: diff(next.verkaufskostenPercent, DEFAULTS.verkaufskostenPercent),
+      jahre: urlValue(next.horizontJahre, DEFAULTS.horizontJahre),
+      wertplus: urlValue(next.wertsteigerungPercent, DEFAULTS.wertsteigerungPercent),
+      verkauf: urlValue(next.verkaufskostenPercent, DEFAULTS.verkaufskostenPercent),
     }),
   });
 
@@ -943,11 +944,6 @@ export default function ImmobilienrechnerTool({
       <AffiliateBlock slots={immobilienAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 function CardTitle({ children }: { children: ReactNode }) {

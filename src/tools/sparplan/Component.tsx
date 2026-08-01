@@ -16,6 +16,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { sparplanAffiliate } from "./affiliate";
@@ -130,28 +131,28 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
     // Nur Abweichungen vom Default landen in der URL – sonst wäre der Link
     // bei vierzehn Feldern nicht mehr teilbar.
     serialize: (next) => ({
-      modus: diff(next.modus, DEFAULTS.modus),
-      start: diff(next.startkapital, DEFAULTS.startkapital),
-      rate: diff(next.sparrateMonat, DEFAULTS.sparrateMonat),
-      ziel: diff(next.zielkapital, DEFAULTS.zielkapital),
-      dyn: diff(next.dynamikPercent, DEFAULTS.dynamikPercent),
-      rendite: diff(next.renditePercent, DEFAULTS.renditePercent),
-      jahre: diff(next.laufzeitJahre, DEFAULTS.laufzeitJahre),
-      kosten: diff(next.kostenPercent, DEFAULTS.kostenPercent),
-      aufschlag: diff(
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      start: urlValue(next.startkapital, DEFAULTS.startkapital),
+      rate: urlValue(next.sparrateMonat, DEFAULTS.sparrateMonat),
+      ziel: urlValue(next.zielkapital, DEFAULTS.zielkapital),
+      dyn: urlValue(next.dynamikPercent, DEFAULTS.dynamikPercent),
+      rendite: urlValue(next.renditePercent, DEFAULTS.renditePercent),
+      jahre: urlValue(next.laufzeitJahre, DEFAULTS.laufzeitJahre),
+      kosten: urlValue(next.kostenPercent, DEFAULTS.kostenPercent),
+      aufschlag: urlValue(
         next.ausgabeaufschlagPercent,
         DEFAULTS.ausgabeaufschlagPercent,
       ),
-      inflation: diff(next.inflationPercent, DEFAULTS.inflationPercent),
-      art: diff(next.anlageart, DEFAULTS.anlageart),
+      inflation: urlValue(next.inflationPercent, DEFAULTS.inflationPercent),
+      art: urlValue(next.anlageart, DEFAULTS.anlageart),
       steuern:
         next.steuernBeruecksichtigen === DEFAULTS.steuernBeruecksichtigen
           ? ""
           : next.steuernBeruecksichtigen
             ? "1"
             : "0",
-      kirche: diff(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
-      entnahme: diff(next.entnahmeJahre, DEFAULTS.entnahmeJahre),
+      kirche: urlValue(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
+      entnahme: urlValue(next.entnahmeJahre, DEFAULTS.entnahmeJahre),
     }),
   });
 
@@ -612,11 +613,6 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
       <AffiliateBlock slots={sparplanAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 function CardTitle({ children }: { children: ReactNode }) {

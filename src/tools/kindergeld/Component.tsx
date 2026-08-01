@@ -18,6 +18,7 @@ import { ShareBar } from "@/components/ui/ShareBar";
 import { toEuro } from "@/lib/finanzmath";
 import { formatDate, formatEuro, plural } from "@/lib/format";
 import { isValidIso } from "@/lib/date";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { regions, type RegionCode } from "@/tools/brueckentage/logic";
 import type { ToolParams } from "@/tools/types";
@@ -111,16 +112,16 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
         encodeKinder(next.kinder) === encodeKinder(DEFAULTS.kinder)
           ? ""
           : encodeKinder(next.kinder),
-      jahr: diff(next.jahr, DEFAULTS.jahr),
-      zve: diff(next.zvE, DEFAULTS.zvE),
-      ver: diff(next.veranlagung, DEFAULTS.veranlagung),
+      jahr: urlValue(next.jahr, DEFAULTS.jahr),
+      zve: urlValue(next.zvE, DEFAULTS.zvE),
+      ver: urlValue(next.veranlagung, DEFAULTS.veranlagung),
       kist:
         next.kirchensteuer === DEFAULTS.kirchensteuer
           ? ""
           : next.kirchensteuer
             ? "1"
             : "0",
-      land: diff(next.region, DEFAULTS.region),
+      land: urlValue(next.region, DEFAULTS.region),
     }),
   });
 
@@ -478,11 +479,6 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
       <AffiliateBlock slots={kindergeldAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 function CardTitle({ children }: { children: ReactNode }) {

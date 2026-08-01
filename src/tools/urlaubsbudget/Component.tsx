@@ -11,6 +11,7 @@ import { ShareBar } from "@/components/ui/ShareBar";
 import { isValidIso, todayIso } from "@/lib/date";
 import { toEuro } from "@/lib/finanzmath";
 import { formatEuro, plural } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { urlaubsbudgetAffiliate } from "./affiliate";
@@ -114,26 +115,26 @@ export default function UrlaubsbudgetTool({ params }: { params?: ToolParams }) {
     // Nur Abweichungen vom Default landen in der URL – sonst wäre der Link bei
     // vierzehn Feldern nicht mehr teilbar.
     serialize: (next) => ({
-      erw: diff(next.erwachsene, DEFAULTS.erwachsene),
-      kind: diff(next.kinder, DEFAULTS.kinder),
-      kf: diff(next.kindFaktorPercent, DEFAULTS.kindFaktorPercent),
-      naechte: diff(next.naechte, DEFAULTS.naechte),
-      anreise: diff(next.anreiseGesamt, DEFAULTS.anreiseGesamt),
-      anreisepp: diff(next.anreiseProPerson, DEFAULTS.anreiseProPerson),
-      nacht: diff(next.unterkunftProNacht, DEFAULTS.unterkunftProNacht),
-      essen: diff(next.verpflegungProPersonTag, DEFAULTS.verpflegungProPersonTag),
-      aktiv: diff(
+      erw: urlValue(next.erwachsene, DEFAULTS.erwachsene),
+      kind: urlValue(next.kinder, DEFAULTS.kinder),
+      kf: urlValue(next.kindFaktorPercent, DEFAULTS.kindFaktorPercent),
+      naechte: urlValue(next.naechte, DEFAULTS.naechte),
+      anreise: urlValue(next.anreiseGesamt, DEFAULTS.anreiseGesamt),
+      anreisepp: urlValue(next.anreiseProPerson, DEFAULTS.anreiseProPerson),
+      nacht: urlValue(next.unterkunftProNacht, DEFAULTS.unterkunftProNacht),
+      essen: urlValue(next.verpflegungProPersonTag, DEFAULTS.verpflegungProPersonTag),
+      aktiv: urlValue(
         next.aktivitaetenProPersonTag,
         DEFAULTS.aktivitaetenProPersonTag,
       ),
-      transport: diff(
+      transport: urlValue(
         next.transportVorOrtGesamt,
         DEFAULTS.transportVorOrtGesamt,
       ),
-      vers: diff(next.versicherungGesamt, DEFAULTS.versicherungGesamt),
-      puffer: diff(next.pufferPercent, DEFAULTS.pufferPercent),
-      ruecklage: diff(next.ruecklageVorhanden, DEFAULTS.ruecklageVorhanden),
-      monate: diff(next.monateBisAbreise, DEFAULTS.monateBisAbreise),
+      vers: urlValue(next.versicherungGesamt, DEFAULTS.versicherungGesamt),
+      puffer: urlValue(next.pufferPercent, DEFAULTS.pufferPercent),
+      ruecklage: urlValue(next.ruecklageVorhanden, DEFAULTS.ruecklageVorhanden),
+      monate: urlValue(next.monateBisAbreise, DEFAULTS.monateBisAbreise),
     }),
   });
 
@@ -512,11 +513,6 @@ export default function UrlaubsbudgetTool({ params }: { params?: ToolParams }) {
       <AffiliateBlock slots={urlaubsbudgetAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 function CardTitle({ children }: { children: ReactNode }) {

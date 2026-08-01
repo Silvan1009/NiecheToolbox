@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { elterngeldAffiliate } from "./affiliate";
@@ -52,11 +53,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function ElterngeldTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -68,16 +64,16 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
       bezugsmonate: toNumber(search.get("monate"), fallback.bezugsmonate),
     }),
     serialize: (next) => ({
-      netto: diff(next.nettoEinkommenVorGeburt, DEFAULTS.nettoEinkommenVorGeburt),
+      netto: urlValue(next.nettoEinkommenVorGeburt, DEFAULTS.nettoEinkommenVorGeburt),
       geschwister:
         next.geschwisterbonus === DEFAULTS.geschwisterbonus
           ? ""
           : next.geschwisterbonus
             ? "1"
             : "0",
-      mehrlinge: diff(next.mehrlingsKinder, DEFAULTS.mehrlingsKinder),
-      modus: diff(next.modus, DEFAULTS.modus),
-      monate: diff(next.bezugsmonate, DEFAULTS.bezugsmonate),
+      mehrlinge: urlValue(next.mehrlingsKinder, DEFAULTS.mehrlingsKinder),
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      monate: urlValue(next.bezugsmonate, DEFAULTS.bezugsmonate),
     }),
   });
 

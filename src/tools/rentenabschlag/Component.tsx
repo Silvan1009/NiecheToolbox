@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { rentenabschlagAffiliate } from "./affiliate";
@@ -34,11 +35,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function RentenabschlagTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -50,11 +46,11 @@ export default function RentenabschlagTool({ params }: { params?: ToolParams }) 
       lebenserwartung: toNumber(search.get("leben"), fallback.lebenserwartung),
     }),
     serialize: (next) => ({
-      jahrgang: diff(next.geburtsjahr, DEFAULTS.geburtsjahr),
-      alterj: diff(next.geplantesAlterJahre, DEFAULTS.geplantesAlterJahre),
-      alterm: diff(next.geplantesAlterMonate, DEFAULTS.geplantesAlterMonate),
-      rente: diff(next.erwarteteRegelrente, DEFAULTS.erwarteteRegelrente),
-      leben: diff(next.lebenserwartung, DEFAULTS.lebenserwartung),
+      jahrgang: urlValue(next.geburtsjahr, DEFAULTS.geburtsjahr),
+      alterj: urlValue(next.geplantesAlterJahre, DEFAULTS.geplantesAlterJahre),
+      alterm: urlValue(next.geplantesAlterMonate, DEFAULTS.geplantesAlterMonate),
+      rente: urlValue(next.erwarteteRegelrente, DEFAULTS.erwarteteRegelrente),
+      leben: urlValue(next.lebenserwartung, DEFAULTS.lebenserwartung),
     }),
   });
 

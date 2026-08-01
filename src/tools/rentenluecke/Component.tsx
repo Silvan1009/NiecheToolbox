@@ -9,6 +9,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { rentenlueckeAffiliate } from "./affiliate";
@@ -68,11 +69,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -115,23 +111,23 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
       };
     },
     serialize: (next) => ({
-      alter: diff(next.aktuellesAlter, DEFAULTS.aktuellesAlter),
-      renteneintritt: diff(next.renteneintrittsalter, DEFAULTS.renteneintrittsalter),
-      leben: diff(next.lebenserwartung, DEFAULTS.lebenserwartung),
-      modus: diff(next.einkommenModus, DEFAULTS.einkommenModus),
-      netto: diff(next.nettoEinkommen, DEFAULTS.nettoEinkommen),
-      niveau: diff(next.versorgungsniveauPercent, DEFAULTS.versorgungsniveauPercent),
-      wunsch: diff(next.gewuenschtesEinkommenFest, DEFAULTS.gewuenschtesEinkommenFest),
-      gesetzlich: diff(next.gesetzlicheRente, DEFAULTS.gesetzlicheRente),
-      weitere: diff(next.weitereRenten, DEFAULTS.weitereRenten),
-      vermoegen: diff(next.vorhandenesVermoegen, DEFAULTS.vorhandenesVermoegen),
-      sparrate: diff(next.monatlicheSparrate, DEFAULTS.monatlicheSparrate),
-      renditean: diff(next.renditeAnsparphasePercent, DEFAULTS.renditeAnsparphasePercent),
-      renditerente: diff(
+      alter: urlValue(next.aktuellesAlter, DEFAULTS.aktuellesAlter),
+      renteneintritt: urlValue(next.renteneintrittsalter, DEFAULTS.renteneintrittsalter),
+      leben: urlValue(next.lebenserwartung, DEFAULTS.lebenserwartung),
+      modus: urlValue(next.einkommenModus, DEFAULTS.einkommenModus),
+      netto: urlValue(next.nettoEinkommen, DEFAULTS.nettoEinkommen),
+      niveau: urlValue(next.versorgungsniveauPercent, DEFAULTS.versorgungsniveauPercent),
+      wunsch: urlValue(next.gewuenschtesEinkommenFest, DEFAULTS.gewuenschtesEinkommenFest),
+      gesetzlich: urlValue(next.gesetzlicheRente, DEFAULTS.gesetzlicheRente),
+      weitere: urlValue(next.weitereRenten, DEFAULTS.weitereRenten),
+      vermoegen: urlValue(next.vorhandenesVermoegen, DEFAULTS.vorhandenesVermoegen),
+      sparrate: urlValue(next.monatlicheSparrate, DEFAULTS.monatlicheSparrate),
+      renditean: urlValue(next.renditeAnsparphasePercent, DEFAULTS.renditeAnsparphasePercent),
+      renditerente: urlValue(
         next.renditeRentenphasePercent,
         DEFAULTS.renditeRentenphasePercent,
       ),
-      inflation: diff(next.inflationPercent, DEFAULTS.inflationPercent),
+      inflation: urlValue(next.inflationPercent, DEFAULTS.inflationPercent),
     }),
   });
 

@@ -9,6 +9,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatEuro, formatInteger } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { erbschaftsteuerAffiliate } from "./affiliate";
@@ -60,11 +61,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function ErbschaftsteuerTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -88,14 +84,14 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
       };
     },
     serialize: (next) => ({
-      modus: diff(next.modus, DEFAULTS.modus),
-      verwandtschaft: diff(next.verwandtschaft, DEFAULTS.verwandtschaft),
-      wert: diff(next.vermoegenswert, DEFAULTS.vermoegenswert),
-      verbindlichkeiten: diff(
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      verwandtschaft: urlValue(next.verwandtschaft, DEFAULTS.verwandtschaft),
+      wert: urlValue(next.vermoegenswert, DEFAULTS.vermoegenswert),
+      verbindlichkeiten: urlValue(
         next.nachlassverbindlichkeiten,
         DEFAULTS.nachlassverbindlichkeiten,
       ),
-      genutzt: diff(next.bereitsGenutzterFreibetrag, DEFAULTS.bereitsGenutzterFreibetrag),
+      genutzt: urlValue(next.bereitsGenutzterFreibetrag, DEFAULTS.bereitsGenutzterFreibetrag),
     }),
   });
 

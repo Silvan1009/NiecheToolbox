@@ -14,6 +14,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { kreditAffiliate } from "./affiliate";
@@ -107,18 +108,18 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
     },
     // Nur Abweichungen vom Default landen in der URL – so bleibt der Link teilbar.
     serialize: (next) => ({
-      modus: diff(next.modus, DEFAULTS.modus),
-      betrag: diff(next.kreditbetrag, DEFAULTS.kreditbetrag),
-      zins: diff(next.sollzinsPercent, DEFAULTS.sollzinsPercent),
-      jahre: diff(next.laufzeitJahre, DEFAULTS.laufzeitJahre),
-      rate: diff(next.wunschrateMonat, DEFAULTS.wunschrateMonat),
-      sonder: diff(next.sondertilgungJahr, DEFAULTS.sondertilgungJahr),
-      gebuehr: diff(
+      modus: urlValue(next.modus, DEFAULTS.modus),
+      betrag: urlValue(next.kreditbetrag, DEFAULTS.kreditbetrag),
+      zins: urlValue(next.sollzinsPercent, DEFAULTS.sollzinsPercent),
+      jahre: urlValue(next.laufzeitJahre, DEFAULTS.laufzeitJahre),
+      rate: urlValue(next.wunschrateMonat, DEFAULTS.wunschrateMonat),
+      sonder: urlValue(next.sondertilgungJahr, DEFAULTS.sondertilgungJahr),
+      gebuehr: urlValue(
         next.bearbeitungsgebuehrPercent,
         DEFAULTS.bearbeitungsgebuehrPercent,
       ),
-      rsv: diff(next.restschuldversicherung, DEFAULTS.restschuldversicherung),
-      bindung: diff(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
+      rsv: urlValue(next.restschuldversicherung, DEFAULTS.restschuldversicherung),
+      bindung: urlValue(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
     }),
   });
 
@@ -471,11 +472,6 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
       <AffiliateBlock slots={kreditAffiliate} result={result} />
     </div>
   );
-}
-
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
 }
 
 function CardTitle({ children }: { children: ReactNode }) {

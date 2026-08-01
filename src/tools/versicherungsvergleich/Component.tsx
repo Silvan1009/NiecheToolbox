@@ -8,6 +8,7 @@ import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatEuro } from "@/lib/format";
+import { urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { versicherungsvergleichAffiliate } from "./affiliate";
@@ -158,11 +159,6 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-/** Leerer String heißt: Schlüssel aus der URL entfernen. */
-function diff(value: string | number, fallback: string | number): string {
-  return value === fallback ? "" : String(value);
-}
-
 export default function VersicherungsvergleichTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
@@ -173,28 +169,28 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
       bu: readBu(search, fallback.bu),
     }),
     serialize: (next) => ({
-      art: diff(next.art, DEFAULTS.art),
-      kfz_deckung: diff(next.kfz.deckung, DEFAULTS.kfz.deckung),
-      kfz_sf: diff(next.kfz.sfKlasse, DEFAULTS.kfz.sfKlasse),
-      kfz_region: diff(next.kfz.region, DEFAULTS.kfz.region),
-      kfz_fahrzeug: diff(next.kfz.fahrzeug, DEFAULTS.kfz.fahrzeug),
-      kfz_alter: diff(next.kfz.fahrerAlter, DEFAULTS.kfz.fahrerAlter),
-      kfz_km: diff(next.kfz.kmProJahr, DEFAULTS.kfz.kmProJahr),
-      kfz_beitrag: diff(next.kfz.eigenerBeitragJahr, DEFAULTS.kfz.eigenerBeitragJahr),
-      hp_kreis: diff(next.haftpflicht.personenkreis, DEFAULTS.haftpflicht.personenkreis),
+      art: urlValue(next.art, DEFAULTS.art),
+      kfz_deckung: urlValue(next.kfz.deckung, DEFAULTS.kfz.deckung),
+      kfz_sf: urlValue(next.kfz.sfKlasse, DEFAULTS.kfz.sfKlasse),
+      kfz_region: urlValue(next.kfz.region, DEFAULTS.kfz.region),
+      kfz_fahrzeug: urlValue(next.kfz.fahrzeug, DEFAULTS.kfz.fahrzeug),
+      kfz_alter: urlValue(next.kfz.fahrerAlter, DEFAULTS.kfz.fahrerAlter),
+      kfz_km: urlValue(next.kfz.kmProJahr, DEFAULTS.kfz.kmProJahr),
+      kfz_beitrag: urlValue(next.kfz.eigenerBeitragJahr, DEFAULTS.kfz.eigenerBeitragJahr),
+      hp_kreis: urlValue(next.haftpflicht.personenkreis, DEFAULTS.haftpflicht.personenkreis),
       hp_sb: next.haftpflicht.mitSelbstbeteiligung === DEFAULTS.haftpflicht.mitSelbstbeteiligung
         ? ""
         : next.haftpflicht.mitSelbstbeteiligung
           ? "1"
           : "0",
-      hp_beitrag: diff(
+      hp_beitrag: urlValue(
         next.haftpflicht.eigenerBeitragJahr,
         DEFAULTS.haftpflicht.eigenerBeitragJahr,
       ),
-      bu_alter: diff(next.bu.alterBeiEintritt, DEFAULTS.bu.alterBeiEintritt),
-      bu_rente: diff(next.bu.buRenteMonat, DEFAULTS.bu.buRenteMonat),
-      bu_risiko: diff(next.bu.risikogruppe, DEFAULTS.bu.risikogruppe),
-      bu_beitrag: diff(next.bu.eigenerBeitragMonat, DEFAULTS.bu.eigenerBeitragMonat),
+      bu_alter: urlValue(next.bu.alterBeiEintritt, DEFAULTS.bu.alterBeiEintritt),
+      bu_rente: urlValue(next.bu.buRenteMonat, DEFAULTS.bu.buRenteMonat),
+      bu_risiko: urlValue(next.bu.risikogruppe, DEFAULTS.bu.risikogruppe),
+      bu_beitrag: urlValue(next.bu.eigenerBeitragMonat, DEFAULTS.bu.eigenerBeitragMonat),
     }),
   });
 
