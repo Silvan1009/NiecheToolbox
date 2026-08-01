@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ads, analytics, site } from "@/config/site";
+import { toolPath } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
 import { ConsentSettingsButton } from "./consent/ConsentSettingsButton";
 
@@ -36,7 +37,7 @@ export function SiteFooter() {
                 {tools.map((tool) => (
                   <li key={tool.slug}>
                     <Link
-                      href={`/tools/${tool.slug}`}
+                      href={toolPath(tool.slug)}
                       className="text-muted transition-colors duration-(--dur-fast) hover:text-ink"
                     >
                       {tool.name}

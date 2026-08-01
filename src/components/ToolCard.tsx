@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { toolPath } from "@/lib/seo";
 import { categoryLabels, type ToolManifest } from "@/tools/types";
 
 export function ToolCard({
@@ -19,7 +20,7 @@ export function ToolCard({
 
   return (
     <Link
-      href={`/tools/${tool.slug}`}
+      href={toolPath(tool.slug)}
       className="group surface-soft flex w-full flex-col p-6 transition-[box-shadow,transform] duration-(--dur-base) ease-(--ease-out) hover:-translate-y-0.5 hover:shadow-lift"
     >
       <div className="flex items-center gap-3">

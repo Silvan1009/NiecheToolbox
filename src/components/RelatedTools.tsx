@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { toolPath } from "@/lib/seo";
 import { relatedTools } from "@/tools/registry";
 
 /** Interne Verlinkung zwischen thematisch nahen Tools. */
@@ -21,7 +22,7 @@ export function RelatedTools({ slug }: { slug: string }) {
           return (
             <li key={tool.slug}>
               <Link
-                href={`/tools/${tool.slug}`}
+                href={toolPath(tool.slug)}
                 className="group surface-soft flex items-center gap-3 p-4 transition-shadow duration-(--dur-base) hover:shadow-lift"
               >
                 <span className="grid size-9 shrink-0 place-items-center rounded-control bg-accent-soft text-accent">
