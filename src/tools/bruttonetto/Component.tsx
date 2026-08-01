@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { Card, Disclosure } from "@/components/ui/Card";
+import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
   SegmentedControl,
@@ -533,14 +533,6 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
 /** Schalter als 0/1, damit ein bewusstes Aus vom Default unterscheidbar bleibt. */
 function bool(value: boolean, fallback: boolean): string {
   return value === fallback ? "" : value ? "1" : "0";
-}
-
-function CardTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="font-display text-lg font-semibold tracking-tight">
-      {children}
-    </h2>
-  );
 }
 
 function UnitInput({

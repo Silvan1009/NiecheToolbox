@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { Card } from "@/components/ui/Card";
+import { Card, CardTitle } from "@/components/ui/Card";
 import { Field, SegmentedControl, Stepper, TextInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -385,12 +385,6 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
 
       <AffiliateBlock slots={autokostenAffiliate} result={result} />
     </div>
-  );
-}
-
-function CardTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="font-display text-lg font-semibold tracking-tight">{children}</h2>
   );
 }
 

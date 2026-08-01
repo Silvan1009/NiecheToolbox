@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { Card, Disclosure } from "@/components/ui/Card";
+import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
   SegmentedControl,
@@ -612,14 +612,6 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
 
       <AffiliateBlock slots={sparplanAffiliate} result={result} />
     </div>
-  );
-}
-
-function CardTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="font-display text-lg font-semibold tracking-tight">
-      {children}
-    </h2>
   );
 }
 

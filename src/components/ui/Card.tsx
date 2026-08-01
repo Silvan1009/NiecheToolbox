@@ -19,6 +19,15 @@ export function Card({
   );
 }
 
+/** Überschrift einer Karte. Immer h2 – die h1 gehört der Seite, nicht der Karte. */
+export function CardTitle({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="font-display text-lg font-semibold tracking-tight">
+      {children}
+    </h2>
+  );
+}
+
 /** Eine Karte, die zugeklappt startet – <details>, kein State nötig. */
 export function Disclosure({
   title,

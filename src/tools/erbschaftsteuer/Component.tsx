@@ -1,9 +1,9 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { Card } from "@/components/ui/Card";
+import { Card, CardTitle } from "@/components/ui/Card";
 import { Field, SegmentedControl, Select, TextInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -354,12 +354,6 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
 
       <AffiliateBlock slots={erbschaftsteuerAffiliate} result={result} />
     </div>
-  );
-}
-
-function CardTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="font-display text-lg font-semibold tracking-tight">{children}</h2>
   );
 }
 
