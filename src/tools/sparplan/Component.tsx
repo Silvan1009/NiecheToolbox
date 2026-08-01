@@ -3,7 +3,7 @@
 import { useMemo, type ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { Card } from "@/components/ui/Card";
+import { Card, Disclosure } from "@/components/ui/Card";
 import {
   Field,
   SegmentedControl,
@@ -253,7 +253,7 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
         </div>
       </Card>
 
-      <Klapp
+      <Disclosure
         title="Kosten und Dynamik"
         hint="Fondsgebühr, Ausgabeaufschlag und eine jährlich steigende Rate."
       >
@@ -312,9 +312,9 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
             />
           </Field>
         </div>
-      </Klapp>
+      </Disclosure>
 
-      <Klapp
+      <Disclosure
         title="Steuern"
         hint={`Abgeltungsteuer, Teilfreistellung und Vorabpauschale. Stand: ${STEUER_STAND.slice(0, 4)}.`}
       >
@@ -367,7 +367,7 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
             </Field>
           </div>
         </div>
-      </Klapp>
+      </Disclosure>
 
       <ResultPanel
         footer={
@@ -620,35 +620,6 @@ function CardTitle({ children }: { children: ReactNode }) {
     <h2 className="font-display text-lg font-semibold tracking-tight">
       {children}
     </h2>
-  );
-}
-
-/** Eingaben, die nicht jeder braucht, bleiben eingeklappt. */
-function Klapp({
-  title,
-  hint,
-  children,
-}: {
-  title: string;
-  hint: string;
-  children: ReactNode;
-}) {
-  return (
-    <details className="group overflow-hidden rounded-card bg-surface shadow-[var(--elev-soft),var(--elev-inset)]">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 transition-colors duration-(--dur-fast) hover:bg-ink-soft">
-        <span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            {title}
-          </span>
-          <span className="mt-0.5 block text-[13px] text-muted">{hint}</span>
-        </span>
-        <ChevronDown
-          className="size-4 shrink-0 text-muted transition-transform duration-(--dur-base) group-open:rotate-180"
-          aria-hidden="true"
-        />
-      </summary>
-      <div className="px-6 pb-6">{children}</div>
-    </details>
   );
 }
 
