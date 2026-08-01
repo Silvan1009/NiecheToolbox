@@ -22,7 +22,7 @@
  * und nicht statt dessen.
  *
  * Der Einkommensteuertarif wird nicht neu implementiert, sondern aus
- * bruttonetto/steuerdaten.ts importiert. Eine zweite Fassung von § 32a EStG
+ * lib/steuerdaten.ts importiert. Eine zweite Fassung von § 32a EStG
  * wäre die zweite Stelle, an der ein Fehler einzeln gefunden werden müsste.
  *
  * Gerechnet wird in ganzen Cent. Der Tarif selbst liefert volle Euro, so will
@@ -31,7 +31,7 @@
 
 import { addMonths, endOfMonth, fullYearsBetween, isValidIso, todayIso, type Iso } from "@/lib/date";
 import { cents, nn } from "@/lib/finanzmath";
-import type { RegionCode } from "@/tools/brueckentage/logic";
+import type { RegionCode } from "@/lib/regionen";
 import {
   BETREUUNGSFREIBETRAG_VOLL,
   GRUNDFREIBETRAG,
@@ -42,7 +42,7 @@ import {
   SOLI_SATZ,
   einkommensteuer,
   kirchensteuersatz,
-} from "@/tools/bruttonetto/steuerdaten";
+} from "@/lib/steuerdaten";
 import { ALTERSGRENZE, kindergeldSatz, type KindStatus } from "./saetze";
 
 export type { KindStatus };

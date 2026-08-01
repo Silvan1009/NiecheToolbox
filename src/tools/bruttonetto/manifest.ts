@@ -3,7 +3,7 @@ import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { bruttonettoAffiliate } from "./affiliate";
 import Component from "./Component";
-import { STEUERJAHR } from "./steuerdaten";
+import { STEUERJAHR } from "@/lib/steuerdaten";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------

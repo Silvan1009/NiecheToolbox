@@ -10,7 +10,7 @@ import {
   GRUNDFREIBETRAG,
   einkommensteuer,
   kirchensteuersatz,
-} from "./steuerdaten";
+} from "@/lib/steuerdaten";
 
 /**
  * Basisfall: 4.000 Euro im Monat, Steuerklasse I, Nordrhein-Westfalen,

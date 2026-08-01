@@ -33,7 +33,7 @@
  * beschäftigung und geldwerte Vorteile bleiben außen vor.
  */
 
-import type { RegionCode } from "@/tools/brueckentage/logic";
+import type { RegionCode } from "@/lib/regionen";
 import { clamp, nn } from "@/lib/finanzmath";
 import { formatEuroRounded } from "@/lib/format";
 import {
@@ -58,7 +58,7 @@ import {
   einkommensteuer,
   kirchensteuersatz,
   type Steuerklasse,
-} from "./steuerdaten";
+} from "@/lib/steuerdaten";
 
 const MONATE_PRO_JAHR = 12;
 

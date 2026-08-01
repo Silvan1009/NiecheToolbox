@@ -6,7 +6,7 @@
  * Änderung in dieser Datei, nicht eine Suche quer durch den Code.
  *
  * Die Freibeträge stehen bewusst nicht hier, sondern werden aus
- * bruttonetto/steuerdaten.ts importiert. Zwei Dateien mit demselben
+ * lib/steuerdaten.ts importiert. Zwei Dateien mit demselben
  * Kinderfreibetrag wären zwei Stellen, die zum Jahreswechsel auseinanderlaufen.
  *
  * Quellen (Stand Januar 2026):

@@ -22,7 +22,7 @@ import { formatDate, formatEuro, plural } from "@/lib/format";
 import { isValidIso } from "@/lib/date";
 import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
-import { regions, type RegionCode } from "@/tools/brueckentage/logic";
+import { regions, type RegionCode } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import { kindergeldAffiliate } from "./affiliate";
 import {

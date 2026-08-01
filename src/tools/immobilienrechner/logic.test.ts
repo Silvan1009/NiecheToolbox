@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { regions } from "@/tools/brueckentage/logic";
+import { regions } from "@/lib/regionen";
 import {
   GREST_BUNDESSATZ,
   grestFor,

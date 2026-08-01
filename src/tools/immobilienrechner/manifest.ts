@@ -1,6 +1,6 @@
 import { House } from "lucide-react";
 import { formatInteger } from "@/lib/format";
-import { regions } from "@/tools/brueckentage/logic";
+import { regions } from "@/lib/regionen";
 import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
 import Component from "./Component";

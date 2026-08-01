@@ -7,7 +7,7 @@
  */
 
 import { addDays, diffDays, fromIso, weekdayOf, type Iso } from "@/lib/date";
-import { holidaysFor, type RegionCode } from "@/tools/brueckentage/logic";
+import { holidaysFor, type RegionCode } from "@/lib/regionen";
 
 export type { Iso };
 

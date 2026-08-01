@@ -18,7 +18,7 @@ import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
 import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
-import { isRegionCode, regions } from "@/tools/brueckentage/logic";
+import { isRegionCode, regions } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
 import { GREST_STAND, grestFor } from "./grunderwerbsteuer";

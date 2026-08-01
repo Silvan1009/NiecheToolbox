@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { regions, type RegionCode } from "@/tools/brueckentage/logic";
+import { regions, type RegionCode } from "@/lib/regionen";
 import {
   calculateWorkdays,
   isoWeekdayOf,

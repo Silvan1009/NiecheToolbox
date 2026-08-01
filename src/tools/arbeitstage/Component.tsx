@@ -27,7 +27,7 @@ import {
   partialHolidayNames,
   regions,
   type RegionCode,
-} from "@/tools/brueckentage/logic";
+} from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import {
   calculateWorkdays,

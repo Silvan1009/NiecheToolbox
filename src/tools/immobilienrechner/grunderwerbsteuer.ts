@@ -10,7 +10,7 @@
  * derselben sechzehn Länder wäre eine Fehlerquelle ohne Gegenwert.
  */
 
-import { regions, type RegionCode } from "@/tools/brueckentage/logic";
+import { regions, type RegionCode } from "@/lib/regionen";
 
 /**
  * Stand der Tabelle. Bei Abweichung im Rechner sichtbar machen, nicht still

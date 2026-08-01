@@ -45,7 +45,7 @@ import {
   toEuro,
   MONATE_PRO_JAHR,
 } from "@/lib/finanzmath";
-import type { RegionCode } from "@/tools/brueckentage/logic";
+import type { RegionCode } from "@/lib/regionen";
 import { grestFor } from "./grunderwerbsteuer";
 
 // Der interne Zinsfuß lebt seit dem Sparplan- und Kreditrechner in

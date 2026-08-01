@@ -2,7 +2,7 @@ import { CalendarRange } from "lucide-react";
 import type { ToolManifest, ToolVariant } from "@/tools/types";
 import { brueckentageAffiliate } from "./affiliate";
 import Component from "./Component";
-import { regions } from "./logic";
+import { regions } from "@/lib/regionen";
 
 /** Für wie viele Jahre programmatische Landing-Pages entstehen. */
 const VARIANT_YEARS = 3;

@@ -10,17 +10,16 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDate, formatWeekday, formatWeekdayDate, plural } from "@/lib/format";
-import { useUrlState } from "@/lib/useUrlState";
-import type { ToolParams } from "@/tools/types";
-import { brueckentageAffiliate } from "./affiliate";
 import {
-  calculateBrueckentage,
   isRegionCode,
   partialHolidayNames,
   regions,
-  type BridgeBlock,
   type RegionCode,
-} from "./logic";
+} from "@/lib/regionen";
+import { useUrlState } from "@/lib/useUrlState";
+import type { ToolParams } from "@/tools/types";
+import { brueckentageAffiliate } from "./affiliate";
+import { calculateBrueckentage, type BridgeBlock } from "./logic";
 
 interface State extends Record<string, unknown> {
   region: RegionCode;

@@ -1,5 +1,5 @@
 /**
- * Drift-Wächter für die hartcodierte Feiertagstabelle in `logic.ts`.
+ * Drift-Wächter für die hartcodierte Feiertagstabelle in `regionen.ts`.
  *
  * Die Tabelle ist bewusst kein API-Abruf: sie kennt zusätzlich die nur
  * regional geltenden Feiertage (Fronleichnam in Sachsen/Thüringen, Mariä
@@ -16,7 +16,7 @@
  */
 
 import { beforeAll, describe, expect, it, type TestContext } from "vitest";
-import { holidaysFor, regions, type RegionCode } from "./logic";
+import { holidaysFor, regions, type RegionCode } from "./regionen";
 
 const API = "https://date.nager.at/api/v3/PublicHolidays";
 const TIMEOUT_MS = 5_000;
@@ -25,7 +25,7 @@ const TIMEOUT_MS = 5_000;
  * Dasselbe Fenster, das die Site veröffentlicht: `VARIANT_YEARS = 3` ab dem
  * laufenden Jahr (brueckentage/manifest.ts). Abgeleitet statt hartcodiert,
  * damit es mitwandert. Frühere Jahre bleiben außen vor – die `since`-Regeln
- * prüft logic.test.ts bereits offline, und Nagers Rückschau vor 2018 ist
+ * prüft regionen.test.ts bereits offline, und Nagers Rückschau vor 2018 ist
  * nichts, woran diese Suite hängen sollte.
  */
 const BASE_YEAR = new Date().getUTCFullYear();

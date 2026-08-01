@@ -22,7 +22,7 @@ import {
   plural,
 } from "@/lib/format";
 import { useUrlState } from "@/lib/useUrlState";
-import { isRegionCode, regions, type RegionCode } from "@/tools/brueckentage/logic";
+import { isRegionCode, regions, type RegionCode } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import { kuendigungsfristAffiliate } from "./affiliate";
 import {

@@ -18,7 +18,7 @@ import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
 import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
-import { isRegionCode, regions } from "@/tools/brueckentage/logic";
+import { isRegionCode, regions } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import { bruttonettoAffiliate } from "./affiliate";
 import {
@@ -33,7 +33,7 @@ import {
   kirchensteuersatz,
   steuerklassen,
   type Steuerklasse,
-} from "./steuerdaten";
+} from "@/lib/steuerdaten";
 
 /** Der Zustand ist genau die Eingabe der Rechenlogik – keine zweite Wahrheit. */
 interface State extends Record<string, unknown>, BruttoNettoInput {}

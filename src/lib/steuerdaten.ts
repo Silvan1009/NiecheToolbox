@@ -17,7 +17,7 @@
  *   Solidaritätszuschlag – § 3, § 4 SolZG
  */
 
-import type { RegionCode } from "@/tools/brueckentage/logic";
+import type { RegionCode } from "./regionen";
 
 export const STEUERDATEN_STAND = "2026-01-01";
 export const STEUERJAHR = 2026;

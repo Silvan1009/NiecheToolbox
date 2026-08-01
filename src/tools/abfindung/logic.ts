@@ -14,7 +14,7 @@
  *
  * Für die Einkommensteuer selbst wird dieselbe Tariffunktion nach § 32a EStG
  * verwendet wie im Brutto-Netto-Rechner (`einkommensteuer` aus
- * `bruttonetto/steuerdaten`) – eine zweite, eigene Nachbildung des Tarifs wäre
+ * `lib/steuerdaten`) – eine zweite, eigene Nachbildung des Tarifs wäre
  * die zweite Stelle, an der sich ein Fehler in den Koeffizienten einschleichen
  * könnte. Die Berechnung geht vom zu versteuernden Jahreseinkommen aus, nicht
  * vom Bruttogehalt – wer das noch nicht kennt, findet die Herleitung im
@@ -32,7 +32,7 @@ import {
   SOLI_MILDERUNG_SATZ,
   SOLI_SATZ,
   einkommensteuer,
-} from "@/tools/bruttonetto/steuerdaten";
+} from "@/lib/steuerdaten";
 
 export interface AbfindungInput {
   /** Zu versteuerndes Jahreseinkommen ohne die Abfindung. */

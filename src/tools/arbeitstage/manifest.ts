@@ -1,6 +1,6 @@
 import { CalendarCheck } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import { regions } from "@/tools/brueckentage/logic";
+import { regions } from "@/lib/regionen";
 import type { ToolManifest, ToolVariant } from "@/tools/types";
 import Component from "./Component";
 import { calculateWorkdays, weekPresets, yearRange } from "./logic";

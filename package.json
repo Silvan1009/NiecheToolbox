@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:holidays": "vitest run src/tools/brueckentage/holidays.drift.test.ts"
+    "test:holidays": "vitest run src/lib/regionen.drift.test.ts"
   },
   "dependencies": {
     "lucide-react": "^1.26.0",
