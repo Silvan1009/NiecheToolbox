@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, TextInput, Toggle } from "@/components/ui/Field";
+import { Field, SegmentedControl, Stepper, Toggle, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -85,6 +85,7 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
             hint="Durchschnitt der letzten 12 Monate."
           >
             <UnitInput
+              blankWhenZero
               id="eg-netto"
               unit="€/Monat"
               value={state.nettoEinkommenVorGeburt}
@@ -228,38 +229,6 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={elterngeldAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={value === 0 ? "" : String(value).replace(".", ",")}
-        placeholder="0"
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-20 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
     </div>
   );
 }

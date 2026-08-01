@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, Select, TextInput, Toggle } from "@/components/ui/Field";
+import { Field, Select, Toggle, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -74,6 +74,7 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
             hint="Für das Jahr der Auszahlung, laut Steuerbescheid oder überschlagen."
           >
             <UnitInput
+              blankWhenZero
               id="af-zve"
               unit="€/Jahr"
               value={state.zvEOhneAbfindung}
@@ -83,6 +84,7 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
 
           <Field label="Abfindungsbetrag" htmlFor="af-abfindung" hint="Brutto, laut Aufhebungsvertrag.">
             <UnitInput
+              blankWhenZero
               id="af-abfindung"
               unit="€"
               value={state.abfindungsbetrag}
@@ -196,38 +198,6 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={abfindungAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={value === 0 ? "" : String(value).replace(".", ",")}
-        placeholder="0"
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-20 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
     </div>
   );
 }

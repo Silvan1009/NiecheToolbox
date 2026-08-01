@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
+import { toNumber } from "@/lib/parse";
 
 const controlClasses =
   "w-full rounded-control bg-surface px-3.5 py-2.5 text-[15px] text-ink " +
@@ -34,6 +35,51 @@ export function Field({
 
 export function TextInput({ className = "", ...props }: ComponentProps<"input">) {
   return <input className={`${controlClasses} ${className}`} {...props} />;
+}
+
+/**
+ * Zahlenfeld mit der Einheit rechts im Feld.
+ *
+ * Der freie Platz rechts ergibt sich aus der Einheit selbst statt aus einer
+ * geratenen Tailwind-Stufe: das Feld ist Monospace, ein Zeichen ist 1ch, und
+ * "Mio. Stück" braucht mehr Raum als "€".
+ */
+export function UnitInput({
+  id,
+  unit,
+  value,
+  onChange,
+  blankWhenZero = false,
+}: {
+  id: string;
+  unit: string;
+  value: number;
+  onChange: (next: number) => void;
+  /** 0 als leeres Feld mit Platzhalter zeigen – für Posten, die meistens keiner hat. */
+  blankWhenZero?: boolean;
+}) {
+  return (
+    <div className="relative">
+      <TextInput
+        id={id}
+        type="text"
+        inputMode="decimal"
+        value={blankWhenZero && value === 0 ? "" : String(value).replace(".", ",")}
+        placeholder={blankWhenZero ? "0" : undefined}
+        onChange={(event) => onChange(toNumber(event.target.value, 0))}
+        style={unit ? { paddingRight: `calc(${unit.length}ch + 1.75rem)` } : undefined}
+        className="font-mono"
+      />
+      {unit && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
+        >
+          {unit}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function TextArea({

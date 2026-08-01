@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Select, TextInput } from "@/components/ui/Field";
+import { Field, SegmentedControl, Select, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -139,6 +139,7 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
             htmlFor="es-wert"
           >
             <UnitInput
+              blankWhenZero
               id="es-wert"
               unit="€"
               value={state.vermoegenswert}
@@ -153,6 +154,7 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
               hint="Über die Erbfallkostenpauschale hinaus – z. B. offene Kredite."
             >
               <UnitInput
+                blankWhenZero
                 id="es-verbindlichkeiten"
                 unit="€"
                 value={state.nachlassverbindlichkeiten}
@@ -170,6 +172,7 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
               hint="An dieselbe Person – zehrt den Freibetrag entsprechend vor."
             >
               <UnitInput
+                blankWhenZero
                 id="es-genutzt"
                 unit="€"
                 value={state.bereitsGenutzterFreibetrag}
@@ -347,38 +350,6 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
       )}
 
       <AffiliateBlock slots={erbschaftsteuerAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={value === 0 ? "" : String(value).replace(".", ",")}
-        placeholder="0"
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-16 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
     </div>
   );
 }

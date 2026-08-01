@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Select, Stepper, TextInput, Toggle } from "@/components/ui/Field";
+import { Field, SegmentedControl, Select, Stepper, Toggle, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -314,6 +314,7 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               hint="Zum Vergleich mit der geschätzten Spanne."
             >
               <UnitInput
+                blankWhenZero
                 id="vv-kfz-beitrag"
                 unit="€/Jahr"
                 value={state.kfz.eigenerBeitragJahr}
@@ -350,6 +351,7 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               hint="Zum Vergleich mit der geschätzten Spanne."
             >
               <UnitInput
+                blankWhenZero
                 id="vv-hp-beitrag"
                 unit="€/Jahr"
                 value={state.haftpflicht.eigenerBeitragJahr}
@@ -382,6 +384,7 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               hint="Sollte die bisherigen laufenden Kosten decken."
             >
               <UnitInput
+                blankWhenZero
                 id="vv-bu-rente"
                 unit="€/Monat"
                 value={state.bu.buRenteMonat}
@@ -415,6 +418,7 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               hint="Zum Vergleich mit der geschätzten Spanne."
             >
               <UnitInput
+                blankWhenZero
                 id="vv-bu-beitrag"
                 unit="€/Monat"
                 value={state.bu.eigenerBeitragMonat}
@@ -553,38 +557,6 @@ function Einordnungshinweis({
       liegt {einordnungLabel(result.einordnung)} – typisch sind{" "}
       {formatEuro(result.spanneMin)} bis {formatEuro(result.spanneMax)} {suffix}.
     </>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={value === 0 ? "" : String(value).replace(".", ",")}
-        placeholder="0"
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-20 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
-    </div>
   );
 }
 

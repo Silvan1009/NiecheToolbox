@@ -11,6 +11,7 @@ import {
   Select,
   TextInput,
   Toggle,
+  UnitInput,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
@@ -463,39 +464,6 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={kindergeldAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={String(value).replace(".", ",")}
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className={`font-mono ${unit ? "pr-24" : ""}`}
-      />
-      {unit && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-        >
-          {unit}
-        </span>
-      )}
     </div>
   );
 }

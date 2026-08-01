@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, TextInput } from "@/components/ui/Field";
+import { Field, SegmentedControl, Stepper, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -563,37 +563,6 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
       </p>
 
       <AffiliateBlock slots={rentenlueckeAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={String(value).replace(".", ",")}
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-16 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
     </div>
   );
 }

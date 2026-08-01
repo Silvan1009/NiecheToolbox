@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, Stepper, TextInput } from "@/components/ui/Field";
+import { Field, Stepper, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -103,6 +103,7 @@ export default function RentenabschlagTool({ params }: { params?: ToolParams }) 
             hint="Aus deiner Renteninformation, bei Renteneintritt zur Regelaltersgrenze."
           >
             <UnitInput
+              blankWhenZero
               id="ra-rente"
               unit="€/Monat"
               value={state.erwarteteRegelrente}
@@ -201,38 +202,6 @@ export default function RentenabschlagTool({ params }: { params?: ToolParams }) 
       )}
 
       <AffiliateBlock slots={rentenabschlagAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={value === 0 ? "" : String(value).replace(".", ",")}
-        placeholder="0"
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-20 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
     </div>
   );
 }
