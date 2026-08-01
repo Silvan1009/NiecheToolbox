@@ -31,7 +31,7 @@ const about: string[] = [
   "Alle Angaben sind Näherungen und keine Steuer- oder Anlageberatung. Solidaritätszuschlag, Kirchensteuer, der progressive Verlauf des Steuertarifs und Sonderfälle wie Denkmalabschreibung oder Förderkredite bleiben außen vor. Die Wertentwicklung ist die unsicherste Annahme im ganzen Rechner: Sie lässt sich nicht vorhersagen, sondern nur durchspielen. Wer wissen will, ob eine Kalkulation trägt, sollte sie einmal mit null Prozent Wertsteigerung rechnen.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Wie viel Eigenkapital brauche ich für eine Immobilie?",
     answer:
@@ -125,7 +125,7 @@ function buildVariants(): ToolVariant[] {
           question: `Lässt sich die Grunderwerbsteuer in ${region.name} senken?`,
           answer: `Legal und in Grenzen: Bewegliches Zubehör wie eine Einbauküche, Markisen oder eine Sauna gehört nicht zum Grundstück und darf im Kaufvertrag gesondert ausgewiesen werden – auf diesen Teil fällt keine Grunderwerbsteuer an. Bei einer Küche im Wert von 15.000 Euro spart das in ${region.name} ${euro(Math.round((15000 * satz) / 100))}. Der Betrag muss angemessen sein, das Finanzamt prüft bei auffälligen Ansätzen. Bei Neubauten kann außerdem die Trennung von Grundstückskauf und Bauvertrag helfen, wenn beide Verträge tatsächlich unabhängig sind.`,
         },
-        ...allgemeineFaq.slice(0, 5),
+        ...sharedFaq.slice(0, 5),
       ],
     };
   });
@@ -159,7 +159,7 @@ export const immobilienrechner: ToolManifest = {
   getVariants: buildVariants,
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

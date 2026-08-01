@@ -15,7 +15,7 @@ const about: string[] = [
   "Alle Ergebnisse sind Planungszahlen, keine Angebote. Preise für Flug und Unterkunft schwanken je nach Buchungszeitpunkt erheblich, und gerade in den Schulferien liegen zwischen der günstigsten und der teuersten Woche schnell 30 bis 50 Prozent. Der Planer rechnet das durch, was du einträgst – er sucht keine Preise.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Wie viel Geld brauche ich für eine Woche Urlaub?",
     answer:
@@ -77,10 +77,10 @@ export const urlaubsbudget: ToolManifest = {
   // Das Abreisedatum darf nicht im Client entstehen: sonst weicht der erste
   // Client-Render vom SSR-HTML ab.
   getDefaultParams: () => ({ heute: todayIso() }),
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

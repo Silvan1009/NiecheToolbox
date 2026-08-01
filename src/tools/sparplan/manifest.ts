@@ -18,7 +18,7 @@ const about: string[] = [
   "Alle Ergebnisse unterstellen eine gleichbleibende Rendite, und die gibt es an der Börse nicht. Ein breiter Aktienindex hat langfristig rund sieben Prozent im Jahr gebracht, aber als Mittelwert über Jahrzehnte mit einzelnen Jahren zwischen plus dreißig und minus vierzig Prozent. Für die Planung heißt das: Die Rechnung mit mehreren Renditen durchspielen, nicht mit der optimistischsten planen, und den Anlagehorizont ernst nehmen. Dieser Rechner ist keine Anlageberatung und ersetzt keine.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Mit welcher Rendite sollte ich rechnen?",
     answer:
@@ -96,10 +96,10 @@ export const sparplan: ToolManifest = {
   ],
 
   Component,
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

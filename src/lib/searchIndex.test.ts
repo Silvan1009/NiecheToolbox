@@ -7,7 +7,7 @@
 import { describe, expect, it } from "vitest";
 import { toolPath, variantPath } from "./seo";
 import { searchIndex } from "./searchIndex";
-import { TOOLS_MIT_INDIZIERTEN_VARIANTEN } from "@/tools/groups";
+import { toolsWithIndexedVariants } from "@/tools/groups";
 import { publicTools } from "@/tools/registry";
 
 describe("searchIndex", () => {
@@ -30,7 +30,7 @@ describe("searchIndex", () => {
   });
 
   it("bildet die Varianten der Themen-Tools ab und keine anderen", () => {
-    for (const slug of TOOLS_MIT_INDIZIERTEN_VARIANTEN) {
+    for (const slug of toolsWithIndexedVariants) {
       const tool = publicTools().find((t) => t.slug === slug);
       expect(tool, `Tool "${slug}" fehlt in der Registry`).toBeDefined();
 
@@ -53,7 +53,7 @@ describe("searchIndex", () => {
     // Backform-Paare …) – die würden das Suchfeld mit Dutzenden fast
     // gleichlautender Treffer fluten.
     const uebrige = publicTools().filter(
-      (t) => !TOOLS_MIT_INDIZIERTEN_VARIANTEN.includes(t.slug),
+      (t) => !toolsWithIndexedVariants.includes(t.slug),
     );
     for (const tool of uebrige) {
       const variantHrefs = new Set(

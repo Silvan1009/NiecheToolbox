@@ -18,7 +18,7 @@ const about: string[] = [
   "Zwei Rechte gelten bei Verbraucherkrediten unabhängig vom Vertrag. Die vorzeitige Rückzahlung ist immer möglich; die Bank darf dafür höchstens 1 Prozent der zurückgezahlten Summe verlangen, bei weniger als zwölf Monaten Restlaufzeit höchstens 0,5 Prozent. Und jeder Kreditvertrag kann innerhalb von vierzehn Tagen ohne Begründung widerrufen werden. Bei Immobiliendarlehen gilt die Deckelung der Vorfälligkeitsentschädigung nicht – dafür darf nach § 489 BGB jedes Darlehen zehn Jahre nach Vollauszahlung mit sechs Monaten Frist gekündigt werden. Dieser Rechner ist keine Rechts- oder Finanzberatung.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Wie hoch darf meine Kreditrate sein?",
     answer:
@@ -91,10 +91,10 @@ export const kreditrechner: ToolManifest = {
   ],
 
   Component,
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

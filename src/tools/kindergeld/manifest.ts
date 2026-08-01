@@ -16,7 +16,7 @@ const about: string[] = [
   "Die Günstigerprüfung hier ist eine Näherung. Sie rechnet mit dem zu versteuernden Einkommen und den Kinderfreibeträgen, aber ohne Entlastungsbetrag für Alleinerziehende, ohne Kinderbetreuungskosten als Sonderausgaben und ohne die Übertragung eines Freibetragsanteils auf den anderen Elternteil. Für die Größenordnung reicht das; für den Steuerbescheid nicht. Das hier ist keine Steuerberatung – verbindliche Auskünfte geben das Finanzamt, ein Lohnsteuerhilfeverein oder eine Steuerberatung.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Wie hoch ist das Kindergeld 2026?",
     answer:
@@ -90,10 +90,10 @@ export const kindergeld: ToolManifest = {
     const start = defaultInput();
     return { heute: todayIso(), kinder: encodeKinder(start.kinder) };
   },
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

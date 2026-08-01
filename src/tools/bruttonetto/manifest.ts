@@ -19,7 +19,7 @@ const about: string[] = [
   `Das Ergebnis ist eine Schätzung und keine Lohnabrechnung. Nicht abgebildet sind Freibeträge aus den ELStAM, der Altersentlastungsbetrag, geldwerte Vorteile wie ein Dienstwagen, betriebliche Altersvorsorge, vermögenswirksame Leistungen, Einmalzahlungen wie Urlaubs- und Weihnachtsgeld sowie der Übergangsbereich für Midijobs. Die Steuerklassen V und VI folgen der Grundformel des Gesetzes ohne die zusätzlichen Stützstellen der amtlichen Programmablaufpläne. Für den Regelfall in den Klassen I bis IV liegt der Rechner im Bereich weniger Euro an den veröffentlichten Vergleichswerten für ${STEUERJAHR}. Dieser Rechner ist keine Steuerberatung.`,
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Warum weicht mein tatsächliches Netto ab?",
     answer:
@@ -91,10 +91,10 @@ export const bruttonetto: ToolManifest = {
   ],
 
   Component,
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

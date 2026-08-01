@@ -14,7 +14,7 @@ const about: string[] = [
   "Der CO₂-Wert ist eine Näherung. Für Strom rechnet er mit 380 Gramm je Kilowattstunde für den deutschen Strommix – ein Wert, der mit dem Ausbau der Erneuerbaren von Jahr zu Jahr sinkt. Für Gas sind es 201 Gramm, und dieser Wert bleibt, weil er aus der Verbrennung folgt und nicht aus einer Statistik. Als Größenordnung taugen beide, als Bilanz nicht.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Wo finde ich Arbeitspreis, Grundpreis und Verbrauch?",
     answer:
@@ -81,10 +81,10 @@ export const energiekosten: ToolManifest = {
   ],
 
   Component,
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",

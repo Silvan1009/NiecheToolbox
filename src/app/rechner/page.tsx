@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { ToolCard } from "@/components/ToolCard";
 import { absoluteUrl, breadcrumbNode, jsonLdGraph, variantPath } from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
-import { TOOLS_MIT_INDIZIERTEN_VARIANTEN, toolGroups } from "@/tools/groups";
+import { toolsWithIndexedVariants, toolGroups } from "@/tools/groups";
 
 /**
  * Gruppierte Übersicht – Ergänzung zur flachen Liste auf der Startseite
@@ -75,7 +75,7 @@ export default function RechnerPage() {
                   // Bei Tools, deren Unterseiten je ein eigenes Thema sind,
                   // stehen sie direkt unter der Karte – sonst wären sie nur
                   // über die Tool-Seite erreichbar.
-                  const varianten = TOOLS_MIT_INDIZIERTEN_VARIANTEN.includes(
+                  const varianten = toolsWithIndexedVariants.includes(
                     tool.slug,
                   )
                     ? (tool.getVariants?.() ?? [])

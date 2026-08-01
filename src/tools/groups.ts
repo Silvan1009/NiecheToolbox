@@ -92,7 +92,7 @@ export function groupsForSlug(slug: string): ToolGroup[] {
  * Wer hier ein Tool einträgt, muss dessen Varianten in lib/searchIndex.ts
  * ergänzen – searchIndex.test.ts prüft beide Richtungen.
  */
-export const TOOLS_MIT_INDIZIERTEN_VARIANTEN: string[] = [
+export const toolsWithIndexedVariants: string[] = [
   "aktienkennzahlen",
   "sparplan",
   "kreditrechner",

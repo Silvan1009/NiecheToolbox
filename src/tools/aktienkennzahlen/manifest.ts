@@ -18,7 +18,7 @@ const about: string[] = [
   "Alle Kennzahlen sind Näherungen und keine Anlageberatung. Sondereffekte, Minderheitenanteile, Pensions- und Leasingverpflichtungen, Aktienrückkäufe, Währungseffekte und Steuern auf Kursgewinne bleiben außen vor. Die Faustwerte für die Einordnung sind bewusst branchenblind: Ein KGV von 25 ist bei Software normal und bei einem Stahlwerk teuer, eine Eigenkapitalquote von 10 Prozent bei einer Bank unauffällig und in der Industrie alarmierend. Wer eine Kennzahl ernst nimmt, vergleicht sie mit der Historie desselben Unternehmens und mit direkten Wettbewerbern – nicht mit einer Tabelle.",
 ];
 
-const allgemeineFaq: FaqEntry[] = [
+const sharedFaq: FaqEntry[] = [
   {
     question: "Welche Kennzahlen sind bei einer Aktie wirklich wichtig?",
     answer:
@@ -91,10 +91,10 @@ export const aktienkennzahlen: ToolManifest = {
   ],
 
   Component,
-  getVariants: () => buildVariants(variantenTexte, about, allgemeineFaq),
+  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
-  faq: allgemeineFaq,
+  faq: sharedFaq,
 
   monetization: {
     adDensity: "medium",
