@@ -6,6 +6,7 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
 import { Field, Select, Stepper } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDate, formatWeekday, formatWeekdayDate, plural } from "@/lib/format";
@@ -412,29 +413,3 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
   );
 }
 
-function Stat({
-  icon,
-  label,
-  value,
-  hint,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="flex items-center gap-2 text-[13px] font-semibold text-muted">
-        <span className="text-accent">{icon}</span>
-        {label}
-      </dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
-    </div>
-  );
-}
