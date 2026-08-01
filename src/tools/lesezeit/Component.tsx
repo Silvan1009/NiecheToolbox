@@ -112,7 +112,9 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
               value={state.words === 0 ? "" : String(state.words)}
               placeholder="0"
               disabled={hasText}
-              onChange={(event) => update({ words: toCount(event.target.value, 0) })}
+              onChange={(event) =>
+                update({ words: toCount(event.target.value, 0) })
+              }
               className="max-w-40 font-mono disabled:opacity-50"
             />
           </Field>
@@ -150,7 +152,9 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
                       {option.wpm} W/min
                     </span>
                   </span>
-                  <span className="pl-6 text-[13px] text-muted">{option.hint}</span>
+                  <span className="pl-6 text-[13px] text-muted">
+                    {option.hint}
+                  </span>
                 </label>
               );
             })}
@@ -177,7 +181,11 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
           }
         >
           <NumberDisplay
-            value={result.readingSeconds < 60 ? result.readingSeconds : result.readingSeconds / 60}
+            value={
+              result.readingSeconds < 60
+                ? result.readingSeconds
+                : result.readingSeconds / 60
+            }
             format={(value) => formatInteger(Math.max(1, Math.round(value)))}
             suffix={
               result.readingSeconds < 60
@@ -238,4 +246,3 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

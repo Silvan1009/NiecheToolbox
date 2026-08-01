@@ -4,7 +4,9 @@ import type { ConversionResult } from "./logic";
 function asResult(value: unknown): ConversionResult | null {
   if (typeof value !== "object" || value === null) return null;
   const candidate = value as Partial<ConversionResult>;
-  return typeof candidate.factor === "number" ? (candidate as ConversionResult) : null;
+  return typeof candidate.factor === "number"
+    ? (candidate as ConversionResult)
+    : null;
 }
 
 export const backformAffiliate: AffiliateSlot[] = [

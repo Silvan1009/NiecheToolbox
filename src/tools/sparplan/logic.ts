@@ -307,10 +307,7 @@ function simuliere(p: SimParams): Verlauf {
 }
 
 /** Steuer auf den Veräußerungsgewinn am Ende, in Cent. */
-function verkaufssteuer(
-  verlauf: Verlauf,
-  p: SimParams,
-): number {
+function verkaufssteuer(verlauf: Verlauf, p: SimParams): number {
   if (!p.steuern) return 0;
 
   // Bereits über die Vorabpauschale versteuerte Beträge werden angerechnet,
@@ -430,9 +427,7 @@ export function calculateSparplan(input: SparplanInput): SparplanResult {
     entnahmeJahre * MONATE_PRO_JAHR,
   );
   const entnahmeEwigC =
-    rendite > 0
-      ? Math.round(endNachSteuerC * monatszinsEffektiv(rendite))
-      : 0;
+    rendite > 0 ? Math.round(endNachSteuerC * monatszinsEffektiv(rendite)) : 0;
 
   /* -- Hinweise ----------------------------------------------------------- */
 

@@ -21,7 +21,8 @@ const sharedFaq: FaqEntry[] = [
       "Alle drei stehen auf der letzten Jahresabrechnung, meist auf der zweiten Seite unter „Berechnung des Rechnungsbetrags“. Der Arbeitspreis ist in Cent je Kilowattstunde angegeben, der Grundpreis als Betrag pro Monat oder Jahr – bei einer Jahresangabe durch zwölf teilen. Achte darauf, ob die Preise brutto oder netto ausgewiesen sind; für einen Haushalt ist immer der Bruttopreis der richtige.",
   },
   {
-    question: "Was ist der Unterschied zwischen Arbeitspreis und Effektivpreis?",
+    question:
+      "Was ist der Unterschied zwischen Arbeitspreis und Effektivpreis?",
     answer:
       "Der Arbeitspreis gilt je Kilowattstunde, der Effektivpreis rechnet den Grundpreis mit ein. Bei 3.000 Kilowattstunden und 144 Euro Grundpreis im Jahr sind das 4,80 Cent Unterschied – aus 35 Cent Arbeitspreis werden 39,80 Cent effektiv. Bei doppeltem Verbrauch halbiert sich dieser Aufschlag. Deshalb ist nur der Effektivpreis zwischen Tarifen vergleichbar.",
   },

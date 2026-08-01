@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateRentenabschlag, defaultInput, type RentenabschlagInput } from "./logic";
+import {
+  calculateRentenabschlag,
+  defaultInput,
+  type RentenabschlagInput,
+} from "./logic";
 
 describe("Rentenabschlags-Rechner", () => {
   it("berechnet die Voreinstellung: Jahrgang 1985, Renteneintritt mit 63", () => {
@@ -15,23 +19,38 @@ describe("Rentenabschlags-Rechner", () => {
   });
 
   it("liefert die gestaffelte Regelaltersgrenze für ältere Jahrgänge korrekt", () => {
-    const j1947 = calculateRentenabschlag({ ...defaultInput(), geburtsjahr: 1947 });
+    const j1947 = calculateRentenabschlag({
+      ...defaultInput(),
+      geburtsjahr: 1947,
+    });
     expect(j1947.regelaltersgrenzeJahre).toBe(65);
     expect(j1947.regelaltersgrenzeMonate).toBe(1);
 
-    const j1955 = calculateRentenabschlag({ ...defaultInput(), geburtsjahr: 1955 });
+    const j1955 = calculateRentenabschlag({
+      ...defaultInput(),
+      geburtsjahr: 1955,
+    });
     expect(j1955.regelaltersgrenzeJahre).toBe(65);
     expect(j1955.regelaltersgrenzeMonate).toBe(9);
 
-    const j1958 = calculateRentenabschlag({ ...defaultInput(), geburtsjahr: 1958 });
+    const j1958 = calculateRentenabschlag({
+      ...defaultInput(),
+      geburtsjahr: 1958,
+    });
     expect(j1958.regelaltersgrenzeJahre).toBe(66);
     expect(j1958.regelaltersgrenzeMonate).toBe(0);
 
-    const j1960 = calculateRentenabschlag({ ...defaultInput(), geburtsjahr: 1960 });
+    const j1960 = calculateRentenabschlag({
+      ...defaultInput(),
+      geburtsjahr: 1960,
+    });
     expect(j1960.regelaltersgrenzeJahre).toBe(66);
     expect(j1960.regelaltersgrenzeMonate).toBe(4);
 
-    const j1964 = calculateRentenabschlag({ ...defaultInput(), geburtsjahr: 1964 });
+    const j1964 = calculateRentenabschlag({
+      ...defaultInput(),
+      geburtsjahr: 1964,
+    });
     expect(j1964.regelaltersgrenzeJahre).toBe(67);
     expect(j1964.regelaltersgrenzeMonate).toBe(0);
   });
@@ -46,7 +65,10 @@ describe("Rentenabschlags-Rechner", () => {
     expect(result.differenzMonate).toBe(0);
     expect(result.abschlagProzent).toBe(0);
     expect(result.zuschlagProzent).toBe(0);
-    expect(result.renteMitAnpassung).toBeCloseTo(result.differenzMonatlich + 1_600, 2);
+    expect(result.renteMitAnpassung).toBeCloseTo(
+      result.differenzMonatlich + 1_600,
+      2,
+    );
     expect(result.differenzMonatlich).toBe(0);
     expect(
       result.warnings.some((w) => w.includes("weder Abschlag noch Zuschlag")),
@@ -64,7 +86,9 @@ describe("Rentenabschlags-Rechner", () => {
     expect(result.zuschlagProzent).toBe(12);
     expect(result.abschlagProzent).toBe(0);
     expect(result.renteMitAnpassung).toBeCloseTo(1_792, 2);
-    expect(result.warnings.some((w) => w.includes("keine gesetzliche Obergrenze"))).toBe(true);
+    expect(
+      result.warnings.some((w) => w.includes("keine gesetzliche Obergrenze")),
+    ).toBe(true);
   });
 
   it("deckelt den Abschlag bei 48 Monaten auf 14,4 Prozent", () => {
@@ -77,7 +101,9 @@ describe("Rentenabschlags-Rechner", () => {
     // 84 Monate früher als die Regelaltersgrenze, gedeckelt auf 48 Monate.
     expect(result.abschlagProzent).toBeCloseTo(14.4, 6);
     expect(
-      result.warnings.some((w) => w.includes("gesetzlich auf 14,4 Prozent gedeckelt")),
+      result.warnings.some((w) =>
+        w.includes("gesetzlich auf 14,4 Prozent gedeckelt"),
+      ),
     ).toBe(true);
   });
 
@@ -88,7 +114,10 @@ describe("Rentenabschlags-Rechner", () => {
       lebenserwartung: 85,
     });
     expect(result.jahreRentenbezug).toBe(22);
-    expect(result.kumulierterEffekt).toBeCloseTo(result.differenzMonatlich * 12 * 22, 1);
+    expect(result.kumulierterEffekt).toBeCloseTo(
+      result.differenzMonatlich * 12 * 22,
+      1,
+    );
   });
 
   it("warnt lebenslang über den kumulierten Effekt, wenn ein Abschlag besteht", () => {
@@ -119,8 +148,14 @@ describe("Rentenabschlags-Rechner", () => {
   });
 
   it("hält das geplante Renteneintrittsalter in einem plausiblen Bereich", () => {
-    const zuFrueh = calculateRentenabschlag({ ...defaultInput(), geplantesAlterJahre: 10 });
-    const zuSpaet = calculateRentenabschlag({ ...defaultInput(), geplantesAlterJahre: 200 });
+    const zuFrueh = calculateRentenabschlag({
+      ...defaultInput(),
+      geplantesAlterJahre: 10,
+    });
+    const zuSpaet = calculateRentenabschlag({
+      ...defaultInput(),
+      geplantesAlterJahre: 200,
+    });
     expect(Number.isFinite(zuFrueh.abschlagProzent)).toBe(true);
     expect(Number.isFinite(zuSpaet.zuschlagProzent)).toBe(true);
   });

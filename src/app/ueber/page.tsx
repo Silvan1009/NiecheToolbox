@@ -40,12 +40,12 @@ export default function UeberPage() {
           <Section heading="Worum es hier geht">
             <p>
               {site.name} ist eine Sammlung von derzeit {toolCount} kleinen
-              Rechnern für Fragen, die im Alltag tatsächlich aufkommen: Wie viele
-              Brückentage bringt mir mein Urlaub im nächsten Jahr? Bis wann muss
-              die Kündigung raus? Wie viel kostet der alte Kühlschrank im Jahr?
-              Wie viel Teig passt in die andere Backform? Jede dieser Fragen
-              lässt sich in einem Satz stellen und in einer Zahl beantworten –
-              genau das macht diese Seite, und sonst nichts.
+              Rechnern für Fragen, die im Alltag tatsächlich aufkommen: Wie
+              viele Brückentage bringt mir mein Urlaub im nächsten Jahr? Bis
+              wann muss die Kündigung raus? Wie viel kostet der alte Kühlschrank
+              im Jahr? Wie viel Teig passt in die andere Backform? Jede dieser
+              Fragen lässt sich in einem Satz stellen und in einer Zahl
+              beantworten – genau das macht diese Seite, und sonst nichts.
             </p>
             <p>
               Kein Konto, kein Newsletter, kein Download, keine Bezahlschranke.
@@ -104,9 +104,9 @@ export default function UeberPage() {
               Rechner ausrechnet – die Rechenlogik kennt keine Partner.
             </p>
             <p>
-              Werbung wird erst nach ausdrücklicher Einwilligung geladen. Wie das
-              im Detail funktioniert und welche Daten dabei anfallen, steht in
-              der{" "}
+              Werbung wird erst nach ausdrücklicher Einwilligung geladen. Wie
+              das im Detail funktioniert und welche Daten dabei anfallen, steht
+              in der{" "}
               <Link
                 href="/rechtliches/datenschutz/"
                 className="underline decoration-line underline-offset-2 hover:text-ink"

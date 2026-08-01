@@ -24,7 +24,8 @@ export const BASISZINS_PROZENT = 3.2;
 /** § 18 Abs. 1 InvStG: der Basisertrag ist auf 70 % des Basiszinses gedeckelt. */
 export const BASISERTRAG_FAKTOR = 0.7;
 
-export type Anlageart = "aktienfonds" | "mischfonds" | "immobilienfonds" | "zinsen";
+export type Anlageart =
+  "aktienfonds" | "mischfonds" | "immobilienfonds" | "zinsen";
 
 interface AnlageartDef {
   label: string;

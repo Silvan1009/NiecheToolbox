@@ -60,7 +60,8 @@ const tendenzTon: Record<Tendenz, PayoffTone> = {
  */
 function toNumber(value: unknown, fallback: number): number {
   if (value === null || value === undefined || value === "") return fallback;
-  const parsed = typeof value === "string" ? parseNumberInput(value) : Number(value);
+  const parsed =
+    typeof value === "string" ? parseNumberInput(value) : Number(value);
   return parsed !== null && Number.isFinite(parsed) ? parsed : fallback;
 }
 
@@ -110,8 +111,14 @@ export default function AktienkennzahlenTool({
           search.get("ocf"),
           fallback.operativerCashflowMio,
         ),
-        investitionenMio: toNumber(search.get("capex"), fallback.investitionenMio),
-        dividendeJeAktie: toNumber(search.get("div"), fallback.dividendeJeAktie),
+        investitionenMio: toNumber(
+          search.get("capex"),
+          fallback.investitionenMio,
+        ),
+        dividendeJeAktie: toNumber(
+          search.get("div"),
+          fallback.dividendeJeAktie,
+        ),
         gewinnwachstumPercent: toNumber(
           search.get("wachstum"),
           fallback.gewinnwachstumPercent,
@@ -147,7 +154,10 @@ export default function AktienkennzahlenTool({
       ocf: urlValue(next.operativerCashflowMio, DEFAULTS.operativerCashflowMio),
       capex: urlValue(next.investitionenMio, DEFAULTS.investitionenMio),
       div: urlValue(next.dividendeJeAktie, DEFAULTS.dividendeJeAktie),
-      wachstum: urlValue(next.gewinnwachstumPercent, DEFAULTS.gewinnwachstumPercent),
+      wachstum: urlValue(
+        next.gewinnwachstumPercent,
+        DEFAULTS.gewinnwachstumPercent,
+      ),
       fkgv: urlValue(next.faireKgv, DEFAULTS.faireKgv),
       anspruch: urlValue(
         next.renditeanspruchPercent,
@@ -195,7 +205,11 @@ export default function AktienkennzahlenTool({
         </div>
       </Card>
 
-      <Card as="section" className="p-6" aria-label="Gewinn- und Verlustrechnung">
+      <Card
+        as="section"
+        className="p-6"
+        aria-label="Gewinn- und Verlustrechnung"
+      >
         <CardTitle>Gewinn- und Verlustrechnung</CardTitle>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <Field label="Umsatz" htmlFor="ak-umsatz">
@@ -509,7 +523,9 @@ export default function AktienkennzahlenTool({
         />
         <Stat
           label={
-            result.nettofinanzschuldenMio < 0 ? "Netto-Liquidität" : "Nettoschulden"
+            result.nettofinanzschuldenMio < 0
+              ? "Netto-Liquidität"
+              : "Nettoschulden"
           }
           value={mio(Math.abs(result.nettofinanzschuldenMio))}
           hint={
@@ -574,12 +590,19 @@ export default function AktienkennzahlenTool({
             label={`KGV-Modell (${formatDecimal(state.faireKgv)}-faches Ergebnis)`}
             value={result.fairerWertKgv}
           />
-          <Posten label="Graham-Zahl (Gewinn und Substanz)" value={result.fairerWertGraham} />
+          <Posten
+            label="Graham-Zahl (Gewinn und Substanz)"
+            value={result.fairerWertGraham}
+          />
           <Posten
             label="Dividendenmodell (Gordon)"
             value={result.fairerWertDividende}
           />
-          <Posten label="Mittel der Verfahren" value={result.fairerWertSchnitt} stark />
+          <Posten
+            label="Mittel der Verfahren"
+            value={result.fairerWertSchnitt}
+            stark
+          />
           <Posten label="Aktueller Kurs" value={state.kurs} />
         </ul>
 
@@ -587,8 +610,8 @@ export default function AktienkennzahlenTool({
           {result.abweichungProzent === null ? (
             <>
               Mit diesen Angaben lässt sich kein fairer Wert bilden. Alle drei
-              Verfahren brauchen einen Gewinn, eine Substanz oder eine Dividende,
-              an die sie anknüpfen können.
+              Verfahren brauchen einen Gewinn, eine Substanz oder eine
+              Dividende, an die sie anknüpfen können.
             </>
           ) : (
             <>
@@ -672,13 +695,22 @@ export default function AktienkennzahlenTool({
                     <th scope="col" className="py-2 pr-3 font-semibold">
                       Jahr
                     </th>
-                    <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                    <th
+                      scope="col"
+                      className="py-2 pr-3 text-right font-semibold"
+                    >
                       Gewinn/Aktie
                     </th>
-                    <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                    <th
+                      scope="col"
+                      className="py-2 pr-3 text-right font-semibold"
+                    >
                       Dividende
                     </th>
-                    <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                    <th
+                      scope="col"
+                      className="py-2 pr-3 text-right font-semibold"
+                    >
                       Kurs
                     </th>
                     <th scope="col" className="py-2 text-right font-semibold">
@@ -689,7 +721,10 @@ export default function AktienkennzahlenTool({
                 <tbody className="font-mono tabular-nums">
                   {result.jahre.map((zeile) => (
                     <tr key={zeile.jahr} className="border-t border-line">
-                      <th scope="row" className="py-2 pr-3 text-left font-semibold">
+                      <th
+                        scope="row"
+                        className="py-2 pr-3 text-left font-semibold"
+                      >
                         {zeile.jahr}
                       </th>
                       <td className="py-2 pr-3 text-right">
@@ -858,7 +893,9 @@ function Kennzahlzeile({
         <span className="block font-mono text-[15px] font-semibold tabular-nums">
           {formatKennzahl(def.einheit, wert)}
         </span>
-        {tendenz && <Badge tendenz={tendenz} text={tendenzText(def.skala, tendenz)} />}
+        {tendenz && (
+          <Badge tendenz={tendenz} text={tendenzText(def.skala, tendenz)} />
+        )}
       </span>
     </li>
   );

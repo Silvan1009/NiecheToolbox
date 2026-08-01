@@ -172,7 +172,11 @@ export function filterEntries(
     if (total === 0) continue;
     if (prepared.entry.parentName) total -= SCORE.variantPenalty;
 
-    scored.push({ entry: prepared.entry, score: total, position: prepared.position });
+    scored.push({
+      entry: prepared.entry,
+      score: total,
+      position: prepared.position,
+    });
   }
 
   return scored

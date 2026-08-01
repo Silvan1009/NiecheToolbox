@@ -68,7 +68,8 @@ export const brueckentage: ToolManifest = {
         "Außer Neujahr, Karfreitag, Ostermontag, 1. Mai, Christi Himmelfahrt, Pfingstmontag, Tag der Deutschen Einheit und den beiden Weihnachtstagen sind alle Feiertage Ländersache. Fronleichnam gilt zum Beispiel in Bayern, aber nicht in Berlin; der Buß- und Bettag nur in Sachsen.",
     },
     {
-      question: "Sind Mariä Himmelfahrt und Fronleichnam überall im Land Feiertage?",
+      question:
+        "Sind Mariä Himmelfahrt und Fronleichnam überall im Land Feiertage?",
       answer:
         "Nicht überall. Mariä Himmelfahrt ist in Bayern nur in Gemeinden mit überwiegend katholischer Bevölkerung frei – das sind die meisten, aber nicht alle. Fronleichnam gilt in Sachsen und Thüringen ebenfalls nur in einzelnen Gemeinden. Diese Tage sind im Rechner als „nur regional“ gekennzeichnet und zählen erst mit, wenn du sie ausdrücklich aktivierst.",
     },

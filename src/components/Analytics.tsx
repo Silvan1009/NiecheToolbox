@@ -23,7 +23,12 @@ export function Analytics() {
     const { scriptUrl, domain } = analytics.plausible;
     if (!scriptUrl || !domain) return null;
     return (
-      <Script src={scriptUrl} data-domain={domain} strategy="afterInteractive" defer />
+      <Script
+        src={scriptUrl}
+        data-domain={domain}
+        strategy="afterInteractive"
+        defer
+      />
     );
   }
 

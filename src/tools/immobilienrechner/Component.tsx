@@ -155,22 +155,40 @@ export default function ImmobilienrechnerTool({
       tilg: urlValue(next.tilgungPercent, DEFAULTS.tilgungPercent),
       bindung: urlValue(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
       miete: urlValue(next.kaltmieteMonat, DEFAULTS.kaltmieteMonat),
-      mietplus: urlValue(next.mietsteigerungPercent, DEFAULTS.mietsteigerungPercent),
+      mietplus: urlValue(
+        next.mietsteigerungPercent,
+        DEFAULTS.mietsteigerungPercent,
+      ),
       hausgeld: urlValue(next.hausgeldMonat, DEFAULTS.hausgeldMonat),
-      instand: urlValue(next.instandhaltungProQmJahr, DEFAULTS.instandhaltungProQmJahr),
+      instand: urlValue(
+        next.instandhaltungProQmJahr,
+        DEFAULTS.instandhaltungProQmJahr,
+      ),
       verwaltung: urlValue(next.verwaltungMonat, DEFAULTS.verwaltungMonat),
       ausfall: urlValue(next.mietausfallPercent, DEFAULTS.mietausfallPercent),
-      gebaeude: urlValue(next.gebaeudeanteilPercent, DEFAULTS.gebaeudeanteilPercent),
+      gebaeude: urlValue(
+        next.gebaeudeanteilPercent,
+        DEFAULTS.gebaeudeanteilPercent,
+      ),
       afa: urlValue(next.afaArt, DEFAULTS.afaArt),
-      steuer: urlValue(next.grenzsteuersatzPercent, DEFAULTS.grenzsteuersatzPercent),
+      steuer: urlValue(
+        next.grenzsteuersatzPercent,
+        DEFAULTS.grenzsteuersatzPercent,
+      ),
       sparmiete: urlValue(next.ersparteMieteMonat, DEFAULTS.ersparteMieteMonat),
       altrendite: urlValue(
         next.alternativrenditePercent,
         DEFAULTS.alternativrenditePercent,
       ),
       jahre: urlValue(next.horizontJahre, DEFAULTS.horizontJahre),
-      wertplus: urlValue(next.wertsteigerungPercent, DEFAULTS.wertsteigerungPercent),
-      verkauf: urlValue(next.verkaufskostenPercent, DEFAULTS.verkaufskostenPercent),
+      wertplus: urlValue(
+        next.wertsteigerungPercent,
+        DEFAULTS.wertsteigerungPercent,
+      ),
+      verkauf: urlValue(
+        next.verkaufskostenPercent,
+        DEFAULTS.verkaufskostenPercent,
+      ),
     }),
   });
 
@@ -359,7 +377,11 @@ export default function ImmobilienrechnerTool({
       </Card>
 
       {istAnlage ? (
-        <Card as="section" className="p-6" aria-label="Miete und Bewirtschaftung">
+        <Card
+          as="section"
+          className="p-6"
+          aria-label="Miete und Bewirtschaftung"
+        >
           <CardTitle>Miete und Bewirtschaftung</CardTitle>
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <Field label="Kaltmiete" htmlFor="im-miete">
@@ -417,7 +439,9 @@ export default function ImmobilienrechnerTool({
                 id="im-ausfall"
                 unit="%"
                 value={state.mietausfallPercent}
-                onChange={(mietausfallPercent) => update({ mietausfallPercent })}
+                onChange={(mietausfallPercent) =>
+                  update({ mietausfallPercent })
+                }
               />
             </Field>
 
@@ -446,7 +470,9 @@ export default function ImmobilienrechnerTool({
                 id="im-sparmiete"
                 unit="€/Monat"
                 value={state.ersparteMieteMonat}
-                onChange={(ersparteMieteMonat) => update({ ersparteMieteMonat })}
+                onChange={(ersparteMieteMonat) =>
+                  update({ ersparteMieteMonat })
+                }
               />
             </Field>
 
@@ -526,7 +552,10 @@ export default function ImmobilienrechnerTool({
        * passen – deshalb bleiben sie hinter Disclosure eingeklappt.
        */}
       {istAnlage && (
-        <Disclosure title="Steuer" hint="Abschreibung und persönlicher Steuersatz">
+        <Disclosure
+          title="Steuer"
+          hint="Abschreibung und persönlicher Steuersatz"
+        >
           <div className="grid gap-5 sm:grid-cols-2">
             <Field
               label="Gebäudeanteil am Kaufpreis"
@@ -674,8 +703,8 @@ export default function ImmobilienrechnerTool({
                     dazu.
                   </>
                 )}{" "}
-                Vor Steuern wären es {formatEuro(result.cashflowVorSteuerMonat)} im
-                Monat.
+                Vor Steuern wären es {formatEuro(result.cashflowVorSteuerMonat)}{" "}
+                im Monat.
               </>
             }
           />
@@ -695,8 +724,8 @@ export default function ImmobilienrechnerTool({
                     ? `${formatEuro(result.mehrbelastungMonat)} mehr`
                     : `${formatEuro(-result.mehrbelastungMonat)} weniger`}
                 </strong>{" "}
-                im Monat – davon {formatEuro(result.tilgungErstesJahr / 12)} Tilgung,
-                also Geld, das dir bleibt.
+                im Monat – davon {formatEuro(result.tilgungErstesJahr / 12)}{" "}
+                Tilgung, also Geld, das dir bleibt.
               </>
             }
           />
@@ -749,7 +778,9 @@ export default function ImmobilienrechnerTool({
               hint={`Eigenkapital zu ${formatDecimal(state.alternativrenditePercent)} % angelegt`}
             />
             <Stat
-              label={result.vorteilKaufen >= 0 ? "Vorteil Kaufen" : "Vorteil Mieten"}
+              label={
+                result.vorteilKaufen >= 0 ? "Vorteil Kaufen" : "Vorteil Mieten"
+              }
               value={formatEuro(Math.abs(result.vorteilKaufen))}
               hint={`Unterschied nach ${result.horizontJahre} Jahren`}
             />
@@ -818,8 +849,15 @@ export default function ImmobilienrechnerTool({
           {result.modernisierung > 0 && (
             <AmountRow label="Modernisierung" value={result.modernisierung} />
           )}
-          <AmountRow label="Gesamtinvestition" value={result.gesamtinvestition} stark />
-          <AmountRow label="davon Eigenkapital" value={result.eigenkapitalEingesetzt} />
+          <AmountRow
+            label="Gesamtinvestition"
+            value={result.gesamtinvestition}
+            stark
+          />
+          <AmountRow
+            label="davon Eigenkapital"
+            value={result.eigenkapitalEingesetzt}
+          />
           <AmountRow label="davon Darlehen" value={result.darlehen} />
         </ul>
         <p className="mt-4 text-[13px] text-muted">
@@ -845,15 +883,27 @@ export default function ImmobilienrechnerTool({
             </caption>
             <thead>
               <tr className="text-left text-muted">
-                <th scope="col" className="py-2 pr-3 font-semibold">Jahr</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">Zins</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">Tilgung</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">Restschuld</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">Wert</th>
+                <th scope="col" className="py-2 pr-3 font-semibold">
+                  Jahr
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Zins
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Tilgung
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Restschuld
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Wert
+                </th>
                 <th scope="col" className="py-2 pr-3 text-right font-semibold">
                   {istAnlage ? "Cashflow" : "Ggü. Miete"}
                 </th>
-                <th scope="col" className="py-2 text-right font-semibold">Vermögen</th>
+                <th scope="col" className="py-2 text-right font-semibold">
+                  Vermögen
+                </th>
               </tr>
             </thead>
             <tbody className="font-mono tabular-nums">
@@ -862,12 +912,24 @@ export default function ImmobilienrechnerTool({
                   <th scope="row" className="py-2 pr-3 text-left font-semibold">
                     {zeile.jahr}
                   </th>
-                  <td className="py-2 pr-3 text-right">{formatEuro(zeile.zins)}</td>
-                  <td className="py-2 pr-3 text-right">{formatEuro(zeile.tilgung)}</td>
-                  <td className="py-2 pr-3 text-right">{formatEuro(zeile.restschuld)}</td>
-                  <td className="py-2 pr-3 text-right">{formatEuro(zeile.immobilienwert)}</td>
-                  <td className="py-2 pr-3 text-right">{formatEuro(zeile.cashflow)}</td>
-                  <td className="py-2 text-right">{formatEuro(zeile.vermoegen)}</td>
+                  <td className="py-2 pr-3 text-right">
+                    {formatEuro(zeile.zins)}
+                  </td>
+                  <td className="py-2 pr-3 text-right">
+                    {formatEuro(zeile.tilgung)}
+                  </td>
+                  <td className="py-2 pr-3 text-right">
+                    {formatEuro(zeile.restschuld)}
+                  </td>
+                  <td className="py-2 pr-3 text-right">
+                    {formatEuro(zeile.immobilienwert)}
+                  </td>
+                  <td className="py-2 pr-3 text-right">
+                    {formatEuro(zeile.cashflow)}
+                  </td>
+                  <td className="py-2 text-right">
+                    {formatEuro(zeile.vermoegen)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -881,7 +943,10 @@ export default function ImmobilienrechnerTool({
       </details>
 
       {istAnlage && (
-        <section aria-labelledby="im-verkauf-titel" className="surface-soft p-6">
+        <section
+          aria-labelledby="im-verkauf-titel"
+          className="surface-soft p-6"
+        >
           <h2
             id="im-verkauf-titel"
             className="font-display text-lg font-semibold tracking-tight"
@@ -889,7 +954,10 @@ export default function ImmobilienrechnerTool({
             Verkauf nach {result.horizontJahre} Jahren
           </h2>
           <ul className="mt-4 flex flex-col gap-2 text-[15px]">
-            <AmountRow label="Immobilienwert" value={result.immobilienwertEnde} />
+            <AmountRow
+              label="Immobilienwert"
+              value={result.immobilienwertEnde}
+            />
             <AmountRow label="Verkaufskosten" value={-result.verkaufskosten} />
             <AmountRow label="Restschuld" value={-result.restschuldEnde} />
             {result.spekulationssteuer > 0 && (
@@ -898,13 +966,24 @@ export default function ImmobilienrechnerTool({
                 value={-result.spekulationssteuer}
               />
             )}
-            <AmountRow label="Netto-Verkaufserlös" value={result.nettoVerkaufserloes} stark />
+            <AmountRow
+              label="Netto-Verkaufserlös"
+              value={result.nettoVerkaufserloes}
+              stark
+            />
             <AmountRow
               label={`Cashflow über ${result.horizontJahre} Jahre`}
               value={result.kumulierterCashflow}
             />
-            <AmountRow label="Eingesetztes Eigenkapital" value={-result.eigenkapitalEingesetzt} />
-            <AmountRow label="Vermögenszuwachs" value={result.vermoegenszuwachs} stark />
+            <AmountRow
+              label="Eingesetztes Eigenkapital"
+              value={-result.eigenkapitalEingesetzt}
+            />
+            <AmountRow
+              label="Vermögenszuwachs"
+              value={result.vermoegenszuwachs}
+              stark
+            />
           </ul>
         </section>
       )}
@@ -935,4 +1014,3 @@ export default function ImmobilienrechnerTool({
     </div>
   );
 }
-

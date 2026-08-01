@@ -36,17 +36,20 @@ export const trinkgeld: ToolManifest = {
         "Im Restaurant sind 5 bis 10 Prozent gängig, bei sehr gutem Service auch mehr. Im Café oder an der Bar rundet man meist einfach auf. Trinkgeld ist freiwillig – niemand muss sich rechtfertigen, wenn er nichts gibt.",
     },
     {
-      question: "Kann ich den Betrag pro Person eingeben statt der Gesamtrechnung?",
+      question:
+        "Kann ich den Betrag pro Person eingeben statt der Gesamtrechnung?",
       answer:
         "Ja. Über den Umschalter bei „Betrag“ wechselst du zwischen Gesamtrechnung und Betrag pro Person. Praktisch, wenn jede Person einzeln bestellt hat und du nur den eigenen Posten kennst – der Rechner multipliziert das für die Gesamtsumme hoch und teilt Trinkgeld und Rundung wie gewohnt auf alle auf.",
     },
     {
-      question: "Warum zahlt jede Person ein paar Cent mehr als der geteilte Betrag?",
+      question:
+        "Warum zahlt jede Person ein paar Cent mehr als der geteilte Betrag?",
       answer:
         "Weil sich Beträge oft nicht glatt teilen lassen. 10 Euro auf drei Personen sind 3,33 Euro – zusammen nur 9,99 Euro. Der Rechner rundet deshalb pro Person auf den nächsten Cent auf, damit die Summe am Tisch immer reicht. Die Differenz ist im Trinkgeld enthalten.",
     },
     {
-      question: "Wird das Trinkgeld auf den Betrag vor oder nach dem Aufrunden berechnet?",
+      question:
+        "Wird das Trinkgeld auf den Betrag vor oder nach dem Aufrunden berechnet?",
       answer:
         "Der Prozentsatz gilt für den eingegebenen Rechnungsbetrag. Das Aufrunden kommt danach dazu und erhöht das Trinkgeld – wie viel es am Ende tatsächlich ist, siehst du unter „Trinkgeld effektiv“.",
     },

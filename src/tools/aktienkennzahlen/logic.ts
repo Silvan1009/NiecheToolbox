@@ -327,7 +327,8 @@ export function calculateAktie(input: AktienInput): AktienResult {
 
   /* -- Fairer Wert --------------------------------------------------------- */
 
-  const fairerWertKgv = eps !== null && eps > 0 && faireKgv > 0 ? faireKgv * eps : null;
+  const fairerWertKgv =
+    eps !== null && eps > 0 && faireKgv > 0 ? faireKgv * eps : null;
 
   // Graham-Zahl: die Wurzel aus dem 22,5-Fachen von Gewinn und Buchwert je
   // Aktie. Sie ist absichtlich streng und liegt bei substanzarmen Geschäften
@@ -346,9 +347,11 @@ export function calculateAktie(input: AktienInput): AktienResult {
       ? (dividende * (1 + wachstum / 100)) / (abstand / 100)
       : null;
 
-  const verfahren = [fairerWertKgv, fairerWertGraham, fairerWertDividende].filter(
-    (wert): wert is number => wert !== null,
-  );
+  const verfahren = [
+    fairerWertKgv,
+    fairerWertGraham,
+    fairerWertDividende,
+  ].filter((wert): wert is number => wert !== null);
   const fairerWertSchnitt =
     verfahren.length > 0
       ? verfahren.reduce((summe, wert) => summe + wert, 0) / verfahren.length
@@ -471,7 +474,11 @@ export function calculateAktie(input: AktienInput): AktienResult {
       `Die Eigenkapitalquote beträgt ${formatKurz(eigenkapitalquote)} Prozent. Bei Banken und Immobiliengesellschaften ist das normal, im produzierenden Gewerbe oder im Handel gilt es als dünn.`,
     );
   }
-  if (liquiditaetsgrad3 !== null && liquiditaetsgrad3 < 100 && kurzfristig > 0) {
+  if (
+    liquiditaetsgrad3 !== null &&
+    liquiditaetsgrad3 < 100 &&
+    kurzfristig > 0
+  ) {
     warnings.push(
       `Das Umlaufvermögen deckt die kurzfristigen Verbindlichkeiten nur zu ${formatKurz(liquiditaetsgrad3)} Prozent. Das Unternehmen finanziert langfristiges Vermögen mit kurzfristigem Geld und ist auf die Verlängerung dieser Kredite angewiesen.`,
     );

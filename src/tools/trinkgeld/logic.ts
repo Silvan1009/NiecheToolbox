@@ -68,7 +68,11 @@ export function calculateTip(input: TipInput): TipResult {
     perPersonCents = Math.ceil(ceilTo(targetCents, 100) / people);
   } else {
     const step =
-      input.rounding === "person-50" ? 50 : input.rounding === "person-100" ? 100 : 1;
+      input.rounding === "person-50"
+        ? 50
+        : input.rounding === "person-100"
+          ? 100
+          : 1;
     perPersonCents = ceilTo(targetCents / people, step);
   }
 

@@ -91,7 +91,10 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
         sparrateMonat: toNumber(search.get("rate"), fallback.sparrateMonat),
         zielkapital: toNumber(search.get("ziel"), fallback.zielkapital),
         dynamikPercent: toNumber(search.get("dyn"), fallback.dynamikPercent),
-        renditePercent: toNumber(search.get("rendite"), fallback.renditePercent),
+        renditePercent: toNumber(
+          search.get("rendite"),
+          fallback.renditePercent,
+        ),
         laufzeitJahre: toNumber(search.get("jahre"), fallback.laufzeitJahre),
         kostenPercent: toNumber(search.get("kosten"), fallback.kostenPercent),
         ausgabeaufschlagPercent: toNumber(
@@ -137,7 +140,10 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
           : next.steuernBeruecksichtigen
             ? "1"
             : "0",
-      kirche: urlValue(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
+      kirche: urlValue(
+        next.kirchensteuerPercent,
+        DEFAULTS.kirchensteuerPercent,
+      ),
       entnahme: urlValue(next.entnahmeJahre, DEFAULTS.entnahmeJahre),
     }),
   });
@@ -145,7 +151,9 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
   const result = useMemo(() => calculateSparplan(state), [state]);
 
   const istZielmodus = state.modus === "sparrate";
-  const payoff = istZielmodus ? result.sparrateMonat : result.endkapitalNachSteuer;
+  const payoff = istZielmodus
+    ? result.sparrateMonat
+    : result.endkapitalNachSteuer;
 
   return (
     <div className="flex flex-col gap-8">
@@ -385,8 +393,8 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
                 <strong className="font-semibold text-ink">
                   {formatEuro(result.endkapitalNachSteuer)}
                 </strong>{" "}
-                zur Verfügung – bei{" "}
-                {formatEuro(result.eingezahlt)} eigener Einzahlung.
+                zur Verfügung – bei {formatEuro(result.eingezahlt)} eigener
+                Einzahlung.
               </>
             ) : (
               <>
@@ -468,7 +476,10 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
             label="Vorabpauschale während der Laufzeit"
             value={-result.steuerLaufend}
           />
-          <AmountRow label="Steuer beim Verkauf" value={-result.steuerVerkauf} />
+          <AmountRow
+            label="Steuer beim Verkauf"
+            value={-result.steuerVerkauf}
+          />
           <AmountRow
             label="Endkapital nach Steuern"
             value={result.endkapitalNachSteuer}
@@ -600,4 +611,3 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

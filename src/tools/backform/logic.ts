@@ -15,12 +15,7 @@
  * ------------------------------------------------------------------------- */
 
 export type ShapeKind =
-  | "rund"
-  | "quadratisch"
-  | "rechteckig"
-  | "kastenform"
-  | "blech"
-  | "muffins";
+  "rund" | "quadratisch" | "rechteckig" | "kastenform" | "blech" | "muffins";
 
 interface ShapeDef {
   label: string;
@@ -177,7 +172,10 @@ export interface ParsedIngredient {
 function readQuantity(line: string): { value: number; length: number } | null {
   const patterns: [RegExp, (m: RegExpMatchArray) => number][] = [
     // "1 1/2"
-    [/^(\d+)\s+(\d+)\s*\/\s*(\d+)/, (m) => Number(m[1]) + Number(m[2]) / Number(m[3])],
+    [
+      /^(\d+)\s+(\d+)\s*\/\s*(\d+)/,
+      (m) => Number(m[1]) + Number(m[2]) / Number(m[3]),
+    ],
     // "1½"
     [/^(\d+)\s*([½⅓⅔¼¾⅕⅛])/, (m) => Number(m[1]) + VULGAR[m[2]]],
     // "1/2"
@@ -330,8 +328,7 @@ export function scaleIngredients(
       ...item,
       scaled,
       text: parts.join(" "),
-      rounded:
-        exact > 0 && Math.abs(exact - scaled) / exact > NOTABLE_ROUNDING,
+      rounded: exact > 0 && Math.abs(exact - scaled) / exact > NOTABLE_ROUNDING,
     };
   });
 }

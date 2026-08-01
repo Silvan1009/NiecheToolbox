@@ -88,13 +88,16 @@ export function calculateElterngeld(input: ElterngeldInput): ElterngeldResult {
   const mehrlingsKinder = Math.round(clamp(nn(input.mehrlingsKinder), 0, 10));
   const mehrlingszuschlagC = mehrlingsKinder * cents(300);
 
-  const vollerMonatsbetragC = basisbetragC + geschwisterbonusC + mehrlingszuschlagC;
+  const vollerMonatsbetragC =
+    basisbetragC + geschwisterbonusC + mehrlingszuschlagC;
   const plusMonatsbetragC = Math.round(vollerMonatsbetragC / 2);
 
   const bezugsmonate = Math.round(clamp(input.bezugsmonate, 1, 14));
   const istPlus = input.modus === "plus";
 
-  const ausgezahlterMonatsbetragC = istPlus ? plusMonatsbetragC : vollerMonatsbetragC;
+  const ausgezahlterMonatsbetragC = istPlus
+    ? plusMonatsbetragC
+    : vollerMonatsbetragC;
   const bezugsmonateEffektiv = istPlus ? bezugsmonate * 2 : bezugsmonate;
   const gesamtbetragC = ausgezahlterMonatsbetragC * bezugsmonateEffektiv;
 

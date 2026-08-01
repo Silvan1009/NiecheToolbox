@@ -125,9 +125,9 @@ describe("Feiertage je Bundesland", () => {
     expect(mariae?.partial).toBe(true);
 
     const saarland = holidaysFor(2026, "sl");
-    expect(
-      saarland.find((h) => h.name === "Mariä Himmelfahrt")?.partial,
-    ).toBe(false);
+    expect(saarland.find((h) => h.name === "Mariä Himmelfahrt")?.partial).toBe(
+      false,
+    );
 
     const sachsen = holidaysFor(2026, "sn");
     expect(sachsen.find((h) => h.name === "Fronleichnam")?.partial).toBe(true);
@@ -198,7 +198,9 @@ describe("Feiertage je Bundesland", () => {
   it("legt Christi Himmelfahrt immer auf einen Donnerstag, Pfingstmontag auf einen Montag", () => {
     for (const year of YEARS) {
       const list = holidaysFor(year, "nw");
-      expect(list.find((h) => h.name === "Christi Himmelfahrt")?.weekday).toBe(4);
+      expect(list.find((h) => h.name === "Christi Himmelfahrt")?.weekday).toBe(
+        4,
+      );
       expect(list.find((h) => h.name === "Pfingstmontag")?.weekday).toBe(1);
       expect(list.find((h) => h.name === "Karfreitag")?.weekday).toBe(5);
       expect(list.find((h) => h.name === "Ostermontag")?.weekday).toBe(1);

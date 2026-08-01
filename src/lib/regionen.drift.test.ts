@@ -73,7 +73,10 @@ async function load(year: number): Promise<void> {
     payload = await res.json();
   } catch (error) {
     fetched.set(year, null);
-    skipReason.set(year, error instanceof Error ? error.message : String(error));
+    skipReason.set(
+      year,
+      error instanceof Error ? error.message : String(error),
+    );
     return;
   }
 
@@ -102,7 +105,10 @@ function requireData(ctx: TestContext, year: number): NagerHoliday[] {
  * Die Daten, die Nager für ein Bundesland als landesweit gültig ausweist.
  * `global` heißt bundesweit, sonst muss der Ländercode in `counties` stehen.
  */
-function apiStatewideDates(data: NagerHoliday[], region: RegionCode): Set<string> {
+function apiStatewideDates(
+  data: NagerHoliday[],
+  region: RegionCode,
+): Set<string> {
   const county = COUNTY_OF.get(region)!;
   return new Set(
     data
@@ -144,7 +150,10 @@ describe("Feiertagstabelle gegen Nager.Date", { timeout: 15_000 }, () => {
 
         // Ein unbekanntes DE-XY würde sonst stillschweigend weggefiltert und
         // die Mengenvergleiche unten wertlos machen.
-        expect(unknown, `Nager kennt Ländercodes, die wir nicht abbilden`).toEqual([]);
+        expect(
+          unknown,
+          `Nager kennt Ländercodes, die wir nicht abbilden`,
+        ).toEqual([]);
       });
 
       for (const region of regions) {
@@ -173,7 +182,9 @@ describe("Feiertagstabelle gegen Nager.Date", { timeout: 15_000 }, () => {
             const data = requireData(ctx, year);
             const api = apiStatewideDates(data, region.code);
 
-            const partial = holidaysFor(year, region.code, { includePartial: true })
+            const partial = holidaysFor(year, region.code, {
+              includePartial: true,
+            })
               .filter((h) => h.partial)
               .map((h) => h.date);
 

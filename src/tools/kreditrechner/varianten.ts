@@ -17,7 +17,8 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "effektiver-jahreszins-berechnen",
-    title: "Effektiven Jahreszins berechnen: Rechner nach Preisangabenverordnung",
+    title:
+      "Effektiven Jahreszins berechnen: Rechner nach Preisangabenverordnung",
     description:
       "Effektiver Jahreszins mit Bearbeitungsgebühr, Disagio und Restschuldversicherung – die einzige Zahl, mit der sich Kreditangebote vergleichen lassen.",
     heading: "Effektiven Jahreszins berechnen",
@@ -54,7 +55,13 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Annuitätendarlehen mit gleichbleibender Rate berechnen – mit monatsgenauem Tilgungsplan, Zinsanteil und Restschuld zu jedem Zeitpunkt.",
     heading: "Annuitätendarlehen berechnen",
-    params: { betrag: 300000, zins: 3.5, modus: "laufzeit-aus-rate", rate: 1375, bindung: 10 },
+    params: {
+      betrag: 300000,
+      zins: 3.5,
+      modus: "laufzeit-aus-rate",
+      rate: 1375,
+      bindung: 10,
+    },
     about: [
       "Beim Annuitätendarlehen bleibt die Rate über die gesamte Laufzeit gleich, ihre Zusammensetzung verschiebt sich aber laufend. Am Anfang besteht sie fast nur aus Zinsen, am Ende fast nur aus Tilgung. Bei 300.000 Euro zu 3,5 Prozent und einer Rate von 1.375 Euro gehen im ersten Monat 875 Euro an Zinsen weg und nur 500 Euro in die Tilgung. Weil die Restschuld sinkt, sinkt auch der Zinsanteil – und der frei werdende Betrag erhöht die Tilgung. Diese Selbstbeschleunigung ist der Grund, warum die Laufzeit nicht linear von der Rate abhängt.",
       "In der Baufinanzierung wird die Rate meist nicht über eine Laufzeit, sondern über Zins plus anfängliche Tilgung angegeben. Bei 3,5 Prozent Zins und 2 Prozent Anfangstilgung ergibt das eine Annuität von 5,5 Prozent der Darlehenssumme im Jahr, also 16.500 Euro oder 1.375 Euro im Monat. Daraus folgt eine Gesamtlaufzeit von 348 Monaten – 29 Jahren. Ein Prozentpunkt mehr Anfangstilgung – also 1.625 statt 1.375 Euro Rate – verkürzt sie auf 266 Monate, gut 22 Jahre, und spart 46.187 Euro Zinsen. Die Anfangstilgung ist deshalb die wichtigste Zahl im Baufinanzierungsangebot nach dem Zins selbst.",
@@ -87,7 +94,14 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Wirkung jährlicher Sondertilgungen auf Laufzeit und Zinsen berechnen – mit vollständigem Tilgungsplan und Vergleich mit und ohne.",
     heading: "Sondertilgung berechnen",
-    params: { betrag: 300000, zins: 3.5, modus: "laufzeit-aus-rate", rate: 1375, sonder: 5000, bindung: 10 },
+    params: {
+      betrag: 300000,
+      zins: 3.5,
+      modus: "laufzeit-aus-rate",
+      rate: 1375,
+      sonder: 5000,
+      bindung: 10,
+    },
     about: [
       "Eine Sondertilgung wirkt stärker, als ihr Betrag vermuten lässt, weil sie nicht nur die Schuld senkt, sondern sämtliche künftigen Zinsen auf diesen Betrag streicht. Bei 300.000 Euro zu 3,5 Prozent und 1.375 Euro Monatsrate verkürzen jährlich 5.000 Euro Sondertilgung die Laufzeit von 348 auf 233 Monate – von 29 auf gut 19 Jahre. Gespart werden dabei 63.149 Euro Zinsen, bei einer Sondertilgungssumme von rund 95.000 Euro über die Jahre. Jeder sonder­getilgte Euro spart also etwa 66 Cent Zinsen.",
       "Entscheidend ist der Zeitpunkt. Am Anfang der Laufzeit ist die Restschuld am größten und die verbleibende Zeit am längsten – eine Sondertilgung im dritten Jahr wirkt deshalb um ein Vielfaches stärker als dieselbe Summe im zwanzigsten. Wer die Wahl hat zwischen einer höheren Anfangstilgung und einer späteren Sondertilgung, fährt mit der höheren Anfangstilgung fast immer besser, weil sie ab dem ersten Monat wirkt.",
@@ -120,7 +134,13 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Restschuld zum Ende der Zinsbindung monatsgenau berechnen – die Zahl, an der die Anschlussfinanzierung und das Zinsrisiko hängen.",
     heading: "Restschuld berechnen",
-    params: { betrag: 300000, zins: 3.5, modus: "laufzeit-aus-rate", rate: 1375, bindung: 10 },
+    params: {
+      betrag: 300000,
+      zins: 3.5,
+      modus: "laufzeit-aus-rate",
+      rate: 1375,
+      bindung: 10,
+    },
     about: [
       "Bei einer Baufinanzierung ist nicht die heutige Rate das Risiko, sondern die Restschuld am Ende der Zinsbindung. Sie muss zu einem Zins neu finanziert werden, den heute niemand kennt. Bei 300.000 Euro zu 3,5 Prozent und 1.375 Euro Rate sind nach zehn Jahren Zinsbindung noch 228.284 Euro offen – gut drei Viertel der ursprünglichen Summe, obwohl in dieser Zeit 165.000 Euro gezahlt wurden. Der Rest ging in Zinsen.",
       "Was dieser Betrag im schlechten Fall bedeutet, lässt sich durchrechnen. Steigt der Zins zur Anschlussfinanzierung von 3,5 auf 6 Prozent, kostet dieselbe Restschuld bei gleicher Restlaufzeit gut 308 Euro mehr im Monat – aus 1.372 werden 1.680 Euro. Genau diese Rechnung sollte vor dem Abschluss stehen und nicht danach: Wer sie bei sechs Prozent nicht mehr trägt, hat entweder zu wenig Eigenkapital, eine zu niedrige Anfangstilgung oder eine zu kurze Zinsbindung gewählt.",

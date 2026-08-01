@@ -111,7 +111,10 @@ export interface RentenlueckeResult {
  * ------------------------------------------------------------------------- */
 
 /** Reale Rendite nach Kaufkraft, aus nominaler Rendite und Inflation. */
-function realeRendite(nominalPercent: number, inflationPercent: number): number {
+function realeRendite(
+  nominalPercent: number,
+  inflationPercent: number,
+): number {
   return ((1 + nominalPercent / 100) / (1 + inflationPercent / 100) - 1) * 100;
 }
 
@@ -182,21 +185,39 @@ function sparrateFuerZiel(
 ): number {
   if (monate <= 0) return 0;
 
-  const ohneRate = simuliereAufbau(vorhandenesC, 0, realeRenditePercent, monate, 0);
+  const ohneRate = simuliereAufbau(
+    vorhandenesC,
+    0,
+    realeRenditePercent,
+    monate,
+    0,
+  );
   if (ohneRate.kapitalEndeC >= zielC) return 0;
 
   let lo = 0;
   let hi = Math.max(cents(10), zielC);
 
   for (let i = 0; i < 40; i++) {
-    const probe = simuliereAufbau(vorhandenesC, hi, realeRenditePercent, monate, 0);
+    const probe = simuliereAufbau(
+      vorhandenesC,
+      hi,
+      realeRenditePercent,
+      monate,
+      0,
+    );
     if (probe.kapitalEndeC >= zielC) break;
     hi *= 2;
   }
 
   for (let i = 0; i < 60; i++) {
     const mid = Math.round((lo + hi) / 2);
-    const probe = simuliereAufbau(vorhandenesC, mid, realeRenditePercent, monate, 0);
+    const probe = simuliereAufbau(
+      vorhandenesC,
+      mid,
+      realeRenditePercent,
+      monate,
+      0,
+    );
     if (probe.kapitalEndeC < zielC) lo = mid;
     else hi = mid;
   }
@@ -243,9 +264,13 @@ function barwertEwigeRente(
  * Hauptrechnung
  * ------------------------------------------------------------------------- */
 
-export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeResult {
+export function calculateRentenluecke(
+  input: RentenlueckeInput,
+): RentenlueckeResult {
   const aktuellesAlter = Math.round(clamp(input.aktuellesAlter, 16, 80));
-  const renteneintrittsalter = Math.round(clamp(input.renteneintrittsalter, 16, 80));
+  const renteneintrittsalter = Math.round(
+    clamp(input.renteneintrittsalter, 16, 80),
+  );
   const lebenserwartung = Math.round(
     clamp(input.lebenserwartung, renteneintrittsalter + 1, 110),
   );
@@ -256,7 +281,11 @@ export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeRes
   );
   const jahreRentenbezug = Math.max(1, lebenserwartung - renteneintrittsalter);
 
-  const versorgungsniveauPercent = clamp(input.versorgungsniveauPercent, 0, 150);
+  const versorgungsniveauPercent = clamp(
+    input.versorgungsniveauPercent,
+    0,
+    150,
+  );
   const nettoEinkommen = nn(input.nettoEinkommen);
   const gewuenschtesEinkommenFest = nn(input.gewuenschtesEinkommenFest);
 
@@ -288,7 +317,10 @@ export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeRes
     realeRenditeRentenphase,
     jahreRentenbezug * MONATE_PRO_JAHR,
   );
-  const kapitalbedarfEwigC = barwertEwigeRente(monatlicheLueckeC, realeRenditeRentenphase);
+  const kapitalbedarfEwigC = barwertEwigeRente(
+    monatlicheLueckeC,
+    realeRenditeRentenphase,
+  );
 
   /* -- Projiziertes Kapital aus vorhandenem Vermögen und Sparrate --------- */
 
@@ -347,8 +379,12 @@ export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeRes
     );
   }
 
-  const einkommenBasis = input.einkommenModus === "prozent" ? nettoEinkommen : gewuenschtesEinkommen;
-  if (einkommenBasis > 0 && toEuro(zusaetzlicheSparrateC) > einkommenBasis * 0.5) {
+  const einkommenBasis =
+    input.einkommenModus === "prozent" ? nettoEinkommen : gewuenschtesEinkommen;
+  if (
+    einkommenBasis > 0 &&
+    toEuro(zusaetzlicheSparrateC) > einkommenBasis * 0.5
+  ) {
     warnings.push(
       "Die zusätzlich nötige Sparrate liegt bei über der Hälfte des eingegebenen Einkommens. Das ist auf diesem Weg kaum zu stemmen – ein späterer Renteneintritt oder ein niedrigeres Versorgungsniveau verkleinern die Lücke spürbar.",
     );
@@ -363,7 +399,8 @@ export function calculateRentenluecke(input: RentenlueckeInput): RentenlueckeRes
     monatlicheLuecke: toEuro(monatlicheLueckeC),
 
     kapitalbedarf: toEuro(kapitalbedarfC),
-    kapitalbedarfEwig: kapitalbedarfEwigC === null ? null : toEuro(kapitalbedarfEwigC),
+    kapitalbedarfEwig:
+      kapitalbedarfEwigC === null ? null : toEuro(kapitalbedarfEwigC),
 
     projiziertesKapital: toEuro(aufbau.kapitalEndeC),
     eingezahltGesamt: toEuro(aufbau.eingezahltC),

@@ -59,7 +59,11 @@ export const regions: readonly Region[] = [
   { code: "hb", name: "Bremen", slug: "bremen" },
   { code: "hh", name: "Hamburg", slug: "hamburg" },
   { code: "he", name: "Hessen", slug: "hessen" },
-  { code: "mv", name: "Mecklenburg-Vorpommern", slug: "mecklenburg-vorpommern" },
+  {
+    code: "mv",
+    name: "Mecklenburg-Vorpommern",
+    slug: "mecklenburg-vorpommern",
+  },
   { code: "ni", name: "Niedersachsen", slug: "niedersachsen" },
   { code: "nw", name: "Nordrhein-Westfalen", slug: "nordrhein-westfalen" },
   { code: "rp", name: "Rheinland-Pfalz", slug: "rheinland-pfalz" },

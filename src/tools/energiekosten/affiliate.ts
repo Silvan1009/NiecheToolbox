@@ -10,7 +10,11 @@ function asResult(value: unknown): EnergieResult | null {
 }
 
 /** Preis je Sparte, in ct/kWh – oberhalb dessen lohnt der Vergleich wirklich. */
-const teuer = (result: EnergieResult, art: "strom" | "gas", schwelle: number) => {
+const teuer = (
+  result: EnergieResult,
+  art: "strom" | "gas",
+  schwelle: number,
+) => {
   const sparte = result.sparten.find((s) => s.art === art);
   if (!sparte || sparte.effektivpreisCt === null) return false;
   return sparte.effektivpreisCt > schwelle;

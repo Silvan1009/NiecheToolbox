@@ -21,9 +21,18 @@ describe("Versicherungs-Vergleichsrechner – Kfz", () => {
   });
 
   it("addiert Teilkasko und Vollkasko korrekt auf die Haftpflicht-Basis", () => {
-    const haftpflicht = calculateKfz({ ...defaultKfzInput(), deckung: "haftpflicht" });
-    const teilkasko = calculateKfz({ ...defaultKfzInput(), deckung: "teilkasko" });
-    const vollkasko = calculateKfz({ ...defaultKfzInput(), deckung: "vollkasko" });
+    const haftpflicht = calculateKfz({
+      ...defaultKfzInput(),
+      deckung: "haftpflicht",
+    });
+    const teilkasko = calculateKfz({
+      ...defaultKfzInput(),
+      deckung: "teilkasko",
+    });
+    const vollkasko = calculateKfz({
+      ...defaultKfzInput(),
+      deckung: "vollkasko",
+    });
     expect(haftpflicht.richtwert).toBe(260);
     expect(teilkasko.richtwert).toBe(450);
     expect(vollkasko.richtwert).toBe(590);
@@ -58,37 +67,64 @@ describe("Versicherungs-Vergleichsrechner – Kfz", () => {
     const result = calculateKfz(input);
     // 260 * 0,55 * 0,85 * 0,85 * 0,95 * 0,9 ≈ 88,34 -> 88 €.
     expect(result.richtwert).toBe(88);
-    expect(result.richtwert).toBeLessThan(calculateKfz(defaultKfzInput()).richtwert);
-  });
-
-  it("warnt Einsteiger vor der teuren Startklasse SF 0", () => {
-    const result = calculateKfz({ ...defaultKfzInput(), sfKlasse: "einsteiger" });
-    expect(result.warnings.some((w) => w.includes("Mitversicherung als Zweitfahrer"))).toBe(
-      true,
+    expect(result.richtwert).toBeLessThan(
+      calculateKfz(defaultKfzInput()).richtwert,
     );
   });
 
+  it("warnt Einsteiger vor der teuren Startklasse SF 0", () => {
+    const result = calculateKfz({
+      ...defaultKfzInput(),
+      sfKlasse: "einsteiger",
+    });
+    expect(
+      result.warnings.some((w) =>
+        w.includes("Mitversicherung als Zweitfahrer"),
+      ),
+    ).toBe(true);
+  });
+
   it("ordnet die eigene Prämie im Vergleich zur Spanne ein", () => {
-    const guenstig = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 300 });
+    const guenstig = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 300,
+    });
     expect(guenstig.einordnung).toBe("guenstig");
 
-    const imRahmen = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 450 });
+    const imRahmen = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 450,
+    });
     expect(imRahmen.einordnung).toBe("im-rahmen");
 
-    const erhoeht = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 600 });
+    const erhoeht = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 600,
+    });
     expect(erhoeht.einordnung).toBe("erhoeht");
 
-    const deutlichErhoeht = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 900 });
+    const deutlichErhoeht = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 900,
+    });
     expect(deutlichErhoeht.einordnung).toBe("deutlich-erhoeht");
 
-    const ohneAngabe = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 0 });
+    const ohneAngabe = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 0,
+    });
     expect(ohneAngabe.einordnung).toBeNull();
     expect(ohneAngabe.eigenerBeitrag).toBeNull();
   });
 
   it("warnt bei deutlich überhöhter eigener Prämie", () => {
-    const result = calculateKfz({ ...defaultKfzInput(), eigenerBeitragJahr: 900 });
-    expect(result.warnings.some((w) => w.includes("Tarifvergleich"))).toBe(true);
+    const result = calculateKfz({
+      ...defaultKfzInput(),
+      eigenerBeitragJahr: 900,
+    });
+    expect(result.warnings.some((w) => w.includes("Tarifvergleich"))).toBe(
+      true,
+    );
   });
 
   it("liefert sechs erklärende Faktoren", () => {
@@ -125,17 +161,33 @@ describe("Versicherungs-Vergleichsrechner – Privathaftpflicht", () => {
   });
 
   it("senkt die Schätzung mit Selbstbeteiligung um 10 Prozent", () => {
-    const ohne = calculateHaftpflicht({ ...defaultHaftpflichtInput(), mitSelbstbeteiligung: false });
-    const mit = calculateHaftpflicht({ ...defaultHaftpflichtInput(), mitSelbstbeteiligung: true });
+    const ohne = calculateHaftpflicht({
+      ...defaultHaftpflichtInput(),
+      mitSelbstbeteiligung: false,
+    });
+    const mit = calculateHaftpflicht({
+      ...defaultHaftpflichtInput(),
+      mitSelbstbeteiligung: true,
+    });
     expect(mit.richtwert).toBeCloseTo(ohne.richtwert * 0.9, 0);
   });
 
   it("empfiehlt eine Selbstbeteiligung nur, wenn noch keine vereinbart ist", () => {
-    const ohne = calculateHaftpflicht({ ...defaultHaftpflichtInput(), mitSelbstbeteiligung: false });
-    expect(ohne.warnings.some((w) => w.includes("Selbstbeteiligung"))).toBe(true);
+    const ohne = calculateHaftpflicht({
+      ...defaultHaftpflichtInput(),
+      mitSelbstbeteiligung: false,
+    });
+    expect(ohne.warnings.some((w) => w.includes("Selbstbeteiligung"))).toBe(
+      true,
+    );
 
-    const mit = calculateHaftpflicht({ ...defaultHaftpflichtInput(), mitSelbstbeteiligung: true });
-    expect(mit.warnings.some((w) => w.includes("Selbstbeteiligung"))).toBe(false);
+    const mit = calculateHaftpflicht({
+      ...defaultHaftpflichtInput(),
+      mitSelbstbeteiligung: true,
+    });
+    expect(mit.warnings.some((w) => w.includes("Selbstbeteiligung"))).toBe(
+      false,
+    );
   });
 
   it("ordnet die eigene Prämie korrekt ein", () => {
@@ -226,7 +278,10 @@ describe("Versicherungs-Vergleichsrechner – Berufsunfähigkeit", () => {
     const hoch = calculateBu({ ...defaultBuInput(), risikogruppe: "hoch" });
     expect(hoch.warnings.length).toBeGreaterThanOrEqual(2);
 
-    const niedrig = calculateBu({ ...defaultBuInput(), risikogruppe: "niedrig" });
+    const niedrig = calculateBu({
+      ...defaultBuInput(),
+      risikogruppe: "niedrig",
+    });
     expect(niedrig.warnings).toHaveLength(1);
   });
 

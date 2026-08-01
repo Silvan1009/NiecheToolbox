@@ -37,7 +37,10 @@ export const weekdayShortNames: Record<IsoWeekday, string> = {
 /** Die üblichen Arbeitswochen als Voreinstellungen. */
 export const weekPresets = {
   "5": { label: "Montag bis Freitag", days: [1, 2, 3, 4, 5] as IsoWeekday[] },
-  "6": { label: "Montag bis Samstag", days: [1, 2, 3, 4, 5, 6] as IsoWeekday[] },
+  "6": {
+    label: "Montag bis Samstag",
+    days: [1, 2, 3, 4, 5, 6] as IsoWeekday[],
+  },
   "7": {
     label: "Alle sieben Tage",
     days: [1, 2, 3, 4, 5, 6, 7] as IsoWeekday[],
@@ -135,7 +138,12 @@ export function calculateWorkdays(input: WorkdaysInput): WorkdaysResult {
   const working = new Set(input.workdays);
   const calendarDays = diffDays(from, to) + 1;
 
-  const holidayList = holidaysInRange(from, to, input.region, input.includePartial);
+  const holidayList = holidaysInRange(
+    from,
+    to,
+    input.region,
+    input.includePartial,
+  );
 
   let scheduledDays = 0;
   for (let cursor = from; cursor <= to; cursor = addDays(cursor, 1)) {
@@ -179,7 +187,10 @@ export function yearRange(year: number): { from: Iso; to: Iso } {
 }
 
 /** Ein Kalendermonat, 1-basiert. */
-export function monthRange(year: number, month: number): { from: Iso; to: Iso } {
+export function monthRange(
+  year: number,
+  month: number,
+): { from: Iso; to: Iso } {
   const padded = String(month).padStart(2, "0");
   const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
   return { from: `${year}-${padded}-01`, to: `${year}-${padded}-${lastDay}` };

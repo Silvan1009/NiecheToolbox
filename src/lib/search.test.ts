@@ -67,7 +67,9 @@ describe("filterEntries", () => {
   });
 
   it("verknüpft mehrere Wörter per UND", () => {
-    expect(filterEntries(index, "strom kosten")[0]?.href).toBe("/tools/stromkosten/");
+    expect(filterEntries(index, "strom kosten")[0]?.href).toBe(
+      "/tools/stromkosten/",
+    );
     expect(filterEntries(index, "strom bayern")).toEqual([]);
   });
 

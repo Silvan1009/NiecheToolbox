@@ -98,9 +98,11 @@ const weekdayLong = new Intl.DateTimeFormat("de-DE", {
 export const formatWeekdayLong = (iso: string) =>
   weekdayLong.format(isoToUtcDate(iso));
 
-export const formatDayMonth = (iso: string) => dayMonth.format(isoToUtcDate(iso));
+export const formatDayMonth = (iso: string) =>
+  dayMonth.format(isoToUtcDate(iso));
 export const formatDate = (iso: string) => fullDate.format(isoToUtcDate(iso));
-export const formatLongDate = (iso: string) => longDate.format(isoToUtcDate(iso));
+export const formatLongDate = (iso: string) =>
+  longDate.format(isoToUtcDate(iso));
 export const formatWeekday = (iso: string) =>
   weekdayShort.format(isoToUtcDate(iso)).replace(".", "");
 

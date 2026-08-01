@@ -49,7 +49,11 @@ describe("Jahreskosten", () => {
   it("rechnet ct/kWh ohne Rundungsverlust in Cent um", () => {
     // 2733 kWh * 28,7 ct = 78.437,1 ct – auf den Cent gerundet.
     const sparte = ersteSparte({
-      strom: tarif({ verbrauchKwh: 2733, arbeitspreisCt: 28.7, grundpreisMonat: 0 }),
+      strom: tarif({
+        verbrauchKwh: 2733,
+        arbeitspreisCt: 28.7,
+        grundpreisMonat: 0,
+      }),
     });
     expect(sparte.arbeitskostenC).toBe(78437);
   });
@@ -196,12 +200,21 @@ describe("CO2", () => {
 
   it("rechnet Gas mit dem niedrigeren Verbrennungsfaktor", () => {
     const sparte = ersteSparte({ modus: "gas" });
-    expect(sparte.co2KgPerYear).toBeCloseTo((18000 * CO2_G_PER_KWH_GAS) / 1000, 6);
+    expect(sparte.co2KgPerYear).toBeCloseTo(
+      (18000 * CO2_G_PER_KWH_GAS) / 1000,
+      6,
+    );
   });
 
   it("Gas ist je Kilowattstunde klimafreundlicher als Netzstrom", () => {
-    const strom = ersteSparte({ modus: "strom", strom: tarif({ verbrauchKwh: 1000 }) });
-    const gas = ersteSparte({ modus: "gas", gas: tarif({ verbrauchKwh: 1000 }) });
+    const strom = ersteSparte({
+      modus: "strom",
+      strom: tarif({ verbrauchKwh: 1000 }),
+    });
+    const gas = ersteSparte({
+      modus: "gas",
+      gas: tarif({ verbrauchKwh: 1000 }),
+    });
     expect(gas.co2KgPerYear).toBeLessThan(strom.co2KgPerYear);
   });
 });
@@ -243,7 +256,11 @@ describe("Verbrauchsschaetzung", () => {
   it("klemmt unsinnige Haushaltsangaben", () => {
     expect(schaetzeStromverbrauch(0, false)).toBe(1500);
     expect(schaetzeStromverbrauch(Number.NaN, false)).toBe(1500);
-    expect(Number.isFinite(schaetzeGasverbrauch(Number.POSITIVE_INFINITY, "saniert"))).toBe(true);
+    expect(
+      Number.isFinite(
+        schaetzeGasverbrauch(Number.POSITIVE_INFINITY, "saniert"),
+      ),
+    ).toBe(true);
   });
 
   it("steht als Vergleichswert am Ergebnis", () => {
@@ -253,7 +270,10 @@ describe("Verbrauchsschaetzung", () => {
   });
 
   it("warnt bei auffaellig hohem Verbrauch", () => {
-    const result = rechne({ personen: 1, strom: tarif({ verbrauchKwh: 9000 }) });
+    const result = rechne({
+      personen: 1,
+      strom: tarif({ verbrauchKwh: 9000 }),
+    });
     expect(result.warnings.join(" ")).toContain("weit über");
   });
 });

@@ -4,7 +4,9 @@ import type { PartyResult } from "./logic";
 function asResult(value: unknown): PartyResult | null {
   if (typeof value !== "object" || value === null) return null;
   const candidate = value as Partial<PartyResult>;
-  return typeof candidate.guests === "number" ? (candidate as PartyResult) : null;
+  return typeof candidate.guests === "number"
+    ? (candidate as PartyResult)
+    : null;
 }
 
 /** Getränke in Litern über alle Zeilen zusammen. */

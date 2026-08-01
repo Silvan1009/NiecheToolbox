@@ -30,10 +30,7 @@ import { CO2_G_PER_KWH } from "@/tools/stromkosten/logic";
 export type Energieart = "strom" | "gas";
 export type Modus = "strom" | "gas" | "beide";
 export type Gebaeudestandard =
-  | "unsaniert"
-  | "teilsaniert"
-  | "saniert"
-  | "neubau";
+  "unsaniert" | "teilsaniert" | "saniert" | "neubau";
 
 /**
  * CO₂ je Kilowattstunde Erdgas, in Gramm.
@@ -211,7 +208,10 @@ export function calculateEnergie(input: EnergieInput): EnergieResult {
     input.personen,
     input.warmwasserElektrisch,
   );
-  const gasVergleich = schaetzeGasverbrauch(input.wohnflaecheM2, input.standard);
+  const gasVergleich = schaetzeGasverbrauch(
+    input.wohnflaecheM2,
+    input.standard,
+  );
 
   const alle: Record<Energieart, EnergieSparte> = {
     strom: berechneSparte("strom", input.strom, stromVergleich),

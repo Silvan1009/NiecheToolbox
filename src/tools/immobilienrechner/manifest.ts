@@ -4,7 +4,11 @@ import { regions } from "@/lib/regionen";
 import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
 import Component from "./Component";
-import { grestHistorie, grestSpanne, grunderwerbsteuer } from "./grunderwerbsteuer";
+import {
+  grestHistorie,
+  grestSpanne,
+  grunderwerbsteuer,
+} from "./grunderwerbsteuer";
 import { defaultInput } from "./logic";
 
 const { notarPercent, maklerPercent } = defaultInput();
@@ -16,7 +20,8 @@ const nebenkosten = (kaufpreis: number, grest: number) =>
 const euro = (betrag: number) => `${formatInteger(betrag)} Euro`;
 
 /** Prozentangabe mit Dezimalkomma und ohne angehängte Nullen: "3,5", "9,07". */
-const prozent = (n: number) => String(Math.round(n * 100) / 100).replace(".", ",");
+const prozent = (n: number) =>
+  String(Math.round(n * 100) / 100).replace(".", ",");
 
 /* ---------------------------------------------------------------------------
  * Inhalte

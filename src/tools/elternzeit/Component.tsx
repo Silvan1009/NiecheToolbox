@@ -45,13 +45,15 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-const kindStyles: Record<MilestoneKind, { icon: typeof Flag; className: string }> =
-  {
-    frist: { icon: AlertTriangle, className: "bg-accent-soft text-accent" },
-    start: { icon: Play, className: "bg-positive-soft text-positive" },
-    ende: { icon: Square, className: "bg-ink-soft text-muted" },
-    info: { icon: Flag, className: "bg-ink-soft text-muted" },
-  };
+const kindStyles: Record<
+  MilestoneKind,
+  { icon: typeof Flag; className: string }
+> = {
+  frist: { icon: AlertTriangle, className: "bg-accent-soft text-accent" },
+  start: { icon: Play, className: "bg-positive-soft text-positive" },
+  ende: { icon: Square, className: "bg-ink-soft text-muted" },
+  info: { icon: Flag, className: "bg-ink-soft text-muted" },
+};
 
 export default function ElternzeitTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
@@ -147,7 +149,9 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
         <div className="mt-6 flex flex-col gap-2">
           <Toggle
             checked={state.extendedMutterschutz}
-            onChange={(extendedMutterschutz) => update({ extendedMutterschutz })}
+            onChange={(extendedMutterschutz) =>
+              update({ extendedMutterschutz })
+            }
             label="Mehrlings- oder Frühgeburt"
             hint="Der Mutterschutz nach der Geburt beträgt dann 12 statt 8 Wochen."
           />
@@ -232,12 +236,13 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
                       {formatDate(period.start)} – {formatDate(period.end)}
                     </p>
                     <p className="mt-1 text-sm text-muted">
-                      {period.months}{" "}
-                      {plural(period.months, "Monat", "Monate")} · Lebensmonat{" "}
-                      {period.startMonth} bis {period.endMonth}
+                      {period.months} {plural(period.months, "Monat", "Monate")}{" "}
+                      · Lebensmonat {period.startMonth} bis {period.endMonth}
                     </p>
                     {period.note && (
-                      <p className="mt-2 text-[13px] text-muted">{period.note}</p>
+                      <p className="mt-2 text-[13px] text-muted">
+                        {period.note}
+                      </p>
                     )}
                   </li>
                 ))}
@@ -291,7 +296,10 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
                 id="ez-warnings"
                 className="flex items-center gap-2 font-display text-base font-semibold"
               >
-                <CalendarClock className="size-4 text-accent" aria-hidden="true" />
+                <CalendarClock
+                  className="size-4 text-accent"
+                  aria-hidden="true"
+                />
                 Darauf solltest du achten
               </h2>
               <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-[15px] text-muted">

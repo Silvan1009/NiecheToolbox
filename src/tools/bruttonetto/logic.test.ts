@@ -98,7 +98,10 @@ describe("Sozialabgaben", () => {
       (BBG_KRANKEN * 8.75) / 100,
       2,
     );
-    expect(hoch.pflegeversicherungJahr).toBeCloseTo((BBG_KRANKEN * 2.4) / 100, 2);
+    expect(hoch.pflegeversicherungJahr).toBeCloseTo(
+      (BBG_KRANKEN * 2.4) / 100,
+      2,
+    );
     // Und die Rente an ihrer eigenen, höheren Grenze.
     expect(hoch.rentenversicherungJahr).toBeCloseTo((BBG_RENTE * 9.3) / 100, 2);
   });
@@ -107,16 +110,18 @@ describe("Sozialabgaben", () => {
     const ohneKinder = rechne();
     const mitKind = rechne({ kinderlos: false, kinderZahl: 1 });
     // 0,6 Prozentpunkte auf 48.000 sind 288 Euro im Jahr.
-    expect(ohneKinder.pflegeversicherungJahr - mitKind.pflegeversicherungJahr)
-      .toBeCloseTo(288, 2);
+    expect(
+      ohneKinder.pflegeversicherungJahr - mitKind.pflegeversicherungJahr,
+    ).toBeCloseTo(288, 2);
   });
 
   it("mindert den Pflegebeitrag ab dem zweiten Kind", () => {
     const einKind = rechne({ kinderlos: false, kinderZahl: 1 });
     const dreiKinder = rechne({ kinderlos: false, kinderZahl: 3 });
     // Zwei Abschläge à 0,25 Punkte auf 48.000 sind 240 Euro.
-    expect(einKind.pflegeversicherungJahr - dreiKinder.pflegeversicherungJahr)
-      .toBeCloseTo(240, 2);
+    expect(
+      einKind.pflegeversicherungJahr - dreiKinder.pflegeversicherungJahr,
+    ).toBeCloseTo(240, 2);
   });
 
   it("deckelt den Abschlag beim fünften Kind", () => {
@@ -132,10 +137,13 @@ describe("Sozialabgaben", () => {
     const nrw = rechne();
     const sachsen = rechne({ region: "sn" });
     // 0,5 Punkte mehr für den Arbeitnehmer: 240 Euro auf 48.000.
-    expect(sachsen.pflegeversicherungJahr - nrw.pflegeversicherungJahr)
-      .toBeCloseTo(240, 2);
+    expect(
+      sachsen.pflegeversicherungJahr - nrw.pflegeversicherungJahr,
+    ).toBeCloseTo(240, 2);
     // Der Arbeitgeber zahlt entsprechend weniger.
-    expect(sachsen.arbeitgeberAnteilJahr).toBeLessThan(nrw.arbeitgeberAnteilJahr);
+    expect(sachsen.arbeitgeberAnteilJahr).toBeLessThan(
+      nrw.arbeitgeberAnteilJahr,
+    );
   });
 
   it("lässt die Sozialabgaben ohne Versicherungspflicht entfallen", () => {
@@ -195,8 +203,9 @@ describe("Lohnsteuer und Netto", () => {
     const eins = rechne();
     const sechs = rechne({ steuerklasse: 6 });
     // 1.230 + 36 Euro mehr zu versteuern.
-    expect(sechs.zuVersteuerndesEinkommen - eins.zuVersteuerndesEinkommen)
-      .toBeCloseTo(1266, 2);
+    expect(
+      sechs.zuVersteuerndesEinkommen - eins.zuVersteuerndesEinkommen,
+    ).toBeCloseTo(1266, 2);
     expect(sechs.nettoMonat).toBeLessThan(eins.nettoMonat);
   });
 
@@ -226,8 +235,9 @@ describe("Lohnsteuer und Netto", () => {
     const eins = rechne({ kinderlos: false, kinderZahl: 1 });
     const zwei = rechne({ steuerklasse: 2, kinderlos: false, kinderZahl: 1 });
     // 4.260 Euro weniger zu versteuern.
-    expect(eins.zuVersteuerndesEinkommen - zwei.zuVersteuerndesEinkommen)
-      .toBeCloseTo(4260, 2);
+    expect(
+      eins.zuVersteuerndesEinkommen - zwei.zuVersteuerndesEinkommen,
+    ).toBeCloseTo(4260, 2);
   });
 
   it("erhöht den Entlastungsbetrag je weiterem Kind", () => {
@@ -241,8 +251,9 @@ describe("Lohnsteuer und Netto", () => {
     const klasse2 = rechne({ ...kinder, steuerklasse: 2 });
 
     // 4.260 Euro Grundbetrag plus zweimal 240 Euro für das zweite und dritte Kind.
-    expect(klasse1.zuVersteuerndesEinkommen - klasse2.zuVersteuerndesEinkommen)
-      .toBeCloseTo(4740, 2);
+    expect(
+      klasse1.zuVersteuerndesEinkommen - klasse2.zuVersteuerndesEinkommen,
+    ).toBeCloseTo(4740, 2);
   });
 });
 
@@ -277,8 +288,9 @@ describe("Solidaritätszuschlag", () => {
 describe("Kirchensteuer", () => {
   it("fällt nur bei Kirchenzugehörigkeit an", () => {
     expect(rechne().kirchensteuerJahr).toBe(0);
-    expect(rechne({ kirchensteuerpflichtig: true }).kirchensteuerJahr)
-      .toBeGreaterThan(0);
+    expect(
+      rechne({ kirchensteuerpflichtig: true }).kirchensteuerJahr,
+    ).toBeGreaterThan(0);
   });
 
   it("rechnet 8 Prozent in Bayern und 9 Prozent in NRW", () => {

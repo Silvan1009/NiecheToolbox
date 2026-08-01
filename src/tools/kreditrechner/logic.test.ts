@@ -67,7 +67,10 @@ describe("Rate aus Laufzeit", () => {
 
 describe("Laufzeit aus Rate", () => {
   it("rechnet die Laufzeit aus einer gewünschten Rate", () => {
-    const result = rechne({ modus: "laufzeit-aus-rate", wunschrateMonat: 188.72 });
+    const result = rechne({
+      modus: "laufzeit-aus-rate",
+      wunschrateMonat: 188.72,
+    });
     expect(result.laufzeitMonate).toBe(60);
     expect(result.tilgtNicht).toBe(false);
   });

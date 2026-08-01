@@ -14,18 +14,30 @@ describe("Abfindungsrechner", () => {
 
   it("spart gegenüber der vollen Versteuerung im selben Jahr", () => {
     const result = calculateAbfindung(defaultInput());
-    expect(result.steuerAufAbfindungFuenftel).toBeLessThan(result.steuerAufAbfindungVoll);
+    expect(result.steuerAufAbfindungFuenftel).toBeLessThan(
+      result.steuerAufAbfindungVoll,
+    );
     expect(
-      result.warnings.some((w) => w.includes("spart hier") && w.includes("Fünftelregelung")),
+      result.warnings.some(
+        (w) => w.includes("spart hier") && w.includes("Fünftelregelung"),
+      ),
     ).toBe(true);
   });
 
   it("rechnet mit dem Splittingtarif bei Zusammenveranlagung deutlich günstiger", () => {
-    const ledig = calculateAbfindung({ ...defaultInput(), zusammenveranlagung: false });
-    const verheiratet = calculateAbfindung({ ...defaultInput(), zusammenveranlagung: true });
+    const ledig = calculateAbfindung({
+      ...defaultInput(),
+      zusammenveranlagung: false,
+    });
+    const verheiratet = calculateAbfindung({
+      ...defaultInput(),
+      zusammenveranlagung: true,
+    });
     expect(verheiratet.steuerOhneAbfindung).toBe(4_398);
     expect(verheiratet.steuerAufAbfindungFuenftel).toBe(7_840);
-    expect(verheiratet.steuerAufAbfindungFuenftel).toBeLessThan(ledig.steuerAufAbfindungFuenftel);
+    expect(verheiratet.steuerAufAbfindungFuenftel).toBeLessThan(
+      ledig.steuerAufAbfindungFuenftel,
+    );
   });
 
   it("bleibt bei einer Abfindung ohne reguläres Einkommen innerhalb des Grundfreibetrags steuerfrei", () => {
@@ -45,35 +57,54 @@ describe("Abfindungsrechner", () => {
       ...defaultInput(),
       zvEOhneAbfindung: 300_000,
     });
-    expect(result.steuerAufAbfindungFuenftel).toBe(result.steuerAufAbfindungVoll);
+    expect(result.steuerAufAbfindungFuenftel).toBe(
+      result.steuerAufAbfindungVoll,
+    );
     expect(result.ersparnisEinkommensteuer).toBe(0);
-    expect(
-      result.warnings.some((w) => w.includes("keinen Vorteil")),
-    ).toBe(true);
+    expect(result.warnings.some((w) => w.includes("keinen Vorteil"))).toBe(
+      true,
+    );
   });
 
   it("berechnet den Solidaritätszuschlag nur oberhalb der Freigrenze", () => {
-    const niedrig = calculateAbfindung({ ...defaultInput(), zvEOhneAbfindung: 20_000 });
+    const niedrig = calculateAbfindung({
+      ...defaultInput(),
+      zvEOhneAbfindung: 20_000,
+    });
     expect(niedrig.soliAufAbfindung).toBe(0);
 
-    const hoch = calculateAbfindung({ ...defaultInput(), zvEOhneAbfindung: 300_000 });
+    const hoch = calculateAbfindung({
+      ...defaultInput(),
+      zvEOhneAbfindung: 300_000,
+    });
     expect(hoch.soliAufAbfindung).toBeGreaterThan(0);
   });
 
   it("berechnet die Kirchensteuer als Prozentsatz der Einkommensteuer auf die Abfindung", () => {
-    const ohne = calculateAbfindung({ ...defaultInput(), kirchensteuerPercent: 0 });
-    const mit = calculateAbfindung({ ...defaultInput(), kirchensteuerPercent: 9 });
+    const ohne = calculateAbfindung({
+      ...defaultInput(),
+      kirchensteuerPercent: 0,
+    });
+    const mit = calculateAbfindung({
+      ...defaultInput(),
+      kirchensteuerPercent: 9,
+    });
     expect(ohne.kirchensteuerAufAbfindung).toBe(0);
     expect(mit.kirchensteuerAufAbfindung).toBeCloseTo(
       mit.steuerAufAbfindungFuenftel * 0.09,
       2,
     );
     expect(mit.nettoAbfindung).toBeLessThan(ohne.nettoAbfindung);
-    expect(mit.warnings.some((w) => w.includes("Billigkeitsgründen"))).toBe(true);
+    expect(mit.warnings.some((w) => w.includes("Billigkeitsgründen"))).toBe(
+      true,
+    );
   });
 
   it("liefert ohne Abfindung überall null", () => {
-    const result = calculateAbfindung({ ...defaultInput(), abfindungsbetrag: 0 });
+    const result = calculateAbfindung({
+      ...defaultInput(),
+      abfindungsbetrag: 0,
+    });
     expect(result.steuerAufAbfindungFuenftel).toBe(0);
     expect(result.nettoAbfindung).toBe(0);
     expect(result.effektiverSteuersatz).toBe(0);

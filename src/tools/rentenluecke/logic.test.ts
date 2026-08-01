@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateRentenluecke, defaultInput, type RentenlueckeInput } from "./logic";
+import {
+  calculateRentenluecke,
+  defaultInput,
+  type RentenlueckeInput,
+} from "./logic";
 
 describe("Rentenlücken-Rechner", () => {
   it("rechnet die Voreinstellung ohne Fehler durch", () => {
@@ -41,7 +45,9 @@ describe("Rentenlücken-Rechner", () => {
     expect(result.kapitalLuecke).toBe(0);
     expect(result.zielErreichbar).toBe(true);
     expect(
-      result.warnings.some((w) => w.includes("deckt das Wunscheinkommen bereits")),
+      result.warnings.some((w) =>
+        w.includes("deckt das Wunscheinkommen bereits"),
+      ),
     ).toBe(true);
   });
 
@@ -209,11 +215,11 @@ describe("Rentenlücken-Rechner", () => {
     };
     const result = calculateRentenluecke(input);
     expect(result.realeRenditeAnsparphase).toBeCloseTo(
-      ((1.07 / 1.02 - 1) * 100),
+      (1.07 / 1.02 - 1) * 100,
       6,
     );
     expect(result.realeRenditeRentenphase).toBeCloseTo(
-      ((1.04 / 1.02 - 1) * 100),
+      (1.04 / 1.02 - 1) * 100,
       6,
     );
   });

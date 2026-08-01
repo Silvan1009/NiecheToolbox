@@ -18,17 +18,20 @@ const faq: FaqEntry[] = [
       "Nein, und das ist ein wichtiger Unterschied. Ein Kreditzins folgt einer festen mathematischen Formel, eine Versicherungsprämie legt jeder Anbieter nach eigenem, nicht öffentlichem Tarifwerk fest. Dieser Rechner zeigt deshalb einen recherchierten Marktdurchschnitt und die Richtung, in die einzelne Merkmale die Prämie typischerweise verschieben – als Orientierung, nicht als Angebot. Ein verbindlicher Preis kommt immer erst von einem tatsächlichen Versicherer.",
   },
   {
-    question: "Warum wirkt sich die Schadenfreiheitsklasse bei der Kfz-Versicherung so stark aus?",
+    question:
+      "Warum wirkt sich die Schadenfreiheitsklasse bei der Kfz-Versicherung so stark aus?",
     answer:
       "Weil sie das direkteste Maß für das tatsächliche Unfallrisiko einer fahrenden Person ist, das ein Versicherer hat. Ein Einsteiger in SF 0 hat noch keine Schadenhistorie, gilt also statistisch als riskanter, und zahlt deshalb oft mehr als das Doppelte einer erfahrenen Person mit derselben Deckung. Mit jedem unfallfreien Jahr sinkt die Einstufung, bis viele Versicherer nach etwa 25 bis 35 Jahren die günstigste Klasse erreichen. Wer als Einsteiger startet, kann oft günstiger als Zweitfahrer bei einem Elternteil oder Partner mitversichert werden, statt die teure Startklasse allein zu durchlaufen.",
   },
   {
-    question: "Warum ist die Spanne bei der Berufsunfähigkeitsversicherung so viel breiter?",
+    question:
+      "Warum ist die Spanne bei der Berufsunfähigkeitsversicherung so viel breiter?",
     answer:
       "Weil dort mehr individuelle Faktoren mitspielen, die dieser Rechner nicht abfragt. Kfz- und Haftpflichtprämien hängen überwiegend von objektiven, leicht abfragbaren Merkmalen ab – Alter, Region, Fahrzeug. Bei der Berufsunfähigkeit entscheidet zusätzlich die individuelle Gesundheit: Vorerkrankungen, Rauchstatus, sogar Hobbys können den Beitrag erheblich verändern oder zu Risikozuschlägen und Ausschlüssen führen. Deshalb ist hier nur eine grobe Größenordnung möglich, keine engere Schätzung.",
   },
   {
-    question: "Was bedeutet die Einordnung „über dem Durchschnitt“ bei meiner eigenen Prämie?",
+    question:
+      "Was bedeutet die Einordnung „über dem Durchschnitt“ bei meiner eigenen Prämie?",
     answer:
       "Dass die eingetragene eigene Prämie oberhalb der geschätzten Marktspanne für das eingegebene Profil liegt. Das muss nicht falsch sein – ältere Verträge, umfangreichere Zusatzleistungen oder ein bereits erfolgter Schadenfall können das rechtfertigen. Es ist aber ein guter Anlass, den eigenen Vertrag mit aktuellen Tarifen zu vergleichen, statt automatisch weiterzuzahlen. Bei „im Rahmen“ bewegt sich die eigene Prämie dagegen im Bereich dessen, was für ein vergleichbares Profil üblich ist.",
   },
@@ -38,7 +41,8 @@ const faq: FaqEntry[] = [
       "Aus aktuellen Tarifvergleichen unabhängiger Vergleichsportale: für die Kfz-Versicherung aus dem Verivox-Kfz-Versicherungsreport, für Privathaftpflicht und Berufsunfähigkeit aus Finanztip-Tarifvergleichen, jeweils Stand Juli 2026. Diese Werte ändern sich mit der Marktentwicklung – Kfz-Prämien sind in den vergangenen Jahren mehrfach deutlich gestiegen –, weshalb ein aktueller Tarifvergleich immer genauer ist als jeder hier hinterlegte Durchschnittswert.",
   },
   {
-    question: "Lohnt sich eine Selbstbeteiligung bei der Privathaftpflicht wirklich?",
+    question:
+      "Lohnt sich eine Selbstbeteiligung bei der Privathaftpflicht wirklich?",
     answer:
       "In den meisten Fällen ja. Eine Privathaftpflichtversicherung ist für Großschäden gedacht – einen Personenschaden in sechsstelliger Höhe kann kaum jemand aus eigener Tasche zahlen. Kleinere Schäden von wenigen Hundert Euro werden dagegen oft ohnehin nicht gemeldet, um die Einstufung nicht zu verschlechtern. Eine Selbstbeteiligung von 150 bis 250 Euro senkt die Prämie spürbar, ohne den eigentlichen Zweck der Versicherung – den Schutz vor Großschäden – zu schmälern.",
   },

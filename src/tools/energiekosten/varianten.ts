@@ -47,7 +47,8 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "stromkosten-haushalt-berechnen",
-    title: "Stromkosten für den Haushalt berechnen: Jahresrechnung und Abschlag",
+    title:
+      "Stromkosten für den Haushalt berechnen: Jahresrechnung und Abschlag",
     description:
       "Stromkosten des ganzen Haushalts aus Jahresverbrauch, Arbeitspreis und Grundpreis – mit Effektivpreis, Vergleichsverbrauch und Nachzahlung.",
     heading: "Stromkosten für den Haushalt berechnen",
@@ -64,7 +65,8 @@ export const variantenTexte: VariantContent[] = [
           "Auf der Jahresabrechnung, meist im oberen Drittel neben dem Abrechnungszeitraum. Steht dort ein Zeitraum von weniger als zwölf Monaten, muss der Wert erst auf ein Jahr hochgerechnet werden. Wer die Abrechnung nicht zur Hand hat, kann den aktuellen Zählerstand notieren und in vier Wochen erneut ablesen – das Zwölffache der Differenz ist eine brauchbare Näherung, solange keine Heizperiode dazwischenliegt.",
       },
       {
-        question: "Was ist der Unterschied zwischen Arbeitspreis und Effektivpreis?",
+        question:
+          "Was ist der Unterschied zwischen Arbeitspreis und Effektivpreis?",
         answer:
           "Der Arbeitspreis ist der Preis je Kilowattstunde, der Effektivpreis rechnet den Grundpreis mit ein. Bei 3.000 Kilowattstunden und 144 Euro Grundpreis liegen 4,80 Cent Unterschied dazwischen. Nur der Effektivpreis ist vergleichbar, weil er beide Preisbestandteile in einer Zahl zusammenfasst.",
       },
@@ -100,7 +102,8 @@ export const variantenTexte: VariantContent[] = [
           "Ja. Eine Erhöhung akzeptiert jeder Versorger ohne Rückfrage. Eine Senkung darf er ablehnen, wenn sie den erwarteten Verbrauch offensichtlich unterschreitet – ist der bisherige Abschlag aber nachweislich zu hoch, etwa weil eine Person ausgezogen ist oder die letzte Abrechnung ein deutliches Guthaben ergab, muss er sie anpassen.",
       },
       {
-        question: "Warum ist mein Abschlag höher als ein Zwölftel der letzten Rechnung?",
+        question:
+          "Warum ist mein Abschlag höher als ein Zwölftel der letzten Rechnung?",
         answer:
           "Weil der Versorger nicht rückwärts, sondern vorwärts schätzt. Steigen die Preise zum Jahreswechsel, steckt die Erhöhung schon im neuen Abschlag. Dazu kommt bei manchen Anbietern ein bewusst gesetzter Sicherheitszuschlag, der Nachzahlungen vermeidet – der ist zulässig, aber verhandelbar.",
       },

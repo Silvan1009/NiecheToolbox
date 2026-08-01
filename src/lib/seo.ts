@@ -73,7 +73,11 @@ export function faqNode(entries: FaqEntry[]): JsonLdNode {
 
 export function toolNode(
   tool: ToolManifest,
-  { name, description, path }: { name: string; description: string; path: string },
+  {
+    name,
+    description,
+    path,
+  }: { name: string; description: string; path: string },
 ): JsonLdNode {
   return {
     "@type": "WebApplication",
@@ -117,7 +121,10 @@ export function toolSeo(tool: ToolManifest, variant?: ToolVariant) {
  * müssen exakt dieselben Werte liefern – der einzige Unterschied ist, ob eine
  * Variante mitkommt.
  */
-export function toolMetadata(tool: ToolManifest, variant?: ToolVariant): Metadata {
+export function toolMetadata(
+  tool: ToolManifest,
+  variant?: ToolVariant,
+): Metadata {
   const { title, heading, description, path } = toolSeo(tool, variant);
   const image = ogImagePath(tool.slug, variant?.slug);
 

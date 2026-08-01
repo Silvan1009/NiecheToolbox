@@ -30,7 +30,8 @@ const sharedFaq: FaqEntry[] = [
       "Weil hier Kosten, Steuern und Inflation mitgerechnet werden. Viele Rechner zeigen den reinen Bruttowert, also die Verzinsung der Einzahlungen ohne Abzüge – das ist rechnerisch richtig, aber es ist nicht der Betrag, über den man am Ende verfügt. Wer die Werte vergleichen will, kann die Steuern im Rechner ausschalten und die Kosten auf null setzen; dann stimmt das Ergebnis mit den einfacheren Rechnern überein.",
   },
   {
-    question: "Wann wird die Sparrate eingezahlt – am Anfang oder am Ende des Monats?",
+    question:
+      "Wann wird die Sparrate eingezahlt – am Anfang oder am Ende des Monats?",
     answer:
       "Am Monatsanfang, so wie es Sparpläne in der Praxis ausführen. Das klingt nach einer Kleinigkeit, macht über lange Laufzeiten aber einen sichtbaren Unterschied: Jede Rate verzinst sich einen Monat länger. Bei 100 Euro im Monat über ein Jahr zu 12 Prozent sind es 1.276,64 statt 1.264,64 Euro – über dreißig Jahre summiert sich dieser Vorsprung auf mehrere Tausend Euro.",
   },

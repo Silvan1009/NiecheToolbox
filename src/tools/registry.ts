@@ -87,7 +87,10 @@ export function relatedTools(slug: string, limit = 3): ToolManifest[] {
       const overlap = t.keywords.filter((k) =>
         selfKeywords.has(k.toLowerCase()),
       ).length;
-      return { tool: t, score: (t.category === self.category ? 10 : 0) + overlap };
+      return {
+        tool: t,
+        score: (t.category === self.category ? 10 : 0) + overlap,
+      };
     })
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)

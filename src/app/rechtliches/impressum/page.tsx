@@ -64,12 +64,12 @@ export default function ImpressumPage() {
       <Section heading="Haftung für Inhalte">
         <p>
           Die Rechner auf {site.name} liefern rechnerische Orientierung. Trotz
-          sorgfältiger Prüfung der Berechnungslogik lässt sich nicht garantieren,
-          dass jedes Ergebnis auf jeden Einzelfall passt – insbesondere nicht bei
-          Feiertagsregelungen einzelner Gemeinden oder bei arbeits- und
-          sozialrechtlichen Fragen. Die Ergebnisse sind keine Rechts-, Steuer-
-          oder Finanzberatung. Für Entscheidungen auf Basis der Ergebnisse wird
-          keine Haftung übernommen.
+          sorgfältiger Prüfung der Berechnungslogik lässt sich nicht
+          garantieren, dass jedes Ergebnis auf jeden Einzelfall passt –
+          insbesondere nicht bei Feiertagsregelungen einzelner Gemeinden oder
+          bei arbeits- und sozialrechtlichen Fragen. Die Ergebnisse sind keine
+          Rechts-, Steuer- oder Finanzberatung. Für Entscheidungen auf Basis der
+          Ergebnisse wird keine Haftung übernommen.
         </p>
         <p>
           Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach
@@ -85,8 +85,9 @@ export default function ImpressumPage() {
           sind ausschließlich deren Betreiber verantwortlich. Zum Zeitpunkt der
           Verlinkung waren keine rechtswidrigen Inhalte erkennbar. Eine
           permanente inhaltliche Kontrolle ist ohne konkrete Anhaltspunkte einer
-          Rechtsverletzung nicht zumutbar; bei Bekanntwerden von Rechts&shy;ver&shy;letzungen
-          werden solche Links unverzüglich entfernt.
+          Rechtsverletzung nicht zumutbar; bei Bekanntwerden von
+          Rechts&shy;ver&shy;letzungen werden solche Links unverzüglich
+          entfernt.
         </p>
       </Section>
 

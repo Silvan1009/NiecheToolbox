@@ -43,7 +43,10 @@ export function buildVariants(
       heading: entry.heading,
       params: entry.params,
       about: [...entry.about, ...about.slice(1)],
-      faq: [...entry.faq, ...faq.filter((item) => !own.has(item.question)).slice(0, 4)],
+      faq: [
+        ...entry.faq,
+        ...faq.filter((item) => !own.has(item.question)).slice(0, 4),
+      ],
     };
   });
 }

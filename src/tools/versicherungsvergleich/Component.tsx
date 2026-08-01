@@ -3,7 +3,14 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Select, Stepper, Toggle, UnitInput } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Select,
+  Stepper,
+  Toggle,
+  UnitInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -64,10 +71,12 @@ const ART_OPTIONS = [
   { value: "bu", label: "Berufsunfähigkeit" },
 ] as const satisfies readonly { value: VersicherungsArt; label: string }[];
 
-const KFZ_DECKUNG_OPTIONS = (Object.keys(kfzDeckungLabels) as KfzDeckung[]).map((value) => ({
-  value,
-  label: kfzDeckungLabels[value],
-}));
+const KFZ_DECKUNG_OPTIONS = (Object.keys(kfzDeckungLabels) as KfzDeckung[]).map(
+  (value) => ({
+    value,
+    label: kfzDeckungLabels[value],
+  }),
+);
 
 const HAFTPFLICHT_KREIS_OPTIONS = (
   Object.keys(haftpflichtPersonenkreisLabels) as HaftpflichtPersonenkreis[]
@@ -97,21 +106,35 @@ function toBool(value: unknown, fallback: boolean): boolean {
   return value === "1" || value === 1 || value === "true";
 }
 
-function readKfz(source: ToolParams | URLSearchParams, fallback: KfzInput): KfzInput {
+function readKfz(
+  source: ToolParams | URLSearchParams,
+  fallback: KfzInput,
+): KfzInput {
   const get = (key: string) =>
     source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
   return {
-    deckung: isDeckung(get("kfz_deckung")) ? (get("kfz_deckung") as KfzDeckung) : fallback.deckung,
-    sfKlasse: isSfKlasse(get("kfz_sf")) ? (get("kfz_sf") as KfzSfKlasse) : fallback.sfKlasse,
-    region: isRegion(get("kfz_region")) ? (get("kfz_region") as KfzRegion) : fallback.region,
+    deckung: isDeckung(get("kfz_deckung"))
+      ? (get("kfz_deckung") as KfzDeckung)
+      : fallback.deckung,
+    sfKlasse: isSfKlasse(get("kfz_sf"))
+      ? (get("kfz_sf") as KfzSfKlasse)
+      : fallback.sfKlasse,
+    region: isRegion(get("kfz_region"))
+      ? (get("kfz_region") as KfzRegion)
+      : fallback.region,
     fahrzeug: isFahrzeug(get("kfz_fahrzeug"))
       ? (get("kfz_fahrzeug") as KfzFahrzeug)
       : fallback.fahrzeug,
     fahrerAlter: isAlter(get("kfz_alter"))
       ? (get("kfz_alter") as KfzAlter)
       : fallback.fahrerAlter,
-    kmProJahr: isKm(get("kfz_km")) ? (get("kfz_km") as KfzFahrleistung) : fallback.kmProJahr,
-    eigenerBeitragJahr: toNumber(get("kfz_beitrag"), fallback.eigenerBeitragJahr),
+    kmProJahr: isKm(get("kfz_km"))
+      ? (get("kfz_km") as KfzFahrleistung)
+      : fallback.kmProJahr,
+    eigenerBeitragJahr: toNumber(
+      get("kfz_beitrag"),
+      fallback.eigenerBeitragJahr,
+    ),
   };
 }
 
@@ -126,11 +149,17 @@ function readHaftpflicht(
       ? (get("hp_kreis") as HaftpflichtPersonenkreis)
       : fallback.personenkreis,
     mitSelbstbeteiligung: toBool(get("hp_sb"), fallback.mitSelbstbeteiligung),
-    eigenerBeitragJahr: toNumber(get("hp_beitrag"), fallback.eigenerBeitragJahr),
+    eigenerBeitragJahr: toNumber(
+      get("hp_beitrag"),
+      fallback.eigenerBeitragJahr,
+    ),
   };
 }
 
-function readBu(source: ToolParams | URLSearchParams, fallback: BuInput): BuInput {
+function readBu(
+  source: ToolParams | URLSearchParams,
+  fallback: BuInput,
+): BuInput {
   const get = (key: string) =>
     source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
   return {
@@ -139,7 +168,10 @@ function readBu(source: ToolParams | URLSearchParams, fallback: BuInput): BuInpu
     risikogruppe: isRisikogruppe(get("bu_risiko"))
       ? (get("bu_risiko") as BuRisikogruppe)
       : fallback.risikogruppe,
-    eigenerBeitragMonat: toNumber(get("bu_beitrag"), fallback.eigenerBeitragMonat),
+    eigenerBeitragMonat: toNumber(
+      get("bu_beitrag"),
+      fallback.eigenerBeitragMonat,
+    ),
   };
 }
 
@@ -153,11 +185,17 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-export default function VersicherungsvergleichTool({ params }: { params?: ToolParams }) {
+export default function VersicherungsvergleichTool({
+  params,
+}: {
+  params?: ToolParams;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => ({
-      art: isArt(search.get("art")) ? (search.get("art") as VersicherungsArt) : fallback.art,
+      art: isArt(search.get("art"))
+        ? (search.get("art") as VersicherungsArt)
+        : fallback.art,
       kfz: readKfz(search, fallback.kfz),
       haftpflicht: readHaftpflicht(search, fallback.haftpflicht),
       bu: readBu(search, fallback.bu),
@@ -170,31 +208,48 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
       kfz_fahrzeug: urlValue(next.kfz.fahrzeug, DEFAULTS.kfz.fahrzeug),
       kfz_alter: urlValue(next.kfz.fahrerAlter, DEFAULTS.kfz.fahrerAlter),
       kfz_km: urlValue(next.kfz.kmProJahr, DEFAULTS.kfz.kmProJahr),
-      kfz_beitrag: urlValue(next.kfz.eigenerBeitragJahr, DEFAULTS.kfz.eigenerBeitragJahr),
-      hp_kreis: urlValue(next.haftpflicht.personenkreis, DEFAULTS.haftpflicht.personenkreis),
-      hp_sb: next.haftpflicht.mitSelbstbeteiligung === DEFAULTS.haftpflicht.mitSelbstbeteiligung
-        ? ""
-        : next.haftpflicht.mitSelbstbeteiligung
-          ? "1"
-          : "0",
+      kfz_beitrag: urlValue(
+        next.kfz.eigenerBeitragJahr,
+        DEFAULTS.kfz.eigenerBeitragJahr,
+      ),
+      hp_kreis: urlValue(
+        next.haftpflicht.personenkreis,
+        DEFAULTS.haftpflicht.personenkreis,
+      ),
+      hp_sb:
+        next.haftpflicht.mitSelbstbeteiligung ===
+        DEFAULTS.haftpflicht.mitSelbstbeteiligung
+          ? ""
+          : next.haftpflicht.mitSelbstbeteiligung
+            ? "1"
+            : "0",
       hp_beitrag: urlValue(
         next.haftpflicht.eigenerBeitragJahr,
         DEFAULTS.haftpflicht.eigenerBeitragJahr,
       ),
-      bu_alter: urlValue(next.bu.alterBeiEintritt, DEFAULTS.bu.alterBeiEintritt),
+      bu_alter: urlValue(
+        next.bu.alterBeiEintritt,
+        DEFAULTS.bu.alterBeiEintritt,
+      ),
       bu_rente: urlValue(next.bu.buRenteMonat, DEFAULTS.bu.buRenteMonat),
       bu_risiko: urlValue(next.bu.risikogruppe, DEFAULTS.bu.risikogruppe),
-      bu_beitrag: urlValue(next.bu.eigenerBeitragMonat, DEFAULTS.bu.eigenerBeitragMonat),
+      bu_beitrag: urlValue(
+        next.bu.eigenerBeitragMonat,
+        DEFAULTS.bu.eigenerBeitragMonat,
+      ),
     }),
   });
 
-  const updateKfz = (patch: Partial<KfzInput>) => update({ kfz: { ...state.kfz, ...patch } });
+  const updateKfz = (patch: Partial<KfzInput>) =>
+    update({ kfz: { ...state.kfz, ...patch } });
   const updateHaftpflicht = (patch: Partial<HaftpflichtInput>) =>
     update({ haftpflicht: { ...state.haftpflicht, ...patch } });
-  const updateBu = (patch: Partial<BuInput>) => update({ bu: { ...state.bu, ...patch } });
+  const updateBu = (patch: Partial<BuInput>) =>
+    update({ bu: { ...state.bu, ...patch } });
 
   const result = useMemo<SchaetzungResult>(() => {
-    if (state.art === "haftpflicht") return calculateHaftpflicht(state.haftpflicht);
+    if (state.art === "haftpflicht")
+      return calculateHaftpflicht(state.haftpflicht);
     if (state.art === "bu") return calculateBu(state.bu);
     return calculateKfz(state.kfz);
   }, [state]);
@@ -215,14 +270,20 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
       </Card>
 
       {state.art === "kfz" && (
-        <Card as="section" className="p-6" aria-label="Angaben zur Kfz-Versicherung">
+        <Card
+          as="section"
+          className="p-6"
+          aria-label="Angaben zur Kfz-Versicherung"
+        >
           <CardTitle>Fahrzeug &amp; Profil</CardTitle>
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <Field label="Deckung" htmlFor="vv-kfz-deckung">
               <Select
                 id="vv-kfz-deckung"
                 value={state.kfz.deckung}
-                onChange={(event) => updateKfz({ deckung: event.target.value as KfzDeckung })}
+                onChange={(event) =>
+                  updateKfz({ deckung: event.target.value as KfzDeckung })
+                }
               >
                 {KFZ_DECKUNG_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -240,7 +301,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               <Select
                 id="vv-kfz-sf"
                 value={state.kfz.sfKlasse}
-                onChange={(event) => updateKfz({ sfKlasse: event.target.value as KfzSfKlasse })}
+                onChange={(event) =>
+                  updateKfz({ sfKlasse: event.target.value as KfzSfKlasse })
+                }
               >
                 {(Object.keys(kfzSfLabels) as KfzSfKlasse[]).map((value) => (
                   <option key={value} value={value}>
@@ -254,7 +317,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               <Select
                 id="vv-kfz-region"
                 value={state.kfz.region}
-                onChange={(event) => updateKfz({ region: event.target.value as KfzRegion })}
+                onChange={(event) =>
+                  updateKfz({ region: event.target.value as KfzRegion })
+                }
               >
                 {(Object.keys(kfzRegionLabels) as KfzRegion[]).map((value) => (
                   <option key={value} value={value}>
@@ -268,13 +333,17 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               <Select
                 id="vv-kfz-fahrzeug"
                 value={state.kfz.fahrzeug}
-                onChange={(event) => updateKfz({ fahrzeug: event.target.value as KfzFahrzeug })}
+                onChange={(event) =>
+                  updateKfz({ fahrzeug: event.target.value as KfzFahrzeug })
+                }
               >
-                {(Object.keys(kfzFahrzeugLabels) as KfzFahrzeug[]).map((value) => (
-                  <option key={value} value={value}>
-                    {kfzFahrzeugLabels[value]}
-                  </option>
-                ))}
+                {(Object.keys(kfzFahrzeugLabels) as KfzFahrzeug[]).map(
+                  (value) => (
+                    <option key={value} value={value}>
+                      {kfzFahrzeugLabels[value]}
+                    </option>
+                  ),
+                )}
               </Select>
             </Field>
 
@@ -282,7 +351,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               <Select
                 id="vv-kfz-alter"
                 value={state.kfz.fahrerAlter}
-                onChange={(event) => updateKfz({ fahrerAlter: event.target.value as KfzAlter })}
+                onChange={(event) =>
+                  updateKfz({ fahrerAlter: event.target.value as KfzAlter })
+                }
               >
                 {(Object.keys(kfzAlterLabels) as KfzAlter[]).map((value) => (
                   <option key={value} value={value}>
@@ -296,13 +367,19 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
               <Select
                 id="vv-kfz-km"
                 value={state.kfz.kmProJahr}
-                onChange={(event) => updateKfz({ kmProJahr: event.target.value as KfzFahrleistung })}
+                onChange={(event) =>
+                  updateKfz({
+                    kmProJahr: event.target.value as KfzFahrleistung,
+                  })
+                }
               >
-                {(Object.keys(kfzKmLabels) as KfzFahrleistung[]).map((value) => (
-                  <option key={value} value={value}>
-                    {kfzKmLabels[value]}
-                  </option>
-                ))}
+                {(Object.keys(kfzKmLabels) as KfzFahrleistung[]).map(
+                  (value) => (
+                    <option key={value} value={value}>
+                      {kfzKmLabels[value]}
+                    </option>
+                  ),
+                )}
               </Select>
             </Field>
           </div>
@@ -318,7 +395,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
                 id="vv-kfz-beitrag"
                 unit="€/Jahr"
                 value={state.kfz.eigenerBeitragJahr}
-                onChange={(eigenerBeitragJahr) => updateKfz({ eigenerBeitragJahr })}
+                onChange={(eigenerBeitragJahr) =>
+                  updateKfz({ eigenerBeitragJahr })
+                }
               />
             </Field>
           </div>
@@ -326,21 +405,29 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
       )}
 
       {state.art === "haftpflicht" && (
-        <Card as="section" className="p-6" aria-label="Angaben zur Privathaftpflicht">
+        <Card
+          as="section"
+          className="p-6"
+          aria-label="Angaben zur Privathaftpflicht"
+        >
           <CardTitle>Haushalt</CardTitle>
           <div className="mt-4 flex flex-col gap-5">
             <Field label="Personenkreis" htmlFor="vv-hp-kreis">
               <SegmentedControl
                 value={state.haftpflicht.personenkreis}
                 options={HAFTPFLICHT_KREIS_OPTIONS}
-                onChange={(personenkreis) => updateHaftpflicht({ personenkreis })}
+                onChange={(personenkreis) =>
+                  updateHaftpflicht({ personenkreis })
+                }
                 ariaLabel="Personenkreis"
               />
             </Field>
 
             <Toggle
               checked={state.haftpflicht.mitSelbstbeteiligung}
-              onChange={(mitSelbstbeteiligung) => updateHaftpflicht({ mitSelbstbeteiligung })}
+              onChange={(mitSelbstbeteiligung) =>
+                updateHaftpflicht({ mitSelbstbeteiligung })
+              }
               label="Selbstbeteiligung vereinbart"
               hint="150–250 € Selbstbehalt senken die Prämie meist um rund 10 %."
             />
@@ -355,7 +442,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
                 id="vv-hp-beitrag"
                 unit="€/Jahr"
                 value={state.haftpflicht.eigenerBeitragJahr}
-                onChange={(eigenerBeitragJahr) => updateHaftpflicht({ eigenerBeitragJahr })}
+                onChange={(eigenerBeitragJahr) =>
+                  updateHaftpflicht({ eigenerBeitragJahr })
+                }
               />
             </Field>
           </div>
@@ -363,7 +452,11 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
       )}
 
       {state.art === "bu" && (
-        <Card as="section" className="p-6" aria-label="Angaben zur Berufsunfähigkeit">
+        <Card
+          as="section"
+          className="p-6"
+          aria-label="Angaben zur Berufsunfähigkeit"
+        >
           <CardTitle>Absicherung &amp; Beruf</CardTitle>
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <Field label="Alter bei Eintritt" htmlFor="vv-bu-alter">
@@ -398,14 +491,18 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
                   id="vv-bu-risiko"
                   value={state.bu.risikogruppe}
                   onChange={(event) =>
-                    updateBu({ risikogruppe: event.target.value as BuRisikogruppe })
+                    updateBu({
+                      risikogruppe: event.target.value as BuRisikogruppe,
+                    })
                   }
                 >
-                  {(Object.keys(buRisikogruppeLabels) as BuRisikogruppe[]).map((value) => (
-                    <option key={value} value={value}>
-                      {buRisikogruppeLabels[value]}
-                    </option>
-                  ))}
+                  {(Object.keys(buRisikogruppeLabels) as BuRisikogruppe[]).map(
+                    (value) => (
+                      <option key={value} value={value}>
+                        {buRisikogruppeLabels[value]}
+                      </option>
+                    ),
+                  )}
                 </Select>
               </Field>
             </div>
@@ -422,7 +519,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
                 id="vv-bu-beitrag"
                 unit="€/Monat"
                 value={state.bu.eigenerBeitragMonat}
-                onChange={(eigenerBeitragMonat) => updateBu({ eigenerBeitragMonat })}
+                onChange={(eigenerBeitragMonat) =>
+                  updateBu({ eigenerBeitragMonat })
+                }
               />
             </Field>
           </div>
@@ -455,7 +554,11 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
         />
         <Stat
           label="Deine Prämie"
-          value={result.eigenerBeitrag === null ? "–" : formatEuro(result.eigenerBeitrag)}
+          value={
+            result.eigenerBeitrag === null
+              ? "–"
+              : formatEuro(result.eigenerBeitrag)
+          }
           hint={
             result.eigenerBeitrag === null
               ? "noch nicht eingetragen"
@@ -479,7 +582,9 @@ export default function VersicherungsvergleichTool({ params }: { params?: ToolPa
             >
               <span className="text-[15px]">
                 {faktor.label}
-                <span className="ml-2 text-[13px] text-muted">{faktor.wert}</span>
+                <span className="ml-2 text-[13px] text-muted">
+                  {faktor.wert}
+                </span>
               </span>
               <span className="font-mono text-sm font-semibold tabular-nums">
                 {faktor.effekt}
@@ -553,10 +658,12 @@ function Einordnungshinweis({
   return (
     <>
       Deine Prämie von{" "}
-      <strong className="font-semibold text-ink">{formatEuro(result.eigenerBeitrag)}</strong>{" "}
+      <strong className="font-semibold text-ink">
+        {formatEuro(result.eigenerBeitrag)}
+      </strong>{" "}
       liegt {einordnungLabel(result.einordnung)} – typisch sind{" "}
-      {formatEuro(result.spanneMin)} bis {formatEuro(result.spanneMax)} {suffix}.
+      {formatEuro(result.spanneMin)} bis {formatEuro(result.spanneMax)} {suffix}
+      .
     </>
   );
 }
-

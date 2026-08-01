@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { site } from "@/config/site";
 import { JsonLd } from "@/components/JsonLd";
 import { ToolCard } from "@/components/ToolCard";
-import { absoluteUrl, breadcrumbNode, jsonLdGraph, variantPath } from "@/lib/seo";
+import {
+  absoluteUrl,
+  breadcrumbNode,
+  jsonLdGraph,
+  variantPath,
+} from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
 import { toolsWithIndexedVariants, toolGroups } from "@/tools/groups";
 
@@ -75,35 +80,33 @@ export default function RechnerPage() {
                   // Bei Tools, deren Unterseiten je ein eigenes Thema sind,
                   // stehen sie direkt unter der Karte – sonst wären sie nur
                   // über die Tool-Seite erreichbar.
-                  const varianten = toolsWithIndexedVariants.includes(
-                    tool.slug,
-                  )
+                  const varianten = toolsWithIndexedVariants.includes(tool.slug)
                     ? (tool.getVariants?.() ?? [])
                     : [];
 
                   return (
-                  <li key={tool.slug} className="flex flex-col gap-3">
-                    <ToolCard tool={tool} showCategory={false} />
+                    <li key={tool.slug} className="flex flex-col gap-3">
+                      <ToolCard tool={tool} showCategory={false} />
 
-                    {varianten.length > 0 && (
-                      <ul className="flex flex-col gap-1 px-1">
-                        {varianten.map((variant) => (
-                          <li key={variant.slug}>
-                            <Link
-                              href={variantPath(tool.slug, variant.slug)}
-                              className="group flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
-                            >
-                              <ArrowRight
-                                className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover:translate-x-0.5"
-                                aria-hidden="true"
-                              />
-                              {variant.heading ?? variant.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
+                      {varianten.length > 0 && (
+                        <ul className="flex flex-col gap-1 px-1">
+                          {varianten.map((variant) => (
+                            <li key={variant.slug}>
+                              <Link
+                                href={variantPath(tool.slug, variant.slug)}
+                                className="group flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
+                              >
+                                <ArrowRight
+                                  className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover:translate-x-0.5"
+                                  aria-hidden="true"
+                                />
+                                {variant.heading ?? variant.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
                   );
                 })}
               </ul>

@@ -29,7 +29,14 @@
  * es das Gesetz.
  */
 
-import { addMonths, endOfMonth, fullYearsBetween, isValidIso, todayIso, type Iso } from "@/lib/date";
+import {
+  addMonths,
+  endOfMonth,
+  fullYearsBetween,
+  isValidIso,
+  todayIso,
+  type Iso,
+} from "@/lib/date";
 import { cents, nn } from "@/lib/finanzmath";
 import type { RegionCode } from "@/lib/regionen";
 import {
@@ -136,7 +143,10 @@ export function anspruchsende(geburtsdatum: Iso, status: KindStatus): Iso {
  * einen Sprung erzeugen, deshalb ist er auf 11,9 Prozent des übersteigenden
  * Betrags begrenzt, bis der reguläre Satz günstiger ist.
  */
-function solidaritaetszuschlag(steuer: number, veranlagung: Veranlagung): number {
+function solidaritaetszuschlag(
+  steuer: number,
+  veranlagung: Veranlagung,
+): number {
   const freigrenze =
     veranlagung === "zusammen" ? SOLI_FREIGRENZE_SPLITTING : SOLI_FREIGRENZE;
   if (steuer <= freigrenze) return 0;
@@ -330,10 +340,7 @@ export function encodeKinder(kinder: KindInput[]): string {
     .join(",");
 }
 
-export function decodeKinder(
-  raw: unknown,
-  fallback: KindInput[],
-): KindInput[] {
+export function decodeKinder(raw: unknown, fallback: KindInput[]): KindInput[] {
   if (typeof raw !== "string" || raw.trim() === "") return fallback;
 
   const kinder = raw

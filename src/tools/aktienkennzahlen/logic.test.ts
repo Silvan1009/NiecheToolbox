@@ -215,7 +215,10 @@ describe("Dividende", () => {
   it("rechnet Rendite und Ausschüttungsquote", () => {
     const result = rechne();
     expect(result.dividendenrendite).toBeCloseTo((1.4 / 68) * 100, 8);
-    expect(result.ausschuettungsquote).toBeCloseTo((1.4 / (430 / 120)) * 100, 8);
+    expect(result.ausschuettungsquote).toBeCloseTo(
+      (1.4 / (430 / 120)) * 100,
+      8,
+    );
   });
 
   it("unterscheidet keine Dividende von einer fehlenden Angabe", () => {
@@ -257,7 +260,9 @@ describe("Fairer Wert", () => {
       renditeanspruchPercent: 7 + DDM_MIN_ABSTAND - 0.5,
     });
     expect(result.fairerWertDividende).toBeNull();
-    expect(result.warnings.some((w) => w.includes("Dividendenmodell"))).toBe(true);
+    expect(result.warnings.some((w) => w.includes("Dividendenmodell"))).toBe(
+      true,
+    );
     // Die anderen Verfahren bleiben davon unberührt.
     expect(result.fairerWertKgv).not.toBeNull();
     expect(result.fairerWertGraham).not.toBeNull();
@@ -267,9 +272,18 @@ describe("Fairer Wert", () => {
     const ohneDividende = rechne({ dividendeJeAktie: 0 });
     const kgvWert = ohneDividende.fairerWertKgv!;
     const graham = ohneDividende.fairerWertGraham!;
-    expect(ohneDividende.fairerWertSchnitt).toBeCloseTo((kgvWert + graham) / 2, 8);
-    expect(ohneDividende.fairerWertMin).toBeCloseTo(Math.min(kgvWert, graham), 8);
-    expect(ohneDividende.fairerWertMax).toBeCloseTo(Math.max(kgvWert, graham), 8);
+    expect(ohneDividende.fairerWertSchnitt).toBeCloseTo(
+      (kgvWert + graham) / 2,
+      8,
+    );
+    expect(ohneDividende.fairerWertMin).toBeCloseTo(
+      Math.min(kgvWert, graham),
+      8,
+    );
+    expect(ohneDividende.fairerWertMax).toBeCloseTo(
+      Math.max(kgvWert, graham),
+      8,
+    );
   });
 
   it("liefert ohne jedes Verfahren keinen fairen Wert", () => {
@@ -288,7 +302,10 @@ describe("Fairer Wert", () => {
   it("misst die Abweichung vom Kurs mit Vorzeichen", () => {
     const result = rechne();
     const schnitt = result.fairerWertSchnitt!;
-    expect(result.abweichungProzent).toBeCloseTo(((schnitt - 68) / 68) * 100, 8);
+    expect(result.abweichungProzent).toBeCloseTo(
+      ((schnitt - 68) / 68) * 100,
+      8,
+    );
     // Bei diesen Annahmen liegt der Kurs über dem Mittel der Verfahren.
     expect(result.abweichungProzent!).toBeLessThan(0);
   });
@@ -308,10 +325,9 @@ describe("Projektion und erwartete Rendite", () => {
     expect(result.jahre[2].gewinnJeAktie).toBeCloseTo(eps * 1.07 ** 3, 8);
     expect(result.jahre[2].dividende).toBeCloseTo(1.4 * 1.07 ** 3, 8);
     // Die Ausschüttungsquote bleibt damit über die ganze Projektion konstant.
-    expect(result.jahre[2].dividende / result.jahre[2].gewinnJeAktie).toBeCloseTo(
-      1.4 / eps,
-      8,
-    );
+    expect(
+      result.jahre[2].dividende / result.jahre[2].gewinnJeAktie,
+    ).toBeCloseTo(1.4 / eps, 8);
   });
 
   it("summiert die Dividenden ohne Wiederanlage", () => {
@@ -403,7 +419,9 @@ describe("Hinweise", () => {
 
   it("warnt vor einer Dividende über dem Gewinn", () => {
     const warnings = rechne({ dividendeJeAktie: 4 }).warnings;
-    expect(warnings.some((w) => w.includes("übersteigt den Gewinn"))).toBe(true);
+    expect(warnings.some((w) => w.includes("übersteigt den Gewinn"))).toBe(
+      true,
+    );
   });
 
   it("warnt, wenn der Gewinn nicht als Geld ankommt", () => {
@@ -430,7 +448,9 @@ describe("Hinweise", () => {
 
   it("warnt bei einem Verlust und bei negativem Eigenkapital", () => {
     expect(
-      rechne({ gewinnMio: -50 }).warnings.some((w) => w.includes("keinen Gewinn")),
+      rechne({ gewinnMio: -50 }).warnings.some((w) =>
+        w.includes("keinen Gewinn"),
+      ),
     ).toBe(true);
     expect(
       rechne({ eigenkapitalMio: -50 }).warnings.some((w) =>

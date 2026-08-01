@@ -157,7 +157,8 @@ interface SvBeitraege {
 }
 
 /** Beitragspflichtiges Entgelt: Bruttolohn, gedeckelt auf die Bemessungsgrenze. */
-const bis = (bruttoJahr: number, grenze: number) => Math.min(bruttoJahr, grenze);
+const bis = (bruttoJahr: number, grenze: number) =>
+  Math.min(bruttoJahr, grenze);
 
 function sozialversicherung(
   bruttoJahr: number,
@@ -366,7 +367,8 @@ function solidaritaetszuschlag(
   if (lohnsteuerBetrag <= freigrenze) return 0;
 
   const voll = (lohnsteuerBetrag * SOLI_SATZ) / 100;
-  const milderung = ((lohnsteuerBetrag - freigrenze) * SOLI_MILDERUNG_SATZ) / 100;
+  const milderung =
+    ((lohnsteuerBetrag - freigrenze) * SOLI_MILDERUNG_SATZ) / 100;
   return Math.min(voll, milderung);
 }
 

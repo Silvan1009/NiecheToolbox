@@ -93,7 +93,8 @@ export function calculateUrlaub(input: UrlaubInput): UrlaubResult {
   const personenGewichtet = erwachsene + (kinder * kindFaktor) / 100;
 
   const anreiseC =
-    cents(nn(input.anreiseGesamt)) + cents(nn(input.anreiseProPerson)) * personen;
+    cents(nn(input.anreiseGesamt)) +
+    cents(nn(input.anreiseProPerson)) * personen;
   const unterkunftC = cents(nn(input.unterkunftProNacht)) * naechte;
   const verpflegungC = Math.round(
     cents(nn(input.verpflegungProPersonTag)) * personenGewichtet * tage,
@@ -116,7 +117,10 @@ export function calculateUrlaub(input: UrlaubInput): UrlaubResult {
   const posten = alle.filter((p) => p.betragC > 0);
 
   const zwischensummeC = alle.reduce((sum, p) => sum + p.betragC, 0);
-  const pufferC = anteil(zwischensummeC, clamp(nn(input.pufferPercent), 0, 100));
+  const pufferC = anteil(
+    zwischensummeC,
+    clamp(nn(input.pufferPercent), 0, 100),
+  );
   const gesamtC = zwischensummeC + pufferC;
 
   const vorOrtC = verpflegungC + aktivitaetenC + transportC;

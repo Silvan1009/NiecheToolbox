@@ -308,7 +308,10 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
   /* -- Finanzierung ------------------------------------------------------- */
 
   // Mehr Eigenkapital als Investition ergibt kein negatives Darlehen.
-  const eigenkapitalC = Math.min(cents(nn(input.eigenkapital)), gesamtinvestitionC);
+  const eigenkapitalC = Math.min(
+    cents(nn(input.eigenkapital)),
+    gesamtinvestitionC,
+  );
   const darlehenC = gesamtinvestitionC - eigenkapitalC;
 
   const jahresannuitaetC = anteil(darlehenC, sollzins + tilgung);
@@ -397,13 +400,15 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
       : 0;
     const steuerC = istAnlage ? anteil(steuerErgebnisC, grenzsteuersatz) : 0;
 
-    const cashflowVorSteuerC = mieteEffektivC - bewirtschaftungJahrC - rateJahrC;
+    const cashflowVorSteuerC =
+      mieteEffektivC - bewirtschaftungJahrC - rateJahrC;
     const cashflowC = cashflowVorSteuerC - steuerC;
 
     if (!istAnlage) {
       // Der Mieter legt das Eigenkapital an und investiert die Differenz zur
       // Belastung des Käufers – das ist der faire Vergleich.
-      depotC = Math.round(depotC * (1 + alternativrendite / 100)) - cashflowVorSteuerC;
+      depotC =
+        Math.round(depotC * (1 + alternativrendite / 100)) - cashflowVorSteuerC;
     }
 
     // Der Wert am Jahresende, also nach der Wertentwicklung dieses Jahres.
@@ -490,9 +495,7 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
   const buchwertC = gesamtinvestitionC - kumAfaC;
   const veraeusserungsgewinnC = wertEndeC - verkaufskostenC - buchwertC;
   const spekulationssteuerC =
-    istAnlage &&
-    horizont < SPEKULATIONSFRIST_JAHRE &&
-    veraeusserungsgewinnC > 0
+    istAnlage && horizont < SPEKULATIONSFRIST_JAHRE && veraeusserungsgewinnC > 0
       ? anteil(veraeusserungsgewinnC, grenzsteuersatz)
       : 0;
 
@@ -500,14 +503,14 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
     wertEndeC - verkaufskostenC - restschuldEndeC - spekulationssteuerC;
 
   const bisHorizont = jahre.slice(0, horizont);
-  const kumCashflowC = bisHorizont.reduce((sum, z) => sum + cents(z.cashflow), 0);
+  const kumCashflowC = bisHorizont.reduce(
+    (sum, z) => sum + cents(z.cashflow),
+    0,
+  );
   const vermoegenszuwachsC =
     kumCashflowC + nettoVerkaufserloesC - eigenkapitalC;
 
-  const flows = [
-    -toEuro(eigenkapitalC),
-    ...bisHorizont.map((z) => z.cashflow),
-  ];
+  const flows = [-toEuro(eigenkapitalC), ...bisHorizont.map((z) => z.cashflow)];
   flows[flows.length - 1] += toEuro(nettoVerkaufserloesC);
   const irr = internerZinsfuss(flows);
 
@@ -566,7 +569,8 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
   if (
     istAnlage &&
     afaBasisC > 0 &&
-    modernisierungC > anteil(afaBasisC - modernisierungC, ANSCHAFFUNGSNAH_GRENZE_PROZENT)
+    modernisierungC >
+      anteil(afaBasisC - modernisierungC, ANSCHAFFUNGSNAH_GRENZE_PROZENT)
   ) {
     warnings.push(
       "Die Modernisierung übersteigt 15 Prozent des Gebäudewerts. In den ersten drei Jahren nach dem Kauf gilt sie dann als anschaffungsnaher Herstellungsaufwand und ist nicht sofort abziehbar, sondern nur über die Abschreibung – hier ist sie entsprechend eingerechnet.",
@@ -614,11 +618,15 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
 
     mieteJahr: erstes.miete,
     bewirtschaftungJahr: erstes.bewirtschaftung,
-    cashflowVorSteuerMonat: toEuro(Math.round(cashflowVorSteuer1C / MONATE_PRO_JAHR)),
+    cashflowVorSteuerMonat: toEuro(
+      Math.round(cashflowVorSteuer1C / MONATE_PRO_JAHR),
+    ),
     cashflowVorSteuerJahr: toEuro(cashflowVorSteuer1C),
     afaJahr: erstes.afa,
     steuerlichesErgebnis: toEuro(
-      istAnlage ? mieteJahr1C - bewirtschaftung1C - zins1C - cents(erstes.afa) : 0,
+      istAnlage
+        ? mieteJahr1C - bewirtschaftung1C - zins1C - cents(erstes.afa)
+        : 0,
     ),
     steuerwirkungJahr: erstes.steuer,
     cashflowNachSteuerMonat: toEuro(

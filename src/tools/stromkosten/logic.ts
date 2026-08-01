@@ -55,20 +55,132 @@ export interface DevicePreset {
  * Typenschild und machen sichtbar, welche Geräte wirklich ins Gewicht fallen.
  */
 export const devicePresets: DevicePreset[] = [
-  { id: "kuehlschrank", label: "Kühlschrank", watts: 45, pattern: "taeglich", usage: 24, kwhPerCycle: 0, standbyWatts: 0 },
-  { id: "gefriertruhe", label: "Gefriertruhe", watts: 60, pattern: "taeglich", usage: 24, kwhPerCycle: 0, standbyWatts: 0 },
-  { id: "waschmaschine", label: "Waschmaschine", watts: 0, pattern: "durchgaenge", usage: 4, kwhPerCycle: 0.9, standbyWatts: 1 },
-  { id: "trockner", label: "Wäschetrockner", watts: 0, pattern: "durchgaenge", usage: 3, kwhPerCycle: 2.5, standbyWatts: 1 },
-  { id: "spuelmaschine", label: "Spülmaschine", watts: 0, pattern: "durchgaenge", usage: 5, kwhPerCycle: 1, standbyWatts: 1 },
-  { id: "backofen", label: "Backofen", watts: 2500, pattern: "woechentlich", usage: 2, kwhPerCycle: 0, standbyWatts: 1 },
-  { id: "fernseher", label: "Fernseher (55 Zoll)", watts: 90, pattern: "taeglich", usage: 4, kwhPerCycle: 0, standbyWatts: 0.5 },
-  { id: "gaming", label: "Gaming-PC", watts: 400, pattern: "taeglich", usage: 3, kwhPerCycle: 0, standbyWatts: 3 },
-  { id: "laptop", label: "Laptop", watts: 50, pattern: "taeglich", usage: 8, kwhPerCycle: 0, standbyWatts: 1 },
-  { id: "heizluefter", label: "Heizlüfter", watts: 2000, pattern: "taeglich", usage: 3, kwhPerCycle: 0, standbyWatts: 0 },
-  { id: "klimageraet", label: "Mobiles Klimagerät", watts: 1000, pattern: "taeglich", usage: 6, kwhPerCycle: 0, standbyWatts: 1 },
-  { id: "aquarium", label: "Aquarium (200 l)", watts: 80, pattern: "taeglich", usage: 24, kwhPerCycle: 0, standbyWatts: 0 },
-  { id: "router", label: "WLAN-Router", watts: 10, pattern: "taeglich", usage: 24, kwhPerCycle: 0, standbyWatts: 0 },
-  { id: "kaffeevollautomat", label: "Kaffeevollautomat", watts: 1400, pattern: "woechentlich", usage: 1.5, kwhPerCycle: 0, standbyWatts: 2 },
+  {
+    id: "kuehlschrank",
+    label: "Kühlschrank",
+    watts: 45,
+    pattern: "taeglich",
+    usage: 24,
+    kwhPerCycle: 0,
+    standbyWatts: 0,
+  },
+  {
+    id: "gefriertruhe",
+    label: "Gefriertruhe",
+    watts: 60,
+    pattern: "taeglich",
+    usage: 24,
+    kwhPerCycle: 0,
+    standbyWatts: 0,
+  },
+  {
+    id: "waschmaschine",
+    label: "Waschmaschine",
+    watts: 0,
+    pattern: "durchgaenge",
+    usage: 4,
+    kwhPerCycle: 0.9,
+    standbyWatts: 1,
+  },
+  {
+    id: "trockner",
+    label: "Wäschetrockner",
+    watts: 0,
+    pattern: "durchgaenge",
+    usage: 3,
+    kwhPerCycle: 2.5,
+    standbyWatts: 1,
+  },
+  {
+    id: "spuelmaschine",
+    label: "Spülmaschine",
+    watts: 0,
+    pattern: "durchgaenge",
+    usage: 5,
+    kwhPerCycle: 1,
+    standbyWatts: 1,
+  },
+  {
+    id: "backofen",
+    label: "Backofen",
+    watts: 2500,
+    pattern: "woechentlich",
+    usage: 2,
+    kwhPerCycle: 0,
+    standbyWatts: 1,
+  },
+  {
+    id: "fernseher",
+    label: "Fernseher (55 Zoll)",
+    watts: 90,
+    pattern: "taeglich",
+    usage: 4,
+    kwhPerCycle: 0,
+    standbyWatts: 0.5,
+  },
+  {
+    id: "gaming",
+    label: "Gaming-PC",
+    watts: 400,
+    pattern: "taeglich",
+    usage: 3,
+    kwhPerCycle: 0,
+    standbyWatts: 3,
+  },
+  {
+    id: "laptop",
+    label: "Laptop",
+    watts: 50,
+    pattern: "taeglich",
+    usage: 8,
+    kwhPerCycle: 0,
+    standbyWatts: 1,
+  },
+  {
+    id: "heizluefter",
+    label: "Heizlüfter",
+    watts: 2000,
+    pattern: "taeglich",
+    usage: 3,
+    kwhPerCycle: 0,
+    standbyWatts: 0,
+  },
+  {
+    id: "klimageraet",
+    label: "Mobiles Klimagerät",
+    watts: 1000,
+    pattern: "taeglich",
+    usage: 6,
+    kwhPerCycle: 0,
+    standbyWatts: 1,
+  },
+  {
+    id: "aquarium",
+    label: "Aquarium (200 l)",
+    watts: 80,
+    pattern: "taeglich",
+    usage: 24,
+    kwhPerCycle: 0,
+    standbyWatts: 0,
+  },
+  {
+    id: "router",
+    label: "WLAN-Router",
+    watts: 10,
+    pattern: "taeglich",
+    usage: 24,
+    kwhPerCycle: 0,
+    standbyWatts: 0,
+  },
+  {
+    id: "kaffeevollautomat",
+    label: "Kaffeevollautomat",
+    watts: 1400,
+    pattern: "woechentlich",
+    usage: 1.5,
+    kwhPerCycle: 0,
+    standbyWatts: 2,
+  },
 ];
 
 /**
@@ -152,10 +264,14 @@ export function calculatePower(input: PowerInput): PowerResult {
 
   const warnings: string[] = [];
   if (input.pattern === "taeglich" && usage > 24) {
-    warnings.push("Mehr als 24 Stunden am Tag gibt es nicht – gerechnet wird mit 24.");
+    warnings.push(
+      "Mehr als 24 Stunden am Tag gibt es nicht – gerechnet wird mit 24.",
+    );
   }
   if (input.pattern === "woechentlich" && usage > 168) {
-    warnings.push("Mehr als 168 Stunden pro Woche gibt es nicht – gerechnet wird mit 168.");
+    warnings.push(
+      "Mehr als 168 Stunden pro Woche gibt es nicht – gerechnet wird mit 168.",
+    );
   }
   if (totalKwh > 0 && standbyKwh / totalKwh > 0.3) {
     warnings.push(

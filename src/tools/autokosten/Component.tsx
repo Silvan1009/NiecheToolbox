@@ -3,7 +3,12 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, UnitInput } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Stepper,
+  UnitInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -62,16 +67,31 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
         ...fallback,
         antrieb: isAntrieb(antrieb) ? antrieb : fallback.antrieb,
         verbrauch: toNumber(search.get("verbrauch"), fallback.verbrauch),
-        kraftstoffpreis: toNumber(search.get("preis"), fallback.kraftstoffpreis),
+        kraftstoffpreis: toNumber(
+          search.get("preis"),
+          fallback.kraftstoffpreis,
+        ),
         kmProJahr: toNumber(search.get("km"), fallback.kmProJahr),
         kaufpreis: toNumber(search.get("kaufpreis"), fallback.kaufpreis),
         restwert: toNumber(search.get("restwert"), fallback.restwert),
-        haltedauerJahre: toNumber(search.get("haltedauer"), fallback.haltedauerJahre),
+        haltedauerJahre: toNumber(
+          search.get("haltedauer"),
+          fallback.haltedauerJahre,
+        ),
         kfzSteuerJahr: toNumber(search.get("steuer"), fallback.kfzSteuerJahr),
-        versicherungJahr: toNumber(search.get("versicherung"), fallback.versicherungJahr),
+        versicherungJahr: toNumber(
+          search.get("versicherung"),
+          fallback.versicherungJahr,
+        ),
         wartungJahr: toNumber(search.get("wartung"), fallback.wartungJahr),
-        verschleissJahr: toNumber(search.get("verschleiss"), fallback.verschleissJahr),
-        sonstigesJahr: toNumber(search.get("sonstiges"), fallback.sonstigesJahr),
+        verschleissJahr: toNumber(
+          search.get("verschleiss"),
+          fallback.verschleissJahr,
+        ),
+        sonstigesJahr: toNumber(
+          search.get("sonstiges"),
+          fallback.sonstigesJahr,
+        ),
       };
     },
     serialize: (next) => ({
@@ -158,7 +178,11 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
           unsichtbarste Kostenposten.
         </p>
         <div className="mt-4 grid gap-5 sm:grid-cols-3">
-          <Field label="Kaufpreis" htmlFor="ak-kaufpreis" hint="Neu oder gebraucht.">
+          <Field
+            label="Kaufpreis"
+            htmlFor="ak-kaufpreis"
+            hint="Neu oder gebraucht."
+          >
             <UnitInput
               id="ak-kaufpreis"
               unit="€"
@@ -221,7 +245,11 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
         </div>
       </Card>
 
-      <Card as="section" className="p-6" aria-label="Wartung, Verschleiß und Sonstiges">
+      <Card
+        as="section"
+        className="p-6"
+        aria-label="Wartung, Verschleiß und Sonstiges"
+      >
         <CardTitle>Wartung, Verschleiß &amp; Sonstiges</CardTitle>
         <div className="mt-4 grid gap-5 sm:grid-cols-3">
           <Field
@@ -380,4 +408,3 @@ export default function AutokostenTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

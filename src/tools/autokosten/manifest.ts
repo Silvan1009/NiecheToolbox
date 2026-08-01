@@ -13,17 +13,20 @@ const about: string[] = [
 
 const faq: FaqEntry[] = [
   {
-    question: "Warum ist der Wertverlust die größte Kostenposition, obwohl kein Geld dafür überwiesen wird?",
+    question:
+      "Warum ist der Wertverlust die größte Kostenposition, obwohl kein Geld dafür überwiesen wird?",
     answer:
       "Weil ein Auto ab dem Kauf laufend an Wert verliert, unabhängig davon, ob es gefahren wird oder in der Garage steht. Dieser Verlust zeigt sich nicht auf dem Kontoauszug, sondern erst beim Verkauf oder in der Differenz zum Neupreis – und genau deshalb wird er beim Überschlagen so oft vergessen. Rechnerisch ist er trotzdem ein echter Kostenfaktor: Geld, das beim Kauf gebunden war und beim Verkauf nicht wiederkommt.",
   },
   {
-    question: "Wie bestimme ich den Restwert meines Autos nach ein paar Jahren?",
+    question:
+      "Wie bestimme ich den Restwert meines Autos nach ein paar Jahren?",
     answer:
       "Am zuverlässigsten über aktuelle Angebote für vergleichbare Modelle in ähnlichem Alter und ähnlicher Laufleistung auf gängigen Gebrauchtwagenbörsen. Als grobe Faustregel verlieren Neuwagen im ersten Jahr etwa 20 bis 25 Prozent, danach jährlich weitere 10 bis 15 Prozent – nach sechs Jahren bleiben oft noch 30 bis 40 Prozent des Neupreises. Elektroautos und wenig gefragte Modelle verlieren häufig schneller, gesuchte Gebrauchte langsamer.",
   },
   {
-    question: "Was zählt zu „Wartung & Inspektion“ und was zu „Verschleiß & Reifen“?",
+    question:
+      "Was zählt zu „Wartung & Inspektion“ und was zu „Verschleiß & Reifen“?",
     answer:
       "Unter Wartung & Inspektion stehen die Termine, die im Wartungsplan des Herstellers vorgesehen sind: Ölwechsel, Filter, Inspektionen sowie die Hauptuntersuchung alle zwei Jahre. Verschleiß & Reifen umfasst alles, was sich mit der Zeit abnutzt und ausgetauscht werden muss – Reifensätze, Bremsscheiben und -beläge, die Batterie. Die Trennung hilft, weil beide Posten unterschiedlich stark von der Fahrleistung abhängen: Reifen und Bremsen nutzen sich mit den Kilometern ab, viele Inspektionen sind dagegen fest an die Zeit gekoppelt.",
   },

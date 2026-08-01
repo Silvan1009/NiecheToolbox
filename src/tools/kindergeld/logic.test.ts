@@ -10,7 +10,10 @@ import {
   type KindInput,
 } from "./logic";
 
-const kind = (geburtsdatum: string, status: KindInput["status"] = "regulaer"): KindInput => ({
+const kind = (
+  geburtsdatum: string,
+  status: KindInput["status"] = "regulaer",
+): KindInput => ({
   geburtsdatum,
   status,
 });
@@ -154,7 +157,9 @@ describe("Guenstigerpruefung", () => {
 
   it("gibt den Abstand zur schlechteren Variante an", () => {
     const result = rechne({ zvE: 60000 });
-    expect(result.vorteilC).toBe(Math.abs(result.steuervorteilC - result.jahrC));
+    expect(result.vorteilC).toBe(
+      Math.abs(result.steuervorteilC - result.jahrC),
+    );
   });
 
   it("bringt unterhalb des Grundfreibetrags keinen Steuervorteil", () => {
@@ -248,7 +253,9 @@ describe("Soli und Kirchensteuer", () => {
   });
 
   it("rechnet Kirchensteuer nur auf Wunsch", () => {
-    expect(rechne({ zvE: 90000, kirchensteuer: false }).kirchensteuerEntlastungC).toBe(0);
+    expect(
+      rechne({ zvE: 90000, kirchensteuer: false }).kirchensteuerEntlastungC,
+    ).toBe(0);
     expect(
       rechne({ zvE: 90000, kirchensteuer: true }).kirchensteuerEntlastungC,
     ).toBeGreaterThan(0);
@@ -298,7 +305,9 @@ describe("Kodierung fuer die URL", () => {
 
   it("schreibt ein kurzes, lesbares Format", () => {
     expect(encodeKinder([kind("2018-03-14")])).toBe("2018-03-14r");
-    expect(encodeKinder([kind("2005-07-02", "ausbildung")])).toBe("2005-07-02a");
+    expect(encodeKinder([kind("2005-07-02", "ausbildung")])).toBe(
+      "2005-07-02a",
+    );
   });
 
   it("faellt bei Muell auf den Fallback zurueck", () => {

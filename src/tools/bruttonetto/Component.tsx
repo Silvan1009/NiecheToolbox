@@ -145,7 +145,10 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
       kinder: urlValue(next.kinderZahl, DEFAULTS.kinderZahl),
       kinderlos: bool(next.kinderlos, DEFAULTS.kinderlos),
       gkv: bool(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
-      zusatz: urlValue(next.zusatzbeitragPercent, DEFAULTS.zusatzbeitragPercent),
+      zusatz: urlValue(
+        next.zusatzbeitragPercent,
+        DEFAULTS.zusatzbeitragPercent,
+      ),
       pkv: urlValue(next.privatBeitragMonat, DEFAULTS.privatBeitragMonat),
       rv: bool(
         next.rentenversicherungspflichtig,
@@ -289,7 +292,9 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
 
           <Toggle
             checked={state.gesetzlichVersichert}
-            onChange={(gesetzlichVersichert) => update({ gesetzlichVersichert })}
+            onChange={(gesetzlichVersichert) =>
+              update({ gesetzlichVersichert })
+            }
             label="Gesetzlich krankenversichert"
             hint="Ausschalten für die private Krankenversicherung."
           />
@@ -521,4 +526,3 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
 function bool(value: boolean, fallback: boolean): string {
   return value === fallback ? "" : value ? "1" : "0";
 }
-

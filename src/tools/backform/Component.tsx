@@ -3,7 +3,13 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
-import { Field, Select, Stepper, TextArea, TextInput } from "@/components/ui/Field";
+import {
+  Field,
+  Select,
+  Stepper,
+  TextArea,
+  TextInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
@@ -187,8 +193,9 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
                 {formatInteger(Math.round(Math.abs(result.percentDelta)))} %{" "}
                 {result.factor >= 1 ? "mehr" : "weniger"}
               </strong>{" "}
-              von allem – aus {formatInteger(Math.round(result.sourceVolume))} ml
-              Teig werden {formatInteger(Math.round(result.targetVolume))} ml.
+              von allem – aus {formatInteger(Math.round(result.sourceVolume))}{" "}
+              ml Teig werden {formatInteger(Math.round(result.targetVolume))}{" "}
+              ml.
             </>
           }
         />
@@ -203,7 +210,9 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
           <TextArea
             id="bf-zutaten"
             value={state.ingredients}
-            placeholder={"250 g Mehl\n1 Pck. Backpulver\n200 g Zucker\n4 Eier\n125 g Butter\n1 Prise Salz"}
+            placeholder={
+              "250 g Mehl\n1 Pck. Backpulver\n200 g Zucker\n4 Eier\n125 g Butter\n1 Prise Salz"
+            }
             onChange={(event) => update({ ingredients: event.target.value })}
             className="font-mono text-[15px]"
           />
@@ -242,8 +251,8 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
             </ul>
             {rounded > 0 && (
               <p className="mt-4 text-[13px] text-muted">
-                {rounded} {rounded === 1 ? "Zeile wurde" : "Zeilen wurden"} auf ein
-                Maß gerundet, das sich abmessen lässt – halbe Eier gehen
+                {rounded} {rounded === 1 ? "Zeile wurde" : "Zeilen wurden"} auf
+                ein Maß gerundet, das sich abmessen lässt – halbe Eier gehen
                 verquirlt, ein Viertel Päckchen Backpulver nicht.
               </p>
             )}

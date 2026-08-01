@@ -23,7 +23,9 @@ export function Faq({ entries }: { entries: FaqEntry[] }) {
                 aria-hidden="true"
               />
             </summary>
-            <div className="px-5 pb-5 text-[15px] text-muted">{entry.answer}</div>
+            <div className="px-5 pb-5 text-[15px] text-muted">
+              {entry.answer}
+            </div>
           </details>
         ))}
       </div>

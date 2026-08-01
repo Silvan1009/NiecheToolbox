@@ -18,9 +18,10 @@ describe("Varianten", () => {
   it("Variantenslugs sind je Tool eindeutig", () => {
     for (const tool of publicTools()) {
       const slugs = (tool.getVariants?.() ?? []).map((v) => v.slug);
-      expect(new Set(slugs).size, `Tool "${tool.slug}" hat doppelte Variantenslugs`).toBe(
-        slugs.length,
-      );
+      expect(
+        new Set(slugs).size,
+        `Tool "${tool.slug}" hat doppelte Variantenslugs`,
+      ).toBe(slugs.length);
     }
   });
 
@@ -41,9 +42,10 @@ describe("Varianten", () => {
       if (!tool.getVariants) continue;
       const first = tool.getVariants().length;
       const second = tool.getVariants().length;
-      expect(second, `Tool "${tool.slug}" liefert bei erneutem Aufruf eine andere Anzahl`).toBe(
-        first,
-      );
+      expect(
+        second,
+        `Tool "${tool.slug}" liefert bei erneutem Aufruf eine andere Anzahl`,
+      ).toBe(first);
     }
   });
 });

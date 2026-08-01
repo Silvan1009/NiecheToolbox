@@ -189,7 +189,10 @@ describe("Renditekennzahlen", () => {
 
   it("ist der Kaufpreisfaktor der Kehrwert der Bruttorendite", () => {
     const result = rechne();
-    expect(result.kaufpreisfaktor).toBeCloseTo(100 / result.bruttomietrendite, 6);
+    expect(result.kaufpreisfaktor).toBeCloseTo(
+      100 / result.bruttomietrendite,
+      6,
+    );
   });
 
   it("weist die Miete je Quadratmeter aus", () => {
@@ -311,7 +314,10 @@ describe("Verkauf und Gesamtrendite", () => {
   });
 
   it("zieht Restschuld und Verkaufskosten vom Erlös ab", () => {
-    const result = rechne({ verkaufskostenPercent: 3, wertsteigerungPercent: 0 });
+    const result = rechne({
+      verkaufskostenPercent: 3,
+      wertsteigerungPercent: 0,
+    });
     expect(result.immobilienwertEnde).toBeCloseTo(400000, 2);
     expect(result.verkaufskosten).toBeCloseTo(12000, 2);
     expect(result.nettoVerkaufserloes).toBeCloseTo(
@@ -398,8 +404,12 @@ describe("Kaufen oder mieten", () => {
 
 describe("Jahresverlauf", () => {
   it("deckt Zinsbindung und Betrachtungszeitraum ab", () => {
-    expect(rechne({ zinsbindungJahre: 15, horizontJahre: 10 }).jahre).toHaveLength(15);
-    expect(rechne({ zinsbindungJahre: 10, horizontJahre: 25 }).jahre).toHaveLength(25);
+    expect(
+      rechne({ zinsbindungJahre: 15, horizontJahre: 10 }).jahre,
+    ).toHaveLength(15);
+    expect(
+      rechne({ zinsbindungJahre: 10, horizontJahre: 25 }).jahre,
+    ).toHaveLength(25);
   });
 
   it("summiert Zins und Tilgung zur gezahlten Rate", () => {
@@ -482,14 +492,17 @@ describe("Grenzen und Robustheit", () => {
       const result = rechne(fall);
       for (const [key, wert] of Object.entries(result)) {
         if (typeof wert === "number") {
-          expect(Number.isFinite(wert), `${key} in ${JSON.stringify(fall)}`).toBe(
-            true,
-          );
+          expect(
+            Number.isFinite(wert),
+            `${key} in ${JSON.stringify(fall)}`,
+          ).toBe(true);
         }
       }
       for (const zeile of result.jahre) {
         for (const [key, wert] of Object.entries(zeile)) {
-          expect(Number.isFinite(wert), `Jahr ${zeile.jahr}, ${key}`).toBe(true);
+          expect(Number.isFinite(wert), `Jahr ${zeile.jahr}, ${key}`).toBe(
+            true,
+          );
         }
       }
     }
@@ -536,7 +549,9 @@ describe("Invarianten", () => {
     const wenig = rechne({ eigenkapital: 50000 });
     const viel = rechne({ eigenkapital: 200000 });
     expect(viel.darlehen).toBeLessThan(wenig.darlehen);
-    expect(viel.restschuldZinsbindung).toBeLessThan(wenig.restschuldZinsbindung);
+    expect(viel.restschuldZinsbindung).toBeLessThan(
+      wenig.restschuldZinsbindung,
+    );
     expect(viel.gesamtzinsen).toBeLessThan(wenig.gesamtzinsen);
   });
 });

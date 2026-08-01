@@ -169,7 +169,11 @@ interface EndOutcome {
   karenzDeadline?: Iso;
 }
 
-function endForFrist(zugang: Iso, frist: Frist, region: RegionCode): EndOutcome {
+function endForFrist(
+  zugang: Iso,
+  frist: Frist,
+  region: RegionCode,
+): EndOutcome {
   switch (frist.termin) {
     case "beliebig":
       return { end: addDays(zugang, frist.value * 7) };
@@ -307,7 +311,11 @@ function buildWarnings(input: NoticeInput, frist: Frist): string[] {
     );
   }
 
-  if (input.contract === "wohnung" && input.party === "mieter" && !input.probezeit) {
+  if (
+    input.contract === "wohnung" &&
+    input.party === "mieter" &&
+    !input.probezeit
+  ) {
     warnings.push(
       "Für Mieter darf der Vertrag keine längere Frist als drei Monate vorsehen. Eine längere Klausel ist unwirksam.",
     );

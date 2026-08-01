@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateErbschaftsteuer, defaultInput, type ErbschaftInput } from "./logic";
+import {
+  calculateErbschaftsteuer,
+  defaultInput,
+  type ErbschaftInput,
+} from "./logic";
 
 describe("Erbschaftsteuer- und Schenkungsteuer-Rechner", () => {
   it("berechnet die Voreinstellung: Kind erbt 500.000 €", () => {
@@ -26,7 +30,9 @@ describe("Erbschaftsteuer- und Schenkungsteuer-Rechner", () => {
     expect(result.steuer).toBe(0);
     expect(result.steuerpflichtigerErwerb).toBe(0);
     expect(
-      result.warnings.some((w) => w.includes("keine Erbschaft- oder Schenkungsteuer")),
+      result.warnings.some((w) =>
+        w.includes("keine Erbschaft- oder Schenkungsteuer"),
+      ),
     ).toBe(true);
   });
 
@@ -45,7 +51,9 @@ describe("Erbschaftsteuer- und Schenkungsteuer-Rechner", () => {
     expect(result.steuerVorHaerteausgleich).toBe(8_261);
     expect(result.haerteausgleich).toBe(2_961);
     expect(result.steuer).toBe(5_300);
-    expect(result.warnings.some((w) => w.includes("Härteausgleich senkt"))).toBe(true);
+    expect(
+      result.warnings.some((w) => w.includes("Härteausgleich senkt")),
+    ).toBe(true);
   });
 
   it("lässt den Erwerber nie schlechter dastehen als bei der Wertgrenze selbst", () => {
@@ -64,7 +72,9 @@ describe("Erbschaftsteuer- und Schenkungsteuer-Rechner", () => {
       nachlassverbindlichkeiten: 0,
       bereitsGenutzterFreibetrag: 0,
     });
-    expect(knappDarueber.nettoErwerb).toBeGreaterThanOrEqual(grenze.nettoErwerb);
+    expect(knappDarueber.nettoErwerb).toBeGreaterThanOrEqual(
+      grenze.nettoErwerb,
+    );
   });
 
   it("wechselt bei Eltern/Großeltern zwischen Steuerklasse I (Erbschaft) und II (Schenkung)", () => {
@@ -165,11 +175,18 @@ describe("Erbschaftsteuer- und Schenkungsteuer-Rechner", () => {
   });
 
   it("warnt vor der 10-Jahres-Auffrischung nur bei Schenkung ohne bereits genutzten Freibetrag", () => {
-    const schenkung = calculateErbschaftsteuer({ ...defaultInput(), modus: "schenkung" });
-    expect(schenkung.warnings.some((w) => w.includes("alle zehn Jahre"))).toBe(true);
+    const schenkung = calculateErbschaftsteuer({
+      ...defaultInput(),
+      modus: "schenkung",
+    });
+    expect(schenkung.warnings.some((w) => w.includes("alle zehn Jahre"))).toBe(
+      true,
+    );
 
     const erbschaft = calculateErbschaftsteuer(defaultInput());
-    expect(erbschaft.warnings.some((w) => w.includes("alle zehn Jahre"))).toBe(false);
+    expect(erbschaft.warnings.some((w) => w.includes("alle zehn Jahre"))).toBe(
+      false,
+    );
   });
 
   it("fängt negative und unsinnige Eingaben ab", () => {

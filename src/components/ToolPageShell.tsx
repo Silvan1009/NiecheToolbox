@@ -80,7 +80,9 @@ export function ToolPageShell({
         <h1 className="font-display text-[clamp(1.75rem,6vw,2.75rem)] font-bold tracking-tight">
           {heading}
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">{description}</p>
+        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">
+          {description}
+        </p>
       </header>
 
       <div className="tool-column mt-10">

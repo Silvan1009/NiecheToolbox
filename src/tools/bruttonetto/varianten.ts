@@ -162,7 +162,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Was ist der Unterschied zwischen Lohnsteuer und Einkommensteuer?",
+        question:
+          "Was ist der Unterschied zwischen Lohnsteuer und Einkommensteuer?",
         answer:
           "Die Lohnsteuer ist die Erhebungsform der Einkommensteuer bei Arbeitnehmern: Der Arbeitgeber behält sie ein und führt sie ab. Die endgültige Steuer wird erst mit der Einkommensteuererklärung ermittelt, unter Berücksichtigung aller Einkünfte, Werbungskosten über 1.230 Euro, Sonderausgaben und außergewöhnlichen Belastungen. Die bereits gezahlte Lohnsteuer wird dabei angerechnet – daraus ergibt sich die Erstattung oder Nachzahlung.",
       },

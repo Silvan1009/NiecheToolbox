@@ -195,7 +195,9 @@ export function calculateKredit(input: KreditInput): KreditResult {
       monatsrateC,
       maxJahre: MAX_JAHRE,
     });
-    sondertilgungZinsersparnis = toEuro(ohne.gesamtzinsenC - plan.gesamtzinsenC);
+    sondertilgungZinsersparnis = toEuro(
+      ohne.gesamtzinsenC - plan.gesamtzinsenC,
+    );
     sondertilgungVerkuerzungMonate =
       (ohne.volltilgungMonate ?? MAX_JAHRE * MONATE_PRO_JAHR) - laufzeitMonate;
   }
@@ -235,10 +237,7 @@ export function calculateKredit(input: KreditInput): KreditResult {
     );
   }
 
-  if (
-    effektiverJahreszins !== null &&
-    effektiverJahreszins - sollzins >= 0.5
-  ) {
+  if (effektiverJahreszins !== null && effektiverJahreszins - sollzins >= 0.5) {
     warnings.push(
       `Der effektive Jahreszins liegt mit ${formatRate(effektiverJahreszins)} Prozent deutlich über dem Sollzins von ${formatRate(sollzins)} Prozent. Vergleiche Angebote immer über den Effektivzins – nur er enthält die Nebenkosten.`,
     );
@@ -256,7 +255,11 @@ export function calculateKredit(input: KreditInput): KreditResult {
     );
   }
 
-  if (!tilgtNicht && laufzeitMonate > 10 * MONATE_PRO_JAHR && sondertilgungC === 0) {
+  if (
+    !tilgtNicht &&
+    laufzeitMonate > 10 * MONATE_PRO_JAHR &&
+    sondertilgungC === 0
+  ) {
     warnings.push(
       "Bei dieser Laufzeit lohnt ein Blick auf das Sondertilgungsrecht: Jeder vorzeitig getilgte Euro spart sämtliche künftigen Zinsen auf diesen Euro, und die Wirkung ist am Anfang der Laufzeit am größten.",
     );

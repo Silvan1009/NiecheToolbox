@@ -203,7 +203,8 @@ export const variantenTexte: VariantContent[] = [
           "30 bis 60 Prozent gelten als gesund: genug für eine verlässliche Dividende, genug für Investitionen. Reife Unternehmen mit stabilen Erträgen – Versorger, Versicherer, Konsumgüterhersteller – liegen häufig bei 50 bis 70 Prozent, Wachstumsunternehmen bei 0 bis 20. Eine Quote von null ist kein Mangel: Wer sein Kapital mit 20 Prozent Rendite reinvestieren kann, sollte es nicht ausschütten.",
       },
       {
-        question: "Kann eine Ausschüttungsquote über 100 Prozent gerechtfertigt sein?",
+        question:
+          "Kann eine Ausschüttungsquote über 100 Prozent gerechtfertigt sein?",
         answer:
           "Vorübergehend ja. Nach einem Jahr mit hohen Abschreibungen oder Sonderaufwendungen ist der ausgewiesene Gewinn niedrig, während das Geld weiterhin hereinkommt – die Dividende aus dem freien Cashflow zu zahlen ist dann vertretbar. Manche Unternehmen halten ihre Dividende bewusst stabil und nehmen einzelne Jahre über 100 Prozent in Kauf. Dauerhaft geht es nicht: Irgendwann sind Kasse und Kreditlinien aufgebraucht.",
       },
@@ -241,7 +242,8 @@ export const variantenTexte: VariantContent[] = [
           "ROE bezieht den Gewinn auf das Eigenkapital, ROA auf die gesamte Bilanzsumme und ROCE das operative Ergebnis auf das eingesetzte Kapital, also die Bilanzsumme ohne die unverzinsten kurzfristigen Verbindlichkeiten. ROE ist die Sicht des Aktionärs, ROA die einfachste Vergleichsgröße und ROCE die aussagekräftigste für die Qualität des Geschäfts, weil sie unabhängig von der Finanzierung ist. Der Rechner weist alle drei aus.",
       },
       {
-        question: "Warum wird bei negativem Eigenkapital keine Rendite ausgewiesen?",
+        question:
+          "Warum wird bei negativem Eigenkapital keine Rendite ausgewiesen?",
         answer:
           "Weil das Ergebnis sinnlos wäre. Ein Gewinn von 100 bei einem Eigenkapital von minus 200 ergäbe minus 50 Prozent – eine Zahl, die weder Verlust noch Rendite bedeutet. Negatives Eigenkapital entsteht nach langen Verlustserien oder nach sehr großen Aktienrückkäufen und ist immer ein Anlass, sich die Verschuldung genau anzusehen. Der Rechner lässt ROE, KBV und Verschuldungsgrad in diesem Fall leer und weist im Hinweisblock darauf hin.",
       },
@@ -274,7 +276,8 @@ export const variantenTexte: VariantContent[] = [
           "Börsenwert plus Finanzschulden minus liquide Mittel. Der Gedanke: Wer das Unternehmen kauft, zahlt den Aktionären den Börsenwert, übernimmt die Schulden und bekommt die Kasse dazu. In der strengen Variante kommen Pensionsverpflichtungen, Leasingverbindlichkeiten und Minderheitenanteile hinzu und Beteiligungen werden abgezogen. Der Rechner nutzt die gebräuchliche Näherung aus Börsenwert und Nettofinanzschulden.",
       },
       {
-        question: "Warum kann der Unternehmenswert unter dem Börsenwert liegen?",
+        question:
+          "Warum kann der Unternehmenswert unter dem Börsenwert liegen?",
         answer:
           "Weil die Nettoschulden negativ sein können. Liegt mehr Geld in der Kasse als Schulden in der Bilanz, ist der Unternehmenswert kleiner als der Börsenwert – der Käufer bekommt die Kasse mit und muss faktisch weniger für das Geschäft zahlen. Bei sehr großen Kassenbeständen kann der Unternehmenswert sogar negativ werden; dann lässt sich kein sinnvolles Vielfaches bilden und der Rechner weist die EV-Kennzahlen nicht aus.",
       },
@@ -302,7 +305,8 @@ export const variantenTexte: VariantContent[] = [
           "Ab 5 Prozent gilt sie als attraktiv, unter 3 Prozent als teuer. Der Vergleichsmaßstab ist die Rendite sicherer Anleihen: Liegt die Free-Cashflow-Rendite darunter, zahlt man für das Aktienrisiko einen Aufschlag statt einen zu bekommen – das kann bei stark wachsenden Unternehmen richtig sein, weil der Cashflow in Zukunft deutlich höher ausfällt, bei reifen Geschäften aber nicht.",
       },
       {
-        question: "Was ist der Unterschied zwischen operativem und freiem Cashflow?",
+        question:
+          "Was ist der Unterschied zwischen operativem und freiem Cashflow?",
         answer:
           "Der operative Cashflow ist das Geld aus dem laufenden Geschäft, vor Investitionen. Der freie Cashflow zieht davon die Investitionen ins Anlagevermögen ab und zeigt damit, was für Dividende, Aktienrückkäufe und Schuldenabbau tatsächlich zur Verfügung steht. Die Differenz ist bei kapitalintensiven Unternehmen groß: Ein Netzbetreiber kann einen hohen operativen und über Jahre keinen freien Cashflow haben.",
       },
@@ -335,7 +339,8 @@ export const variantenTexte: VariantContent[] = [
           "Ab 40 Prozent gilt sie als solide, unter 25 Prozent als dünn – jeweils bezogen auf Industrie, Handel und Dienstleistung. Banken arbeiten mit 5 bis 10 Prozent, Immobiliengesellschaften mit 25 bis 40, und beides ist branchenüblich. Aussagekräftiger als der absolute Wert ist die Entwicklung über mehrere Jahre: Eine fallende Quote bei gleichzeitig steigenden Schulden ist ein deutlicheres Signal als eine niedrige, aber stabile Quote.",
       },
       {
-        question: "Was ist der Unterschied zwischen Eigenkapitalquote und Verschuldungsgrad?",
+        question:
+          "Was ist der Unterschied zwischen Eigenkapitalquote und Verschuldungsgrad?",
         answer:
           "Die Eigenkapitalquote misst das Eigenkapital an der Bilanzsumme, also am gesamten Vermögen. Der Verschuldungsgrad – auch Gearing – setzt die Nettofinanzschulden ins Verhältnis zum Eigenkapital und lässt Posten wie Lieferantenverbindlichkeiten und Rückstellungen außen vor. Er ist damit näher an der Frage, wie viel zinstragende Schuld auf dem Eigenkapital lastet. Ein negativer Verschuldungsgrad bedeutet Netto-Liquidität: mehr Geld in der Kasse als Schulden in der Bilanz.",
       },

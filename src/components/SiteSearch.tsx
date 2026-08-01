@@ -74,7 +74,9 @@ export function SiteSearch() {
         setActiveIndex(results.length - 1);
         return;
       }
-      setActiveIndex((current) => (current - 1 + results.length) % results.length);
+      setActiveIndex(
+        (current) => (current - 1 + results.length) % results.length,
+      );
       return;
     }
 
@@ -116,10 +118,16 @@ export function SiteSearch() {
   }
 
   const activeOptionId =
-    activeIndex >= 0 && results[activeIndex] ? `${listboxId}-opt-${activeIndex}` : undefined;
+    activeIndex >= 0 && results[activeIndex]
+      ? `${listboxId}-opt-${activeIndex}`
+      : undefined;
 
   const statusText =
-    query.trim() === "" ? "" : results.length === 0 ? "Keine Treffer" : `${results.length} Treffer`;
+    query.trim() === ""
+      ? ""
+      : results.length === 0
+        ? "Keine Treffer"
+        : `${results.length} Treffer`;
 
   return (
     <div ref={containerRef} className="relative" onBlur={handleFocusOut}>
@@ -175,7 +183,9 @@ export function SiteSearch() {
                   {entry.parentName}
                 </span>
               )}
-              <span className="block text-[15px] font-medium text-ink">{entry.name}</span>
+              <span className="block text-[15px] font-medium text-ink">
+                {entry.name}
+              </span>
               <span className="block text-[13px] text-muted">{entry.hint}</span>
             </Link>
           </li>
@@ -188,7 +198,12 @@ export function SiteSearch() {
         </div>
       )}
 
-      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
         {statusText}
       </div>
     </div>

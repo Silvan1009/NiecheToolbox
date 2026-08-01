@@ -33,7 +33,10 @@ export function Field({
   );
 }
 
-export function TextInput({ className = "", ...props }: ComponentProps<"input">) {
+export function TextInput({
+  className = "",
+  ...props
+}: ComponentProps<"input">) {
   return <input className={`${controlClasses} ${className}`} {...props} />;
 }
 
@@ -64,10 +67,16 @@ export function UnitInput({
         id={id}
         type="text"
         inputMode="decimal"
-        value={blankWhenZero && value === 0 ? "" : String(value).replace(".", ",")}
+        value={
+          blankWhenZero && value === 0 ? "" : String(value).replace(".", ",")
+        }
         placeholder={blankWhenZero ? "0" : undefined}
         onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        style={unit ? { paddingRight: `calc(${unit.length}ch + 1.75rem)` } : undefined}
+        style={
+          unit
+            ? { paddingRight: `calc(${unit.length}ch + 1.75rem)` }
+            : undefined
+        }
         className="font-mono"
       />
       {unit && (

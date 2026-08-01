@@ -92,9 +92,12 @@ export function calculateAutokosten(input: AutokostenInput): AutokostenResult {
 
   const literOderKwh = (verbrauch / 100) * kmProJahr;
   const kraftstoffJahrC = Math.round(literOderKwh * kraftstoffpreisC);
-  const kraftstoffLabel = input.antrieb === "elektro" ? "Stromkosten" : "Kraftstoff";
+  const kraftstoffLabel =
+    input.antrieb === "elektro" ? "Stromkosten" : "Kraftstoff";
 
-  const wertverlustJahrC = Math.round((kaufpreisC - restwertC) / haltedauerJahre);
+  const wertverlustJahrC = Math.round(
+    (kaufpreisC - restwertC) / haltedauerJahre,
+  );
 
   const gesamtC =
     wertverlustJahrC +

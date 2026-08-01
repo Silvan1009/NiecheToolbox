@@ -3,7 +3,13 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, Toggle, UnitInput } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Stepper,
+  Toggle,
+  UnitInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -39,7 +45,10 @@ function toBool(value: unknown, fallback: boolean): boolean {
 
 function initialState(params: ToolParams | undefined): State {
   return {
-    nettoEinkommenVorGeburt: toNumber(params?.netto, DEFAULTS.nettoEinkommenVorGeburt),
+    nettoEinkommenVorGeburt: toNumber(
+      params?.netto,
+      DEFAULTS.nettoEinkommenVorGeburt,
+    ),
     geschwisterbonus: toBool(params?.geschwister, DEFAULTS.geschwisterbonus),
     mehrlingsKinder: toNumber(params?.mehrlinge, DEFAULTS.mehrlingsKinder),
     modus: isModus(params?.modus) ? params.modus : DEFAULTS.modus,
@@ -51,14 +60,28 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => ({
-      nettoEinkommenVorGeburt: toNumber(search.get("netto"), fallback.nettoEinkommenVorGeburt),
-      geschwisterbonus: toBool(search.get("geschwister"), fallback.geschwisterbonus),
-      mehrlingsKinder: toNumber(search.get("mehrlinge"), fallback.mehrlingsKinder),
-      modus: isModus(search.get("modus")) ? (search.get("modus") as ElterngeldModus) : fallback.modus,
+      nettoEinkommenVorGeburt: toNumber(
+        search.get("netto"),
+        fallback.nettoEinkommenVorGeburt,
+      ),
+      geschwisterbonus: toBool(
+        search.get("geschwister"),
+        fallback.geschwisterbonus,
+      ),
+      mehrlingsKinder: toNumber(
+        search.get("mehrlinge"),
+        fallback.mehrlingsKinder,
+      ),
+      modus: isModus(search.get("modus"))
+        ? (search.get("modus") as ElterngeldModus)
+        : fallback.modus,
       bezugsmonate: toNumber(search.get("monate"), fallback.bezugsmonate),
     }),
     serialize: (next) => ({
-      netto: urlValue(next.nettoEinkommenVorGeburt, DEFAULTS.nettoEinkommenVorGeburt),
+      netto: urlValue(
+        next.nettoEinkommenVorGeburt,
+        DEFAULTS.nettoEinkommenVorGeburt,
+      ),
       geschwister:
         next.geschwisterbonus === DEFAULTS.geschwisterbonus
           ? ""
@@ -89,11 +112,17 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
               id="eg-netto"
               unit="€/Monat"
               value={state.nettoEinkommenVorGeburt}
-              onChange={(nettoEinkommenVorGeburt) => update({ nettoEinkommenVorGeburt })}
+              onChange={(nettoEinkommenVorGeburt) =>
+                update({ nettoEinkommenVorGeburt })
+              }
             />
           </Field>
 
-          <Field label="Kinder bei einer Mehrlingsgeburt" htmlFor="eg-mehrlinge" hint="0 bei einem Einzelkind.">
+          <Field
+            label="Kinder bei einer Mehrlingsgeburt"
+            htmlFor="eg-mehrlinge"
+            hint="0 bei einem Einzelkind."
+          >
             <Stepper
               id="eg-mehrlinge"
               value={state.mehrlingsKinder}
@@ -136,7 +165,11 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
             />
           </Field>
 
-          <Field label="Basismonate" htmlFor="eg-monate" hint="1–12 allein, bis zu 14 mit Partnermonaten.">
+          <Field
+            label="Basismonate"
+            htmlFor="eg-monate"
+            hint="1–12 allein, bis zu 14 mit Partnermonaten."
+          >
             <Stepper
               id="eg-monate"
               value={state.bezugsmonate}
@@ -167,7 +200,9 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
           hint={
             <>
               Insgesamt{" "}
-              <strong className="font-semibold text-ink">{formatEuro(result.gesamtbetrag)}</strong>{" "}
+              <strong className="font-semibold text-ink">
+                {formatEuro(result.gesamtbetrag)}
+              </strong>{" "}
               über {result.bezugsmonateEffektiv} Monate – bei{" "}
               {formatDecimal(result.ersatzrate)} % Ersatzrate.
             </>
@@ -176,7 +211,11 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
       </ResultPanel>
 
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Ersatzrate" value={`${formatDecimal(result.ersatzrate)} %`} hint="vom Nettoeinkommen" />
+        <Stat
+          label="Ersatzrate"
+          value={`${formatDecimal(result.ersatzrate)} %`}
+          hint="vom Nettoeinkommen"
+        />
         <Stat
           label="Basiselterngeld"
           value={formatEuro(result.monatsbetragBasis)}
@@ -194,33 +233,56 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
         />
       </dl>
 
-      {(result.geschwisterbonusMonat > 0 || result.mehrlingszuschlagMonat > 0) && (
+      {(result.geschwisterbonusMonat > 0 ||
+        result.mehrlingszuschlagMonat > 0) && (
         <section aria-labelledby="eg-boni" className="surface-soft p-6">
-          <h2 id="eg-boni" className="font-display text-lg font-semibold tracking-tight">
+          <h2
+            id="eg-boni"
+            className="font-display text-lg font-semibold tracking-tight"
+          >
             Zuschläge
           </h2>
           <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-            <AmountRow label="Elterngeld ohne Zuschläge" value={result.basisbetragMonat} />
+            <AmountRow
+              label="Elterngeld ohne Zuschläge"
+              value={result.basisbetragMonat}
+            />
             {result.geschwisterbonusMonat > 0 && (
-              <AmountRow label="Geschwisterbonus" value={result.geschwisterbonusMonat} />
+              <AmountRow
+                label="Geschwisterbonus"
+                value={result.geschwisterbonusMonat}
+              />
             )}
             {result.mehrlingszuschlagMonat > 0 && (
-              <AmountRow label="Mehrlingszuschlag" value={result.mehrlingszuschlagMonat} />
+              <AmountRow
+                label="Mehrlingszuschlag"
+                value={result.mehrlingszuschlagMonat}
+              />
             )}
-            <AmountRow label="Voller Monatsbetrag" value={result.vollerMonatsbetrag} stark />
+            <AmountRow
+              label="Voller Monatsbetrag"
+              value={result.vollerMonatsbetrag}
+              stark
+            />
           </ul>
         </section>
       )}
 
       {result.warnings.length > 0 && (
         <section aria-labelledby="eg-hinweise" className="surface-soft p-6">
-          <h2 id="eg-hinweise" className="font-display text-lg font-semibold tracking-tight">
+          <h2
+            id="eg-hinweise"
+            className="font-display text-lg font-semibold tracking-tight"
+          >
             Auffällig
           </h2>
           <ul className="mt-3 flex flex-col gap-2.5 text-[15px] text-muted">
             {result.warnings.map((warning) => (
               <li key={warning} className="flex gap-2.5">
-                <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent" />
+                <span
+                  aria-hidden="true"
+                  className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent"
+                />
                 {warning}
               </li>
             ))}
@@ -232,4 +294,3 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

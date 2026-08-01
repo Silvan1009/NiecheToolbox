@@ -46,12 +46,15 @@ export type Verwandtschaft =
 export const verwandtschaftLabels: Record<Verwandtschaft, string> = {
   ehepartner: "Ehepartner / eingetragene:r Lebenspartner:in",
   kind: "Kind, Stiefkind, Adoptivkind",
-  enkelKindVerstorben: "Enkel, dessen Elternteil (Ihr Kind) bereits verstorben ist",
+  enkelKindVerstorben:
+    "Enkel, dessen Elternteil (Ihr Kind) bereits verstorben ist",
   enkel: "Enkel (Elternteil noch lebend)",
   elternGrosseltern: "Eltern, Großeltern",
   geschwisterNeffenNichten: "Geschwister, Nichten, Neffen",
-  stiefSchwiegerGeschieden: "Stiefeltern, Schwiegerkinder, Schwiegereltern, geschiedene:r Ehepartner:in",
-  sonstige: "Alle übrigen (Freunde, nichteheliche Partnerschaft, entfernte Verwandte)",
+  stiefSchwiegerGeschieden:
+    "Stiefeltern, Schwiegerkinder, Schwiegereltern, geschiedene:r Ehepartner:in",
+  sonstige:
+    "Alle übrigen (Freunde, nichteheliche Partnerschaft, entfernte Verwandte)",
 };
 
 interface VerwandtschaftRegel {
@@ -152,27 +155,40 @@ export interface ErbschaftResult {
   warnings: string[];
 }
 
-export function calculateErbschaftsteuer(input: ErbschaftInput): ErbschaftResult {
+export function calculateErbschaftsteuer(
+  input: ErbschaftInput,
+): ErbschaftResult {
   const modus = input.modus;
   const regel = verwandtschaftRegel(input.verwandtschaft, modus);
 
   const freibetrag = regel.freibetrag;
-  const bereitsGenutzt = clamp(nn(input.bereitsGenutzterFreibetrag), 0, freibetrag);
+  const bereitsGenutzt = clamp(
+    nn(input.bereitsGenutzterFreibetrag),
+    0,
+    freibetrag,
+  );
   const freibetragVerbleibend = freibetrag - bereitsGenutzt;
 
   const pauschale = modus === "erbschaft" ? ERBFALLKOSTENPAUSCHALE : 0;
-  const verbindlichkeiten = modus === "erbschaft" ? nn(input.nachlassverbindlichkeiten) : 0;
+  const verbindlichkeiten =
+    modus === "erbschaft" ? nn(input.nachlassverbindlichkeiten) : 0;
 
   const vermoegenswert = nn(input.vermoegenswert);
-  const bereicherung = Math.max(0, vermoegenswert - verbindlichkeiten - pauschale);
+  const bereicherung = Math.max(
+    0,
+    vermoegenswert - verbindlichkeiten - pauschale,
+  );
   const nachFreibetrag = Math.max(0, bereicherung - freibetragVerbleibend);
   const steuerpflichtigerErwerb = Math.floor(nachFreibetrag / 100) * 100;
 
   const stufenIndex = STUFEN.findIndex((s) => steuerpflichtigerErwerb <= s.bis);
   const stufe = STUFEN[stufenIndex] ?? STUFEN[STUFEN.length - 1]!;
-  const steuersatz = steuerpflichtigerErwerb > 0 ? satzFuerKlasse(stufe, regel.steuerklasse) : 0;
+  const steuersatz =
+    steuerpflichtigerErwerb > 0 ? satzFuerKlasse(stufe, regel.steuerklasse) : 0;
 
-  const steuerVorHaerteausgleich = Math.round((steuerpflichtigerErwerb * steuersatz) / 100);
+  const steuerVorHaerteausgleich = Math.round(
+    (steuerpflichtigerErwerb * steuersatz) / 100,
+  );
 
   let steuer = steuerVorHaerteausgleich;
   let haerteausgleich = 0;

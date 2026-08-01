@@ -3,7 +3,11 @@
 import { useEffect, useRef } from "react";
 import { ads } from "@/config/site";
 import { useConsentStatus } from "@/components/consent/useConsent";
-import { adSlotAllowed, type AdDensity, type AdPlacement } from "@/lib/adPlacement";
+import {
+  adSlotAllowed,
+  type AdDensity,
+  type AdPlacement,
+} from "@/lib/adPlacement";
 import { useInView } from "@/lib/useInView";
 
 interface AdsWindow extends Window {

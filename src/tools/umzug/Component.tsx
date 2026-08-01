@@ -118,7 +118,9 @@ export default function UmzugTool({ params }: { params?: ToolParams }) {
                   id="um-qm"
                   type="text"
                   inputMode="decimal"
-                  value={state.area === 0 ? "" : String(state.area).replace(".", ",")}
+                  value={
+                    state.area === 0 ? "" : String(state.area).replace(".", ",")
+                  }
                   placeholder="80"
                   onChange={(event) =>
                     update({ area: toNumber(event.target.value, 0) })
@@ -357,4 +359,3 @@ function MaterialRow({ label, value }: { label: string; value: string }) {
     </li>
   );
 }
-

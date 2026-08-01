@@ -47,7 +47,10 @@ const headers = securityHeaders({
 });
 
 const headerLines = headers
-  .map(({ key, value }) => `  Header always set "${key}" "${value.replace(/"/g, '\\"')}"`)
+  .map(
+    ({ key, value }) =>
+      `  Header always set "${key}" "${value.replace(/"/g, '\\"')}"`,
+  )
   .join("\n");
 
 const htaccess = `# Automatisch erzeugt von scripts/generate-htaccess.ts – nicht von Hand pflegen.

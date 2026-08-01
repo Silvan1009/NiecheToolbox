@@ -25,7 +25,9 @@ export const immobilienAffiliate: AffiliateSlot[] = [
       const immo = asResult(result);
       // Wer teuer kauft und wenig finanziert, hat kein Zins- sondern ein
       // Preisproblem. Dann hilft eine Bewertung mehr als ein Kreditvergleich.
-      return immo ? immo.kaufpreisfaktor >= 28 && immo.darlehen < 100000 : false;
+      return immo
+        ? immo.kaufpreisfaktor >= 28 && immo.darlehen < 100000
+        : false;
     },
     headline: "Zu diesem Preis muss die Lage stimmen",
     body: "Der Kaufpreis liegt beim 28-Fachen der Jahresmiete oder darüber. Eine unabhängige Bewertung zeigt, ob der Preis zum Objekt passt.",

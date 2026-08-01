@@ -14,5 +14,9 @@ import {
 const serverSnapshot = (): ConsentStatus => "unknown";
 
 export function useConsentStatus(): ConsentStatus {
-  return useSyncExternalStore(subscribeConsent, getConsentStatus, serverSnapshot);
+  return useSyncExternalStore(
+    subscribeConsent,
+    getConsentStatus,
+    serverSnapshot,
+  );
 }

@@ -66,11 +66,13 @@ describe("Lesezeit", () => {
 
   it("zählt Sätze", () => {
     expect(
-      calculateReadingTime({ text: "Eins. Zwei! Drei?", pace: "normal" }).sentences,
+      calculateReadingTime({ text: "Eins. Zwei! Drei?", pace: "normal" })
+        .sentences,
     ).toBe(3);
     // Mehrere Satzzeichen hintereinander sind ein Satzende.
     expect(
-      calculateReadingTime({ text: "Wirklich?! Ja.", pace: "normal" }).sentences,
+      calculateReadingTime({ text: "Wirklich?! Ja.", pace: "normal" })
+        .sentences,
     ).toBe(2);
     // Text ohne Satzzeichen ist trotzdem ein Satz.
     expect(
@@ -79,8 +81,10 @@ describe("Lesezeit", () => {
     ).toBe(1);
     // Abkürzungspunkte mitten im Wort beenden keinen Satz.
     expect(
-      calculateReadingTime({ text: "Das kostet 1.500 Euro netto", pace: "normal" })
-        .sentences,
+      calculateReadingTime({
+        text: "Das kostet 1.500 Euro netto",
+        pace: "normal",
+      }).sentences,
     ).toBe(1);
   });
 

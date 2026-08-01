@@ -3,7 +3,12 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, Toggle } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Stepper,
+  Toggle,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";

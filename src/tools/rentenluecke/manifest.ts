@@ -18,7 +18,8 @@ const faq: FaqEntry[] = [
       "In der jährlichen Renteninformation der Deutschen Rentenversicherung, die ab 27 Jahren und fünf Pflichtbeitragsjahren automatisch per Post kommt. Dort steht eine Hochrechnung bis zum Renteneintritt, meist unter zwei Annahmen für die künftige Rentenanpassung. Nimm den mittleren oder vorsichtigeren der beiden Werte. Ohne Post zur Hand liefert der Kontenspiegel unter www.deutsche-rentenversicherung.de dieselbe Zahl online.",
   },
   {
-    question: "Warum rechnet der Rechner in heutiger Kaufkraft statt in Euro von morgen?",
+    question:
+      "Warum rechnet der Rechner in heutiger Kaufkraft statt in Euro von morgen?",
     answer:
       "Weil die Renteninformation selbst schon in heutiger Kaufkraft denkt – sie unterstellt eine Rentenanpassung nahe der Lohnentwicklung. Würde der Rechner stattdessen mit einer nominalen Rendite auf Zukunftseuro rechnen, würden zwei unterschiedliche Wertmaßstäbe vermischt und die Lücke verzerrt. Deshalb wird jede eingegebene Rendite über die Fisher-Gleichung um die Inflation bereinigt, bevor sie in die Rechnung geht – das Ergebnis bleibt an jeder Stelle mit deinem heutigen Einkommen vergleichbar.",
   },
@@ -28,7 +29,8 @@ const faq: FaqEntry[] = [
       "Als Faustregel gelten 70 bis 80 Prozent des letzten Nettoeinkommens, weil im Ruhestand einige Ausgaben wegfallen – Fahrtkosten zur Arbeit, Altersvorsorgebeiträge, oft auch die Miete bei abbezahltem Eigentum. Wer im Ruhestand viel reisen oder größere Anschaffungen tätigen will, sollte höher ansetzen, wer sparsam lebt, kommt mit weniger aus. Über den Umschalter bei „Wunscheinkommen“ lässt sich statt eines Prozentsatzes auch direkt ein fester Betrag eintragen.",
   },
   {
-    question: "Was ist der Unterschied zwischen Kapitalverzehr und der ewigen Entnahme?",
+    question:
+      "Was ist der Unterschied zwischen Kapitalverzehr und der ewigen Entnahme?",
     answer:
       "Der Kapitalbedarf mit Verzehr ist das Kapital, das genau bis zur eingetragenen Lebenserwartung reicht und danach null ist – rechnerisch effizient, aber ohne Puffer, falls du älter wirst als angenommen. Das Kapital für die ewige Entnahme ist deutlich höher, wird aber nie selbst angegriffen: Es trägt die monatliche Lücke allein aus seinen Erträgen und bleibt am Lebensende erhalten, etwa zum Vererben. Beide Zahlen stehen im Ergebnis nebeneinander.",
   },
@@ -38,7 +40,8 @@ const faq: FaqEntry[] = [
       "Nur, wenn du sie im Feld „Weitere Renten“ einträgst – dort gehört jede bereits laufende oder fest zugesagte Zusatzrente hinein, addiert zur gesetzlichen Rente. Steuervorteile beim Ansparen, Zulagen oder die abweichende Besteuerung dieser Produkte rechnet der Rechner nicht mit, weil sie stark vom Vertrag und der persönlichen Steuersituation abhängen. Für die reine Frage „wie groß ist die Lücke“ reicht der erwartete Auszahlbetrag.",
   },
   {
-    question: "Warum sinkt die nötige Sparrate, wenn ich den Renteneintritt nach hinten schiebe?",
+    question:
+      "Warum sinkt die nötige Sparrate, wenn ich den Renteneintritt nach hinten schiebe?",
     answer:
       "Weil zwei Effekte gleichzeitig wirken: Das vorhandene Kapital hat mehr Jahre Zeit zum Wachsen, und die Rentenbezugsdauer – und damit der Kapitalbedarf selbst – wird kürzer, wenn die Lebenserwartung gleich bleibt. Ein Jahr länger arbeiten wirkt deshalb überproportional stark auf die Lücke, stärker als ein Jahr länger sparen bei gleichem Renteneintritt.",
   },

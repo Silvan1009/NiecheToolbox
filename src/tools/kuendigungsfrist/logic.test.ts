@@ -60,7 +60,11 @@ describe("Wohnraummiete (§ 573c BGB)", () => {
     expect(result.withinKarenz).toBe(true);
     expect(result.karenzDeadline).toBe("2026-01-05");
     expect(result.end).toBe("2026-03-31");
-    expect(result.frist).toEqual({ unit: "monate", value: 3, termin: "karenz" });
+    expect(result.frist).toEqual({
+      unit: "monate",
+      value: 3,
+      termin: "karenz",
+    });
   });
 
   it("verschiebt um einen Monat, wenn die Karenzzeit verpasst ist", () => {
@@ -105,13 +109,21 @@ describe("Wohnraummiete (§ 573c BGB)", () => {
 describe("Arbeitsvertrag (§ 622 BGB)", () => {
   it("rechnet vier Wochen – nicht einen Monat – zum 15. oder Monatsende", () => {
     const early = calculateNotice(
-      input({ contract: "arbeit", party: "arbeitnehmer", zugang: "2026-03-05" }),
+      input({
+        contract: "arbeit",
+        party: "arbeitnehmer",
+        zugang: "2026-03-05",
+      }),
     );
     // 5. März + 28 Tage = 2. April -> nächster Termin ist der 15. April
     expect(early.end).toBe("2026-04-15");
 
     const late = calculateNotice(
-      input({ contract: "arbeit", party: "arbeitnehmer", zugang: "2026-03-20" }),
+      input({
+        contract: "arbeit",
+        party: "arbeitnehmer",
+        zugang: "2026-03-20",
+      }),
     );
     // 20. März + 28 Tage = 17. April -> Monatsende
     expect(late.end).toBe("2026-04-30");
@@ -119,7 +131,11 @@ describe("Arbeitsvertrag (§ 622 BGB)", () => {
 
   it("landet nicht beim Monatsende, wenn der 15. reicht", () => {
     const result = calculateNotice(
-      input({ contract: "arbeit", party: "arbeitnehmer", zugang: "2026-02-01" }),
+      input({
+        contract: "arbeit",
+        party: "arbeitnehmer",
+        zugang: "2026-02-01",
+      }),
     );
     // 1. Februar + 28 Tage = 1. März. Eine Monatsfrist ergäbe den 31. März.
     expect(result.end).toBe("2026-03-15");
@@ -136,7 +152,11 @@ describe("Arbeitsvertrag (§ 622 BGB)", () => {
       }),
     );
     expect(result.end).toBe("2026-03-24");
-    expect(result.frist).toEqual({ unit: "wochen", value: 2, termin: "beliebig" });
+    expect(result.frist).toEqual({
+      unit: "wochen",
+      value: 2,
+      termin: "beliebig",
+    });
   });
 
   it("staffelt die Arbeitgeberfrist nach Betriebszugehörigkeit", () => {
@@ -149,7 +169,11 @@ describe("Arbeitsvertrag (§ 622 BGB)", () => {
       }),
     );
     expect(result.years).toBe(6);
-    expect(result.frist).toEqual({ unit: "monate", value: 2, termin: "monatsende" });
+    expect(result.frist).toEqual({
+      unit: "monate",
+      value: 2,
+      termin: "monatsende",
+    });
     expect(result.end).toBe("2026-05-31");
   });
 
@@ -178,7 +202,11 @@ describe("Arbeitsvertrag (§ 622 BGB)", () => {
         zugang: "2026-03-05",
       }),
     );
-    expect(veteran.frist).toEqual({ unit: "wochen", value: 4, termin: "halbmonat" });
+    expect(veteran.frist).toEqual({
+      unit: "wochen",
+      value: 4,
+      termin: "halbmonat",
+    });
     expect(veteran.end).toBe("2026-04-15");
   });
 
@@ -226,20 +254,29 @@ describe("Rückwärtsrechnung", () => {
     for (const combo of combos) {
       for (let offset = 0; offset < 60; offset += 7) {
         const wunschende = addDays("2026-05-01", offset);
-        const config = input({ ...combo, direction: "rueckwaerts", wunschende });
+        const config = input({
+          ...combo,
+          direction: "rueckwaerts",
+          wunschende,
+        });
         const latest = latestZugangFor(config, wunschende);
         expect(latest).not.toBeNull();
         if (!latest) continue;
 
         // Definierende Eigenschaft: der Tag passt, der Tag danach nicht mehr.
         expect(endForZugang(config, latest) <= wunschende).toBe(true);
-        expect(endForZugang(config, addDays(latest, 1)) > wunschende).toBe(true);
+        expect(endForZugang(config, addDays(latest, 1)) > wunschende).toBe(
+          true,
+        );
       }
     }
   });
 
   it("gibt auf, wenn der Wunschtermin zu nah liegt", () => {
-    const config = input({ direction: "rueckwaerts", wunschende: "2026-06-30" });
+    const config = input({
+      direction: "rueckwaerts",
+      wunschende: "2026-06-30",
+    });
     expect(latestZugangFor(config, "2026-06-30", 5)).toBeNull();
 
     const result = calculateNotice({
@@ -272,14 +309,17 @@ describe("Invarianten", () => {
 
   it("verschiebt das Ende nie nach vorn, wenn später gekündigt wird", () => {
     // Diese Monotonie trägt die Rückwärtssuche – ohne sie wäre sie falsch.
-    const combos: { contract: ContractKind; party: Party; probezeit?: boolean }[] =
-      [
-        { contract: "wohnung", party: "mieter" },
-        { contract: "wohnung", party: "vermieter" },
-        { contract: "arbeit", party: "arbeitnehmer" },
-        { contract: "arbeit", party: "arbeitgeber" },
-        { contract: "arbeit", party: "arbeitnehmer", probezeit: true },
-      ];
+    const combos: {
+      contract: ContractKind;
+      party: Party;
+      probezeit?: boolean;
+    }[] = [
+      { contract: "wohnung", party: "mieter" },
+      { contract: "wohnung", party: "vermieter" },
+      { contract: "arbeit", party: "arbeitnehmer" },
+      { contract: "arbeit", party: "arbeitgeber" },
+      { contract: "arbeit", party: "arbeitnehmer", probezeit: true },
+    ];
 
     for (const combo of combos) {
       const config = input({ ...combo, probezeit: combo.probezeit ?? false });
@@ -306,7 +346,12 @@ describe("Invarianten", () => {
       expect(arbeit.daysOfNotice).toBeGreaterThanOrEqual(28);
 
       const probe = calculateNotice(
-        input({ contract: "arbeit", party: "arbeitnehmer", probezeit: true, zugang }),
+        input({
+          contract: "arbeit",
+          party: "arbeitnehmer",
+          probezeit: true,
+          zugang,
+        }),
       );
       expect(probe.daysOfNotice).toBe(14);
     }

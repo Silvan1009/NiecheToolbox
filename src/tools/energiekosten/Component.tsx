@@ -87,7 +87,10 @@ function tarifAus(
   const keys = KEYS[art];
   return {
     verbrauchKwh: toNumber(lies(keys.verbrauchKwh), fallback.verbrauchKwh),
-    arbeitspreisCt: toNumber(lies(keys.arbeitspreisCt), fallback.arbeitspreisCt),
+    arbeitspreisCt: toNumber(
+      lies(keys.arbeitspreisCt),
+      fallback.arbeitspreisCt,
+    ),
     grundpreisMonat: toNumber(
       lies(keys.grundpreisMonat),
       fallback.grundpreisMonat,
@@ -124,7 +127,9 @@ function initialState(params: ToolParams | undefined): State {
     modus: isModus(params?.modus) ? params.modus : DEFAULTS.modus,
     personen: toNumber(params?.personen, DEFAULTS.personen),
     wohnflaecheM2: toNumber(params?.qm, DEFAULTS.wohnflaecheM2),
-    standard: isStandard(params?.standard) ? params.standard : DEFAULTS.standard,
+    standard: isStandard(params?.standard)
+      ? params.standard
+      : DEFAULTS.standard,
     warmwasserElektrisch: toBool(params?.eww, DEFAULTS.warmwasserElektrisch),
     strom: tarifAus("strom", lies, DEFAULTS.strom),
     gas: tarifAus("gas", lies, DEFAULTS.gas),
@@ -263,13 +268,13 @@ export default function EnergiekostenTool({ params }: { params?: ToolParams }) {
                 if (isStandard(naechster)) update({ standard: naechster });
               }}
             >
-              {(
-                Object.keys(gebaeudestandardLabels) as Gebaeudestandard[]
-              ).map((key) => (
-                <option key={key} value={key}>
-                  {gebaeudestandardLabels[key]}
-                </option>
-              ))}
+              {(Object.keys(gebaeudestandardLabels) as Gebaeudestandard[]).map(
+                (key) => (
+                  <option key={key} value={key}>
+                    {gebaeudestandardLabels[key]}
+                  </option>
+                ),
+              )}
             </Select>
           </Field>
 
@@ -606,7 +611,9 @@ function SparteCard({
               id={`ek-${id}-ngrund`}
               unit="€/Monat"
               value={tarif.neuGrundpreisMonat}
-              onChange={(neuGrundpreisMonat) => onChange({ neuGrundpreisMonat })}
+              onChange={(neuGrundpreisMonat) =>
+                onChange({ neuGrundpreisMonat })
+              }
             />
           </Field>
         </div>
@@ -614,4 +621,3 @@ function SparteCard({
     </Card>
   );
 }
-

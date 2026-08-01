@@ -26,7 +26,11 @@ export default function HomePage() {
         </p>
       </section>
 
-      <section id="tools" aria-labelledby="tools-heading" className="scroll-mt-8">
+      <section
+        id="tools"
+        aria-labelledby="tools-heading"
+        className="scroll-mt-8"
+      >
         <h2
           id="tools-heading"
           className="font-display text-xl font-semibold tracking-tight"

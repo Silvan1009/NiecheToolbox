@@ -25,7 +25,10 @@ describe("searchIndex", () => {
     const toolHrefs = new Set(publicTools().map((t) => toolPath(t.slug)));
     for (const entry of searchIndex) {
       if (entry.parentName) continue;
-      expect(toolHrefs.has(entry.href), `verwaister Eintrag: ${entry.href}`).toBe(true);
+      expect(
+        toolHrefs.has(entry.href),
+        `verwaister Eintrag: ${entry.href}`,
+      ).toBe(true);
     }
   });
 

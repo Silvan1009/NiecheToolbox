@@ -11,7 +11,11 @@ const isWeekendIso = (iso: string) => weekday(iso) === 0 || weekday(iso) === 6;
 describe("Brückentage-Optimierer", () => {
   it("empfiehlt für Christi Himmelfahrt den Freitag danach: 1 Urlaubstag, 4 freie Tage", () => {
     for (const code of ALL_CODES) {
-      const result = calculateBrueckentage({ year: 2026, region: code, budget: 5 });
+      const result = calculateBrueckentage({
+        year: 2026,
+        region: code,
+        budget: 5,
+      });
       const occasion = result.occasions.find((entry) =>
         entry.holidays.some((h) => h.name === "Christi Himmelfahrt"),
       );
@@ -25,7 +29,11 @@ describe("Brückentage-Optimierer", () => {
   });
 
   it("liefert für jeden Werktags-Feiertag mindestens einen Anlass", () => {
-    const result = calculateBrueckentage({ year: 2026, region: "nw", budget: 5 });
+    const result = calculateBrueckentage({
+      year: 2026,
+      region: "nw",
+      budget: 5,
+    });
     const workdayHolidays = result.holidays.filter(
       (h) => !h.onWeekend && !h.partial,
     );
@@ -57,8 +65,10 @@ describe("Brückentage-Optimierer", () => {
 
     // 15.08.2026 ist ein Samstag – der Tag bringt so oder so keine Brücke,
     // aber er darf nur mit includePartial überhaupt als frei gelten.
-    expect(holidaysFor(2026, "by").find((h) => h.name === "Mariä Himmelfahrt")
-      ?.onWeekend).toBe(true);
+    expect(
+      holidaysFor(2026, "by").find((h) => h.name === "Mariä Himmelfahrt")
+        ?.onWeekend,
+    ).toBe(true);
     expect(hasMariae(without)).toBe(false);
     expect(hasMariae(withPartial)).toBe(false);
 
@@ -75,9 +85,12 @@ describe("Brückentage-Optimierer", () => {
       ),
     ).toBe(true);
     expect(
-      calculateBrueckentage({ year: 2028, region: "by", budget: 5 }).occasions.some(
-        (occasion) =>
-          occasion.holidays.some((h) => h.name === "Mariä Himmelfahrt"),
+      calculateBrueckentage({
+        year: 2028,
+        region: "by",
+        budget: 5,
+      }).occasions.some((occasion) =>
+        occasion.holidays.some((h) => h.name === "Mariä Himmelfahrt"),
       ),
     ).toBe(false);
   });
@@ -100,8 +113,16 @@ describe("Brückentage-Optimierer", () => {
   });
 
   it("bietet bei größerem Budget längere Spannen an", () => {
-    const small = calculateBrueckentage({ year: 2026, region: "by", budget: 1 });
-    const large = calculateBrueckentage({ year: 2026, region: "by", budget: 5 });
+    const small = calculateBrueckentage({
+      year: 2026,
+      region: "by",
+      budget: 1,
+    });
+    const large = calculateBrueckentage({
+      year: 2026,
+      region: "by",
+      budget: 5,
+    });
     expect(large.best!.freeDays).toBeGreaterThan(small.best!.freeDays);
     // Das beste Verhältnis ist budgetunabhängig – ein einzelner Brückentag.
     expect(large.mostEfficient!.ratio).toBe(small.mostEfficient!.ratio);
@@ -180,9 +201,9 @@ describe("Invarianten über alle Bundesländer und Jahre", () => {
         // Varianten je Anlass sind Pareto-optimal und aufsteigend sortiert.
         for (const occasion of result.occasions) {
           for (let i = 1; i < occasion.options.length; i += 1) {
-            expect(
-              occasion.options[i].vacationDays.length,
-            ).toBeGreaterThan(occasion.options[i - 1].vacationDays.length);
+            expect(occasion.options[i].vacationDays.length).toBeGreaterThan(
+              occasion.options[i - 1].vacationDays.length,
+            );
             expect(occasion.options[i].freeDays).toBeGreaterThan(
               occasion.options[i - 1].freeDays,
             );
@@ -205,8 +226,7 @@ describe("Invarianten über alle Bundesländer und Jahre", () => {
         expect(result.plan.vacationDaysUsed).toBeLessThanOrEqual(6);
         for (let i = 1; i < result.plan.blocks.length; i += 1) {
           expect(
-            result.plan.blocks[i].freeStart >
-              result.plan.blocks[i - 1].freeEnd,
+            result.plan.blocks[i].freeStart > result.plan.blocks[i - 1].freeEnd,
           ).toBe(true);
         }
         expect(result.plan.freeDays).toBe(

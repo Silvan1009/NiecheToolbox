@@ -56,11 +56,7 @@ export type KennzahlKey =
   | "ausschuettungsquote";
 
 export type KennzahlGruppe =
-  | "jeAktie"
-  | "bewertung"
-  | "rentabilitaet"
-  | "bilanz"
-  | "cashflow";
+  "jeAktie" | "bewertung" | "rentabilitaet" | "bilanz" | "cashflow";
 
 /** Grobe Einordnung eines Werts – gut, unauffällig, auffällig. */
 export type Tendenz = "gut" | "neutral" | "schwach";
@@ -335,7 +331,8 @@ export const kennzahlen: Record<KennzahlKey, KennzahlDef> = {
     formel: "(Börsenwert + Nettoschulden) / Umsatz",
     erklaerung:
       "Das Umsatzvielfache auf Unternehmensebene. Üblich bei Übernahmen und bei jungen Unternehmen, die noch keinen Gewinn ausweisen.",
-    faustwert: "Bis 1,5 gilt als günstig, bis 4 als normal – stark branchenabhängig.",
+    faustwert:
+      "Bis 1,5 gilt als günstig, bis 4 als normal – stark branchenabhängig.",
     gruppe: "bewertung",
     einheit: "faktor",
     skala: "preis",

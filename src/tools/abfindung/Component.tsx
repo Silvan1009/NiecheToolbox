@@ -34,8 +34,14 @@ function initialState(params: ToolParams | undefined): State {
   return {
     zvEOhneAbfindung: toNumber(params?.zve, DEFAULTS.zvEOhneAbfindung),
     abfindungsbetrag: toNumber(params?.abfindung, DEFAULTS.abfindungsbetrag),
-    zusammenveranlagung: toBool(params?.verheiratet, DEFAULTS.zusammenveranlagung),
-    kirchensteuerPercent: toNumber(params?.kirche, DEFAULTS.kirchensteuerPercent),
+    zusammenveranlagung: toBool(
+      params?.verheiratet,
+      DEFAULTS.zusammenveranlagung,
+    ),
+    kirchensteuerPercent: toNumber(
+      params?.kirche,
+      DEFAULTS.kirchensteuerPercent,
+    ),
   };
 }
 
@@ -44,9 +50,18 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
     initialState: initialState(params),
     parse: (search, fallback) => ({
       zvEOhneAbfindung: toNumber(search.get("zve"), fallback.zvEOhneAbfindung),
-      abfindungsbetrag: toNumber(search.get("abfindung"), fallback.abfindungsbetrag),
-      zusammenveranlagung: toBool(search.get("verheiratet"), fallback.zusammenveranlagung),
-      kirchensteuerPercent: toNumber(search.get("kirche"), fallback.kirchensteuerPercent),
+      abfindungsbetrag: toNumber(
+        search.get("abfindung"),
+        fallback.abfindungsbetrag,
+      ),
+      zusammenveranlagung: toBool(
+        search.get("verheiratet"),
+        fallback.zusammenveranlagung,
+      ),
+      kirchensteuerPercent: toNumber(
+        search.get("kirche"),
+        fallback.kirchensteuerPercent,
+      ),
     }),
     serialize: (next) => ({
       zve: urlValue(next.zvEOhneAbfindung, DEFAULTS.zvEOhneAbfindung),
@@ -57,7 +72,10 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
           : next.zusammenveranlagung
             ? "1"
             : "0",
-      kirche: urlValue(next.kirchensteuerPercent, DEFAULTS.kirchensteuerPercent),
+      kirche: urlValue(
+        next.kirchensteuerPercent,
+        DEFAULTS.kirchensteuerPercent,
+      ),
     }),
   });
 
@@ -82,7 +100,11 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
             />
           </Field>
 
-          <Field label="Abfindungsbetrag" htmlFor="af-abfindung" hint="Brutto, laut Aufhebungsvertrag.">
+          <Field
+            label="Abfindungsbetrag"
+            htmlFor="af-abfindung"
+            hint="Brutto, laut Aufhebungsvertrag."
+          >
             <UnitInput
               blankWhenZero
               id="af-abfindung"
@@ -95,7 +117,9 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
           <div className="sm:col-span-2">
             <Toggle
               checked={state.zusammenveranlagung}
-              onChange={(zusammenveranlagung) => update({ zusammenveranlagung })}
+              onChange={(zusammenveranlagung) =>
+                update({ zusammenveranlagung })
+              }
               label="Zusammenveranlagung (verheiratet oder verpartnert)"
               hint="Rechnet mit dem günstigeren Splittingtarif statt dem Grundtarif."
             />
@@ -105,7 +129,9 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
             <Select
               id="af-kirche"
               value={state.kirchensteuerPercent}
-              onChange={(event) => update({ kirchensteuerPercent: Number(event.target.value) })}
+              onChange={(event) =>
+                update({ kirchensteuerPercent: Number(event.target.value) })
+              }
             >
               {KIRCHENSTEUER_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -136,8 +162,8 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
               <strong className="font-semibold text-ink">
                 {formatEuro(result.gesamtabgabeAufAbfindung)}
               </strong>{" "}
-              an Steuern und Abgaben ab – das sind {formatDecimal(result.effektiverSteuersatz)} %
-              der Abfindung.
+              an Steuern und Abgaben ab – das sind{" "}
+              {formatDecimal(result.effektiverSteuersatz)} % der Abfindung.
             </>
           }
         />
@@ -167,29 +193,54 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
       </dl>
 
       <section aria-labelledby="af-abzuege" className="surface-soft p-6">
-        <h2 id="af-abzuege" className="font-display text-lg font-semibold tracking-tight">
+        <h2
+          id="af-abzuege"
+          className="font-display text-lg font-semibold tracking-tight"
+        >
           Was von der Abfindung abgeht
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <AmountRow label="Abfindung (brutto)" value={state.abfindungsbetrag} />
-          <AmountRow label="Einkommensteuer (Fünftelregelung)" value={-result.steuerAufAbfindungFuenftel} />
-          <AmountRow label="Solidaritätszuschlag" value={-result.soliAufAbfindung} />
+          <AmountRow
+            label="Abfindung (brutto)"
+            value={state.abfindungsbetrag}
+          />
+          <AmountRow
+            label="Einkommensteuer (Fünftelregelung)"
+            value={-result.steuerAufAbfindungFuenftel}
+          />
+          <AmountRow
+            label="Solidaritätszuschlag"
+            value={-result.soliAufAbfindung}
+          />
           {state.kirchensteuerPercent > 0 && (
-            <AmountRow label="Kirchensteuer" value={-result.kirchensteuerAufAbfindung} />
+            <AmountRow
+              label="Kirchensteuer"
+              value={-result.kirchensteuerAufAbfindung}
+            />
           )}
-          <AmountRow label="Netto von der Abfindung" value={result.nettoAbfindung} stark />
+          <AmountRow
+            label="Netto von der Abfindung"
+            value={result.nettoAbfindung}
+            stark
+          />
         </ul>
       </section>
 
       {result.warnings.length > 0 && (
         <section aria-labelledby="af-hinweise" className="surface-soft p-6">
-          <h2 id="af-hinweise" className="font-display text-lg font-semibold tracking-tight">
+          <h2
+            id="af-hinweise"
+            className="font-display text-lg font-semibold tracking-tight"
+          >
             Auffällig
           </h2>
           <ul className="mt-3 flex flex-col gap-2.5 text-[15px] text-muted">
             {result.warnings.map((warning) => (
               <li key={warning} className="flex gap-2.5">
-                <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent" />
+                <span
+                  aria-hidden="true"
+                  className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent"
+                />
                 {warning}
               </li>
             ))}
@@ -201,4 +252,3 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

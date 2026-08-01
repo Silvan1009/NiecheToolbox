@@ -15,9 +15,10 @@ describe("toolGroups", () => {
   it("jeder in einer Gruppe referenzierte Slug existiert in der Registry", () => {
     for (const group of toolGroups) {
       for (const slug of group.tools) {
-        expect(knownSlugs.has(slug), `Gruppe "${group.slug}" referenziert unbekanntes Tool "${slug}"`).toBe(
-          true,
-        );
+        expect(
+          knownSlugs.has(slug),
+          `Gruppe "${group.slug}" referenziert unbekanntes Tool "${slug}"`,
+        ).toBe(true);
       }
     }
   });
@@ -32,7 +33,10 @@ describe("toolGroups", () => {
 
   it("keine Gruppe hat weniger als drei Rechner", () => {
     for (const group of toolGroups) {
-      expect(group.tools.length, `Gruppe "${group.slug}" hat zu wenige Tools`).toBeGreaterThanOrEqual(3);
+      expect(
+        group.tools.length,
+        `Gruppe "${group.slug}" hat zu wenige Tools`,
+      ).toBeGreaterThanOrEqual(3);
     }
   });
 

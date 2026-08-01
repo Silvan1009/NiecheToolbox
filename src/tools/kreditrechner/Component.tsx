@@ -104,7 +104,10 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
         next.bearbeitungsgebuehrPercent,
         DEFAULTS.bearbeitungsgebuehrPercent,
       ),
-      rsv: urlValue(next.restschuldversicherung, DEFAULTS.restschuldversicherung),
+      rsv: urlValue(
+        next.restschuldversicherung,
+        DEFAULTS.restschuldversicherung,
+      ),
       bindung: urlValue(next.zinsbindungJahre, DEFAULTS.zinsbindungJahre),
     }),
   });
@@ -348,14 +351,28 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
             label="Restschuldversicherung (mitfinanziert)"
             value={state.restschuldversicherung}
           />
-          <AmountRow label="Zinsen über die Laufzeit" value={result.gesamtzinsen} />
-          <AmountRow label="Summe aller Zahlungen" value={result.gesamtaufwand} stark />
-          <AmountRow label="Kosten des Kredits" value={result.kreditkosten} stark />
+          <AmountRow
+            label="Zinsen über die Laufzeit"
+            value={result.gesamtzinsen}
+          />
+          <AmountRow
+            label="Summe aller Zahlungen"
+            value={result.gesamtaufwand}
+            stark
+          />
+          <AmountRow
+            label="Kosten des Kredits"
+            value={result.kreditkosten}
+            stark
+          />
         </ul>
       </section>
 
       {result.sondertilgungVerkuerzungMonate > 0 && (
-        <section aria-labelledby="kr-sonder-wirkung" className="surface-soft p-6">
+        <section
+          aria-labelledby="kr-sonder-wirkung"
+          className="surface-soft p-6"
+        >
           <h2
             id="kr-sonder-wirkung"
             className="font-display text-lg font-semibold tracking-tight"
@@ -459,4 +476,3 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

@@ -135,7 +135,8 @@ export const variantenTexte: VariantContent[] = [
           "In Europa 50 bis 90 Euro je Person und Tag für Verpflegung, Aktivitäten und Nahverkehr, je nach Land und Essgewohnheiten. Die Voreinstellung dieser Seite liegt mit 67,50 Euro mittendrin. Unterkunft und Anreise sind darin bewusst nicht enthalten, weil sie vorab bezahlt werden.",
       },
       {
-        question: "Warum rechnet der Rechner mit acht Tagen bei sieben Nächten?",
+        question:
+          "Warum rechnet der Rechner mit acht Tagen bei sieben Nächten?",
         answer:
           "Weil der Anreisetag mitgegessen wird. Wer am Samstag anreist und am Samstag darauf zurückfliegt, hat sieben Übernachtungen, aber acht Tage mit Frühstück, Mittag und Abendessen. Die Unterkunft rechnet der Planer deshalb nach Nächten, alles Übrige nach Tagen.",
       },

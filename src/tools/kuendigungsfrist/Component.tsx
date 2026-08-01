@@ -74,15 +74,15 @@ function toIsoOr(value: unknown, fallback: string): string {
 function initialState(params: ToolParams | undefined): State {
   const today = toIsoOr(params?.zugang, todayIso());
   const contract = isContract(params?.art) ? params.art : "wohnung";
-  const party = isParty(params?.seite)
-    ? params.seite
-    : partiesFor[contract][0];
+  const party = isParty(params?.seite) ? params.seite : partiesFor[contract][0];
 
   return {
     contract,
     // Eine Partei, die nicht zur Vertragsart passt, würde stillschweigend
     // falsch rechnen – deshalb hier abfangen statt später korrigieren.
-    party: partiesFor[contract].includes(party) ? party : partiesFor[contract][0],
+    party: partiesFor[contract].includes(party)
+      ? party
+      : partiesFor[contract][0],
     direction: isDirection(params?.richtung) ? params.richtung : "vorwaerts",
     zugang: today,
     wunschende: toIsoOr(params?.ende, addDays(today, 120)),
@@ -219,7 +219,9 @@ export default function KuendigungsfristTool({
                   type="date"
                   value={state.wunschende}
                   onChange={(event) =>
-                    update({ wunschende: toIsoOr(event.target.value, state.wunschende) })
+                    update({
+                      wunschende: toIsoOr(event.target.value, state.wunschende),
+                    })
                   }
                   className="font-mono"
                 />
@@ -235,7 +237,9 @@ export default function KuendigungsfristTool({
                   type="date"
                   value={state.zugang}
                   onChange={(event) =>
-                    update({ zugang: toIsoOr(event.target.value, state.zugang) })
+                    update({
+                      zugang: toIsoOr(event.target.value, state.zugang),
+                    })
                   }
                   className="font-mono"
                 />
@@ -312,7 +316,9 @@ export default function KuendigungsfristTool({
           value={formatDate(headlineDate)}
           suffix={formatWeekdayLong(headlineDate)}
           caption={
-            backwards ? "Kündigung muss zugehen bis" : "Letzter Tag des Vertrags"
+            backwards
+              ? "Kündigung muss zugehen bis"
+              : "Letzter Tag des Vertrags"
           }
           announce={
             backwards
@@ -341,8 +347,7 @@ export default function KuendigungsfristTool({
                 <strong className="font-semibold text-ink">
                   {formatInteger(result.daysOfNotice)} Tage
                 </strong>{" "}
-                ab dem Zugang – gesetzliche Frist:{" "}
-                {fristLabel(result.frist)}.
+                ab dem Zugang – gesetzliche Frist: {fristLabel(result.frist)}.
               </>
             )
           }
@@ -350,14 +355,20 @@ export default function KuendigungsfristTool({
       </ResultPanel>
 
       <dl className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Gesetzliche Frist" value={fristLabel(result.frist)} hint={terminHint(result)} />
+        <Stat
+          label="Gesetzliche Frist"
+          value={fristLabel(result.frist)}
+          hint={terminHint(result)}
+        />
         <Stat
           label="Zeit bis zum Ende"
           value={`${formatInteger(result.daysOfNotice)} ${plural(result.daysOfNotice, "Tag", "Tage")}`}
           hint="ab dem Zugang gerechnet"
         />
         <Stat
-          label={state.contract === "wohnung" ? "Wohndauer" : "Betriebszugehörigkeit"}
+          label={
+            state.contract === "wohnung" ? "Wohndauer" : "Betriebszugehörigkeit"
+          }
           value={`${formatInteger(result.years)} ${plural(result.years, "Jahr", "Jahre")}`}
           hint={
             result.frist.termin === "monatsende" || state.party === "vermieter"
@@ -367,11 +378,11 @@ export default function KuendigungsfristTool({
         />
       </dl>
 
-      <section
-        aria-labelledby="kf-weg"
-        className="surface-soft p-6"
-      >
-        <h2 id="kf-weg" className="font-display text-lg font-semibold tracking-tight">
+      <section aria-labelledby="kf-weg" className="surface-soft p-6">
+        <h2
+          id="kf-weg"
+          className="font-display text-lg font-semibold tracking-tight"
+        >
           Wie das zusammenkommt
         </h2>
         <ol className="mt-4 flex flex-col gap-3">
@@ -400,7 +411,10 @@ export default function KuendigungsfristTool({
           <ul className="mt-3 flex flex-col gap-2.5 text-[15px] text-muted">
             {result.warnings.map((warning) => (
               <li key={warning} className="flex gap-2.5">
-                <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent" />
+                <span
+                  aria-hidden="true"
+                  className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent"
+                />
                 {warning}
               </li>
             ))}
@@ -469,7 +483,9 @@ function explain(result: NoticeResult, state: State): string[] {
       steps.push(
         `Nach ${formatInteger(result.years)} ${plural(result.years, "Jahr", "Jahren")} Betriebszugehörigkeit beträgt die Frist ${fristLabel(result.frist)} zum Monatsende.`,
       );
-      steps.push(`Damit endet das Arbeitsverhältnis am ${formatDate(result.end)}.`);
+      steps.push(
+        `Damit endet das Arbeitsverhältnis am ${formatDate(result.end)}.`,
+      );
       break;
 
     case "karenz": {
@@ -490,4 +506,3 @@ function explain(result: NoticeResult, state: State): string[] {
 
   return steps;
 }
-

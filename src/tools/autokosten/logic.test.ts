@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateAutokosten, defaultInput, type AutokostenInput } from "./logic";
+import {
+  calculateAutokosten,
+  defaultInput,
+  type AutokostenInput,
+} from "./logic";
 
 describe("Auto-Unterhaltskosten-Rechner", () => {
   it("rechnet die Voreinstellung korrekt durch", () => {
@@ -31,7 +35,9 @@ describe("Auto-Unterhaltskosten-Rechner", () => {
     const result = calculateAutokosten(input);
     expect(result.wertverlustJahr).toBe(0);
     expect(
-      result.warnings.some((w) => w.includes("Restwert liegt auf Höhe des Kaufpreises")),
+      result.warnings.some((w) =>
+        w.includes("Restwert liegt auf Höhe des Kaufpreises"),
+      ),
     ).toBe(true);
   });
 
@@ -83,7 +89,10 @@ describe("Auto-Unterhaltskosten-Rechner", () => {
 
   it("hat Anteile, die sich zu 100 Prozent aufsummieren", () => {
     const result = calculateAutokosten(defaultInput());
-    const summeAnteile = result.posten.reduce((sum, p) => sum + p.anteilProzent, 0);
+    const summeAnteile = result.posten.reduce(
+      (sum, p) => sum + p.anteilProzent,
+      0,
+    );
     expect(summeAnteile).toBeCloseTo(100, 6);
   });
 
@@ -102,9 +111,9 @@ describe("Auto-Unterhaltskosten-Rechner", () => {
       haltedauerJahre: 4,
     };
     const result = calculateAutokosten(input);
-    expect(
-      result.warnings.some((w) => w.includes("Wertverlust macht")),
-    ).toBe(true);
+    expect(result.warnings.some((w) => w.includes("Wertverlust macht"))).toBe(
+      true,
+    );
   });
 
   it("warnt bei geringer Fahrleistung, dass Fixkosten dominieren", () => {
@@ -120,7 +129,9 @@ describe("Auto-Unterhaltskosten-Rechner", () => {
     const result = calculateAutokosten(input);
     expect(result.kostenProKmCent).toBe(0);
     expect(result.gesamtkostenJahr).toBeGreaterThan(0);
-    expect(result.warnings.some((w) => w.includes("Ohne Fahrleistung"))).toBe(true);
+    expect(result.warnings.some((w) => w.includes("Ohne Fahrleistung"))).toBe(
+      true,
+    );
   });
 
   it("fängt negative und unsinnige Eingaben ab", () => {

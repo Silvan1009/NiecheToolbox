@@ -61,7 +61,10 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
       usage: toNumber(search.get("nutzung"), fallback.usage),
       kwhPerCycle: toNumber(search.get("kwh"), fallback.kwhPerCycle),
       standbyWatts: toNumber(search.get("standby"), fallback.standbyWatts),
-      pricePerKwhCents: toNumber(search.get("preis"), fallback.pricePerKwhCents),
+      pricePerKwhCents: toNumber(
+        search.get("preis"),
+        fallback.pricePerKwhCents,
+      ),
     }),
     serialize: (next) => ({
       watt: String(next.watts),
@@ -169,7 +172,10 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
               </Field>
             )}
 
-            <Field label={usagePatterns[state.pattern].label} htmlFor="sk-nutzung">
+            <Field
+              label={usagePatterns[state.pattern].label}
+              htmlFor="sk-nutzung"
+            >
               <UnitInput
                 id="sk-nutzung"
                 unit={byCycle ? "×" : "h"}
@@ -289,4 +295,3 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
     </div>
   );
 }
-

@@ -140,8 +140,14 @@ describe("Zeiträume", () => {
   });
 
   it("liefert saubere Monats- und Quartalsgrenzen", () => {
-    expect(monthRange(2026, 2)).toEqual({ from: "2026-02-01", to: "2026-02-28" });
-    expect(monthRange(2028, 2)).toEqual({ from: "2028-02-01", to: "2028-02-29" });
+    expect(monthRange(2026, 2)).toEqual({
+      from: "2026-02-01",
+      to: "2026-02-28",
+    });
+    expect(monthRange(2028, 2)).toEqual({
+      from: "2028-02-01",
+      to: "2028-02-29",
+    });
     expect(quarterRange(2026, 1)).toEqual({
       from: "2026-01-01",
       to: "2026-03-31",
@@ -208,7 +214,9 @@ describe("Invarianten", () => {
           const result = forYear(year, region.code, weekPresets[preset].days);
 
           // Jeder Kalendertag ist entweder verplant oder frei.
-          expect(result.scheduledDays + result.offDays).toBe(result.calendarDays);
+          expect(result.scheduledDays + result.offDays).toBe(
+            result.calendarDays,
+          );
           // Arbeitstage sind die verplanten Tage minus die Feiertage darauf.
           expect(result.workdays + result.lostToHolidays).toBe(
             result.scheduledDays,

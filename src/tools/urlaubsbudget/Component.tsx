@@ -89,13 +89,19 @@ export default function UrlaubsbudgetTool({ params }: { params?: ToolParams }) {
         search.get("transport"),
         fallback.transportVorOrtGesamt,
       ),
-      versicherungGesamt: toNumber(search.get("vers"), fallback.versicherungGesamt),
+      versicherungGesamt: toNumber(
+        search.get("vers"),
+        fallback.versicherungGesamt,
+      ),
       pufferPercent: toNumber(search.get("puffer"), fallback.pufferPercent),
       ruecklageVorhanden: toNumber(
         search.get("ruecklage"),
         fallback.ruecklageVorhanden,
       ),
-      monateBisAbreise: toNumber(search.get("monate"), fallback.monateBisAbreise),
+      monateBisAbreise: toNumber(
+        search.get("monate"),
+        fallback.monateBisAbreise,
+      ),
     }),
     // Nur Abweichungen vom Default landen in der URL – sonst wäre der Link bei
     // vierzehn Feldern nicht mehr teilbar.
@@ -107,7 +113,10 @@ export default function UrlaubsbudgetTool({ params }: { params?: ToolParams }) {
       anreise: urlValue(next.anreiseGesamt, DEFAULTS.anreiseGesamt),
       anreisepp: urlValue(next.anreiseProPerson, DEFAULTS.anreiseProPerson),
       nacht: urlValue(next.unterkunftProNacht, DEFAULTS.unterkunftProNacht),
-      essen: urlValue(next.verpflegungProPersonTag, DEFAULTS.verpflegungProPersonTag),
+      essen: urlValue(
+        next.verpflegungProPersonTag,
+        DEFAULTS.verpflegungProPersonTag,
+      ),
       aktiv: urlValue(
         next.aktivitaetenProPersonTag,
         DEFAULTS.aktivitaetenProPersonTag,

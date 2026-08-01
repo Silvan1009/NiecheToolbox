@@ -4,7 +4,12 @@ import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, UnitInput } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Stepper,
+  UnitInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -40,15 +45,29 @@ function initialState(params: ToolParams | undefined): State {
   return {
     ...DEFAULTS,
     aktuellesAlter: toNumber(params?.alter, DEFAULTS.aktuellesAlter),
-    renteneintrittsalter: toNumber(params?.renteneintritt, DEFAULTS.renteneintrittsalter),
+    renteneintrittsalter: toNumber(
+      params?.renteneintritt,
+      DEFAULTS.renteneintrittsalter,
+    ),
     lebenserwartung: toNumber(params?.leben, DEFAULTS.lebenserwartung),
-    einkommenModus: isModus(params?.modus) ? params.modus : DEFAULTS.einkommenModus,
+    einkommenModus: isModus(params?.modus)
+      ? params.modus
+      : DEFAULTS.einkommenModus,
     nettoEinkommen: toNumber(params?.netto, DEFAULTS.nettoEinkommen),
-    versorgungsniveauPercent: toNumber(params?.niveau, DEFAULTS.versorgungsniveauPercent),
-    gewuenschtesEinkommenFest: toNumber(params?.wunsch, DEFAULTS.gewuenschtesEinkommenFest),
+    versorgungsniveauPercent: toNumber(
+      params?.niveau,
+      DEFAULTS.versorgungsniveauPercent,
+    ),
+    gewuenschtesEinkommenFest: toNumber(
+      params?.wunsch,
+      DEFAULTS.gewuenschtesEinkommenFest,
+    ),
     gesetzlicheRente: toNumber(params?.gesetzlich, DEFAULTS.gesetzlicheRente),
     weitereRenten: toNumber(params?.weitere, DEFAULTS.weitereRenten),
-    vorhandenesVermoegen: toNumber(params?.vermoegen, DEFAULTS.vorhandenesVermoegen),
+    vorhandenesVermoegen: toNumber(
+      params?.vermoegen,
+      DEFAULTS.vorhandenesVermoegen,
+    ),
     monatlicheSparrate: toNumber(params?.sparrate, DEFAULTS.monatlicheSparrate),
     renditeAnsparphasePercent: toNumber(
       params?.renditean,
@@ -74,7 +93,10 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
           search.get("renteneintritt"),
           fallback.renteneintrittsalter,
         ),
-        lebenserwartung: toNumber(search.get("leben"), fallback.lebenserwartung),
+        lebenserwartung: toNumber(
+          search.get("leben"),
+          fallback.lebenserwartung,
+        ),
         einkommenModus: isModus(modus) ? modus : fallback.einkommenModus,
         nettoEinkommen: toNumber(search.get("netto"), fallback.nettoEinkommen),
         versorgungsniveauPercent: toNumber(
@@ -85,13 +107,19 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
           search.get("wunsch"),
           fallback.gewuenschtesEinkommenFest,
         ),
-        gesetzlicheRente: toNumber(search.get("gesetzlich"), fallback.gesetzlicheRente),
+        gesetzlicheRente: toNumber(
+          search.get("gesetzlich"),
+          fallback.gesetzlicheRente,
+        ),
         weitereRenten: toNumber(search.get("weitere"), fallback.weitereRenten),
         vorhandenesVermoegen: toNumber(
           search.get("vermoegen"),
           fallback.vorhandenesVermoegen,
         ),
-        monatlicheSparrate: toNumber(search.get("sparrate"), fallback.monatlicheSparrate),
+        monatlicheSparrate: toNumber(
+          search.get("sparrate"),
+          fallback.monatlicheSparrate,
+        ),
         renditeAnsparphasePercent: toNumber(
           search.get("renditean"),
           fallback.renditeAnsparphasePercent,
@@ -100,22 +128,40 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
           search.get("renditerente"),
           fallback.renditeRentenphasePercent,
         ),
-        inflationPercent: toNumber(search.get("inflation"), fallback.inflationPercent),
+        inflationPercent: toNumber(
+          search.get("inflation"),
+          fallback.inflationPercent,
+        ),
       };
     },
     serialize: (next) => ({
       alter: urlValue(next.aktuellesAlter, DEFAULTS.aktuellesAlter),
-      renteneintritt: urlValue(next.renteneintrittsalter, DEFAULTS.renteneintrittsalter),
+      renteneintritt: urlValue(
+        next.renteneintrittsalter,
+        DEFAULTS.renteneintrittsalter,
+      ),
       leben: urlValue(next.lebenserwartung, DEFAULTS.lebenserwartung),
       modus: urlValue(next.einkommenModus, DEFAULTS.einkommenModus),
       netto: urlValue(next.nettoEinkommen, DEFAULTS.nettoEinkommen),
-      niveau: urlValue(next.versorgungsniveauPercent, DEFAULTS.versorgungsniveauPercent),
-      wunsch: urlValue(next.gewuenschtesEinkommenFest, DEFAULTS.gewuenschtesEinkommenFest),
+      niveau: urlValue(
+        next.versorgungsniveauPercent,
+        DEFAULTS.versorgungsniveauPercent,
+      ),
+      wunsch: urlValue(
+        next.gewuenschtesEinkommenFest,
+        DEFAULTS.gewuenschtesEinkommenFest,
+      ),
       gesetzlich: urlValue(next.gesetzlicheRente, DEFAULTS.gesetzlicheRente),
       weitere: urlValue(next.weitereRenten, DEFAULTS.weitereRenten),
-      vermoegen: urlValue(next.vorhandenesVermoegen, DEFAULTS.vorhandenesVermoegen),
+      vermoegen: urlValue(
+        next.vorhandenesVermoegen,
+        DEFAULTS.vorhandenesVermoegen,
+      ),
       sparrate: urlValue(next.monatlicheSparrate, DEFAULTS.monatlicheSparrate),
-      renditean: urlValue(next.renditeAnsparphasePercent, DEFAULTS.renditeAnsparphasePercent),
+      renditean: urlValue(
+        next.renditeAnsparphasePercent,
+        DEFAULTS.renditeAnsparphasePercent,
+      ),
       renditerente: urlValue(
         next.renditeRentenphasePercent,
         DEFAULTS.renditeRentenphasePercent,
@@ -129,7 +175,11 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <Card as="section" className="p-6" aria-label="Wunscheinkommen im Ruhestand">
+      <Card
+        as="section"
+        className="p-6"
+        aria-label="Wunscheinkommen im Ruhestand"
+      >
         <CardTitle>Wunscheinkommen im Ruhestand</CardTitle>
         <div className="mt-4 flex flex-col gap-5">
           <Field
@@ -177,7 +227,9 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
                         key={preset}
                         type="button"
                         aria-pressed={active}
-                        onClick={() => update({ versorgungsniveauPercent: preset })}
+                        onClick={() =>
+                          update({ versorgungsniveauPercent: preset })
+                        }
                         className={`h-10 rounded-pill px-3.5 text-sm font-semibold transition-colors duration-(--dur-fast) ${
                           active
                             ? "bg-accent text-white shadow-soft"
@@ -241,7 +293,9 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
               value={state.renteneintrittsalter}
               min={16}
               max={80}
-              onChange={(renteneintrittsalter) => update({ renteneintrittsalter })}
+              onChange={(renteneintrittsalter) =>
+                update({ renteneintrittsalter })
+              }
               suffix="Jahre"
               ariaLabel="Renteneintrittsalter"
             />
@@ -308,7 +362,9 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
               id="rl-vermoegen"
               unit="€"
               value={state.vorhandenesVermoegen}
-              onChange={(vorhandenesVermoegen) => update({ vorhandenesVermoegen })}
+              onChange={(vorhandenesVermoegen) =>
+                update({ vorhandenesVermoegen })
+              }
             />
           </Field>
 
@@ -394,8 +450,8 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
           hint={
             result.monatlicheLuecke === 0 ? (
               <>
-                Die erwartete Rente deckt dein Wunscheinkommen bereits – rechnerisch
-                braucht es kein zusätzliches Kapital.
+                Die erwartete Rente deckt dein Wunscheinkommen bereits –
+                rechnerisch braucht es kein zusätzliches Kapital.
               </>
             ) : result.kapitalLuecke === 0 ? (
               <>
@@ -403,8 +459,8 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
                 <strong className="font-semibold text-ink">
                   {formatEuro(result.kapitalbedarf)}
                 </strong>{" "}
-                bei Renteneintritt – mit vorhandenem Vermögen und aktueller Sparrate
-                rechnerisch bereits erreicht.
+                bei Renteneintritt – mit vorhandenem Vermögen und aktueller
+                Sparrate rechnerisch bereits erreicht.
               </>
             ) : (
               <>
@@ -412,7 +468,8 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
                 <strong className="font-semibold text-ink">
                   {formatEuro(result.kapitalbedarf)}
                 </strong>{" "}
-                bei Renteneintritt – zusätzlich zur aktuellen Sparrate fehlen dafür{" "}
+                bei Renteneintritt – zusätzlich zur aktuellen Sparrate fehlen
+                dafür{" "}
                 <strong className="font-semibold text-ink">
                   {formatEuro(result.zusaetzlicheSparrateNoetig)}
                 </strong>{" "}
@@ -437,7 +494,11 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
         <Stat
           label="Kapitallücke"
           value={formatEuro(result.kapitalLuecke)}
-          hint={result.zielErreichbar ? "rechnerisch geschlossen" : "bei Renteneintritt"}
+          hint={
+            result.zielErreichbar
+              ? "rechnerisch geschlossen"
+              : "bei Renteneintritt"
+          }
         />
         <Stat
           label="Sparrate insgesamt nötig"
@@ -451,11 +512,15 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
       </dl>
 
       <section aria-labelledby="rl-ewig" className="surface-soft p-6">
-        <h2 id="rl-ewig" className="font-display text-lg font-semibold tracking-tight">
+        <h2
+          id="rl-ewig"
+          className="font-display text-lg font-semibold tracking-tight"
+        >
           Wie lange soll das Kapital reichen?
         </h2>
         <p className="mt-1.5 text-[15px] text-muted">
-          Beide Beträge schließen dieselbe monatliche Lücke – nur unterschiedlich lang.
+          Beide Beträge schließen dieselbe monatliche Lücke – nur
+          unterschiedlich lang.
         </p>
         <dl className="mt-4 grid gap-4 sm:grid-cols-2">
           <Stat
@@ -502,10 +567,16 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
                   <th scope="col" className="py-2 pr-4 font-semibold">
                     Alter
                   </th>
-                  <th scope="col" className="py-2 pr-4 text-right font-semibold">
+                  <th
+                    scope="col"
+                    className="py-2 pr-4 text-right font-semibold"
+                  >
                     Einzahlung im Jahr
                   </th>
-                  <th scope="col" className="py-2 pr-4 text-right font-semibold">
+                  <th
+                    scope="col"
+                    className="py-2 pr-4 text-right font-semibold"
+                  >
                     Eingezahlt gesamt
                   </th>
                   <th scope="col" className="py-2 text-right font-semibold">
@@ -525,7 +596,9 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
                     <td className="py-2 pr-4 text-right">
                       {formatEuro(zeile.eingezahltGesamt)}
                     </td>
-                    <td className="py-2 text-right">{formatEuro(zeile.kapitalEnde)}</td>
+                    <td className="py-2 text-right">
+                      {formatEuro(zeile.kapitalEnde)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -557,13 +630,13 @@ export default function RentenlueckeTool({ params }: { params?: ToolParams }) {
       )}
 
       <p className="text-[13px] text-muted">
-        Reale Rendite Ansparphase: {formatDecimal(result.realeRenditeAnsparphase)} % ·
-        Rentenphase: {formatDecimal(result.realeRenditeRentenphase)} % – jeweils nach
-        Abzug der Inflation.
+        Reale Rendite Ansparphase:{" "}
+        {formatDecimal(result.realeRenditeAnsparphase)} % · Rentenphase:{" "}
+        {formatDecimal(result.realeRenditeRentenphase)} % – jeweils nach Abzug
+        der Inflation.
       </p>
 
       <AffiliateBlock slots={rentenlueckeAffiliate} result={result} />
     </div>
   );
 }
-

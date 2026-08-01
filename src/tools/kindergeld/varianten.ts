@@ -80,7 +80,8 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "guenstigerpruefung-kinderfreibetrag",
-    title: "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
+    title:
+      "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
     description:
       "Die Günstigerprüfung des Finanzamts nachrechnen: Kinderfreibetrag gegen Kindergeld, inklusive der Wirkung auf Solidaritätszuschlag und Kirchensteuer.",
     heading: "Günstigerprüfung: Freibetrag oder Kindergeld",
@@ -101,7 +102,8 @@ export const variantenTexte: VariantContent[] = [
           "Der automatische Vergleich des Finanzamts zwischen dem Steuervorteil aus dem Kinderfreibetrag und dem Anspruch auf Kindergeld. Die günstigere Variante wird angesetzt. Du musst dafür nichts beantragen – wohl aber eine Steuererklärung abgeben, sonst findet die Prüfung gar nicht statt.",
       },
       {
-        question: "Wird das Kindergeld angerechnet, wenn der Freibetrag gewinnt?",
+        question:
+          "Wird das Kindergeld angerechnet, wenn der Freibetrag gewinnt?",
         answer:
           "Ja. Fällt die Prüfung zugunsten des Freibetrags aus, erhöht das Finanzamt die festgesetzte Einkommensteuer um den Kindergeldanspruch. Im Ergebnis bleibt dir nur die Differenz zwischen beiden – in diesem Beispiel 982 Euro. Angerechnet wird immer der Anspruch, auch wenn tatsächlich kein Kindergeld geflossen ist.",
       },

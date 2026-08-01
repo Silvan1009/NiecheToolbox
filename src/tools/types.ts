@@ -4,13 +4,7 @@ import type { AffiliateKey } from "@/config/site";
 import type { AdDensity } from "@/lib/adPlacement";
 
 export type ToolCategory =
-  | "zeit"
-  | "geld"
-  | "familie"
-  | "text"
-  | "wohnen"
-  | "essen"
-  | "alltag";
+  "zeit" | "geld" | "familie" | "text" | "wohnen" | "essen" | "alltag";
 
 export const categoryLabels: Record<ToolCategory, string> = {
   zeit: "Zeit & Urlaub",

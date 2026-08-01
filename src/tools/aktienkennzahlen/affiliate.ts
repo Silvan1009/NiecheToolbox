@@ -28,7 +28,10 @@ export const aktienAffiliate: AffiliateSlot[] = [
       if (!aktie) return false;
       const qualitaet = aktie.gewinnqualitaet;
       const schulden = aktie.nettoschuldenEbitda;
-      return (qualitaet !== null && qualitaet < 80) || (schulden !== null && schulden > 3.5);
+      return (
+        (qualitaet !== null && qualitaet < 80) ||
+        (schulden !== null && schulden > 3.5)
+      );
     },
     headline: "Diese Bilanz verdient einen zweiten Blick",
     body: "Ein Gewinn, der nicht als Geld ankommt, oder eine hohe Schuldenlast lässt sich mit Kennzahlen allein nicht beurteilen. Der Geschäftsbericht und eine Branchenanalyse sagen mehr.",

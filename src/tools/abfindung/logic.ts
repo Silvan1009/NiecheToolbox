@@ -59,14 +59,22 @@ export interface AbfindungResult {
 }
 
 /** § 32a EStG, Grundtarif oder Splittingverfahren (§ 32a Abs. 5 EStG: doppeltes Einkommen halbiert, Steuer verdoppelt). */
-function jahresEinkommensteuer(zvE: number, zusammenveranlagung: boolean): number {
+function jahresEinkommensteuer(
+  zvE: number,
+  zusammenveranlagung: boolean,
+): number {
   const x = Math.max(0, zvE);
   return zusammenveranlagung ? 2 * einkommensteuer(x / 2) : einkommensteuer(x);
 }
 
 /** Wie im Brutto-Netto-Rechner: 5,5 % mit Milderungszone bis 11,9 % des übersteigenden Betrags. */
-function solidaritaetszuschlag(steuerbetrag: number, zusammenveranlagung: boolean): number {
-  const freigrenze = zusammenveranlagung ? SOLI_FREIGRENZE_SPLITTING : SOLI_FREIGRENZE;
+function solidaritaetszuschlag(
+  steuerbetrag: number,
+  zusammenveranlagung: boolean,
+): number {
+  const freigrenze = zusammenveranlagung
+    ? SOLI_FREIGRENZE_SPLITTING
+    : SOLI_FREIGRENZE;
   if (steuerbetrag <= freigrenze) return 0;
 
   const voll = (steuerbetrag * SOLI_SATZ) / 100;
@@ -83,11 +91,20 @@ export function calculateAbfindung(input: AbfindungInput): AbfindungResult {
   const steuerOhne = jahresEinkommensteuer(zvEOhne, zusammenveranlagung);
 
   // Fünftelregelung: Steuer auf ein Fünftel der Abfindung obendrauf, mal fünf.
-  const steuerMitFuenftel = jahresEinkommensteuer(zvEOhne + abfindung / 5, zusammenveranlagung);
-  const steuerAufAbfindungFuenftel = Math.max(0, 5 * (steuerMitFuenftel - steuerOhne));
+  const steuerMitFuenftel = jahresEinkommensteuer(
+    zvEOhne + abfindung / 5,
+    zusammenveranlagung,
+  );
+  const steuerAufAbfindungFuenftel = Math.max(
+    0,
+    5 * (steuerMitFuenftel - steuerOhne),
+  );
 
   // Vergleich: was die Abfindung ohne die Regelung kosten würde.
-  const steuerMitVoll = jahresEinkommensteuer(zvEOhne + abfindung, zusammenveranlagung);
+  const steuerMitVoll = jahresEinkommensteuer(
+    zvEOhne + abfindung,
+    zusammenveranlagung,
+  );
   const steuerAufAbfindungVoll = Math.max(0, steuerMitVoll - steuerOhne);
 
   const ersparnisEinkommensteuer = Math.max(
@@ -97,10 +114,14 @@ export function calculateAbfindung(input: AbfindungInput): AbfindungResult {
 
   const gesamtsteuerMitAbfindung = steuerOhne + steuerAufAbfindungFuenftel;
   const soliOhne = solidaritaetszuschlag(steuerOhne, zusammenveranlagung);
-  const soliMit = solidaritaetszuschlag(gesamtsteuerMitAbfindung, zusammenveranlagung);
+  const soliMit = solidaritaetszuschlag(
+    gesamtsteuerMitAbfindung,
+    zusammenveranlagung,
+  );
   const soliAufAbfindung = Math.max(0, soliMit - soliOhne);
 
-  const kirchensteuerAufAbfindung = (steuerAufAbfindungFuenftel * kirchensteuerPercent) / 100;
+  const kirchensteuerAufAbfindung =
+    (steuerAufAbfindungFuenftel * kirchensteuerPercent) / 100;
 
   const gesamtabgabeAufAbfindung =
     steuerAufAbfindungFuenftel + soliAufAbfindung + kirchensteuerAufAbfindung;
@@ -138,7 +159,8 @@ export function calculateAbfindung(input: AbfindungInput): AbfindungResult {
     steuerAufAbfindungVoll: Math.round(steuerAufAbfindungVoll),
     ersparnisEinkommensteuer: Math.round(ersparnisEinkommensteuer),
     soliAufAbfindung: Math.round(soliAufAbfindung * 100) / 100,
-    kirchensteuerAufAbfindung: Math.round(kirchensteuerAufAbfindung * 100) / 100,
+    kirchensteuerAufAbfindung:
+      Math.round(kirchensteuerAufAbfindung * 100) / 100,
     gesamtabgabeAufAbfindung: Math.round(gesamtabgabeAufAbfindung * 100) / 100,
     nettoAbfindung: Math.round(nettoAbfindung * 100) / 100,
     effektiverSteuersatz,

@@ -45,7 +45,13 @@ export const toolGroups: ToolGroup[] = [
     slug: "familie",
     label: "Familie & Kinder",
     hint: "Was Kinder kosten, was der Staat dazugibt und wie sich beides planen lässt.",
-    tools: ["kindergeld", "elterngeld", "elternzeit", "bruttonetto", "urlaubsbudget"],
+    tools: [
+      "kindergeld",
+      "elterngeld",
+      "elternzeit",
+      "bruttonetto",
+      "urlaubsbudget",
+    ],
   },
   {
     slug: "wohnen",
@@ -63,7 +69,13 @@ export const toolGroups: ToolGroup[] = [
     slug: "arbeit",
     label: "Arbeit, Urlaub & Zeit",
     hint: "Urlaub planen, Fristen einhalten und Zeit realistisch einschätzen.",
-    tools: ["arbeitstage", "brueckentage", "elternzeit", "kuendigungsfrist", "lesezeit"],
+    tools: [
+      "arbeitstage",
+      "brueckentage",
+      "elternzeit",
+      "kuendigungsfrist",
+      "lesezeit",
+    ],
   },
   {
     slug: "essen",

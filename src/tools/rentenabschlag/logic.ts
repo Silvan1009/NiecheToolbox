@@ -38,7 +38,9 @@ function regelaltersgrenze(geburtsjahr: number): Altersgrenze {
   if (geburtsjahr >= 1964) return { jahre: 67, monate: 0 };
   if (geburtsjahr <= 1958) {
     const monate = geburtsjahr - 1947 + 1;
-    return monate >= 12 ? { jahre: 66, monate: monate - 12 } : { jahre: 65, monate };
+    return monate >= 12
+      ? { jahre: 66, monate: monate - 12 }
+      : { jahre: 65, monate };
   }
   // 1959–1963: von 66+2 bis 66+10, danach 67+0 ab 1964.
   const monate = (geburtsjahr - 1958) * 2;
@@ -71,18 +73,27 @@ export interface RentenabschlagResult {
   warnings: string[];
 }
 
-export function calculateRentenabschlag(input: RentenabschlagInput): RentenabschlagResult {
+export function calculateRentenabschlag(
+  input: RentenabschlagInput,
+): RentenabschlagResult {
   const geburtsjahr = Math.round(clamp(input.geburtsjahr, 1940, 2010));
   const regel = regelaltersgrenze(geburtsjahr);
   const regelMonateGesamt = regel.jahre * 12 + regel.monate;
 
-  const geplantesAlterJahre = Math.round(clamp(input.geplantesAlterJahre, 60, 75));
-  const geplantesAlterMonate = Math.round(clamp(input.geplantesAlterMonate, 0, 11));
+  const geplantesAlterJahre = Math.round(
+    clamp(input.geplantesAlterJahre, 60, 75),
+  );
+  const geplantesAlterMonate = Math.round(
+    clamp(input.geplantesAlterMonate, 0, 11),
+  );
   const geplantMonateGesamt = geplantesAlterJahre * 12 + geplantesAlterMonate;
 
   const differenzMonate = geplantMonateGesamt - regelMonateGesamt;
 
-  const abschlagMonate = Math.min(Math.max(0, -differenzMonate), MAX_ABSCHLAG_MONATE);
+  const abschlagMonate = Math.min(
+    Math.max(0, -differenzMonate),
+    MAX_ABSCHLAG_MONATE,
+  );
   const zuschlagMonate = Math.max(0, differenzMonate);
 
   const abschlagProzent = abschlagMonate * ABSCHLAG_PRO_MONAT;
@@ -94,7 +105,9 @@ export function calculateRentenabschlag(input: RentenabschlagInput): Rentenabsch
 
   const differenzMonatlichC = renteMitAnpassungC - regelrenteC;
 
-  const lebenserwartung = Math.round(clamp(input.lebenserwartung, geplantesAlterJahre + 1, 110));
+  const lebenserwartung = Math.round(
+    clamp(input.lebenserwartung, geplantesAlterJahre + 1, 110),
+  );
   const jahreRentenbezug = Math.max(0, lebenserwartung - geplantesAlterJahre);
   const kumulierterEffektC = differenzMonatlichC * 12 * jahreRentenbezug;
 

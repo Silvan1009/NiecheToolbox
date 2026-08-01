@@ -22,7 +22,14 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Zinseszins für Einmalanlage und monatliche Sparrate – mit Kosten, Steuern, Inflation und Verdopplungsdauer. Kostenlos und ohne Anmeldung.",
     heading: "Zinseszins berechnen",
-    params: { start: 10000, rate: 0, jahre: 30, rendite: 7, kosten: 0, steuern: 0 },
+    params: {
+      start: 10000,
+      rate: 0,
+      jahre: 30,
+      rendite: 7,
+      kosten: 0,
+      steuern: 0,
+    },
     about: [
       "Der Zinseszins ist der Effekt, dass Erträge selbst wieder Erträge bringen. Zehntausend Euro zu sieben Prozent werden im ersten Jahr um siebenhundert Euro mehr, im zweiten Jahr aber schon um 749 Euro – weil die siebenhundert aus dem Vorjahr mitverdienen. Über dreißig Jahre werden aus den zehntausend Euro so 76.123 Euro, ohne dass ein einziger Euro nachgelegt wird. Von diesem Endbetrag stammen 66.123 Euro aus Erträgen und nur zehntausend aus der eigenen Einzahlung. Genau das ist der Grund, warum bei der Geldanlage die Zeit wichtiger ist als der Betrag.",
       "Die Formel dahinter ist kurz: Endkapital gleich Startkapital mal eins plus Zinssatz, hoch die Anzahl der Jahre. Was sie so schwer greifbar macht, ist ihr exponentieller Verlauf. Die ersten Jahre sehen enttäuschend aus, die letzten spektakulär: Im dreißigsten Jahr wächst dasselbe Kapital um 4.980 Euro, im ersten um siebenhundert. Wer einen Sparplan nach fünf Jahren abbricht, weil „nicht viel passiert“, steigt genau vor dem Teil aus, für den er die fünf Jahre gewartet hat.",
@@ -129,7 +136,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Wie viel Vermögen habe ich mit 500 Euro im Monat nach 30 Jahren?",
+        question:
+          "Wie viel Vermögen habe ich mit 500 Euro im Monat nach 30 Jahren?",
         answer:
           "Bei 7 Prozent Rendite und 0,2 Prozent Kosten sind es 540.668 Euro vor Steuern und 496.895 Euro nach Steuern. In heutiger Kaufkraft, also bei 2 Prozent Inflation, entspricht das etwa 274.000 Euro. Bei 5 Prozent Rendite statt 7 wären es 379.283 Euro – die Renditeannahme ist der mit Abstand empfindlichste Wert in dieser Rechnung, deutlich empfindlicher als die Sparrate.",
       },
@@ -154,7 +162,13 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Wie viel muss ich monatlich sparen, um Millionär zu werden? Rechner mit Laufzeit, Rendite, Steuern und Inflation – inklusive Realwert der Million.",
     heading: "Eine Million sparen",
-    params: { modus: "sparrate", start: 0, ziel: 1000000, jahre: 30, rendite: 7 },
+    params: {
+      modus: "sparrate",
+      start: 0,
+      ziel: 1000000,
+      jahre: 30,
+      rendite: 7,
+    },
     about: [
       "Eine Million Euro nach Steuern, in dreißig Jahren, bei sieben Prozent Rendite: Dafür braucht es 1.018 Euro im Monat. Eingezahlt werden dabei 366.581 Euro – der Rest von 720.792 Euro kommt aus Erträgen. Bei vierzig Jahren Laufzeit halbiert sich die nötige Rate auf 507 Euro, und die Einzahlung sinkt auf 243.202 Euro. Zehn Jahre mehr Zeit ersetzen also gut 123.000 Euro eigenes Geld.",
       "Die Rechnung reagiert extrem empfindlich auf die Renditeannahme. Bei fünf statt sieben Prozent steigt die nötige Rate über dreißig Jahre von 1.018 auf 1.410 Euro. Ein Unterschied von zwei Prozentpunkten in der Annahme verschiebt die Rate also um gut ein Drittel. Wer diese Rechnung zur Lebensplanung benutzt, sollte sie deshalb mit mehreren Renditen durchspielen und nicht mit der optimistischsten planen – und die laufenden Kosten niedrig halten, weil sie direkt von der Rendite abgehen.",
@@ -162,7 +176,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Wie lange dauert es, mit 500 Euro im Monat Millionär zu werden?",
+        question:
+          "Wie lange dauert es, mit 500 Euro im Monat Millionär zu werden?",
         answer:
           "Bei 7 Prozent Rendite und 0,2 Prozent Kosten dauert es 41 Jahre, bis nach Steuern eine Million erreicht ist. Mit 1.000 Euro im Monat sind es 31 Jahre, mit 2.000 Euro 22 Jahre. Die Laufzeit verkürzt sich also nicht proportional zur Rate: Eine Verdopplung der Sparrate spart nicht die Hälfte der Zeit, sondern nur etwa ein Viertel – weil der Zinseszins Zeit braucht und nicht durch Geld zu ersetzen ist.",
       },
@@ -187,7 +202,13 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Sparziel eingeben, nötige Monatsrate erhalten – mit Startkapital, Rendite, Laufzeit, Kosten und Steuern. Für Auto, Eigenkapital oder Rücklage.",
     heading: "Sparrate berechnen",
-    params: { modus: "sparrate", start: 0, ziel: 100000, jahre: 20, rendite: 6 },
+    params: {
+      modus: "sparrate",
+      start: 0,
+      ziel: 100000,
+      jahre: 20,
+      rendite: 6,
+    },
     about: [
       "Der Zielmodus dreht die übliche Rechnung um: Statt zu fragen, was aus einer Rate wird, gibst du den Betrag vor, der am Ende dastehen soll – der Rechner sucht die passende Monatsrate. Für 100.000 Euro nach Steuern in zwanzig Jahren bei sechs Prozent Rendite sind das 238 Euro im Monat. Eingezahlt werden dabei 57.019 Euro, der Rest entsteht durch Erträge. Vorhandenes Startkapital wird angerechnet und senkt die nötige Rate entsprechend.",
       "Gesucht wird die Rate nicht über eine umgestellte Formel, sondern durch schrittweise Annäherung. Der Grund sind die Steuern: Sparerpauschbetrag und Teilfreistellung machen den Zusammenhang zwischen Rate und Endkapital abschnittsweise linear, aber eben nicht durchgehend – eine geschlossene Formel gäbe es nur für den steuerfreien Fall. Die Annäherung liefert dafür ein Ergebnis, das auch mit Steuern auf den Euro genau passt.",
@@ -238,7 +259,8 @@ export const variantenTexte: VariantContent[] = [
           "Bei einem Aktien-ETF und vollem Sparerpauschbetrag ab etwa 64.000 Euro Depotwert: 64.000 × 2,24 Prozent × 70 Prozent ergibt rund 1.003 Euro und übersteigt damit knapp die 1.000 Euro Freibetrag. Bei Zinsanlagen ohne Teilfreistellung ist die Grenze niedriger, bei rund 45.000 Euro. Voraussetzung ist jeweils, dass keine anderen Kapitalerträge den Freibetrag schon verbrauchen.",
       },
       {
-        question: "Was passiert, wenn kein Geld auf dem Verrechnungskonto liegt?",
+        question:
+          "Was passiert, wenn kein Geld auf dem Verrechnungskonto liegt?",
         answer:
           "Die Bank ist gesetzlich verpflichtet, die Steuer abzuführen. Reicht das Guthaben nicht, verkauft sie im Zweifel Fondsanteile oder bucht das Konto ins Minus – beides ist unangenehm, weil ein erzwungener Verkauf zu einem beliebigen Kurs stattfindet und zusätzlich einen steuerpflichtigen Gewinn auslöst. Es genügt, Anfang Januar einen kleinen Betrag auf dem Verrechnungskonto zu lassen; die Größenordnung nennt der Rechner in den Hinweisen.",
       },
@@ -286,7 +308,15 @@ export const variantenTexte: VariantContent[] = [
     description:
       "Monatliche Entnahme aus einem Vermögen berechnen – befristet oder dauerhaft aus den Erträgen. Mit Rendite, Laufzeit und Kaufkraftverlust.",
     heading: "Entnahmeplan berechnen",
-    params: { start: 500000, rate: 0, jahre: 1, rendite: 5, entnahme: 30, steuern: 0, kosten: 0 },
+    params: {
+      start: 500000,
+      rate: 0,
+      jahre: 1,
+      rendite: 5,
+      entnahme: 30,
+      steuern: 0,
+      kosten: 0,
+    },
     about: [
       "Ein Entnahmeplan ist mathematisch ein Kredit mit vertauschten Rollen: Statt eine Schuld mit Raten abzutragen, wird ein Kapital mit Entnahmen abgebaut, und beide Male verzinst sich der Rest weiter. Deshalb steckt hinter der Entnahme dieselbe Annuitätenformel wie hinter der Kreditrate. Aus 500.000 Euro lassen sich bei fünf Prozent Rendite dreißig Jahre lang 2.650 Euro im Monat entnehmen – am Ende ist das Kapital genau aufgebraucht.",
       "Wer die Substanz nicht antasten will, entnimmt nur die Erträge. Bei denselben 500.000 Euro und fünf Prozent sind das 2.037 Euro im Monat, dafür ohne zeitliche Begrenzung und mit dem vollen Kapital für die Erben. Die Differenz von gut 600 Euro im Monat ist der Preis dafür, dass am Ende noch etwas übrig bleibt. Bekannt ist diese Größenordnung als Vier-Prozent-Regel, die aus historischen US-Daten stammt und für dreißig Jahre Entnahme kalkuliert war – sie ist eine Faustregel und keine Garantie.",

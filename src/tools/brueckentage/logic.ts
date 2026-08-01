@@ -218,7 +218,12 @@ export function calculateBrueckentage(
         : champion,
     );
 
-    occasions.push({ key, holidays: recommended.holidays, recommended, options });
+    occasions.push({
+      key,
+      holidays: recommended.holidays,
+      recommended,
+      options,
+    });
   }
 
   occasions.sort((a, b) =>

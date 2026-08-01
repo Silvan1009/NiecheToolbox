@@ -35,7 +35,10 @@ describe("Gesamtbudget", () => {
   });
 
   it("Gegenprobe: die ausgewiesenen Posten ergeben genau die Zwischensumme", () => {
-    const result = rechne({ aktivitaetenProPersonTag: 12, versicherungGesamt: 45 });
+    const result = rechne({
+      aktivitaetenProPersonTag: 12,
+      versicherungGesamt: 45,
+    });
     const summe = result.posten.reduce((total, p) => total + p.betragC, 0);
     expect(summe).toBe(result.zwischensummeC);
   });
@@ -55,7 +58,9 @@ describe("Gesamtbudget", () => {
   it("fuehrt keine Nullposten in der Aufstellung", () => {
     const result = rechne();
     expect(result.posten.every((p) => p.betragC > 0)).toBe(true);
-    expect(result.posten.map((p) => p.label)).not.toContain("Reiseversicherung");
+    expect(result.posten.map((p) => p.label)).not.toContain(
+      "Reiseversicherung",
+    );
   });
 
   it("nimmt einen gesetzten Posten in die Aufstellung auf", () => {

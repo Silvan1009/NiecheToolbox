@@ -30,7 +30,8 @@ const sharedFaq: FaqEntry[] = [
       "Aus dem Geschäftsbericht oder Quartalsbericht des Unternehmens, meist als PDF auf der Investor-Relations-Seite. Umsatz und Ergebnisgrößen stehen in der Gewinn- und Verlustrechnung, Eigenkapital und Schulden in der Bilanz, Cashflow und Investitionen in der Kapitalflussrechnung. Wer es schneller braucht: Die meisten Finanzportale zeigen dieselben Zahlen in einer Kennzahlenübersicht. Wichtig ist, dass alle Angaben aus demselben Geschäftsjahr stammen – ein Kurs von heute mit einem Gewinn von vorgestern ergibt ein schiefes Bild.",
   },
   {
-    question: "Warum unterscheiden sich meine Werte von denen auf Finanzportalen?",
+    question:
+      "Warum unterscheiden sich meine Werte von denen auf Finanzportalen?",
     answer:
       "Meist aus drei Gründen. Erstens der verwendete Gewinn: nachlaufend, vorlaufend oder um Sondereffekte bereinigt – das kann leicht 20 Prozent Unterschied machen. Zweitens die Aktienanzahl: ausgegebene, ausstehende oder verwässerte Aktien. Drittens die Definition der Schulden: manche Portale rechnen Pensions- und Leasingverpflichtungen in die Nettoschulden ein, was den Unternehmenswert erhöht. Keine der Varianten ist falsch, aber vergleichen lassen sich nur Zahlen, die gleich gerechnet wurden.",
   },

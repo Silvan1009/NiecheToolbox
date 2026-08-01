@@ -60,7 +60,10 @@ export function kindergeldSatz(jahr: number): {
   extrapoliert: boolean;
 } {
   if (!Number.isFinite(jahr)) {
-    return { satz: KINDERGELD_JE_MONAT[KINDERGELD_NEUESTES_JAHR]!, extrapoliert: true };
+    return {
+      satz: KINDERGELD_JE_MONAT[KINDERGELD_NEUESTES_JAHR]!,
+      extrapoliert: true,
+    };
   }
 
   const gerundet = Math.round(jahr);

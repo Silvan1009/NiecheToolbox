@@ -20,7 +20,8 @@ import { cents, clamp, nn, toEuro } from "@/lib/finanzmath";
 
 export type VersicherungsArt = "kfz" | "haftpflicht" | "bu";
 
-export type Einordnung = "guenstig" | "im-rahmen" | "erhoeht" | "deutlich-erhoeht";
+export type Einordnung =
+  "guenstig" | "im-rahmen" | "erhoeht" | "deutlich-erhoeht";
 
 export interface Faktor {
   label: string;
@@ -67,7 +68,8 @@ function einordnen(
  * ------------------------------------------------------------------------- */
 
 export type KfzDeckung = "haftpflicht" | "teilkasko" | "vollkasko";
-export type KfzSfKlasse = "einsteiger" | "wenig" | "mittel" | "erfahren" | "maximal";
+export type KfzSfKlasse =
+  "einsteiger" | "wenig" | "mittel" | "erfahren" | "maximal";
 export type KfzRegion = "guenstig" | "mittel" | "teuer";
 export type KfzFahrzeug = "klein" | "mittel" | "ober" | "sport";
 export type KfzAlter = "unter23" | "23bis30" | "30bis60" | "ueber60";
@@ -185,13 +187,15 @@ export function calculateKfz(input: KfzInput): SchaetzungResult {
   const kmFaktor = KFZ_KM_FAKTOR[input.kmProJahr];
 
   const basisC = cents(KFZ_BASIS_EURO[input.deckung]);
-  const gesamtFaktor = sfFaktor * regionFaktor * fahrzeugFaktor * alterFaktor * kmFaktor;
+  const gesamtFaktor =
+    sfFaktor * regionFaktor * fahrzeugFaktor * alterFaktor * kmFaktor;
   const richtwertC = basisC * gesamtFaktor;
 
   const spanneMinC = richtwertC * 0.8;
   const spanneMaxC = richtwertC * 1.2;
 
-  const eigenerC = input.eigenerBeitragJahr > 0 ? cents(nn(input.eigenerBeitragJahr)) : null;
+  const eigenerC =
+    input.eigenerBeitragJahr > 0 ? cents(nn(input.eigenerBeitragJahr)) : null;
 
   const warnings: string[] = [];
   if (input.sfKlasse === "einsteiger") {
@@ -214,13 +218,21 @@ export function calculateKfz(input: KfzInput): SchaetzungResult {
     eigenerBeitrag: eigenerC === null ? null : toEuro(eigenerC),
     einordnung: einordnen(eigenerC, spanneMinC, spanneMaxC),
     faktoren: [
-      { label: "Deckung", wert: kfzDeckungLabels[input.deckung], effekt: "Basis" },
+      {
+        label: "Deckung",
+        wert: kfzDeckungLabels[input.deckung],
+        effekt: "Basis",
+      },
       {
         label: "Schadenfreiheitsklasse",
         wert: kfzSfLabels[input.sfKlasse],
         effekt: effektText(sfFaktor),
       },
-      { label: "Region", wert: kfzRegionLabels[input.region], effekt: effektText(regionFaktor) },
+      {
+        label: "Region",
+        wert: kfzRegionLabels[input.region],
+        effekt: effektText(regionFaktor),
+      },
       {
         label: "Fahrzeug",
         wert: kfzFahrzeugLabels[input.fahrzeug],
@@ -263,13 +275,18 @@ const HAFTPFLICHT_BASIS: Record<
   familie: { typisch: 60, min: 35, max: 120 },
 };
 
-export const haftpflichtPersonenkreisLabels: Record<HaftpflichtPersonenkreis, string> = {
+export const haftpflichtPersonenkreisLabels: Record<
+  HaftpflichtPersonenkreis,
+  string
+> = {
   single: "Single",
   paar: "Paar",
   familie: "Familie",
 };
 
-export function calculateHaftpflicht(input: HaftpflichtInput): SchaetzungResult {
+export function calculateHaftpflicht(
+  input: HaftpflichtInput,
+): SchaetzungResult {
   const basis = HAFTPFLICHT_BASIS[input.personenkreis];
   const sbFaktor = input.mitSelbstbeteiligung ? 0.9 : 1;
 
@@ -277,7 +294,8 @@ export function calculateHaftpflicht(input: HaftpflichtInput): SchaetzungResult 
   const spanneMinC = cents(basis.min) * sbFaktor;
   const spanneMaxC = cents(basis.max) * sbFaktor;
 
-  const eigenerC = input.eigenerBeitragJahr > 0 ? cents(nn(input.eigenerBeitragJahr)) : null;
+  const eigenerC =
+    input.eigenerBeitragJahr > 0 ? cents(nn(input.eigenerBeitragJahr)) : null;
 
   const warnings: string[] = [];
   if (!input.mitSelbstbeteiligung) {
@@ -368,11 +386,15 @@ export function calculateBu(input: BuInput): SchaetzungResult {
   const alterFaktor = BU_ALTER_FAKTOR[altersband];
   const risikoFaktor = BU_RISIKO_FAKTOR[input.risikogruppe];
 
-  const richtwertC = cents((buRenteMonat / 1000) * BU_BASIS_PRO_1000) * risikoFaktor * alterFaktor;
+  const richtwertC =
+    cents((buRenteMonat / 1000) * BU_BASIS_PRO_1000) *
+    risikoFaktor *
+    alterFaktor;
   const spanneMinC = richtwertC * 0.7;
   const spanneMaxC = richtwertC * 1.4;
 
-  const eigenerC = input.eigenerBeitragMonat > 0 ? cents(nn(input.eigenerBeitragMonat)) : null;
+  const eigenerC =
+    input.eigenerBeitragMonat > 0 ? cents(nn(input.eigenerBeitragMonat)) : null;
 
   const warnings: string[] = [
     "Die tatsächliche Prämie hängt bei einer Berufsunfähigkeitsversicherung stärker als bei jeder anderen Versicherung von individuellen Faktoren ab – vor allem Gesundheitsfragen, Rauchstatus und dem genauen, nicht nur grob eingeordneten Beruf. Diese Schätzung ersetzt keine Risikoprüfung durch einen Versicherer.",
@@ -393,7 +415,11 @@ export function calculateBu(input: BuInput): SchaetzungResult {
     eigenerBeitrag: eigenerC === null ? null : toEuro(eigenerC),
     einordnung: einordnen(eigenerC, spanneMinC, spanneMaxC),
     faktoren: [
-      { label: "BU-Rente", wert: `${Math.round(buRenteMonat)} €/Monat`, effekt: "Basis" },
+      {
+        label: "BU-Rente",
+        wert: `${Math.round(buRenteMonat)} €/Monat`,
+        effekt: "Basis",
+      },
       {
         label: "Risikogruppe",
         wert: buRisikogruppeLabels[input.risikogruppe],

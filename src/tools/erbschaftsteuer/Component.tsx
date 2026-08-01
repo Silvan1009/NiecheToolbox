@@ -4,7 +4,12 @@ import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
-import { Field, SegmentedControl, Select, UnitInput } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Select,
+  UnitInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
@@ -32,7 +37,9 @@ const MODUS_OPTIONS = [
   { value: "schenkung", label: "Schenkung zu Lebzeiten" },
 ] as const satisfies readonly { value: ErbschaftModus; label: string }[];
 
-const VERWANDTSCHAFT_OPTIONS = Object.keys(verwandtschaftLabels) as Verwandtschaft[];
+const VERWANDTSCHAFT_OPTIONS = Object.keys(
+  verwandtschaftLabels,
+) as Verwandtschaft[];
 
 const isModus = (value: unknown): value is ErbschaftModus =>
   value === "erbschaft" || value === "schenkung";
@@ -51,11 +58,18 @@ function initialState(params: ToolParams | undefined): State {
       params?.verbindlichkeiten,
       DEFAULTS.nachlassverbindlichkeiten,
     ),
-    bereitsGenutzterFreibetrag: toNumber(params?.genutzt, DEFAULTS.bereitsGenutzterFreibetrag),
+    bereitsGenutzterFreibetrag: toNumber(
+      params?.genutzt,
+      DEFAULTS.bereitsGenutzterFreibetrag,
+    ),
   };
 }
 
-export default function ErbschaftsteuerTool({ params }: { params?: ToolParams }) {
+export default function ErbschaftsteuerTool({
+  params,
+}: {
+  params?: ToolParams;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => {
@@ -85,7 +99,10 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
         next.nachlassverbindlichkeiten,
         DEFAULTS.nachlassverbindlichkeiten,
       ),
-      genutzt: urlValue(next.bereitsGenutzterFreibetrag, DEFAULTS.bereitsGenutzterFreibetrag),
+      genutzt: urlValue(
+        next.bereitsGenutzterFreibetrag,
+        DEFAULTS.bereitsGenutzterFreibetrag,
+      ),
     }),
   });
 
@@ -122,7 +139,9 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
                 id="es-verwandtschaft"
                 value={state.verwandtschaft}
                 onChange={(event) =>
-                  update({ verwandtschaft: event.target.value as Verwandtschaft })
+                  update({
+                    verwandtschaft: event.target.value as Verwandtschaft,
+                  })
                 }
               >
                 {VERWANDTSCHAFT_OPTIONS.map((value) => (
@@ -213,8 +232,8 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
                 <strong className="font-semibold text-ink">
                   {formatEuro(result.nettoErwerb)}
                 </strong>{" "}
-                – bei {formatEuro(result.steuerpflichtigerErwerb)} steuerpflichtigem Erwerb
-                zum Satz von {result.steuersatz} %.
+                – bei {formatEuro(result.steuerpflichtigerErwerb)}{" "}
+                steuerpflichtigem Erwerb zum Satz von {result.steuersatz} %.
               </>
             )
           }
@@ -277,7 +296,10 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
             </>
           )}
           <AmountRow label="Bereicherung" value={result.bereicherung} stark />
-          <AmountRow label="Freibetrag verbleibend" value={-result.freibetragVerbleibend} />
+          <AmountRow
+            label="Freibetrag verbleibend"
+            value={-result.freibetragVerbleibend}
+          />
           <AmountRow
             label="Steuerpflichtiger Erwerb"
             value={result.steuerpflichtigerErwerb}
@@ -289,7 +311,8 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
       <details className="group overflow-hidden rounded-card bg-surface shadow-[var(--elev-soft),var(--elev-inset)]">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 transition-colors duration-(--dur-fast) hover:bg-ink-soft">
           <span className="font-display text-lg font-semibold tracking-tight">
-            Steuersatz je Wertstufe (Klasse {["I", "II", "III"][result.steuerklasse - 1]})
+            Steuersatz je Wertstufe (Klasse{" "}
+            {["I", "II", "III"][result.steuerklasse - 1]})
           </span>
           <ChevronDown
             className="size-4 shrink-0 text-muted transition-transform duration-(--dur-base) group-open:rotate-180"
@@ -319,7 +342,9 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
                       ? formatEuro(zeile.bis)
                       : "darüber"}
                   </td>
-                  <td className="py-2 text-right">{formatInteger(zeile.satz)} %</td>
+                  <td className="py-2 text-right">
+                    {formatInteger(zeile.satz)} %
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -353,4 +378,3 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
     </div>
   );
 }
-

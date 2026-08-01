@@ -200,4 +200,7 @@ export const steuerklassen: Record<Steuerklasse, SteuerklasseDef> = {
 };
 
 export const isSteuerklasse = (value: unknown): value is Steuerklasse =>
-  typeof value === "number" && value >= 1 && value <= 6 && Number.isInteger(value);
+  typeof value === "number" &&
+  value >= 1 &&
+  value <= 6 &&
+  Number.isInteger(value);

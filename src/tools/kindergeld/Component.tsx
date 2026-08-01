@@ -168,7 +168,8 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
                   value={kind.status}
                   onChange={(event) => {
                     const naechster = event.target.value;
-                    if (isStatus(naechster)) setzeKind(index, { status: naechster });
+                    if (isStatus(naechster))
+                      setzeKind(index, { status: naechster });
                   }}
                 >
                   {(Object.keys(statusLabels) as KindStatus[]).map((key) => (
@@ -201,8 +202,8 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
       <Card as="section" className="p-6" aria-label="Einkommen">
         <CardTitle>Einkommen für die Günstigerprüfung</CardTitle>
         <p className="mt-2 text-[15px] text-muted">
-          Das Finanzamt prüft von selbst, ob der Kinderfreibetrag mehr bringt als
-          das Kindergeld. Diese Angaben braucht es dafür.
+          Das Finanzamt prüft von selbst, ob der Kinderfreibetrag mehr bringt
+          als das Kindergeld. Diese Angaben braucht es dafür.
         </p>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <Field
@@ -298,8 +299,8 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
                   {formatEuro(toEuro(result.jahrC))}
                 </strong>{" "}
                 im Jahr für {result.anzahlBerechtigt}{" "}
-                {plural(result.anzahlBerechtigt, "Kind", "Kinder")} – und bis zum
-                Ende aller Ansprüche noch{" "}
+                {plural(result.anzahlBerechtigt, "Kind", "Kinder")} – und bis
+                zum Ende aller Ansprüche noch{" "}
                 <strong className="font-semibold text-ink">
                   {formatEuro(toEuro(result.restanspruchGesamtC))}
                 </strong>
@@ -400,13 +401,22 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
                   <th scope="col" className="py-2 pr-4 font-semibold">
                     Geboren
                   </th>
-                  <th scope="col" className="py-2 pr-4 text-right font-semibold">
+                  <th
+                    scope="col"
+                    className="py-2 pr-4 text-right font-semibold"
+                  >
                     Alter
                   </th>
-                  <th scope="col" className="py-2 pr-4 text-right font-semibold">
+                  <th
+                    scope="col"
+                    className="py-2 pr-4 text-right font-semibold"
+                  >
                     Anspruch bis
                   </th>
-                  <th scope="col" className="py-2 pr-4 text-right font-semibold">
+                  <th
+                    scope="col"
+                    className="py-2 pr-4 text-right font-semibold"
+                  >
                     Monate
                   </th>
                   <th scope="col" className="py-2 text-right font-semibold">

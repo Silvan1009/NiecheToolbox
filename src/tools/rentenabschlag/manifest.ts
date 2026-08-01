@@ -22,12 +22,14 @@ const faq: FaqEntry[] = [
       "Für die Altersrente für langjährig Versicherte, die mindestens 35 Versicherungsjahre voraussetzt, ist der früheste Zeitpunkt 63 Jahre – unabhängig vom Geburtsjahrgang. Bei einer Regelaltersgrenze von 67 Jahren entspricht das den vollen 48 Monaten und damit dem gesetzlichen Höchstabschlag von 14,4 Prozent. Bei älteren Jahrgängen mit niedrigerer Regelaltersgrenze fällt der Abschlag entsprechend kleiner aus, weil weniger Monate zwischen 63 und der persönlichen Regelaltersgrenze liegen.",
   },
   {
-    question: "Warum wirkt sich ein kleiner Abschlag über die Jahre so stark aus?",
+    question:
+      "Warum wirkt sich ein kleiner Abschlag über die Jahre so stark aus?",
     answer:
       "Weil er nicht einmalig abgezogen wird, sondern jeden einzelnen Monat der Rente kürzt, von der ersten bis zur letzten Zahlung. Ein Abschlag von 200 Euro im Monat klingt überschaubar, summiert sich über zwanzig Jahre Rentenbezug aber auf 48.000 Euro. Genau dieser kumulierte Betrag steht im Ergebnis, weil die monatliche Zahl allein die Tragweite der Entscheidung meist unterschätzen lässt.",
   },
   {
-    question: "Gibt es eine Möglichkeit, ohne Abschlag früher in Rente zu gehen?",
+    question:
+      "Gibt es eine Möglichkeit, ohne Abschlag früher in Rente zu gehen?",
     answer:
       "Ja, über die Altersrente für besonders langjährig Versicherte – bekannt als „Rente mit 63“ – bei mindestens 45 Beitragsjahren, zu denen unter anderem Pflichtbeiträge, Kindererziehungszeiten und bestimmte Zeiten der Arbeitslosigkeit zählen. Wie viele Jahre vor der Regelaltersgrenze das abschlagsfrei möglich ist, hängt ebenfalls vom Geburtsjahrgang ab und wird schrittweise enger. Dieser Rechner bildet nur die Altersrente für langjährig Versicherte mit Abschlag ab – wer nah an 45 Jahren liegt, sollte die abschlagsfreie Variante vorrangig prüfen.",
   },
@@ -37,7 +39,8 @@ const faq: FaqEntry[] = [
       "Ja, über eine Ausgleichszahlung an die Deutsche Rentenversicherung, mit der sich der Abschlag ganz oder teilweise zurückkaufen lässt – möglich frühestens ab 50 Jahren. Die Höhe der nötigen Einzahlung berechnet ausschließlich die Rentenversicherung individuell, weil sie vom bisherigen Versicherungsverlauf abhängt. Alternativ lässt sich ein absehbarer Abschlag auch durch privates Sparen auffangen, das über die Rentenbezugsdauer denselben Betrag ausgleicht.",
   },
   {
-    question: "Fällt seit 2023 eine Hinzuverdienstgrenze bei vorgezogener Rente an?",
+    question:
+      "Fällt seit 2023 eine Hinzuverdienstgrenze bei vorgezogener Rente an?",
     answer:
       "Nein. Seit Januar 2023 ist die Hinzuverdienstgrenze für vorgezogene Altersrenten komplett entfallen – wer eine Rente mit Abschlag bezieht, darf unbegrenzt dazuverdienen, ohne dass die Rente gekürzt wird. Das war vorher anders und ist bei älteren Berechnungen oder Ratschlägen manchmal noch nicht berücksichtigt.",
   },
