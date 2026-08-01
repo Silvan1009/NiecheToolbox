@@ -13,7 +13,7 @@ import {
   Toggle,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
@@ -472,19 +472,19 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
           Was vom Ertrag abgeht
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <Posten label="Depotwert vor Steuern" value={result.endkapital} />
-          <Posten label="Eingezahlt" value={-result.eingezahlt} />
-          <Posten label="Ertrag" value={result.ertrag} stark />
-          <Posten
+          <AmountRow label="Depotwert vor Steuern" value={result.endkapital} />
+          <AmountRow label="Eingezahlt" value={-result.eingezahlt} />
+          <AmountRow label="Ertrag" value={result.ertrag} stark />
+          <AmountRow
             label="Laufende Kosten und Ausgabeaufschlag"
             value={-result.kostenGesamt}
           />
-          <Posten
+          <AmountRow
             label="Vorabpauschale während der Laufzeit"
             value={-result.steuerLaufend}
           />
-          <Posten label="Steuer beim Verkauf" value={-result.steuerVerkauf} />
-          <Posten
+          <AmountRow label="Steuer beim Verkauf" value={-result.steuerVerkauf} />
+          <AmountRow
             label="Endkapital nach Steuern"
             value={result.endkapitalNachSteuer}
             stark
@@ -647,33 +647,3 @@ function UnitInput({
   );
 }
 
-/**
- * Eine Zeile der Aufstellung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: Abzugsposten kommen hier negiert
- * an, und `-0` schreibt `Intl` als "-0,00 €". Ein Minus vor einer Null, die
- * keine ist, sieht nach einem Rechenfehler aus. `-0 === 0` ist wahr, der
- * Vergleich fängt also genau diesen Fall.
- */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">
-        {formatEuro(value === 0 ? 0 : value)}
-      </span>
-    </li>
-  );
-}

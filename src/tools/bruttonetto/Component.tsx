@@ -12,7 +12,7 @@ import {
   Toggle,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
@@ -417,13 +417,13 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
           </h2>
           <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
             {result.steuern.map((posten) => (
-              <Posten
+              <AmountRow
                 key={posten.label}
                 label={posten.label}
                 value={proMonat ? posten.monat : posten.jahr}
               />
             ))}
-            <Posten
+            <AmountRow
               label="Summe"
               value={
                 proMonat
@@ -444,13 +444,13 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
           </h2>
           <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
             {result.sozialabgaben.map((posten) => (
-              <Posten
+              <AmountRow
                 key={posten.label}
                 label={posten.label}
                 value={proMonat ? posten.monat : posten.jahr}
               />
             ))}
-            <Posten
+            <AmountRow
               label="Summe"
               value={
                 proMonat
@@ -471,11 +471,11 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
           Vom Brutto zum Netto
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <Posten
+          <AmountRow
             label="Bruttolohn"
             value={proMonat ? result.bruttoMonat : result.bruttoJahr}
           />
-          <Posten
+          <AmountRow
             label="Sozialabgaben"
             value={
               -(proMonat
@@ -483,7 +483,7 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
                 : result.sozialabgabenGesamtJahr)
             }
           />
-          <Posten
+          <AmountRow
             label="Steuern"
             value={
               -(proMonat
@@ -491,7 +491,7 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
                 : result.steuernGesamtJahr)
             }
           />
-          <Posten
+          <AmountRow
             label="Netto"
             value={proMonat ? result.nettoMonat : result.nettoJahr}
             stark
@@ -567,32 +567,3 @@ function UnitInput({
   );
 }
 
-/**
- * Eine Zeile der Aufstellung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: Abzugsposten kommen hier negiert
- * an, und `-0` schreibt `Intl` als "-0,00 €". Ein Minus vor einer Null, die
- * keine ist, sieht nach einem Rechenfehler aus.
- */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">
-        {formatEuro(value === 0 ? 0 : value)}
-      </span>
-    </li>
-  );
-}

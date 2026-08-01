@@ -5,7 +5,7 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Field, Select, TextInput, Toggle } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
@@ -176,13 +176,13 @@ export default function AbfindungTool({ params }: { params?: ToolParams }) {
           Was von der Abfindung abgeht
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <Posten label="Abfindung (brutto)" value={state.abfindungsbetrag} />
-          <Posten label="Einkommensteuer (Fünftelregelung)" value={-result.steuerAufAbfindungFuenftel} />
-          <Posten label="Solidaritätszuschlag" value={-result.soliAufAbfindung} />
+          <AmountRow label="Abfindung (brutto)" value={state.abfindungsbetrag} />
+          <AmountRow label="Einkommensteuer (Fünftelregelung)" value={-result.steuerAufAbfindungFuenftel} />
+          <AmountRow label="Solidaritätszuschlag" value={-result.soliAufAbfindung} />
           {state.kirchensteuerPercent > 0 && (
-            <Posten label="Kirchensteuer" value={-result.kirchensteuerAufAbfindung} />
+            <AmountRow label="Kirchensteuer" value={-result.kirchensteuerAufAbfindung} />
           )}
-          <Posten label="Netto von der Abfindung" value={result.nettoAbfindung} stark />
+          <AmountRow label="Netto von der Abfindung" value={result.nettoAbfindung} stark />
         </ul>
       </section>
 
@@ -239,15 +239,3 @@ function UnitInput({
   );
 }
 
-function Posten({ label, value, stark = false }: { label: string; value: number; stark?: boolean }) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">{formatEuro(value === 0 ? 0 : value)}</span>
-    </li>
-  );
-}

@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
@@ -356,16 +356,16 @@ export default function KreditrechnerTool({ params }: { params?: ToolParams }) {
           Was der Kredit kostet
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <Posten label="Kreditbetrag" value={state.kreditbetrag} />
-          <Posten label="Bearbeitungsgebühr" value={-result.gebuehren} />
-          <Posten label="Auszahlung" value={result.auszahlung} stark />
-          <Posten
+          <AmountRow label="Kreditbetrag" value={state.kreditbetrag} />
+          <AmountRow label="Bearbeitungsgebühr" value={-result.gebuehren} />
+          <AmountRow label="Auszahlung" value={result.auszahlung} stark />
+          <AmountRow
             label="Restschuldversicherung (mitfinanziert)"
             value={state.restschuldversicherung}
           />
-          <Posten label="Zinsen über die Laufzeit" value={result.gesamtzinsen} />
-          <Posten label="Summe aller Zahlungen" value={result.gesamtaufwand} stark />
-          <Posten label="Kosten des Kredits" value={result.kreditkosten} stark />
+          <AmountRow label="Zinsen über die Laufzeit" value={result.gesamtzinsen} />
+          <AmountRow label="Summe aller Zahlungen" value={result.gesamtaufwand} stark />
+          <AmountRow label="Kosten des Kredits" value={result.kreditkosten} stark />
         </ul>
       </section>
 
@@ -506,33 +506,3 @@ function UnitInput({
   );
 }
 
-/**
- * Eine Zeile der Aufstellung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: Abzugsposten kommen hier negiert
- * an, und `-0` schreibt `Intl` als "-0,00 €". Ein Minus vor einer Null, die
- * keine ist, sieht nach einem Rechenfehler aus. `-0 === 0` ist wahr, der
- * Vergleich fängt also genau diesen Fall.
- */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">
-        {formatEuro(value === 0 ? 0 : value)}
-      </span>
-    </li>
-  );
-}

@@ -13,7 +13,7 @@ import {
   Toggle,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatEuro, formatInteger } from "@/lib/format";
@@ -393,15 +393,15 @@ export default function EnergiekostenTool({ params }: { params?: ToolParams }) {
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
           {result.sparten.map((sparte) => (
             <Fragment key={sparte.art}>
-              <Posten
+              <AmountRow
                 label={`${energieartLabels[sparte.art]}: Arbeitspreis (${formatInteger(sparte.verbrauchKwh)} kWh)`}
                 value={toEuro(sparte.arbeitskostenC)}
               />
-              <Posten
+              <AmountRow
                 label={`${energieartLabels[sparte.art]}: Grundpreis`}
                 value={toEuro(sparte.grundkostenC)}
               />
-              <Posten
+              <AmountRow
                 label={`${energieartLabels[sparte.art]} zusammen`}
                 value={toEuro(sparte.jahreskostenC)}
                 stark
@@ -409,7 +409,7 @@ export default function EnergiekostenTool({ params }: { params?: ToolParams }) {
             </Fragment>
           ))}
           {result.sparten.length > 1 && (
-            <Posten
+            <AmountRow
               label="Energiekosten im Jahr"
               value={toEuro(result.jahreskostenC)}
               stark
@@ -661,32 +661,3 @@ function UnitInput({
   );
 }
 
-/**
- * Eine Zeile der Aufstellung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: `-0` schreibt `Intl` als
- * "-0,00 €", und ein Minus vor einer Null, die keine ist, sieht nach einem
- * Rechenfehler aus.
- */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">
-        {formatEuro(value === 0 ? 0 : value)}
-      </span>
-    </li>
-  );
-}

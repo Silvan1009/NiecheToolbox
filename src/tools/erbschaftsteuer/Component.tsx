@@ -6,7 +6,7 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Field, SegmentedControl, Select, TextInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatEuro, formatInteger } from "@/lib/format";
@@ -264,25 +264,25 @@ export default function ErbschaftsteuerTool({ params }: { params?: ToolParams })
           Wie sich der steuerpflichtige Erwerb ergibt
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <Posten
+          <AmountRow
             label={istErbschaft ? "Wert des Nachlasses" : "Wert der Schenkung"}
             value={state.vermoegenswert}
           />
           {istErbschaft && (
             <>
-              <Posten
+              <AmountRow
                 label="Nachlassverbindlichkeiten"
                 value={-state.nachlassverbindlichkeiten}
               />
-              <Posten
+              <AmountRow
                 label="Erbfallkostenpauschale"
                 value={-result.erbfallkostenpauschale}
               />
             </>
           )}
-          <Posten label="Bereicherung" value={result.bereicherung} stark />
-          <Posten label="Freibetrag verbleibend" value={-result.freibetragVerbleibend} />
-          <Posten
+          <AmountRow label="Bereicherung" value={result.bereicherung} stark />
+          <AmountRow label="Freibetrag verbleibend" value={-result.freibetragVerbleibend} />
+          <AmountRow
             label="Steuerpflichtiger Erwerb"
             value={result.steuerpflichtigerErwerb}
             stark
@@ -390,29 +390,3 @@ function UnitInput({
   );
 }
 
-/**
- * Eine Zeile der Herleitung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: Abzugsposten kommen hier negiert
- * an, und `-0` schreibt `Intl` als "-0,00 €".
- */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">{formatEuro(value === 0 ? 0 : value)}</span>
-    </li>
-  );
-}

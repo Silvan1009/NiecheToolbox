@@ -5,7 +5,7 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Field, SegmentedControl, Stepper, TextInput, Toggle } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
@@ -206,14 +206,14 @@ export default function ElterngeldTool({ params }: { params?: ToolParams }) {
             Zuschläge
           </h2>
           <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-            <Posten label="Elterngeld ohne Zuschläge" value={result.basisbetragMonat} />
+            <AmountRow label="Elterngeld ohne Zuschläge" value={result.basisbetragMonat} />
             {result.geschwisterbonusMonat > 0 && (
-              <Posten label="Geschwisterbonus" value={result.geschwisterbonusMonat} />
+              <AmountRow label="Geschwisterbonus" value={result.geschwisterbonusMonat} />
             )}
             {result.mehrlingszuschlagMonat > 0 && (
-              <Posten label="Mehrlingszuschlag" value={result.mehrlingszuschlagMonat} />
+              <AmountRow label="Mehrlingszuschlag" value={result.mehrlingszuschlagMonat} />
             )}
-            <Posten label="Voller Monatsbetrag" value={result.vollerMonatsbetrag} stark />
+            <AmountRow label="Voller Monatsbetrag" value={result.vollerMonatsbetrag} stark />
           </ul>
         </section>
       )}
@@ -271,15 +271,3 @@ function UnitInput({
   );
 }
 
-function Posten({ label, value, stark = false }: { label: string; value: number; stark?: boolean }) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">{formatEuro(value === 0 ? 0 : value)}</span>
-    </li>
-  );
-}

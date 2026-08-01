@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { formatEuro } from "@/lib/format";
 
 /**
  * Eine Kennzahl neben dem Ergebnis: Label, Zahl, eine Zeile Einordnung.
@@ -39,5 +40,35 @@ export function Stat({
         )}
       </dd>
     </div>
+  );
+}
+
+/**
+ * Eine Zeile einer Aufstellung: Label links, Betrag rechts in Mono.
+ *
+ * `stark` markiert die Summenzeile. Die Null wird bewusst durch sich selbst
+ * ersetzt: -0 === 0, und ohne das stünde in der Aufstellung "-0,00 €" – ein
+ * Vorzeichen vor einer Null, die keine ist.
+ */
+export function AmountRow({
+  label,
+  value,
+  stark = false,
+}: {
+  label: string;
+  value: number;
+  stark?: boolean;
+}) {
+  return (
+    <li
+      className={`flex items-baseline justify-between gap-4 ${
+        stark ? "border-t border-line pt-2 font-semibold" : ""
+      }`}
+    >
+      <span className={stark ? "" : "text-muted"}>{label}</span>
+      <span className="font-mono tabular-nums">
+        {formatEuro(value === 0 ? 0 : value)}
+      </span>
+    </li>
   );
 }

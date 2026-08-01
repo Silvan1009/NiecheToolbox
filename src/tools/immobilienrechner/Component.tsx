@@ -12,7 +12,7 @@ import {
   TextInput,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
@@ -818,25 +818,25 @@ export default function ImmobilienrechnerTool({
           Was der Kauf wirklich kostet
         </h2>
         <ul className="mt-4 flex flex-col gap-2 text-[15px]">
-          <Posten label="Kaufpreis" value={state.kaufpreis} />
-          <Posten
+          <AmountRow label="Kaufpreis" value={state.kaufpreis} />
+          <AmountRow
             label={`Grunderwerbsteuer (${formatDecimal(state.grestPercent)} %)`}
             value={result.grunderwerbsteuer}
           />
-          <Posten
+          <AmountRow
             label={`Notar und Grundbuch (${formatDecimal(state.notarPercent)} %)`}
             value={result.notarUndGrundbuch}
           />
-          <Posten
+          <AmountRow
             label={`Maklerprovision (${formatDecimal(state.maklerPercent)} %)`}
             value={result.maklerprovision}
           />
           {result.modernisierung > 0 && (
-            <Posten label="Modernisierung" value={result.modernisierung} />
+            <AmountRow label="Modernisierung" value={result.modernisierung} />
           )}
-          <Posten label="Gesamtinvestition" value={result.gesamtinvestition} stark />
-          <Posten label="davon Eigenkapital" value={result.eigenkapitalEingesetzt} />
-          <Posten label="davon Darlehen" value={result.darlehen} />
+          <AmountRow label="Gesamtinvestition" value={result.gesamtinvestition} stark />
+          <AmountRow label="davon Eigenkapital" value={result.eigenkapitalEingesetzt} />
+          <AmountRow label="davon Darlehen" value={result.darlehen} />
         </ul>
         <p className="mt-4 text-[13px] text-muted">
           Die Kaufnebenkosten von {formatEuro(result.nebenkosten)} entsprechen{" "}
@@ -905,22 +905,22 @@ export default function ImmobilienrechnerTool({
             Verkauf nach {result.horizontJahre} Jahren
           </h2>
           <ul className="mt-4 flex flex-col gap-2 text-[15px]">
-            <Posten label="Immobilienwert" value={result.immobilienwertEnde} />
-            <Posten label="Verkaufskosten" value={-result.verkaufskosten} />
-            <Posten label="Restschuld" value={-result.restschuldEnde} />
+            <AmountRow label="Immobilienwert" value={result.immobilienwertEnde} />
+            <AmountRow label="Verkaufskosten" value={-result.verkaufskosten} />
+            <AmountRow label="Restschuld" value={-result.restschuldEnde} />
             {result.spekulationssteuer > 0 && (
-              <Posten
+              <AmountRow
                 label="Steuer auf den Veräußerungsgewinn"
                 value={-result.spekulationssteuer}
               />
             )}
-            <Posten label="Netto-Verkaufserlös" value={result.nettoVerkaufserloes} stark />
-            <Posten
+            <AmountRow label="Netto-Verkaufserlös" value={result.nettoVerkaufserloes} stark />
+            <AmountRow
               label={`Cashflow über ${result.horizontJahre} Jahre`}
               value={result.kumulierterCashflow}
             />
-            <Posten label="Eingesetztes Eigenkapital" value={-result.eigenkapitalEingesetzt} />
-            <Posten label="Vermögenszuwachs" value={result.vermoegenszuwachs} stark />
+            <AmountRow label="Eingesetztes Eigenkapital" value={-result.eigenkapitalEingesetzt} />
+            <AmountRow label="Vermögenszuwachs" value={result.vermoegenszuwachs} stark />
           </ul>
         </section>
       )}
@@ -983,24 +983,3 @@ function UnitInput({
   );
 }
 
-/** Eine Zeile der Kostenaufstellung – Label links, Betrag rechts in Mono. */
-function Posten({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">{formatEuro(value)}</span>
-    </li>
-  );
-}
