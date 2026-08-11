@@ -51,7 +51,12 @@ describe("Lebensmonate", () => {
   });
 
   it("lassen keine Lücken und keine Überschneidungen", () => {
-    for (const birth of ["2026-01-31", "2026-02-28", "2026-06-10", "2027-12-01"]) {
+    for (const birth of [
+      "2026-01-31",
+      "2026-02-28",
+      "2026-06-10",
+      "2027-12-01",
+    ]) {
       for (let month = 1; month <= 40; month += 1) {
         const end = lebensmonatEnd(birth, month);
         const nextStart = lebensmonatStart(birth, month + 1);
@@ -149,9 +154,9 @@ describe("Fristen", () => {
       parentTwo: { months: 3, startMonth: 8 },
     });
     for (let i = 1; i < result.milestones.length; i += 1) {
-      expect(
-        result.milestones[i].date >= result.milestones[i - 1].date,
-      ).toBe(true);
+      expect(result.milestones[i].date >= result.milestones[i - 1].date).toBe(
+        true,
+      );
     }
   });
 

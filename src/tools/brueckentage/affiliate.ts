@@ -9,7 +9,8 @@ import type { BrueckentageResult } from "./logic";
 function asResult(value: unknown): BrueckentageResult | null {
   if (typeof value !== "object" || value === null) return null;
   const candidate = value as Partial<BrueckentageResult>;
-  return typeof candidate.year === "number" && Array.isArray(candidate.occasions)
+  return typeof candidate.year === "number" &&
+    Array.isArray(candidate.occasions)
     ? (candidate as BrueckentageResult)
     : null;
 }

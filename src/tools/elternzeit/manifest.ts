@@ -2,7 +2,6 @@ import { Baby } from "lucide-react";
 import { todayIso } from "@/lib/date";
 import type { ToolManifest } from "@/tools/types";
 import { elternzeitAffiliate } from "./affiliate";
-import Component from "./Component";
 
 export const elternzeit: ToolManifest = {
   slug: "elternzeit",
@@ -22,7 +21,6 @@ export const elternzeit: ToolManifest = {
     "anmeldefrist elternzeit",
   ],
 
-  Component,
   getDefaultParams: () => ({ heute: todayIso() }),
 
   about: [

@@ -3,11 +3,13 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
-import { Field, SegmentedControl, TextInput } from "@/components/ui/Field";
+import { Field, SegmentedControl, UnitInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatEuro, formatInteger } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { stromkostenAffiliate } from "./affiliate";
@@ -37,12 +39,6 @@ const PATTERN_OPTIONS = [
 const isPattern = (value: unknown): value is UsagePattern =>
   typeof value === "string" && value in usagePatterns;
 
-function toNumber(value: unknown, fallback: number): number {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
-
 function initialState(params: ToolParams | undefined): State {
   return {
     watts: toNumber(params?.watt, 90),
@@ -65,7 +61,10 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
       usage: toNumber(search.get("nutzung"), fallback.usage),
       kwhPerCycle: toNumber(search.get("kwh"), fallback.kwhPerCycle),
       standbyWatts: toNumber(search.get("standby"), fallback.standbyWatts),
-      pricePerKwhCents: toNumber(search.get("preis"), fallback.pricePerKwhCents),
+      pricePerKwhCents: toNumber(
+        search.get("preis"),
+        fallback.pricePerKwhCents,
+      ),
     }),
     serialize: (next) => ({
       watt: String(next.watts),
@@ -173,7 +172,10 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
               </Field>
             )}
 
-            <Field label={usagePatterns[state.pattern].label} htmlFor="sk-nutzung">
+            <Field
+              label={usagePatterns[state.pattern].label}
+              htmlFor="sk-nutzung"
+            >
               <UnitInput
                 id="sk-nutzung"
                 unit={byCycle ? "×" : "h"}
@@ -290,59 +292,6 @@ export default function StromkostenTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={stromkostenAffiliate} result={result} />
-    </div>
-  );
-}
-
-function UnitInput({
-  id,
-  unit,
-  value,
-  onChange,
-}: {
-  id: string;
-  unit: string;
-  value: number;
-  onChange: (next: number) => void;
-}) {
-  return (
-    <div className="relative">
-      <TextInput
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={String(value).replace(".", ",")}
-        onChange={(event) => onChange(toNumber(event.target.value, 0))}
-        className="pr-16 font-mono"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-      >
-        {unit}
-      </span>
-    </div>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="text-[13px] font-semibold text-muted">{label}</dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
     </div>
   );
 }

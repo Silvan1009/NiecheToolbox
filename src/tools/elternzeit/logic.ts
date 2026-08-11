@@ -113,7 +113,10 @@ export function lebensmonatEnd(birthDate: Iso, month: number): Iso {
 }
 
 const clampInt = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, Math.trunc(Number.isFinite(value) ? value : min)));
+  Math.min(
+    max,
+    Math.max(min, Math.trunc(Number.isFinite(value) ? value : min)),
+  );
 
 function normalisePlan(plan: ParentPlan): ParentPlan {
   return {

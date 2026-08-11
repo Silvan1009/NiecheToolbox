@@ -7,37 +7,20 @@
  */
 
 import { addDays, diffDays, fromIso, weekdayOf, type Iso } from "@/lib/date";
-import { holidaysFor, type RegionCode } from "@/tools/brueckentage/logic";
+import { holidaysFor, type RegionCode } from "@/lib/regionen";
 
 export type { Iso };
 
 /** 1 = Montag … 7 = Sonntag (ISO-Wochentage, wie sie hier gelesen werden). */
 export type IsoWeekday = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-export const weekdayNames: Record<IsoWeekday, string> = {
-  1: "Montag",
-  2: "Dienstag",
-  3: "Mittwoch",
-  4: "Donnerstag",
-  5: "Freitag",
-  6: "Samstag",
-  7: "Sonntag",
-};
-
-export const weekdayShortNames: Record<IsoWeekday, string> = {
-  1: "Mo",
-  2: "Di",
-  3: "Mi",
-  4: "Do",
-  5: "Fr",
-  6: "Sa",
-  7: "So",
-};
-
 /** Die üblichen Arbeitswochen als Voreinstellungen. */
 export const weekPresets = {
   "5": { label: "Montag bis Freitag", days: [1, 2, 3, 4, 5] as IsoWeekday[] },
-  "6": { label: "Montag bis Samstag", days: [1, 2, 3, 4, 5, 6] as IsoWeekday[] },
+  "6": {
+    label: "Montag bis Samstag",
+    days: [1, 2, 3, 4, 5, 6] as IsoWeekday[],
+  },
   "7": {
     label: "Alle sieben Tage",
     days: [1, 2, 3, 4, 5, 6, 7] as IsoWeekday[],
@@ -45,6 +28,22 @@ export const weekPresets = {
 } as const;
 
 export type WeekPreset = keyof typeof weekPresets;
+
+/** Für die Monatsübersicht und die Texte der Variantenseiten. */
+export const MONTH_NAMES = [
+  "Januar",
+  "Februar",
+  "März",
+  "April",
+  "Mai",
+  "Juni",
+  "Juli",
+  "August",
+  "September",
+  "Oktober",
+  "November",
+  "Dezember",
+] as const;
 
 /** JS-Wochentag (0 = Sonntag) auf ISO-Wochentag (1 = Montag) drehen. */
 export function isoWeekdayOf(iso: Iso): IsoWeekday {
@@ -110,7 +109,7 @@ function holidaysInRange(
   const result: { date: Iso; name: string; partial: boolean }[] = [];
 
   for (let year = firstYear; year <= lastYear; year += 1) {
-    for (const holiday of holidaysFor(year, region, { includePartial })) {
+    for (const holiday of holidaysFor(year, region)) {
       // Nur teilweise geltende Feiertage sind ohne `includePartial` reine
       // Information und dürfen keinen Arbeitstag streichen.
       if (holiday.partial && !includePartial) continue;
@@ -135,7 +134,12 @@ export function calculateWorkdays(input: WorkdaysInput): WorkdaysResult {
   const working = new Set(input.workdays);
   const calendarDays = diffDays(from, to) + 1;
 
-  const holidayList = holidaysInRange(from, to, input.region, input.includePartial);
+  const holidayList = holidaysInRange(
+    from,
+    to,
+    input.region,
+    input.includePartial,
+  );
 
   let scheduledDays = 0;
   for (let cursor = from; cursor <= to; cursor = addDays(cursor, 1)) {
@@ -179,7 +183,10 @@ export function yearRange(year: number): { from: Iso; to: Iso } {
 }
 
 /** Ein Kalendermonat, 1-basiert. */
-export function monthRange(year: number, month: number): { from: Iso; to: Iso } {
+export function monthRange(
+  year: number,
+  month: number,
+): { from: Iso; to: Iso } {
   const padded = String(month).padStart(2, "0");
   const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
   return { from: `${year}-${padded}-01`, to: `${year}-${padded}-${lastDay}` };

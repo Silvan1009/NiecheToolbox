@@ -23,7 +23,7 @@ import {
   weekdayOf,
   type Iso,
 } from "@/lib/date";
-import { holidaysFor, type RegionCode } from "@/tools/brueckentage/logic";
+import { holidaysFor, type RegionCode } from "@/lib/regionen";
 
 export type { Iso };
 
@@ -74,7 +74,7 @@ function holidayDates(year: number, region: RegionCode): Set<Iso> {
   const cached = holidayCache.get(key);
   if (cached) return cached;
   const set = new Set(
-    holidaysFor(year, region, { includePartial: false }).map((h) => h.date),
+    holidaysFor(year, region).map((h) => h.date),
   );
   holidayCache.set(key, set);
   return set;
@@ -169,7 +169,11 @@ interface EndOutcome {
   karenzDeadline?: Iso;
 }
 
-function endForFrist(zugang: Iso, frist: Frist, region: RegionCode): EndOutcome {
+function endForFrist(
+  zugang: Iso,
+  frist: Frist,
+  region: RegionCode,
+): EndOutcome {
   switch (frist.termin) {
     case "beliebig":
       return { end: addDays(zugang, frist.value * 7) };
@@ -307,7 +311,11 @@ function buildWarnings(input: NoticeInput, frist: Frist): string[] {
     );
   }
 
-  if (input.contract === "wohnung" && input.party === "mieter" && !input.probezeit) {
+  if (
+    input.contract === "wohnung" &&
+    input.party === "mieter" &&
+    !input.probezeit
+  ) {
     warnings.push(
       "Für Mieter darf der Vertrag keine längere Frist als drei Monate vorsehen. Eine längere Klausel ist unwirksam.",
     );

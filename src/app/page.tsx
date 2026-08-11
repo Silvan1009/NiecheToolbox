@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { JsonLd } from "@/components/JsonLd";
 import { ToolCard } from "@/components/ToolCard";
+import { WegCard } from "@/components/WegCard";
 import { absoluteUrl, jsonLdGraph, toolPath, websiteNode } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
+import { publicWege } from "@/wege/registry";
 
 export const metadata: Metadata = {
   title: `${site.name} – ${site.tagline}`,
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const tools = publicTools();
+  const wege = publicWege();
 
   return (
     <div className="mx-auto w-full max-w-5xl px-5">
@@ -26,7 +29,38 @@ export default function HomePage() {
         </p>
       </section>
 
-      <section id="tools" aria-labelledby="tools-heading" className="scroll-mt-8">
+      {wege.length > 0 && (
+        <section
+          id="wege"
+          aria-labelledby="wege-heading"
+          className="scroll-mt-8 pb-8"
+        >
+          <h2
+            id="wege-heading"
+            className="font-display text-xl font-semibold tracking-tight"
+          >
+            Wege
+          </h2>
+          <p className="mt-1.5 max-w-xl text-muted">
+            Mehrere Rechner zu einem Urteil kombiniert, statt einer isolierten
+            Zahl.
+          </p>
+
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {wege.map((weg) => (
+              <li key={weg.slug} className="flex">
+                <WegCard weg={weg} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section
+        id="tools"
+        aria-labelledby="tools-heading"
+        className="scroll-mt-8"
+      >
         <h2
           id="tools-heading"
           className="font-display text-xl font-semibold tracking-tight"

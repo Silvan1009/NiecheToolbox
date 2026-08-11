@@ -49,9 +49,9 @@ function PlaceholderNotice() {
         <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[13px]">
           legal.isPlaceholder
         </code>{" "}
-        auf <code className="font-mono text-[13px]">false</code> setzen. Impressum
-        (§ 5 DDG) und Datenschutzerklärung (Art. 13 DSGVO) sind in Deutschland
-        Pflicht – ein fehlerhafter Text ist abmahnfähig.
+        auf <code className="font-mono text-[13px]">false</code> setzen.
+        Impressum (§ 5 DDG) und Datenschutzerklärung (Art. 13 DSGVO) sind in
+        Deutschland Pflicht – ein fehlerhafter Text ist abmahnfähig.
       </p>
     </aside>
   );

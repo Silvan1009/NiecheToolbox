@@ -10,6 +10,7 @@
  */
 
 const rawUrl = process.env.SITE_URL ?? "https://rechnerkiste.app";
+const contactEmail = "comannsilvan@gmail.com";
 
 export const site = {
   name: "Rechnerkiste",
@@ -23,7 +24,22 @@ export const site = {
   locale: "de-DE",
   /** Ohne abschließenden Slash. Für canonical-URLs, Sitemap und OG-Bilder. */
   url: rawUrl.replace(/\/+$/, ""),
-  contactEmail: "comannsilvan@gmail.com",
+  contactEmail,
+  /**
+   * Empfänger für "Fehler melden" in jedem Rechner. Eigene Variable statt
+   * hartcodiert auf contactEmail verweisend, falls Bug-Reports später an eine
+   * andere Adresse (z. B. ein Ticket-System) gehen sollen als allgemeine Post.
+   */
+  bugReportEmail: process.env.NEXT_PUBLIC_BUG_REPORT_EMAIL ?? contactEmail,
+  /** Button vorerst ausgeblendet, Formular ist fertig, aber noch nicht live. */
+  bugReportEnabled: false,
+  /**
+   * Bestätigungscode für Google Search Console (HTML-Tag-Methode). Nur der
+   * `content`-Wert aus dem Meta-Tag, den Google beim Anlegen der Property
+   * zeigt – kein NEXT_PUBLIC_ nötig, das Metadata-Objekt entsteht ohnehin
+   * serverseitig zur Buildzeit.
+   */
+  googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
 } as const;
 
 /**
@@ -91,9 +107,7 @@ export const ads = {
 /** Datenschutzfreundliche, cookiefreie Analytics – läuft unabhängig vom Werbe-Consent. */
 export const analytics = {
   provider: (process.env.NEXT_PUBLIC_ANALYTICS_PROVIDER ?? "none") as
-    | "none"
-    | "umami"
-    | "plausible",
+    "none" | "umami" | "plausible",
   umami: {
     scriptUrl: process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ?? "",
     websiteId: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID ?? "",
@@ -124,7 +138,8 @@ export const affiliate = {
     mietwagen: "https://example.com/partner/mietwagen?ref=PLATZHALTER",
     haushaltsbuch: "https://example.com/partner/finanzen?ref=PLATZHALTER",
     hoerbuecher: "https://example.com/partner/hoerbuecher?ref=PLATZHALTER",
-    elterngeldberatung: "https://example.com/partner/elterngeld?ref=PLATZHALTER",
+    elterngeldberatung:
+      "https://example.com/partner/elterngeld?ref=PLATZHALTER",
     umzugskartons: "https://example.com/partner/umzugskartons?ref=PLATZHALTER",
     transporter: "https://example.com/partner/transporter?ref=PLATZHALTER",
     umzugsfirma: "https://example.com/partner/umzugsfirma?ref=PLATZHALTER",
@@ -132,8 +147,28 @@ export const affiliate = {
     getraenkelieferung: "https://example.com/partner/getraenke?ref=PLATZHALTER",
     grillzubehoer: "https://example.com/partner/grill?ref=PLATZHALTER",
     stromvergleich: "https://example.com/partner/strom?ref=PLATZHALTER",
+    gasvergleich: "https://example.com/partner/gas?ref=PLATZHALTER",
     strommessgeraet: "https://example.com/partner/messgeraet?ref=PLATZHALTER",
-    mietrechtsschutz: "https://example.com/partner/rechtsschutz?ref=PLATZHALTER",
+    reiseversicherung:
+      "https://example.com/partner/reiseversicherung?ref=PLATZHALTER",
+    steuersoftware:
+      "https://example.com/partner/steuersoftware?ref=PLATZHALTER",
+    mietrechtsschutz:
+      "https://example.com/partner/rechtsschutz?ref=PLATZHALTER",
+    baufinanzierung:
+      "https://example.com/partner/baufinanzierung?ref=PLATZHALTER",
+    immobilienbewertung:
+      "https://example.com/partner/immobilienbewertung?ref=PLATZHALTER",
+    depotvergleich: "https://example.com/partner/depot?ref=PLATZHALTER",
+    aktienanalyse: "https://example.com/partner/aktienanalyse?ref=PLATZHALTER",
+    kreditvergleich: "https://example.com/partner/kredit?ref=PLATZHALTER",
+    umschuldung: "https://example.com/partner/umschuldung?ref=PLATZHALTER",
+    kfzversicherung:
+      "https://example.com/partner/kfzversicherung?ref=PLATZHALTER",
+    haftpflichtversicherung:
+      "https://example.com/partner/haftpflicht?ref=PLATZHALTER",
+    berufsunfaehigkeitsversicherung:
+      "https://example.com/partner/bu?ref=PLATZHALTER",
   },
 } as const;
 

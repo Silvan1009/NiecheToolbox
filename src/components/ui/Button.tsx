@@ -4,10 +4,7 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "primary" | "quiet" | "ghost";
 type Size = "md" | "sm";
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded-control font-semibold " +
-  "transition-[background-color,box-shadow,color] duration-(--dur-fast) ease-(--ease-out) " +
-  "disabled:cursor-not-allowed disabled:opacity-50";
+const base = "btn-base";
 
 const variants: Record<Variant, string> = {
   // Gefüllt, leichter Verlauf, weiche Tiefe – nie eine harte Umrisslinie.

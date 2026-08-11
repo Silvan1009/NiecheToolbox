@@ -5,9 +5,11 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
 import { Field, TextArea, TextInput } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatInteger } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { lesezeitAffiliate } from "./affiliate";
@@ -28,11 +30,6 @@ interface State extends Record<string, unknown> {
 
 const isPace = (value: unknown): value is ReadingPace =>
   paceOptions.some((option) => option.id === value);
-
-function toCount(value: unknown, fallback: number) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {
@@ -111,7 +108,9 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
               value={state.words === 0 ? "" : String(state.words)}
               placeholder="0"
               disabled={hasText}
-              onChange={(event) => update({ words: toCount(event.target.value, 0) })}
+              onChange={(event) =>
+                update({ words: toCount(event.target.value, 0) })
+              }
               className="max-w-40 font-mono disabled:opacity-50"
             />
           </Field>
@@ -149,7 +148,9 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
                       {option.wpm} W/min
                     </span>
                   </span>
-                  <span className="pl-6 text-[13px] text-muted">{option.hint}</span>
+                  <span className="pl-6 text-[13px] text-muted">
+                    {option.hint}
+                  </span>
                 </label>
               );
             })}
@@ -176,7 +177,11 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
           }
         >
           <NumberDisplay
-            value={result.readingSeconds < 60 ? result.readingSeconds : result.readingSeconds / 60}
+            value={
+              result.readingSeconds < 60
+                ? result.readingSeconds
+                : result.readingSeconds / 60
+            }
             format={(value) => formatInteger(Math.max(1, Math.round(value)))}
             suffix={
               result.readingSeconds < 60
@@ -234,28 +239,6 @@ export default function LesezeitTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={lesezeitAffiliate} result={result} />
-    </div>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint?: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="text-[13px] font-semibold text-muted">{label}</dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        {hint && <span className="mt-1 block text-[13px] text-muted">{hint}</span>}
-      </dd>
     </div>
   );
 }

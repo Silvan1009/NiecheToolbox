@@ -135,7 +135,10 @@ describe("Trinkgeld-Splitter", () => {
             const result = calculateTip({ bill, tipPercent, people, rounding });
 
             // Jede Person zahlt gleich viel, und es reicht immer.
-            expect(result.perPerson * result.people).toBeCloseTo(result.total, 8);
+            expect(result.perPerson * result.people).toBeCloseTo(
+              result.total,
+              8,
+            );
             expect(result.total).toBeGreaterThanOrEqual(bill);
 
             // Trinkgeld = Gesamt minus Rechnung.
@@ -144,14 +147,18 @@ describe("Trinkgeld-Splitter", () => {
             // Gerundet wird nie nach unten, und nie mehr als nötig.
             expect(result.roundingExtra).toBeGreaterThanOrEqual(0);
             const step =
-              rounding === "person-100" ? 1 : rounding === "person-50" ? 0.5 : 1;
+              rounding === "person-100"
+                ? 1
+                : rounding === "person-50"
+                  ? 0.5
+                  : 1;
             expect(result.roundingExtra).toBeLessThan(step * people + 0.01);
 
             // Beträge sind auf den Cent genau.
             for (const value of [result.perPerson, result.total, result.tip]) {
-              expect(Math.abs(value * 100 - Math.round(value * 100))).toBeLessThan(
-                1e-6,
-              );
+              expect(
+                Math.abs(value * 100 - Math.round(value * 100)),
+              ).toBeLessThan(1e-6);
             }
 
             // Das tatsächliche Trinkgeld ist mindestens das gewünschte –

@@ -1,7 +1,6 @@
 import { BookOpenText } from "lucide-react";
 import type { ToolManifest } from "@/tools/types";
 import { lesezeitAffiliate } from "./affiliate";
-import Component from "./Component";
 
 export const lesezeit: ToolManifest = {
   slug: "lesezeit",
@@ -20,8 +19,6 @@ export const lesezeit: ToolManifest = {
     "vorlesezeit",
     "sprechdauer",
   ],
-
-  Component,
 
   about: [
     "Die Lesezeit ergibt sich aus der Wortzahl geteilt durch die Lesegeschwindigkeit. Für stilles Lesen deutscher Sachtexte werden meist 200 bis 250 Wörter pro Minute angesetzt; wer aufmerksam liest und mitdenkt, liegt eher bei 150. Beim Überfliegen kommt man auf ein Vielfaches, nimmt dafür aber nur die Kernaussagen mit.",

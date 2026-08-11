@@ -113,7 +113,8 @@ export function calculateReadingTime(input: ReadingInput): ReadingResult {
   const paragraphs =
     trimmed.length === 0
       ? 0
-      : trimmed.split(/\n\s*\n/).filter((part) => part.trim().length > 0).length;
+      : trimmed.split(/\n\s*\n/).filter((part) => part.trim().length > 0)
+          .length;
 
   const charactersNoSpaces = text.replace(/\s/g, "").length;
 

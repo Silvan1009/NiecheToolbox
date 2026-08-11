@@ -46,13 +46,14 @@ export default function DatenschutzPage() {
 
       <Section heading="Deine Eingaben in den Rechnern">
         <p>
-          Bundesland, Jahr, Beträge, Texte, Datumsangaben: Alles, was du in einen
-          Rechner eingibst, wird ausschließlich lokal in deinem Browser
-          verarbeitet. Es findet keine Übertragung an einen Server statt, es gibt
-          keine Speicherung und keine Auswertung. Wenn du einen Ergebnis-Link
-          teilst, stehen die Eingabewerte in der Adresszeile dieses Links – du
-          entscheidest, mit wem du ihn teilst. Beim Lesezeit-Rechner wandert
-          bewusst nur die Wortzahl in den Link, nie der Text selbst.
+          Bundesland, Jahr, Beträge, Texte, Datumsangaben: Alles, was du in
+          einen Rechner eingibst, wird ausschließlich lokal in deinem Browser
+          verarbeitet. Es findet keine Übertragung an einen Server statt, es
+          gibt keine Speicherung und keine Auswertung. Wenn du einen
+          Ergebnis-Link teilst, stehen die Eingabewerte in der Adresszeile
+          dieses Links – du entscheidest, mit wem du ihn teilst. Beim
+          Lesezeit-Rechner wandert bewusst nur die Wortzahl in den Link, nie der
+          Text selbst.
         </p>
       </Section>
 
@@ -63,8 +64,8 @@ export default function DatenschutzPage() {
           Datum und Uhrzeit, aufgerufene Adresse, Referrer, Browsertyp und
           Betriebssystem. Diese Verarbeitung ist zum Betrieb und zur Sicherheit
           der Website erforderlich; Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
-          DSGVO (berechtigtes Interesse an einem stabilen, sicheren Betrieb). Die
-          Daten werden nicht mit anderen Quellen zusammengeführt.
+          DSGVO (berechtigtes Interesse an einem stabilen, sicheren Betrieb).
+          Die Daten werden nicht mit anderen Quellen zusammengeführt.
         </p>
         <p>
           Gehostet wird die Seite bei der IONOS SE, Elgendorfer Straße 57, 56410
@@ -84,8 +85,8 @@ export default function DatenschutzPage() {
           dem Transparency &amp; Consent Framework (TCF) v2.2 des IAB Europe
           zertifiziert. Deine Entscheidung wird als sogenannter TC-String auf
           deinem Endgerät abgelegt, damit wir sie nachweisen und beim nächsten
-          Besuch berücksichtigen können. Rechtsgrundlage für das Speichern ist
-          § 25 Abs. 1 TDDDG in Verbindung mit Art. 6 Abs. 1 lit. a DSGVO.
+          Besuch berücksichtigen können. Rechtsgrundlage für das Speichern ist §
+          25 Abs. 1 TDDDG in Verbindung mit Art. 6 Abs. 1 lit. a DSGVO.
         </p>
         <p>
           Lehnst du ab oder entscheidest du nichts, wird kein Werbe-Skript
@@ -118,14 +119,14 @@ export default function DatenschutzPage() {
         <p>
           Nach deiner Einwilligung binden wir Google AdSense ein, einen Dienst
           der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
-          Irland. Dabei werden Cookies oder vergleichbare Kennungen gesetzt, deine
-          IP-Adresse an Google übermittelt und Daten für die Auswahl und Messung
-          von Anzeigen verarbeitet – auch in den USA. Rechtsgrundlage ist deine
-          Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO; für die Übermittlung in
-          Drittländer stützt sich Google auf das EU-US Data Privacy Framework und
-          Standardvertragsklauseln. Ohne Einwilligung wird das Skript nicht
-          geladen. Wir setzen Google Consent Mode v2 ein und übermitteln deine
-          Entscheidung an Google.
+          Irland. Dabei werden Cookies oder vergleichbare Kennungen gesetzt,
+          deine IP-Adresse an Google übermittelt und Daten für die Auswahl und
+          Messung von Anzeigen verarbeitet – auch in den USA. Rechtsgrundlage
+          ist deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO; für die
+          Übermittlung in Drittländer stützt sich Google auf das EU-US Data
+          Privacy Framework und Standardvertragsklauseln. Ohne Einwilligung wird
+          das Skript nicht geladen. Wir setzen Google Consent Mode v2 ein und
+          übermitteln deine Entscheidung an Google.
         </p>
         <p>
           Die eingesetzte Consent-Management-Plattform (Google Funding Choices)
@@ -195,23 +196,24 @@ export default function DatenschutzPage() {
             Unter Ergebnissen zeigen wir gelegentlich Empfehlungen, die zu
             Partnerangeboten führen. Diese Links sind mit „
             {affiliate.disclosureLabel}“ gekennzeichnet. Erst wenn du einen
-            solchen Link anklickst, verlässt du diese Seite; der Partner kann dann
-            eine Kennung setzen, um eine mögliche Buchung zuzuordnen. Für die
-            Datenverarbeitung ab dem Klick gilt die Datenschutzerklärung des
-            Partners. Auf dieser Seite werden dafür keine Daten erhoben und keine
-            Kennungen gesetzt.
+            solchen Link anklickst, verlässt du diese Seite; der Partner kann
+            dann eine Kennung setzen, um eine mögliche Buchung zuzuordnen. Für
+            die Datenverarbeitung ab dem Klick gilt die Datenschutzerklärung des
+            Partners. Auf dieser Seite werden dafür keine Daten erhoben und
+            keine Kennungen gesetzt.
           </p>
         </Section>
       )}
 
       <Section heading="Deine Rechte">
         <p>
-          Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16),
-          Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18),
-          Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen auf
-          Grundlage berechtigter Interessen (Art. 21). Eine erteilte Einwilligung
-          kannst du jederzeit ohne Angabe von Gründen widerrufen – die
-          Rechtmäßigkeit der Verarbeitung bis zum Widerruf bleibt davon unberührt.
+          Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art.
+          16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18),
+          Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen
+          auf Grundlage berechtigter Interessen (Art. 21). Eine erteilte
+          Einwilligung kannst du jederzeit ohne Angabe von Gründen widerrufen –
+          die Rechtmäßigkeit der Verarbeitung bis zum Widerruf bleibt davon
+          unberührt.
         </p>
         <p>
           Für Anfragen genügt eine E-Mail an{" "}

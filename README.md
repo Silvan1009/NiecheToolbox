@@ -68,7 +68,7 @@ Kategorie höher als Keyword-Überschneidung. Eine neue Kategorie ist eine Zeile
 im Union-Typ und eine im Label-Objekt.
 
 Rechnet ein Tool mit Feiertagen, kommen sie aus
-[`src/tools/brueckentage/logic.ts`](src/tools/brueckentage/logic.ts) –
+[`src/lib/regionen.ts`](src/lib/regionen.ts) –
 `holidaysFor(jahr, bundesland)` ist die gemeinsame Quelle für Brückentage,
 Arbeitstage und die Werktagsfristen im Kündigungsrechner. Keine zweite
 Feiertagsliste anlegen.
@@ -100,14 +100,17 @@ src/
 │  ├─ tools/[slug]/               # Tool-Seite
 │  ├─ tools/[slug]/[variant]/     # SEO-Variante
 │  ├─ rechtliches/                # Impressum + Datenschutz (Pflicht in DE)
-│  ├─ api/og/                     # dynamische Open-Graph-Bilder
 │  └─ sitemap.ts, robots.ts       # aus der Registry erzeugt
-├─ tools/                # die Tools selbst + registry.ts + types.ts
+├─ tools/                # die Tools selbst + registry.ts + types.ts + variants.ts
 ├─ components/           # geteilte UI (ui/ = Design-System-Bausteine)
 ├─ design/tokens.css     # Farben, Radien, Schatten, Bewegung
-├─ lib/                  # date, format, seo, consent, useUrlState
+├─ lib/                  # date, format, parse, seo, finanzmath, regionen, steuerdaten
 └─ config/site.ts        # Name, Domain, Werbe-IDs, Affiliate-Links
 ```
+
+Die Open-Graph-Bilder sind keine Route mehr: `scripts/generate-og-images.tsx`
+rendert sie beim Build als PNGs nach `public/og/` – bei `output: "export"`
+gibt es keinen Server, der sie zur Laufzeit erzeugen könnte.
 
 ## Design-System
 

@@ -3,11 +3,18 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
-import { Field, Select, Stepper, TextArea, TextInput } from "@/components/ui/Field";
+import {
+  Field,
+  Select,
+  Stepper,
+  TextArea,
+  TextInput,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatInteger } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { backformAffiliate } from "./affiliate";
@@ -45,12 +52,6 @@ const SHAPE_ORDER: ShapeKind[] = [
 
 const isShape = (value: unknown): value is ShapeKind =>
   typeof value === "string" && value in shapes;
-
-function toNumber(value: unknown, fallback: number): number {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {
@@ -192,8 +193,9 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
                 {formatInteger(Math.round(Math.abs(result.percentDelta)))} %{" "}
                 {result.factor >= 1 ? "mehr" : "weniger"}
               </strong>{" "}
-              von allem – aus {formatInteger(Math.round(result.sourceVolume))} ml
-              Teig werden {formatInteger(Math.round(result.targetVolume))} ml.
+              von allem – aus {formatInteger(Math.round(result.sourceVolume))}{" "}
+              ml Teig werden {formatInteger(Math.round(result.targetVolume))}{" "}
+              ml.
             </>
           }
         />
@@ -208,7 +210,9 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
           <TextArea
             id="bf-zutaten"
             value={state.ingredients}
-            placeholder={"250 g Mehl\n1 Pck. Backpulver\n200 g Zucker\n4 Eier\n125 g Butter\n1 Prise Salz"}
+            placeholder={
+              "250 g Mehl\n1 Pck. Backpulver\n200 g Zucker\n4 Eier\n125 g Butter\n1 Prise Salz"
+            }
             onChange={(event) => update({ ingredients: event.target.value })}
             className="font-mono text-[15px]"
           />
@@ -247,8 +251,8 @@ export default function BackformTool({ params }: { params?: ToolParams }) {
             </ul>
             {rounded > 0 && (
               <p className="mt-4 text-[13px] text-muted">
-                {rounded} {rounded === 1 ? "Zeile wurde" : "Zeilen wurden"} auf ein
-                Maß gerundet, das sich abmessen lässt – halbe Eier gehen
+                {rounded} {rounded === 1 ? "Zeile wurde" : "Zeilen wurden"} auf
+                ein Maß gerundet, das sich abmessen lässt – halbe Eier gehen
                 verquirlt, ein Viertel Päckchen Backpulver nicht.
               </p>
             )}

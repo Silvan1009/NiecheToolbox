@@ -52,7 +52,9 @@ export interface TcfData {
  * liest den TC-String selbst und schaltet eigenständig auf nicht-personalisierte
  * Anzeigen zurück. Wir entscheiden hier nur über das Laden.
  */
-export function deriveConsentStatus(tcData: TcfData | null | undefined): ConsentStatus {
+export function deriveConsentStatus(
+  tcData: TcfData | null | undefined,
+): ConsentStatus {
   if (!tcData) return "unknown";
   if (tcData.cmpStatus === "error") return "denied";
   if (tcData.cmpStatus !== "loaded") return "unknown";

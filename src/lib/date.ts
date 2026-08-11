@@ -13,7 +13,8 @@ export const DAY_MS = 86_400_000;
 export const utcMs = (year: number, month: number, day: number) =>
   Date.UTC(year, month - 1, day);
 
-export const toIso = (ms: number): Iso => new Date(ms).toISOString().slice(0, 10);
+export const toIso = (ms: number): Iso =>
+  new Date(ms).toISOString().slice(0, 10);
 
 export const fromIso = (iso: Iso): number => Date.parse(`${iso}T00:00:00Z`);
 
@@ -40,7 +41,9 @@ export function addMonths(iso: Iso, months: number): Iso {
   const index = month - 1 + months;
   const targetYear = year + Math.floor(index / 12);
   const targetMonth = ((index % 12) + 12) % 12;
-  const lastDay = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
+  const lastDay = new Date(
+    Date.UTC(targetYear, targetMonth + 1, 0),
+  ).getUTCDate();
   return toIso(Date.UTC(targetYear, targetMonth, Math.min(day, lastDay)));
 }
 

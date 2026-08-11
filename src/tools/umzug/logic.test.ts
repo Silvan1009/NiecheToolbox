@@ -101,7 +101,12 @@ describe("Volumen und Fahrzeug", () => {
     // Sonst wäre die Fahrzeugklasse zu klein – auch bei absurd vielen Kartons.
     for (const style of ALL_STYLES) {
       for (const area of [10, 40, 80, 160]) {
-        const result = move({ area, style, shelfMetres: 60, wardrobeMetres: 12 });
+        const result = move({
+          area,
+          style,
+          shelfMetres: 60,
+          wardrobeMetres: 12,
+        });
         expect(result.volume).toBeGreaterThanOrEqual(result.boxVolume - 1e-9);
       }
     }
