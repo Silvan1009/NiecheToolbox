@@ -11,9 +11,11 @@ import {
   Toggle,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatInteger, plural } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { umzugAffiliate } from "./affiliate";
@@ -37,12 +39,6 @@ const STYLE_OPTIONS = [
 
 const isStyle = (value: unknown): value is HouseholdStyle =>
   typeof value === "string" && value in householdStyles;
-
-function toNumber(value: unknown, fallback: number): number {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {
@@ -122,7 +118,9 @@ export default function UmzugTool({ params }: { params?: ToolParams }) {
                   id="um-qm"
                   type="text"
                   inputMode="decimal"
-                  value={state.area === 0 ? "" : String(state.area).replace(".", ",")}
+                  value={
+                    state.area === 0 ? "" : String(state.area).replace(".", ",")
+                  }
                   placeholder="80"
                   onChange={(event) =>
                     update({ area: toNumber(event.target.value, 0) })
@@ -359,27 +357,5 @@ function MaterialRow({ label, value }: { label: string; value: string }) {
       <span>{label}</span>
       <span className="font-mono font-semibold tabular-nums">{value}</span>
     </li>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="text-[13px] font-semibold text-muted">{label}</dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
-    </div>
   );
 }

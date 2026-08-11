@@ -4,7 +4,8 @@ import type { NoticeResult } from "./logic";
 function asResult(value: unknown): NoticeResult | null {
   if (typeof value !== "object" || value === null) return null;
   const candidate = value as Partial<NoticeResult>;
-  return typeof candidate.end === "string" && typeof candidate.party === "string"
+  return typeof candidate.end === "string" &&
+    typeof candidate.party === "string"
     ? (candidate as NoticeResult)
     : null;
 }

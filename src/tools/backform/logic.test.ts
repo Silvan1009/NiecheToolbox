@@ -41,17 +41,19 @@ describe("Geometrie", () => {
       (20 / 26) ** 2,
       10,
     );
-    expect(factorBetween(form("rund", 24), form("rund", 24))).toBeCloseTo(1, 10);
+    expect(factorBetween(form("rund", 24), form("rund", 24))).toBeCloseTo(
+      1,
+      10,
+    );
   });
 
   it("skaliert zwischen flachen Formen über die Fläche", () => {
     expect(
       factorBetween(form("quadratisch", 20), form("rechteckig", 30, 20)),
     ).toBeCloseTo(1.5, 10);
-    expect(factorBetween(form("rund", 26), form("quadratisch", 24))).toBeCloseTo(
-      576 / 530.9291585,
-      6,
-    );
+    expect(
+      factorBetween(form("rund", 26), form("quadratisch", 24)),
+    ).toBeCloseTo(576 / 530.9291585, 6);
   });
 
   it("berücksichtigt die größere Tiefe der Kastenform", () => {
@@ -124,7 +126,10 @@ describe("Zutatenzeilen zerlegen", () => {
     expect(parseIngredientLine("½ TL Zimt").quantity).toBe(0.5);
     expect(parseIngredientLine("1 1/2 EL Öl").quantity).toBe(1.5);
     expect(parseIngredientLine("1½ EL Öl").quantity).toBe(1.5);
-    expect(parseIngredientLine("¾ Tasse Zucker").quantity).toBeCloseTo(0.75, 10);
+    expect(parseIngredientLine("¾ Tasse Zucker").quantity).toBeCloseTo(
+      0.75,
+      10,
+    );
   });
 
   it("erkennt Zutaten ohne Einheit", () => {

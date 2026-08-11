@@ -1,4 +1,3 @@
-import type { ComponentType } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { AffiliateKey } from "@/config/site";
 import type { AdDensity } from "@/lib/adPlacement";
@@ -10,7 +9,8 @@ export type ToolCategory =
   | "text"
   | "wohnen"
   | "essen"
-  | "alltag";
+  | "alltag"
+  | "gesundheit";
 
 export const categoryLabels: Record<ToolCategory, string> = {
   zeit: "Zeit & Urlaub",
@@ -20,6 +20,7 @@ export const categoryLabels: Record<ToolCategory, string> = {
   wohnen: "Wohnen & Verträge",
   essen: "Essen & Feiern",
   alltag: "Alltag",
+  gesundheit: "Gesundheit",
 };
 
 /** Startparameter, die eine Tool-Component von URL oder SEO-Variante bekommt. */
@@ -35,6 +36,18 @@ export interface ToolVariant {
   heading?: string;
   /** Wird an Component/Logik übergeben. */
   params: ToolParams;
+
+  /**
+   * Eigener Erklärtext statt dem des Tools.
+   *
+   * Ohne das unterscheiden sich viele Variantenseiten nur in der Überschrift –
+   * und genau daran scheitern AdSense-Prüfungen mit "low value content". Wer
+   * Varianten erzeugt, die inhaltlich etwas Eigenes zu sagen haben, sagt es
+   * hier.
+   */
+  about?: string[];
+  /** Eigene FAQ statt der des Tools. Wird auch zu FAQPage-JSON-LD. */
+  faq?: FaqEntry[];
 }
 
 export interface FaqEntry {
@@ -78,9 +91,6 @@ export interface ToolManifest {
   /** Interne Suche + SEO. */
   keywords: string[];
   status: "live" | "beta" | "draft";
-
-  /** Die eigentliche UI. Bekommt optionale Startparameter (aus URL/Variante). */
-  Component: ComponentType<{ params?: ToolParams }>;
 
   /**
    * Startwerte, die erst zur Laufzeit feststehen (z. B. das aktuelle Jahr).

@@ -6,20 +6,25 @@ import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
 import { Field, Select, Stepper } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
-import { formatDate, formatWeekday, formatWeekdayDate, plural } from "@/lib/format";
-import { useUrlState } from "@/lib/useUrlState";
-import type { ToolParams } from "@/tools/types";
-import { brueckentageAffiliate } from "./affiliate";
 import {
-  calculateBrueckentage,
+  formatDate,
+  formatWeekday,
+  formatWeekdayDate,
+  plural,
+} from "@/lib/format";
+import {
   isRegionCode,
   partialHolidayNames,
   regions,
-  type BridgeBlock,
   type RegionCode,
-} from "./logic";
+} from "@/lib/regionen";
+import { useUrlState } from "@/lib/useUrlState";
+import type { ToolParams } from "@/tools/types";
+import { brueckentageAffiliate } from "./affiliate";
+import { calculateBrueckentage, type BridgeBlock } from "./logic";
 
 interface State extends Record<string, unknown> {
   region: RegionCode;
@@ -44,7 +49,8 @@ function initialState(params: ToolParams | undefined, baseYear: number): State {
 
   return {
     region: isRegionCode(region) ? region : DEFAULT_REGION,
-    year: Number.isFinite(year) && year > 0 ? clampYear(year, baseYear) : baseYear,
+    year:
+      Number.isFinite(year) && year > 0 ? clampYear(year, baseYear) : baseYear,
     budget:
       Number.isFinite(budget) && budget > 0
         ? Math.min(30, Math.trunc(budget))
@@ -214,9 +220,9 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
                   {partialNames.join(" und ")} gilt bei mir
                 </span>
                 <span className="mt-0.5 block text-muted">
-                  {partialNames.join(" und ")} ist in{" "}
-                  {result.region.name} kein landesweiter Feiertag, sondern gilt
-                  nur in bestimmten Gemeinden.
+                  {partialNames.join(" und ")} ist in {result.region.name} kein
+                  landesweiter Feiertag, sondern gilt nur in bestimmten
+                  Gemeinden.
                 </span>
               </span>
             </label>
@@ -244,7 +250,11 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
                 Setze{" "}
                 <strong className="font-semibold text-ink">
                   {best.vacationDays.length}{" "}
-                  {plural(best.vacationDays.length, "Urlaubstag", "Urlaubstage")}
+                  {plural(
+                    best.vacationDays.length,
+                    "Urlaubstag",
+                    "Urlaubstage",
+                  )}
                 </strong>{" "}
                 ein ({vacationLabel(best, result.year)}) und bekomme{" "}
                 <strong className="font-semibold text-ink">
@@ -302,9 +312,9 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
           </h2>
           <p className="mt-1.5 text-sm text-muted">
             Die {result.plan.blocks.length} mit{" "}
-            <span className="font-semibold text-accent">Im Plan</span> markierten
-            Vorschläge passen zusammen in dein Budget von {state.budget}{" "}
-            {plural(state.budget, "Urlaubstag", "Urlaubstagen")}.
+            <span className="font-semibold text-accent">Im Plan</span>{" "}
+            markierten Vorschläge passen zusammen in dein Budget von{" "}
+            {state.budget} {plural(state.budget, "Urlaubstag", "Urlaubstagen")}.
           </p>
 
           <ul className="mt-4 flex flex-col gap-3">
@@ -340,9 +350,8 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
                     </p>
                     {showAlternative && (
                       <p className="mt-1.5 text-[13px] text-muted">
-                        Mehr Urlaub einsetzen:{" "}
-                        {longest.vacationDays.length} Tage (
-                        {vacationLabel(longest, result.year)}) ergeben{" "}
+                        Mehr Urlaub einsetzen: {longest.vacationDays.length}{" "}
+                        Tage ({vacationLabel(longest, result.year)}) ergeben{" "}
                         <span className="font-semibold text-ink">
                           {longest.freeDays} freie Tage
                         </span>
@@ -408,33 +417,6 @@ export default function BrueckentageTool({ params }: { params?: ToolParams }) {
           ))}
         </ul>
       </details>
-    </div>
-  );
-}
-
-function Stat({
-  icon,
-  label,
-  value,
-  hint,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="flex items-center gap-2 text-[13px] font-semibold text-muted">
-        <span className="text-accent">{icon}</span>
-        {label}
-      </dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
     </div>
   );
 }

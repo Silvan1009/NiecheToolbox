@@ -23,7 +23,9 @@ export const stromkostenAffiliate: AffiliateSlot[] = [
     when: (result) => {
       const power = asResult(result);
       // Wer beim Standby unsicher ist, braucht eine Messung, keinen Tarif.
-      return power ? power.standbyShare >= 30 && power.costPerYear < 120 : false;
+      return power
+        ? power.standbyShare >= 30 && power.costPerYear < 120
+        : false;
     },
     headline: "Erst messen, dann rechnen",
     body: "Standby-Werte stehen selten auf dem Typenschild. Ein Messgerät für die Steckdose zeigt, was wirklich fließt.",

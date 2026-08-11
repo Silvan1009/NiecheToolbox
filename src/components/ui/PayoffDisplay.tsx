@@ -41,11 +41,7 @@ export function PayoffDisplay({
 }) {
   return (
     <div className="text-center">
-      {caption && (
-        <p className="font-display text-[13px] font-semibold tracking-wide text-muted uppercase">
-          {caption}
-        </p>
-      )}
+      {caption && <p className="font-display field-label">{caption}</p>}
 
       <p
         aria-hidden="true"

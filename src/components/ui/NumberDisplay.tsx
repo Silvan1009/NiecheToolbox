@@ -54,8 +54,9 @@ export function NumberDisplay({
     const from = displayRef.current;
     if (from === value) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
-      .matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     const duration = reduceMotion ? 0 : payoffDuration();
 
     // Auch der Sprung ohne Animation läuft über den Frame-Callback: so wird

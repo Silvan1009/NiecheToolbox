@@ -8,8 +8,9 @@ import { Field, Stepper, TextInput, Toggle } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
-import { isValidIso } from "@/lib/date";
+import { isValidIso, todayIso } from "@/lib/date";
 import { formatDate, plural } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { elternzeitAffiliate } from "./affiliate";
@@ -25,17 +26,12 @@ interface State extends Record<string, unknown> {
   startTwo: number;
 }
 
-function toCount(value: unknown, fallback: number) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? Math.trunc(parsed) : fallback;
-}
-
 function initialState(params: ToolParams | undefined): State {
   const fromParams = params?.termin;
   return {
     birthDate: isValidIso(fromParams)
       ? fromParams
-      : String(params?.heute ?? "2026-06-10"),
+      : String(params?.heute ?? todayIso()),
     extendedMutterschutz: params?.mehrlinge === "1",
     singleParent: params?.allein === "1",
     monthsOne: toCount(params?.m1, 12),
@@ -45,13 +41,15 @@ function initialState(params: ToolParams | undefined): State {
   };
 }
 
-const kindStyles: Record<MilestoneKind, { icon: typeof Flag; className: string }> =
-  {
-    frist: { icon: AlertTriangle, className: "bg-accent-soft text-accent" },
-    start: { icon: Play, className: "bg-positive-soft text-positive" },
-    ende: { icon: Square, className: "bg-ink-soft text-muted" },
-    info: { icon: Flag, className: "bg-ink-soft text-muted" },
-  };
+const kindStyles: Record<
+  MilestoneKind,
+  { icon: typeof Flag; className: string }
+> = {
+  frist: { icon: AlertTriangle, className: "bg-accent-soft text-accent" },
+  start: { icon: Play, className: "bg-positive-soft text-positive" },
+  ende: { icon: Square, className: "bg-ink-soft text-muted" },
+  info: { icon: Flag, className: "bg-ink-soft text-muted" },
+};
 
 export default function ElternzeitTool({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
@@ -147,7 +145,9 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
         <div className="mt-6 flex flex-col gap-2">
           <Toggle
             checked={state.extendedMutterschutz}
-            onChange={(extendedMutterschutz) => update({ extendedMutterschutz })}
+            onChange={(extendedMutterschutz) =>
+              update({ extendedMutterschutz })
+            }
             label="Mehrlings- oder Frühgeburt"
             hint="Der Mutterschutz nach der Geburt beträgt dann 12 statt 8 Wochen."
           />
@@ -232,12 +232,13 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
                       {formatDate(period.start)} – {formatDate(period.end)}
                     </p>
                     <p className="mt-1 text-sm text-muted">
-                      {period.months}{" "}
-                      {plural(period.months, "Monat", "Monate")} · Lebensmonat{" "}
-                      {period.startMonth} bis {period.endMonth}
+                      {period.months} {plural(period.months, "Monat", "Monate")}{" "}
+                      · Lebensmonat {period.startMonth} bis {period.endMonth}
                     </p>
                     {period.note && (
-                      <p className="mt-2 text-[13px] text-muted">{period.note}</p>
+                      <p className="mt-2 text-[13px] text-muted">
+                        {period.note}
+                      </p>
                     )}
                   </li>
                 ))}
@@ -291,7 +292,10 @@ export default function ElternzeitTool({ params }: { params?: ToolParams }) {
                 id="ez-warnings"
                 className="flex items-center gap-2 font-display text-base font-semibold"
               >
-                <CalendarClock className="size-4 text-accent" aria-hidden="true" />
+                <CalendarClock
+                  className="size-4 text-accent"
+                  aria-hidden="true"
+                />
                 Darauf solltest du achten
               </h2>
               <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-[15px] text-muted">

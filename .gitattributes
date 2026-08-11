@@ -1,0 +1,11 @@
+# Windows-Checkouts sollen nicht ständig ganze Dateien als geändert zeigen,
+# nur weil Git dort CRLF einsetzt. Text bleibt im Repo LF, egal auf welchem
+# System committet wird; Checkout-Zeilenenden regelt core.autocrlf lokal.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary

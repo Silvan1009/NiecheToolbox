@@ -11,6 +11,7 @@ import {
   Toggle,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { isValidIso, todayIso } from "@/lib/date";
@@ -20,15 +21,17 @@ import {
   formatWeekdayDate,
   plural,
 } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import {
   isRegionCode,
   partialHolidayNames,
   regions,
   type RegionCode,
-} from "@/tools/brueckentage/logic";
+} from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import {
+  MONTH_NAMES,
   calculateWorkdays,
   monthRange,
   monthlyBreakdown,
@@ -53,31 +56,11 @@ const WEEK_OPTIONS = [
   { value: "7", label: "Alle Tage" },
 ] as const satisfies readonly { value: WeekPreset; label: string }[];
 
-const MONTH_NAMES = [
-  "Januar",
-  "Februar",
-  "März",
-  "April",
-  "Mai",
-  "Juni",
-  "Juli",
-  "August",
-  "September",
-  "Oktober",
-  "November",
-  "Dezember",
-];
-
 const isWeekPreset = (value: unknown): value is WeekPreset =>
   value === "5" || value === "6" || value === "7";
 
 function toIsoOr(value: unknown, fallback: string): string {
   return isValidIso(value) ? value : fallback;
-}
-
-function toCount(value: unknown, fallback: number): number {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
 }
 
 function initialState(params: ToolParams | undefined): State {
@@ -436,27 +419,5 @@ function RangeButton({
     >
       {label}
     </button>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="text-[13px] font-semibold text-muted">{label}</dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
-    </div>
   );
 }

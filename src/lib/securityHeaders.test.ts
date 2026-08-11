@@ -42,7 +42,12 @@ describe("securityHeaders", () => {
     });
 
     it("verbietet, was die Seite nie braucht", () => {
-      for (const feature of ["camera", "microphone", "geolocation", "payment"]) {
+      for (const feature of [
+        "camera",
+        "microphone",
+        "geolocation",
+        "payment",
+      ]) {
         expect(value()).toContain(`${feature}=()`);
       }
     });
@@ -51,7 +56,9 @@ describe("securityHeaders", () => {
   describe("Content Security Policy", () => {
     it("läuft standardmäßig nur im Report-Modus", () => {
       const headers = securityHeaders();
-      expect(headerValue(headers, "Content-Security-Policy-Report-Only")).toBeDefined();
+      expect(
+        headerValue(headers, "Content-Security-Policy-Report-Only"),
+      ).toBeDefined();
       expect(headerValue(headers, "Content-Security-Policy")).toBeUndefined();
     });
 
@@ -120,7 +127,10 @@ describe("securityHeaders", () => {
   describe("Transportsicherheit", () => {
     it("setzt HSTS nur in Produktion", () => {
       expect(
-        headerValue(securityHeaders({ isProduction: true }), "Strict-Transport-Security"),
+        headerValue(
+          securityHeaders({ isProduction: true }),
+          "Strict-Transport-Security",
+        ),
       ).toContain("max-age=63072000");
       expect(
         headerValue(

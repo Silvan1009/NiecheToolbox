@@ -45,12 +45,16 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
-  // Seitenverifizierung für AdSense. Cookielos und ohne Einwilligung nötig –
-  // der übliche Weg über ein ungegatetes Werbe-Skript würde einem Prüfer, der
-  // ablehnt, gar nichts zeigen.
-  ...(ads.clientId
-    ? { other: { "google-adsense-account": ads.clientId } }
-    : {}),
+  other: {
+    // Seitenverifizierung für AdSense. Cookielos und ohne Einwilligung nötig –
+    // der übliche Weg über ein ungegatetes Werbe-Skript würde einem Prüfer,
+    // der ablehnt, gar nichts zeigen.
+    ...(ads.clientId ? { "google-adsense-account": ads.clientId } : {}),
+    // Verifizierung für Google Search Console (HTML-Tag-Methode).
+    ...(site.googleSiteVerification
+      ? { "google-site-verification": site.googleSiteVerification }
+      : {}),
+  },
 };
 
 export const viewport: Viewport = {
@@ -69,10 +73,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-bg text-ink">
         {/* Muss vor jedem Google-Tag laufen – daher ganz nach vorn. */}
         <AdsBootstrap />
-        <a
-          href="#inhalt"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-control focus:bg-surface focus:px-4 focus:py-2 focus:shadow-lift"
-        >
+        <a href="#inhalt" className="skip-link">
           Zum Inhalt springen
         </a>
         <SiteHeader />

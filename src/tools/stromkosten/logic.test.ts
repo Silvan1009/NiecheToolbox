@@ -103,10 +103,7 @@ describe("Standby", () => {
 
   it("beziffert die Standby-Kosten getrennt", () => {
     const result = power({ usage: 1, standbyWatts: 2 });
-    expect(result.standbyCostPerYear).toBeCloseTo(
-      result.standbyKwh * 0.35,
-      8,
-    );
+    expect(result.standbyCostPerYear).toBeCloseTo(result.standbyKwh * 0.35, 8);
     expect(result.standbyCostPerYear).toBeLessThan(result.costPerYear);
   });
 
@@ -203,7 +200,9 @@ describe("Voreinstellungen", () => {
 
   it("ordnet den Kühlschrank im erwarteten Bereich ein", () => {
     // Ein moderner Kühlschrank liegt bei 100 bis 200 kWh im Jahr.
-    const fridge = devicePresets.find((preset) => preset.id === "kuehlschrank")!;
+    const fridge = devicePresets.find(
+      (preset) => preset.id === "kuehlschrank",
+    )!;
     const result = calculatePower({
       watts: fridge.watts,
       pattern: fridge.pattern,

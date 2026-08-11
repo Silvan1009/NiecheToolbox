@@ -81,10 +81,26 @@ export interface VanClass {
 
 /** Aufsteigend sortiert – die Auswahl nimmt die erste passende Klasse. */
 export const vanClasses: readonly VanClass[] = [
-  { label: "Kombi oder Hochdachkombi", volume: 3, hint: "Führerschein Klasse B" },
-  { label: "Transporter, kurz (bis 3,5 t)", volume: 8, hint: "Führerschein Klasse B" },
-  { label: "Transporter, lang (bis 3,5 t)", volume: 12, hint: "Führerschein Klasse B" },
-  { label: "Transporter mit Hochdach (bis 3,5 t)", volume: 20, hint: "Führerschein Klasse B" },
+  {
+    label: "Kombi oder Hochdachkombi",
+    volume: 3,
+    hint: "Führerschein Klasse B",
+  },
+  {
+    label: "Transporter, kurz (bis 3,5 t)",
+    volume: 8,
+    hint: "Führerschein Klasse B",
+  },
+  {
+    label: "Transporter, lang (bis 3,5 t)",
+    volume: 12,
+    hint: "Führerschein Klasse B",
+  },
+  {
+    label: "Transporter mit Hochdach (bis 3,5 t)",
+    volume: 20,
+    hint: "Führerschein Klasse B",
+  },
   { label: "Lkw 7,5 t", volume: 40, hint: "Führerschein Klasse C1 nötig" },
   { label: "Umzugs-Lkw 12 t", volume: 60, hint: "Am besten mit Umzugsfirma" },
 ] as const;
@@ -181,7 +197,9 @@ export function calculateMove(input: MoveInput): MoveResult {
 
   const warnings: string[] = [];
   if (area <= 0) {
-    warnings.push("Trage die Wohnfläche ein, damit der Rechner etwas schätzen kann.");
+    warnings.push(
+      "Trage die Wohnfläche ein, damit der Rechner etwas schätzen kann.",
+    );
   }
   if (needsMoreTrips) {
     warnings.push(

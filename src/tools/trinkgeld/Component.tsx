@@ -11,9 +11,11 @@ import {
   TextInput,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
+import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro, plural } from "@/lib/format";
+import { toNumber } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { trinkgeldAffiliate } from "./affiliate";
@@ -46,17 +48,15 @@ const isRounding = (value: unknown): value is Rounding =>
 const isBillMode = (value: unknown): value is BillMode =>
   value === "gesamt" || value === "person";
 
-function toNumber(value: unknown, fallback: number) {
-  const parsed =
-    typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
-}
-
 function roundToCent(value: number) {
   return Math.round(value * 100) / 100;
 }
 
-function defaultPersons(bill: number, people: number, tipPercent: number): PersonEntry[] {
+function defaultPersons(
+  bill: number,
+  people: number,
+  tipPercent: number,
+): PersonEntry[] {
   const perHead = roundToCent(bill / people);
   return Array.from({ length: people }, (_, i) => ({
     name: `Person ${i + 1}`,
@@ -70,16 +70,14 @@ function parsePersons(value: unknown, fallback: PersonEntry[]): PersonEntry[] {
   try {
     const parsed: unknown = JSON.parse(value);
     if (!Array.isArray(parsed)) return fallback;
-    const persons = parsed
-      .slice(0, 50)
-      .map((entry): PersonEntry => {
-        const record = entry as Record<string, unknown>;
-        return {
-          name: typeof record.name === "string" ? record.name.slice(0, 40) : "",
-          bill: toNumber(record.bill, 0),
-          tipPercent: toNumber(record.tipPercent, 10),
-        };
-      });
+    const persons = parsed.slice(0, 50).map((entry): PersonEntry => {
+      const record = entry as Record<string, unknown>;
+      return {
+        name: typeof record.name === "string" ? record.name.slice(0, 40) : "",
+        bill: toNumber(record.bill, 0),
+        tipPercent: toNumber(record.tipPercent, 10),
+      };
+    });
     return persons.length > 0 ? persons : fallback;
   } catch {
     return fallback;
@@ -240,7 +238,11 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
                     type="text"
                     inputMode="decimal"
                     aria-label="Rechnungsbetrag gesamt"
-                    value={state.bill === 0 ? "" : String(state.bill).replace(".", ",")}
+                    value={
+                      state.bill === 0
+                        ? ""
+                        : String(state.bill).replace(".", ",")
+                    }
                     placeholder="0,00"
                     onChange={(event) =>
                       update({ bill: toNumber(event.target.value, 0) })
@@ -259,7 +261,8 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
               {isPersonMode && (
                 <p className="text-[13px] text-muted">
                   Jede Person mit eigenem Betrag und eigenem Trinkgeld – macht{" "}
-                  {formatEuro(split.totalBill)} insgesamt für {state.persons.length}{" "}
+                  {formatEuro(split.totalBill)} insgesamt für{" "}
+                  {state.persons.length}{" "}
                   {plural(state.persons.length, "Person", "Personen")}.
                 </p>
               )}
@@ -366,7 +369,9 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
                           inputMode="decimal"
                           aria-label={`Betrag Person ${index + 1}`}
                           value={
-                            person.bill === 0 ? "" : String(person.bill).replace(".", ",")
+                            person.bill === 0
+                              ? ""
+                              : String(person.bill).replace(".", ",")
                           }
                           placeholder="0,00"
                           onChange={(event) =>
@@ -533,8 +538,16 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
       )}
 
       <dl className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Gesamtbetrag" value={formatEuro(summary.total)} hint="mit Trinkgeld" />
-        <Stat label="Trinkgeld" value={formatEuro(summary.tip)} hint="für den Service" />
+        <Stat
+          label="Gesamtbetrag"
+          value={formatEuro(summary.total)}
+          hint="mit Trinkgeld"
+        />
+        <Stat
+          label="Trinkgeld"
+          value={formatEuro(summary.tip)}
+          hint="für den Service"
+        />
         <Stat
           label="Trinkgeld effektiv"
           value={`${formatDecimal(summary.effectiveTipPercent)} %`}
@@ -546,29 +559,10 @@ export default function TrinkgeldTool({ params }: { params?: ToolParams }) {
         />
       </dl>
 
-      <AffiliateBlock slots={trinkgeldAffiliate} result={isPersonMode ? split : result} />
-    </div>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className="surface-soft p-5">
-      <dt className="text-[13px] font-semibold text-muted">{label}</dt>
-      <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
-        <span className="mt-1 block text-[13px] text-muted">{hint}</span>
-      </dd>
+      <AffiliateBlock
+        slots={trinkgeldAffiliate}
+        result={isPersonMode ? split : result}
+      />
     </div>
   );
 }

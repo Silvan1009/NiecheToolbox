@@ -3,11 +3,17 @@
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card } from "@/components/ui/Card";
-import { Field, SegmentedControl, Stepper, Toggle } from "@/components/ui/Field";
+import {
+  Field,
+  SegmentedControl,
+  Stepper,
+  Toggle,
+} from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatInteger, plural } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { partymengenAffiliate } from "./affiliate";
@@ -37,11 +43,6 @@ const OCCASION_OPTIONS = [
 
 const isOccasion = (value: unknown): value is Occasion =>
   typeof value === "string" && value in occasions;
-
-function toCount(value: unknown, fallback: number): number {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {

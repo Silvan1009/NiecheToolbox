@@ -20,6 +20,14 @@
 # production
 /build
 
+# prebuild-Artefakte (siehe package.json -> prebuild). Beide werden bei jedem
+# Build neu erzeugt und gehoeren deshalb nicht in die Versionierung:
+# generate-og-images.tsx schrieb 199 PNGs mit 8,7 MiB pro Durchlauf neu,
+# generate-htaccess.ts haengt vom Environment ab (CSP_MODE, Analytics-Origin) –
+# eingecheckt lag dort die lokale report-only-Fassung ohne Umami-Origin.
+/public/og/
+/public/.htaccess
+
 # misc
 .DS_Store
 *.pem

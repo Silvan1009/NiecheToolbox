@@ -46,8 +46,12 @@ describe("Essen", () => {
   });
 
   it("lässt die vegetarische Zeile weg, wenn niemand vegetarisch isst", () => {
-    expect(item(party({ vegetarianPercent: 0 }), "vegetarisch")).toBeUndefined();
-    expect(item(party({ vegetarianPercent: 100 }), "vegetarisch")).toBeDefined();
+    expect(
+      item(party({ vegetarianPercent: 0 }), "vegetarisch"),
+    ).toBeUndefined();
+    expect(
+      item(party({ vegetarianPercent: 100 }), "vegetarisch"),
+    ).toBeDefined();
     expect(item(party({ vegetarianPercent: 100 }), "fleisch")?.amount).toBe(0);
   });
 
@@ -95,7 +99,9 @@ describe("Getränke", () => {
     const withKids = party({ adults: 10, children: 10 });
     const withoutKids = party({ adults: 10, children: 0 });
     // Bier hängt nur an den Erwachsenen – Kinder ändern daran nichts.
-    expect(item(withKids, "bier")?.amount).toBe(item(withoutKids, "bier")?.amount);
+    expect(item(withKids, "bier")?.amount).toBe(
+      item(withoutKids, "bier")?.amount,
+    );
     // Softdrinks steigen dagegen.
     expect(item(withKids, "softdrinks")!.amount).toBeGreaterThan(
       item(withoutKids, "softdrinks")!.amount,
@@ -164,7 +170,9 @@ describe("Hinweise", () => {
   });
 
   it("erinnert an alkoholfreie Alternativen", () => {
-    expect(party({ alcohol: true }).warnings.join(" ")).toContain("alkoholfreie");
+    expect(party({ alcohol: true }).warnings.join(" ")).toContain(
+      "alkoholfreie",
+    );
     expect(party({ alcohol: false }).warnings.join(" ")).not.toContain(
       "alkoholfreie",
     );
@@ -183,7 +191,12 @@ describe("Invarianten", () => {
       for (const adults of [0, 1, 5, 25, 120]) {
         for (const veg of [0, 50, 100]) {
           for (const alcohol of [true, false]) {
-            const result = party({ occasion, adults, vegetarianPercent: veg, alcohol });
+            const result = party({
+              occasion,
+              adults,
+              vegetarianPercent: veg,
+              alcohol,
+            });
             for (const entry of [
               ...result.food,
               ...result.drinks,
@@ -216,7 +229,11 @@ describe("Invarianten", () => {
     });
     expect(result.guests).toBe(0);
     expect(result.eaterUnits).toBe(0);
-    for (const entry of [...result.food, ...result.drinks, ...result.supplies]) {
+    for (const entry of [
+      ...result.food,
+      ...result.drinks,
+      ...result.supplies,
+    ]) {
       expect(entry.amount).toBeGreaterThanOrEqual(0);
       expect(Number.isFinite(entry.amount)).toBe(true);
     }
