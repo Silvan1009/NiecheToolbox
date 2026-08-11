@@ -9,6 +9,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatInteger } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { lesezeitAffiliate } from "./affiliate";
@@ -29,11 +30,6 @@ interface State extends Record<string, unknown> {
 
 const isPace = (value: unknown): value is ReadingPace =>
   paceOptions.some((option) => option.id === value);
-
-function toCount(value: unknown, fallback: number) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {

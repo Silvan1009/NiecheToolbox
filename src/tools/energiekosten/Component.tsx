@@ -18,7 +18,7 @@ import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatAmount, formatEuro, formatInteger } from "@/lib/format";
 import { toEuro } from "@/lib/finanzmath";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { energiekostenAffiliate } from "./affiliate";
@@ -53,11 +53,6 @@ const isStandard = (value: unknown): value is Gebaeudestandard =>
   value === "teilsaniert" ||
   value === "saniert" ||
   value === "neubau";
-
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
 
 /** URL-Schlüssel je Sparte – Präfix "s" für Strom, "g" für Gas. */
 const KEYS: Record<Energieart, Record<keyof TarifInput, string>> = {

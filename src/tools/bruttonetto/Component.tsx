@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
+import { WegCallout } from "@/components/WegCallout";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
@@ -16,10 +17,12 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/lib/regionen";
+import { wegPath } from "@/lib/seo";
 import type { ToolParams } from "@/tools/types";
+import { getWeg } from "@/wege/registry";
 import { bruttonettoAffiliate } from "./affiliate";
 import {
   calculateBruttoNetto,
@@ -35,6 +38,8 @@ import {
   type Steuerklasse,
 } from "@/lib/steuerdaten";
 
+const hauskaufWeg = getWeg("hauskauf");
+
 /** Der Zustand ist genau die Eingabe der Rechenlogik – keine zweite Wahrheit. */
 interface State extends Record<string, unknown>, BruttoNettoInput {}
 
@@ -49,11 +54,6 @@ const isZeitraum = (value: unknown): value is Zeitraum =>
   value === "monat" || value === "jahr";
 
 /** Schalter kommen als 0/1 aus der URL und aus den Varianten-Params. */
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
-
 function toSteuerklasse(value: unknown, fallback: Steuerklasse): Steuerklasse {
   const parsed = Number(value);
   return isSteuerklasse(parsed) ? parsed : fallback;
@@ -518,6 +518,16 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={bruttonettoAffiliate} result={result} />
+
+      {hauskaufWeg && (
+        <WegCallout
+          href={wegPath(hauskaufWeg.slug)}
+          icon={hauskaufWeg.icon}
+          eyebrow="Weg"
+          title={hauskaufWeg.name}
+          description="Dieses Netto mit einer Immobilienfinanzierung zusammenrechnen: komfortabel, tragbar oder eng?"
+        />
+      )}
     </div>
   );
 }

@@ -28,24 +28,18 @@ export const STEUERJAHR = 2026;
 
 export const GRUNDFREIBETRAG = 12348;
 
-/** Untergrenzen der Tarifzonen, in Euro zu versteuerndes Einkommen. */
-export const TARIF_ZONEN = {
-  /** Ab hier greift die erste Progressionszone mit 14 % Eingangssatz. */
-  progression1: 12348,
-  /** Ab hier die zweite, flachere Progressionszone. */
-  progression2: 17799,
-  /** Ab hier konstant 42 % Grenzsteuersatz. */
-  proportional: 69878,
-  /** Ab hier 45 %, umgangssprachlich Reichensteuer. */
-  spitzensatz: 277826,
-} as const;
-
 /**
  * Einkommensteuer nach § 32a Abs. 1 EStG für 2026, Grundtarif.
  *
  * Die Koeffizienten stehen so im Gesetz. `y` und `z` sind jeweils ein
  * Zehntausendstel des Betrags, der die jeweilige Zonengrenze übersteigt.
  * Das Ergebnis wird auf volle Euro abgerundet, ebenfalls Vorgabe des Gesetzes.
+ *
+ * Die Zonengrenzen stehen bewusst als Literal in der Formel und nicht in einer
+ * eigenen Konstantentabelle daneben: Grenze und zugehörige Koeffizienten
+ * gehören im Gesetz zusammen, getrennt laufen sie auseinander. Genau das war
+ * hier passiert – eine ungenutzte Tabelle nannte als Beginn der letzten Zone
+ * 277826, die Formel prüft auf 277825.
  */
 export function einkommensteuer(zvE: number): number {
   const x = Math.floor(Math.max(0, zvE));
@@ -147,6 +141,22 @@ export const SOLI_FREIGRENZE = 20350;
 export const SOLI_FREIGRENZE_SPLITTING = 40700;
 /** In der Milderungszone steigt der Soli gedeckelt an, § 4 Satz 2 SolZG. */
 export const SOLI_MILDERUNG_SATZ = 11.9;
+
+/**
+ * Solidaritätszuschlag mit Freigrenze und Milderungszone, § 4 SolZG.
+ *
+ * Bis zur Freigrenze fällt nichts an. Direkt darüber würde der volle Zuschlag
+ * einen Sprung erzeugen, deshalb ist er auf 11,9 Prozent des übersteigenden
+ * Betrags begrenzt, bis der reguläre Satz von 5,5 Prozent günstiger ist.
+ */
+export function soliZuschlag(steuer: number, splitting: boolean): number {
+  const freigrenze = splitting ? SOLI_FREIGRENZE_SPLITTING : SOLI_FREIGRENZE;
+  if (steuer <= freigrenze) return 0;
+
+  const voll = (steuer * SOLI_SATZ) / 100;
+  const milderung = ((steuer - freigrenze) * SOLI_MILDERUNG_SATZ) / 100;
+  return Math.min(voll, milderung);
+}
 
 /* ---------------------------------------------------------------------------
  * Kirchensteuer

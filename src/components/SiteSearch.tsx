@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Search } from "lucide-react";
@@ -23,7 +23,7 @@ export function SiteSearch() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const results = filterEntries(searchIndex, query);
+  const results = useMemo(() => filterEntries(searchIndex, query), [query]);
   const open = results.length > 0;
 
   // Schließen bei Klick/Touch außerhalb – pointerdown statt click, damit ein

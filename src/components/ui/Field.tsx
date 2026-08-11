@@ -1,12 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { toNumber } from "@/lib/parse";
 
-const controlClasses =
-  "w-full rounded-control bg-surface px-3.5 py-2.5 text-[15px] text-ink " +
-  "shadow-[var(--elev-inset)] transition-shadow duration-(--dur-fast) " +
-  "hover:shadow-[inset_0_0_0_1px_var(--accent-ring)] " +
-  "focus:shadow-[inset_0_0_0_1px_var(--accent)] focus:outline-none " +
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+const controlClasses = "field-control";
 
 export function Field({
   label,
@@ -20,15 +15,12 @@ export function Field({
   children: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={htmlFor}
-        className="text-[13px] font-semibold tracking-wide text-muted uppercase"
-      >
+    <div className="field-group">
+      <label htmlFor={htmlFor} className="field-label">
         {label}
       </label>
       {children}
-      {hint && <p className="text-[13px] text-muted">{hint}</p>}
+      {hint && <p className="field-hint">{hint}</p>}
     </div>
   );
 }
@@ -80,10 +72,7 @@ export function UnitInput({
         className="font-mono"
       />
       {unit && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted"
-        >
+        <span aria-hidden="true" className="field-unit-suffix">
           {unit}
         </span>
       )}
@@ -236,7 +225,7 @@ export function Stepper({
         onClick={() => onChange(clamp(value - step))}
         disabled={value <= min}
         aria-label="Wert verringern"
-        className="grid size-11 shrink-0 place-items-center rounded-control bg-surface text-lg text-ink shadow-[var(--elev-inset)] transition-colors duration-(--dur-fast) hover:bg-ink-soft disabled:opacity-40"
+        className="stepper-btn"
       >
         −
       </button>
@@ -256,18 +245,14 @@ export function Stepper({
           }}
           className={`${controlClasses} text-center font-mono ${suffix ? "pr-14" : ""} [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
         />
-        {suffix && (
-          <span className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-sm text-muted">
-            {suffix}
-          </span>
-        )}
+        {suffix && <span className="field-unit-suffix">{suffix}</span>}
       </div>
       <button
         type="button"
         onClick={() => onChange(clamp(value + step))}
         disabled={value >= max}
         aria-label="Wert erhöhen"
-        className="grid size-11 shrink-0 place-items-center rounded-control bg-surface text-lg text-ink shadow-[var(--elev-inset)] transition-colors duration-(--dur-fast) hover:bg-ink-soft disabled:opacity-40"
+        className="stepper-btn"
       >
         +
       </button>

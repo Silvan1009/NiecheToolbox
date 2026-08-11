@@ -89,8 +89,8 @@ export default function UeberPage() {
               Trotzdem gilt: Die Ergebnisse sind rechnerische Orientierung. Bei
               arbeits-, miet- und sozialrechtlichen Fragen entscheidet am Ende
               der Einzelfall, und regionale Sonderregelungen sind nicht immer
-              abgebildet. Rechts-, Steuer- oder Finanzberatung ist das
-              ausdrücklich nicht.
+              abgebildet. Rechts-, Steuer-, Finanz- oder medizinische Beratung
+              ist das ausdrücklich nicht.
             </p>
           </Section>
 

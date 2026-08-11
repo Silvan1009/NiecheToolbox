@@ -3,13 +3,16 @@ import { aktienkennzahlen } from "./aktienkennzahlen/manifest";
 import { arbeitstage } from "./arbeitstage/manifest";
 import { autokosten } from "./autokosten/manifest";
 import { backform } from "./backform/manifest";
+import { bmi } from "./bmi/manifest";
 import { brueckentage } from "./brueckentage/manifest";
 import { bruttonetto } from "./bruttonetto/manifest";
 import { elterngeld } from "./elterngeld/manifest";
 import { elternzeit } from "./elternzeit/manifest";
 import { energiekosten } from "./energiekosten/manifest";
 import { erbschaftsteuer } from "./erbschaftsteuer/manifest";
+import { geburtstermin } from "./geburtstermin/manifest";
 import { immobilienrechner } from "./immobilienrechner/manifest";
+import { kalorienbedarf } from "./kalorienbedarf/manifest";
 import { kindergeld } from "./kindergeld/manifest";
 import { kreditrechner } from "./kreditrechner/manifest";
 import { kuendigungsfrist } from "./kuendigungsfrist/manifest";
@@ -58,14 +61,14 @@ export const tools: ToolManifest[] = [
   elterngeld,
   rentenabschlag,
   abfindung,
+  bmi,
+  kalorienbedarf,
+  geburtstermin,
 ];
 
 /** Ein Tool per Slug. `draft` ist bewusst nicht auffindbar. */
 export const getTool = (slug: string) =>
   tools.find((t) => t.slug === slug && t.status !== "draft");
-
-/** Alles, was öffentlich beworben wird (Galerie, Sitemap). */
-export const liveTools = () => tools.filter((t) => t.status === "live");
 
 /** Alles Erreichbare – inklusive beta, ohne draft. */
 export const publicTools = () => tools.filter((t) => t.status !== "draft");

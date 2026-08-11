@@ -16,7 +16,7 @@ import { Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatEuro } from "@/lib/format";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { versicherungsvergleichAffiliate } from "./affiliate";
@@ -101,36 +101,32 @@ const isKreis = (value: unknown): value is HaftpflichtPersonenkreis =>
 const isRisikogruppe = (value: unknown): value is BuRisikogruppe =>
   typeof value === "string" && value in buRisikogruppeLabels;
 
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
+/**
+ * Werte mit Typwächter erst lesen, dann prüfen: über zwei getrennte
+ * `search.get`-Aufrufe hinweg engt TypeScript den Typ nicht ein.
+ */
+const paramGetter =
+  (source: ToolParams | URLSearchParams) => (key: string) =>
+    source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
 
 function readKfz(
   source: ToolParams | URLSearchParams,
   fallback: KfzInput,
 ): KfzInput {
-  const get = (key: string) =>
-    source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
+  const get = paramGetter(source);
+  const deckung = get("kfz_deckung");
+  const sfKlasse = get("kfz_sf");
+  const region = get("kfz_region");
+  const fahrzeug = get("kfz_fahrzeug");
+  const fahrerAlter = get("kfz_alter");
+  const kmProJahr = get("kfz_km");
   return {
-    deckung: isDeckung(get("kfz_deckung"))
-      ? (get("kfz_deckung") as KfzDeckung)
-      : fallback.deckung,
-    sfKlasse: isSfKlasse(get("kfz_sf"))
-      ? (get("kfz_sf") as KfzSfKlasse)
-      : fallback.sfKlasse,
-    region: isRegion(get("kfz_region"))
-      ? (get("kfz_region") as KfzRegion)
-      : fallback.region,
-    fahrzeug: isFahrzeug(get("kfz_fahrzeug"))
-      ? (get("kfz_fahrzeug") as KfzFahrzeug)
-      : fallback.fahrzeug,
-    fahrerAlter: isAlter(get("kfz_alter"))
-      ? (get("kfz_alter") as KfzAlter)
-      : fallback.fahrerAlter,
-    kmProJahr: isKm(get("kfz_km"))
-      ? (get("kfz_km") as KfzFahrleistung)
-      : fallback.kmProJahr,
+    deckung: isDeckung(deckung) ? deckung : fallback.deckung,
+    sfKlasse: isSfKlasse(sfKlasse) ? sfKlasse : fallback.sfKlasse,
+    region: isRegion(region) ? region : fallback.region,
+    fahrzeug: isFahrzeug(fahrzeug) ? fahrzeug : fallback.fahrzeug,
+    fahrerAlter: isAlter(fahrerAlter) ? fahrerAlter : fallback.fahrerAlter,
+    kmProJahr: isKm(kmProJahr) ? kmProJahr : fallback.kmProJahr,
     eigenerBeitragJahr: toNumber(
       get("kfz_beitrag"),
       fallback.eigenerBeitragJahr,
@@ -142,11 +138,11 @@ function readHaftpflicht(
   source: ToolParams | URLSearchParams,
   fallback: HaftpflichtInput,
 ): HaftpflichtInput {
-  const get = (key: string) =>
-    source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
+  const get = paramGetter(source);
+  const personenkreis = get("hp_kreis");
   return {
-    personenkreis: isKreis(get("hp_kreis"))
-      ? (get("hp_kreis") as HaftpflichtPersonenkreis)
+    personenkreis: isKreis(personenkreis)
+      ? personenkreis
       : fallback.personenkreis,
     mitSelbstbeteiligung: toBool(get("hp_sb"), fallback.mitSelbstbeteiligung),
     eigenerBeitragJahr: toNumber(
@@ -160,13 +156,13 @@ function readBu(
   source: ToolParams | URLSearchParams,
   fallback: BuInput,
 ): BuInput {
-  const get = (key: string) =>
-    source instanceof URLSearchParams ? source.get(key) : (source[key] ?? null);
+  const get = paramGetter(source);
+  const risikogruppe = get("bu_risiko");
   return {
     alterBeiEintritt: toNumber(get("bu_alter"), fallback.alterBeiEintritt),
     buRenteMonat: toNumber(get("bu_rente"), fallback.buRenteMonat),
-    risikogruppe: isRisikogruppe(get("bu_risiko"))
-      ? (get("bu_risiko") as BuRisikogruppe)
+    risikogruppe: isRisikogruppe(risikogruppe)
+      ? risikogruppe
       : fallback.risikogruppe,
     eigenerBeitragMonat: toNumber(
       get("bu_beitrag"),
@@ -192,14 +188,15 @@ export default function VersicherungsvergleichTool({
 }) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
-    parse: (search, fallback) => ({
-      art: isArt(search.get("art"))
-        ? (search.get("art") as VersicherungsArt)
-        : fallback.art,
-      kfz: readKfz(search, fallback.kfz),
-      haftpflicht: readHaftpflicht(search, fallback.haftpflicht),
-      bu: readBu(search, fallback.bu),
-    }),
+    parse: (search, fallback) => {
+      const art = search.get("art");
+      return {
+        art: isArt(art) ? art : fallback.art,
+        kfz: readKfz(search, fallback.kfz),
+        haftpflicht: readHaftpflicht(search, fallback.haftpflicht),
+        bu: readBu(search, fallback.bu),
+      };
+    },
     serialize: (next) => ({
       art: urlValue(next.art, DEFAULTS.art),
       kfz_deckung: urlValue(next.kfz.deckung, DEFAULTS.kfz.deckung),

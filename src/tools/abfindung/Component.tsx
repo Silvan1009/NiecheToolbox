@@ -9,7 +9,7 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { abfindungAffiliate } from "./affiliate";
@@ -24,11 +24,6 @@ const KIRCHENSTEUER_OPTIONS = [
   { value: 8, label: "8 % (Bayern, Baden-Württemberg)" },
   { value: 9, label: "9 % (übrige Bundesländer)" },
 ];
-
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
 
 function initialState(params: ToolParams | undefined): State {
   return {

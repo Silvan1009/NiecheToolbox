@@ -19,7 +19,7 @@
  * Rundungsfehler einschleicht.
  */
 
-import { cents, clamp, nn, toEuro } from "@/lib/finanzmath";
+import { MONATE_PRO_JAHR, cents, clamp, nn, toEuro } from "@/lib/finanzmath";
 import { formatInteger } from "@/lib/format";
 
 export type Antrieb = "benzin" | "diesel" | "elektro";
@@ -108,7 +108,7 @@ export function calculateAutokosten(input: AutokostenInput): AutokostenResult {
     verschleissJahrC +
     sonstigesJahrC;
 
-  const gesamtMonatC = Math.round(gesamtC / 12);
+  const gesamtMonatC = Math.round(gesamtC / MONATE_PRO_JAHR);
   const kostenProKmCent = kmProJahr > 0 ? gesamtC / kmProJahr : 0;
 
   const posten: KostenPosten[] = [
@@ -122,7 +122,7 @@ export function calculateAutokosten(input: AutokostenInput): AutokostenResult {
   ].map(({ label, jahrC }) => ({
     label,
     jahr: toEuro(jahrC),
-    monat: toEuro(Math.round(jahrC / 12)),
+    monat: toEuro(Math.round(jahrC / MONATE_PRO_JAHR)),
     anteilProzent: gesamtC > 0 ? (jahrC / gesamtC) * 100 : 0,
   }));
 

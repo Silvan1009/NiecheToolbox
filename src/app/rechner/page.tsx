@@ -78,26 +78,29 @@ export default function RechnerPage() {
               <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {tools.map((tool) => {
                   // Bei Tools, deren Unterseiten je ein eigenes Thema sind,
-                  // stehen sie direkt unter der Karte – sonst wären sie nur
-                  // über die Tool-Seite erreichbar.
+                  // stehen sie unter der Karte – sonst wären sie nur über die
+                  // Tool-Seite erreichbar. Als Hover-Flyout statt fest im
+                  // Fluss, damit die Karten selbst alle gleich groß bleiben.
                   const varianten = toolsWithIndexedVariants.includes(tool.slug)
                     ? (tool.getVariants?.() ?? [])
                     : [];
 
                   return (
-                    <li key={tool.slug} className="flex flex-col gap-3">
+                    <li key={tool.slug} className="group relative flex">
                       <ToolCard tool={tool} showCategory={false} />
 
                       {varianten.length > 0 && (
-                        <ul className="flex flex-col gap-1 px-1">
+                        <ul
+                          className="pointer-events-none absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-1 rounded-control border border-line bg-surface p-2 opacity-0 shadow-lift transition-opacity duration-(--dur-fast) ease-(--ease-out) group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"
+                        >
                           {varianten.map((variant) => (
                             <li key={variant.slug}>
                               <Link
                                 href={variantPath(tool.slug, variant.slug)}
-                                className="group flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
+                                className="group/link flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
                               >
                                 <ArrowRight
-                                  className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover:translate-x-0.5"
+                                  className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover/link:translate-x-0.5"
                                   aria-hidden="true"
                                 />
                                 {variant.heading ?? variant.title}

@@ -1,7 +1,6 @@
 import { DoorOpen } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { abfindungAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "Eine Abfindung ist kein steuerfreies Trostpflaster – sie wird zum übrigen Jahreseinkommen addiert und dort ganz normal besteuert. Ohne Korrektur würde eine große Einmalzahlung den Grenzsteuersatz für dieses Jahr in die Höhe treiben, obwohl sie wirtschaftlich eine Entschädigung für mehrere Jahre entgangenes Gehalt ist. Die Fünftelregelung nach § 34 EStG gleicht genau das aus: Sie besteuert rechnerisch nur ein Fünftel der Abfindung zusätzlich und multipliziert die daraus entstehende Steuer mit fünf – bei einer progressiven Steuerkurve kommt dabei nie mehr heraus als bei sofortiger voller Versteuerung.",
@@ -60,8 +59,6 @@ export const abfindung: ToolManifest = {
     "abfindungsrechner",
     "steuer auf abfindung",
   ],
-
-  Component,
 
   about,
   faq,

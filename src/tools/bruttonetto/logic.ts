@@ -49,14 +49,12 @@ import {
   PFLEGE_ABSCHLAG_MAX_KINDER,
   PFLEGE_KINDERLOS_ZUSCHLAG,
   PFLEGE_SACHSEN_MEHR_ARBEITNEHMER,
-  SOLI_FREIGRENZE,
-  SOLI_FREIGRENZE_SPLITTING,
-  SOLI_MILDERUNG_SATZ,
-  SOLI_SATZ,
   SONDERAUSGABEN_PAUSCHBETRAG,
   VERSICHERUNGSPFLICHTGRENZE,
+  ZUSATZBEITRAG_DURCHSCHNITT,
   einkommensteuer,
   kirchensteuersatz,
+  soliZuschlag,
   type Steuerklasse,
 } from "@/lib/steuerdaten";
 
@@ -355,21 +353,14 @@ function lohnsteuer(zvE: number, steuerklasse: Steuerklasse): number {
  * Bis zur Freigrenze fällt gar nichts an. Direkt darüber würde der volle
  * Zuschlag einen Sprung erzeugen, deshalb ist er in der Milderungszone auf
  * 11,9 Prozent des übersteigenden Betrags begrenzt, bis der reguläre Satz
- * von 5,5 Prozent günstiger ist.
+ * von 5,5 Prozent günstiger ist. Steuerklasse III rechnet mit der doppelten
+ * Freigrenze, siehe `soliZuschlag` in `@/lib/steuerdaten`.
  */
 function solidaritaetszuschlag(
   lohnsteuerBetrag: number,
   steuerklasse: Steuerklasse,
 ): number {
-  const freigrenze =
-    steuerklasse === 3 ? SOLI_FREIGRENZE_SPLITTING : SOLI_FREIGRENZE;
-
-  if (lohnsteuerBetrag <= freigrenze) return 0;
-
-  const voll = (lohnsteuerBetrag * SOLI_SATZ) / 100;
-  const milderung =
-    ((lohnsteuerBetrag - freigrenze) * SOLI_MILDERUNG_SATZ) / 100;
-  return Math.min(voll, milderung);
+  return soliZuschlag(lohnsteuerBetrag, steuerklasse === 3);
 }
 
 /* ---------------------------------------------------------------------------
@@ -599,7 +590,7 @@ export function defaultInput(): BruttoNettoInput {
     kinderZahl: 0,
     kinderlos: true,
     gesetzlichVersichert: true,
-    zusatzbeitragPercent: 2.9,
+    zusatzbeitragPercent: ZUSATZBEITRAG_DURCHSCHNITT,
     privatBeitragMonat: 0,
     rentenversicherungspflichtig: true,
   };

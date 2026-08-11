@@ -54,6 +54,9 @@ jobs:
           NEXT_PUBLIC_ADS_ENABLED: false
           NEXT_PUBLIC_ADSENSE_CLIENT : ca-pub-4379452218973991
           NEXT_PUBLIC_ANALYTICS_PROVIDER : umami
+          NEXT_PUBLIC_UMAMI_SCRIPT_URL : https://cloud.umami.is/script.js
+          NEXT_PUBLIC_UMAMI_WEBSITE_ID : 90a65a5b-0e64-4135-82ec-094c0d8e80cc
+          GOOGLE_SITE_VERIFICATION : 8EBDaNWwLjSCWpJrGQ_6tYLCGmw_PWU-5dzQujdD_44
           # Bewusst NICHT ${{ inputs.site-url }}: Deploy Now reicht dort den
           # Platzhalter https://IONOS_DEPLOY_NOW_SITE_URL durch und ersetzt ihn
           # erst nach dem Build per `sed` in allen Dateien. Das zerstört den

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/config/site";
+import { FavoritesNavLink } from "@/components/FavoritesNavLink";
 import { SiteSearch } from "@/components/SiteSearch";
 
 export function SiteHeader() {
@@ -16,10 +17,7 @@ export function SiteHeader() {
           href="/"
           className="group order-1 flex items-center gap-2.5 rounded-control"
         >
-          <span
-            aria-hidden="true"
-            className="grid size-8 place-items-center rounded-[10px] bg-accent font-display text-[15px] font-bold text-white shadow-soft transition-colors duration-(--dur-fast) group-hover:bg-accent-600"
-          >
+          <span aria-hidden="true" className="brand-mark">
             {site.name.charAt(0)}
           </span>
           <span className="font-display text-[17px] font-semibold tracking-tight">
@@ -35,22 +33,14 @@ export function SiteHeader() {
           aria-label="Hauptnavigation"
           className="order-2 ml-auto flex items-center gap-1 sm:order-3 sm:ml-0"
         >
-          <Link
-            href="/rechner/"
-            className="rounded-pill px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
-          >
+          <FavoritesNavLink />
+          <Link href="/rechner/" className="nav-pill">
             Rechner finden
           </Link>
-          <Link
-            href="/#tools"
-            className="hidden rounded-pill px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink sm:inline-block"
-          >
+          <Link href="/#tools" className="nav-pill hidden sm:inline-block">
             Alle Rechner
           </Link>
-          <Link
-            href="/ueber/"
-            className="rounded-pill px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
-          >
+          <Link href="/ueber/" className="nav-pill">
             Über uns
           </Link>
         </nav>

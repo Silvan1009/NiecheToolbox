@@ -16,7 +16,7 @@
  * Gerechnet wird in ganzen Cent.
  */
 
-import { cents, clamp, nn, toEuro } from "@/lib/finanzmath";
+import { cents, clamp, jahreRentenbezug, nn, toEuro } from "@/lib/finanzmath";
 import { formatInteger } from "@/lib/format";
 
 const ABSCHLAG_PRO_MONAT = 0.3;
@@ -105,11 +105,11 @@ export function calculateRentenabschlag(
 
   const differenzMonatlichC = renteMitAnpassungC - regelrenteC;
 
-  const lebenserwartung = Math.round(
-    clamp(input.lebenserwartung, geplantesAlterJahre + 1, 110),
+  const jahreRentenbezugWert = jahreRentenbezug(
+    geplantesAlterJahre,
+    input.lebenserwartung,
   );
-  const jahreRentenbezug = Math.max(0, lebenserwartung - geplantesAlterJahre);
-  const kumulierterEffektC = differenzMonatlichC * 12 * jahreRentenbezug;
+  const kumulierterEffektC = differenzMonatlichC * 12 * jahreRentenbezugWert;
 
   const warnings: string[] = [];
 
@@ -121,7 +121,7 @@ export function calculateRentenabschlag(
 
   if (abschlagProzent > 0) {
     warnings.push(
-      `Der Abschlag gilt lebenslang für jede einzelne Rentenzahlung, nicht nur übergangsweise – bei ${jahreRentenbezug} Jahren angenommener Rentenbezugsdauer summiert er sich auf ${formatInteger(toEuro(Math.abs(kumulierterEffektC)))} €.`,
+      `Der Abschlag gilt lebenslang für jede einzelne Rentenzahlung, nicht nur übergangsweise – bei ${jahreRentenbezugWert} Jahren angenommener Rentenbezugsdauer summiert er sich auf ${formatInteger(toEuro(Math.abs(kumulierterEffektC)))} €.`,
     );
   }
 
@@ -145,7 +145,7 @@ export function calculateRentenabschlag(
     zuschlagProzent,
     renteMitAnpassung: toEuro(renteMitAnpassungC),
     differenzMonatlich: toEuro(differenzMonatlichC),
-    jahreRentenbezug,
+    jahreRentenbezug: jahreRentenbezugWert,
     kumulierterEffekt: toEuro(kumulierterEffektC),
     warnings,
   };

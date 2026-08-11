@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
 import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
+import type { WegManifest } from "@/wege/types";
 
 /** Absolute URL aus einem Pfad – für canonical, OG und Sitemap. */
 export function absoluteUrl(path: string): string {
@@ -13,17 +14,16 @@ export function absoluteUrl(path: string): string {
  * Canonical, Sitemap und tatsächliche URL müssen dieselbe Schreibweise haben,
  * sonst crawlt Google zwei Fassungen derselben Seite.
  *
- * Gilt nur für Seiten. Dateien mit Endung (/sitemap.xml, /ads.txt) und die
- * Bilder unter /og/ bleiben unverändert.
+ * Dateien mit Endung (/sitemap.xml, /ads.txt) und die Bilder unter /og/ haben
+ * deshalb keinen Schrägstrich am Ende – siehe ogImagePath().
  */
-export function pagePath(path: string): string {
-  const withLeading = path.startsWith("/") ? path : `/${path}`;
-  return withLeading.endsWith("/") ? withLeading : `${withLeading}/`;
-}
-
 export const toolPath = (slug: string) => `/tools/${slug}/`;
 export const variantPath = (slug: string, variant: string) =>
   `/tools/${slug}/${variant}/`;
+
+export const wegPath = (slug: string) => `/wege/${slug}/`;
+export const wegVariantPath = (slug: string, variant: string) =>
+  `/wege/${slug}/${variant}/`;
 
 /**
  * Pfad zum vorgerenderten Open-Graph-Bild (erzeugt von
@@ -94,6 +94,30 @@ export function toolNode(
   };
 }
 
+/** Wie toolNode, aber für einen Weg – dieselbe Struktur, ein anderer Pfadraum. */
+export function wegNode(
+  weg: WegManifest,
+  {
+    name,
+    description,
+    path,
+  }: { name: string; description: string; path: string },
+): JsonLdNode {
+  return {
+    "@type": "WebApplication",
+    name,
+    description,
+    url: absoluteUrl(path),
+    applicationCategory: "UtilityApplication",
+    operatingSystem: "Web",
+    inLanguage: "de-DE",
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+    keywords: weg.keywords.join(", "),
+    publisher: { "@type": "Organization", name: site.name, url: site.url },
+  };
+}
+
 export function websiteNode(): JsonLdNode {
   return {
     "@type": "WebSite",
@@ -132,6 +156,39 @@ export function toolMetadata(
     title,
     description,
     keywords: tool.keywords,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      url: path,
+      images: [{ url: image, width: 1200, height: 630, alt: heading }],
+    },
+    twitter: { card: "summary_large_image", images: [image] },
+  };
+}
+
+/** Titel und Beschreibung einer Weg-Seite – Gegenstück zu toolSeo(). */
+export function wegSeo(weg: WegManifest, variant?: ToolVariant) {
+  const title = variant?.title ?? `${weg.name} – kostenlos & ohne Anmeldung`;
+  const heading = variant?.heading ?? variant?.title ?? weg.name;
+  const description = variant?.description ?? weg.tagline;
+  const path = variant
+    ? wegVariantPath(weg.slug, variant.slug)
+    : wegPath(weg.slug);
+
+  return { title, heading, description, path };
+}
+
+/** Das komplette Metadata-Objekt für Weg-Seiten – Gegenstück zu toolMetadata(). */
+export function wegMetadata(weg: WegManifest, variant?: ToolVariant): Metadata {
+  const { title, heading, description, path } = wegSeo(weg, variant);
+  const image = ogImagePath(weg.slug, variant?.slug);
+
+  return {
+    title,
+    description,
+    keywords: weg.keywords,
     alternates: { canonical: path },
     openGraph: {
       type: "website",

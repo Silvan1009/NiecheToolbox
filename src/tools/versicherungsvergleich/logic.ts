@@ -333,7 +333,7 @@ export function calculateHaftpflicht(
  * ------------------------------------------------------------------------- */
 
 export type BuRisikogruppe = "niedrig" | "mittel" | "hoch";
-export type BuAltersband = "unter30" | "30bis39" | "40bis49" | "ab50";
+type BuAltersband = "unter30" | "30bis39" | "40bis49" | "ab50";
 
 export interface BuInput {
   alterBeiEintritt: number;

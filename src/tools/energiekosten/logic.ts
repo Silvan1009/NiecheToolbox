@@ -25,6 +25,7 @@
  */
 
 import { MONATE_PRO_JAHR, cents, clamp, nn } from "@/lib/finanzmath";
+import { formatAmount } from "@/lib/format";
 import { CO2_G_PER_KWH } from "@/tools/stromkosten/logic";
 
 export type Energieart = "strom" | "gas";
@@ -264,7 +265,7 @@ export function calculateEnergie(input: EnergieInput): EnergieResult {
       const preis = nn(input[sparte.art].arbeitspreisCt);
       if (preis > PREIS_AUFFAELLIG_CT[sparte.art]) {
         warnings.push(
-          `${preis.toString().replace(".", ",")} ct/kWh liegt bei ${name} über dem, was Neukundentarife derzeit verlangen. Ein Wechsel ist hier der größte Hebel.`,
+          `${formatAmount(preis)} ct/kWh liegt bei ${name} über dem, was Neukundentarife derzeit verlangen. Ein Wechsel ist hier der größte Hebel.`,
         );
       }
     }

@@ -114,6 +114,12 @@ const tendenzTexte: Record<Skala, Record<Tendenz, string>> = {
 export const tendenzText = (skala: Skala, tendenz: Tendenz) =>
   tendenzTexte[skala][tendenz];
 
+/** Die Tendenz eines Werts nach den Faustwerten der Kennzahl, wenn bildbar. */
+export const tendenzVon = (
+  def: KennzahlDef,
+  wert: number | null,
+): Tendenz | null => (wert !== null && def.bewerten ? def.bewerten(wert) : null);
+
 /* ---------------------------------------------------------------------------
  * Gruppen
  * ------------------------------------------------------------------------- */

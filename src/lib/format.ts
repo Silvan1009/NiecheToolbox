@@ -48,15 +48,6 @@ export const formatEuroRounded = (n: number) => euroRounded.format(n);
 export const formatRate = (n: number) => rate.format(n);
 
 /**
- * "6,5 %" – wie eine Mengenangabe, plus Zeichen.
- *
- * Das Leerzeichen vor dem Prozentzeichen ist ein geschütztes: nach DIN 5008
- * gehört es dort hin, und ohne Schutz bricht es am Zeilenende zwischen Zahl
- * und Zeichen um.
- */
-export const formatPercent = (n: number) => `${amount.format(n)} %`;
-
-/**
  * Datumsangaben sind reine Kalendertage (ISO "YYYY-MM-DD"). Sie werden als
  * UTC-Mitternacht gelesen und in UTC formatiert – dadurch ist die Ausgabe auf
  * Server und Client identisch, unabhängig von der Zeitzone des Besuchers.

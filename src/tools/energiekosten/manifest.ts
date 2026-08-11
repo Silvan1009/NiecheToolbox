@@ -2,7 +2,6 @@ import { Gauge } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { energiekostenAffiliate } from "./affiliate";
-import Component from "./Component";
 import { variantenTexte } from "./varianten";
 
 const about: string[] = [
@@ -81,7 +80,6 @@ export const energiekosten: ToolManifest = {
     "tarifwechsel ersparnis",
   ],
 
-  Component,
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,

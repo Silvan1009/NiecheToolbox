@@ -32,11 +32,9 @@ export function Stat({
         {label}
       </dt>
       <dd className="mt-2">
-        <span className="font-mono text-2xl leading-none font-semibold tabular-nums">
-          {value}
-        </span>
+        <span className="readout-value">{value}</span>
         {hint !== undefined && (
-          <span className="mt-1 block text-[13px] text-muted">{hint}</span>
+          <span className="mt-1 block field-hint">{hint}</span>
         )}
       </dd>
     </div>

@@ -3,7 +3,6 @@ import { formatInteger } from "@/lib/format";
 import { regions } from "@/lib/regionen";
 import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
-import Component from "./Component";
 import {
   grestHistorie,
   grestSpanne,
@@ -124,7 +123,7 @@ function buildVariants(): ToolVariant[] {
         },
         {
           question: `Wie viel Eigenkapital brauche ich für einen Kauf in ${region.name}?`,
-          answer: `Mindestens die Kaufnebenkosten, also rund ${prozent(quote)} Prozent des Kaufpreises – bei 300.000 Euro etwa ${euro(nk300)}. Das ist die absolute Untergrenze und führt zu einer Vollfinanzierung des Kaufpreises mit entsprechendem Zinsaufschlag. Komfortabel wird es, wenn zusätzlich rund 20 Prozent des Kaufpreises als Eigenkapital eingebracht werden, in diesem Beispiel also weitere 60.000 Euro.`,
+          answer: `In ${region.name} mindestens die Kaufnebenkosten, also bei ${prozent(satz)} Prozent Grunderwerbsteuer rund ${prozent(quote)} Prozent des Kaufpreises – bei 300.000 Euro etwa ${euro(nk300)}, bei 500.000 Euro ${euro(nk500)}. Das ist die absolute Untergrenze und führt zu einer Vollfinanzierung des Kaufpreises mit entsprechendem Zinsaufschlag. Komfortabel wird es, wenn zusätzlich rund 20 Prozent des Kaufpreises als Eigenkapital eingebracht werden, in diesem Beispiel also weitere 60.000 Euro.`,
         },
         {
           question: `Lässt sich die Grunderwerbsteuer in ${region.name} senken?`,
@@ -160,7 +159,6 @@ export const immobilienrechner: ToolManifest = {
     "cashflow immobilie berechnen",
   ],
 
-  Component,
   getVariants: buildVariants,
 
   about,

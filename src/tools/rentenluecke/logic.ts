@@ -27,6 +27,7 @@ import {
   MONATE_PRO_JAHR,
   cents,
   clamp,
+  jahreRentenbezug,
   monatszinsEffektiv,
   nn,
   toEuro,
@@ -271,15 +272,16 @@ export function calculateRentenluecke(
   const renteneintrittsalter = Math.round(
     clamp(input.renteneintrittsalter, 16, 80),
   );
-  const lebenserwartung = Math.round(
-    clamp(input.lebenserwartung, renteneintrittsalter + 1, 110),
-  );
 
   const jahreBisRente = Math.min(
     MAX_JAHRE,
     Math.max(0, renteneintrittsalter - aktuellesAlter),
   );
-  const jahreRentenbezug = Math.max(1, lebenserwartung - renteneintrittsalter);
+  const jahreRentenbezugWert = jahreRentenbezug(
+    renteneintrittsalter,
+    input.lebenserwartung,
+    1,
+  );
 
   const versorgungsniveauPercent = clamp(
     input.versorgungsniveauPercent,
@@ -315,7 +317,7 @@ export function calculateRentenluecke(
   const kapitalbedarfC = barwertRente(
     monatlicheLueckeC,
     realeRenditeRentenphase,
-    jahreRentenbezug * MONATE_PRO_JAHR,
+    jahreRentenbezugWert * MONATE_PRO_JAHR,
   );
   const kapitalbedarfEwigC = barwertEwigeRente(
     monatlicheLueckeC,
@@ -392,7 +394,7 @@ export function calculateRentenluecke(
 
   return {
     jahreBisRente,
-    jahreRentenbezug,
+    jahreRentenbezug: jahreRentenbezugWert,
 
     gewuenschtesEinkommen,
     erwarteteRente,

@@ -75,9 +75,7 @@ const SCORE = {
 
 /** Trifft `token` den Anfang eines Wortes in `haystack`? */
 function hasWordStart(haystack: string, token: string): boolean {
-  return haystack === token || haystack.startsWith(`${token}`)
-    ? true
-    : haystack.includes(` ${token}`);
+  return haystack.startsWith(token) || haystack.includes(` ${token}`);
 }
 
 interface PreparedEntry {
@@ -90,8 +88,19 @@ interface PreparedEntry {
   tags: [string, string][];
 }
 
+/**
+ * Je Index einmal vorbereitet, nicht bei jedem Tastendruck neu: Normalisierung
+ * über Name, Hinweis, Elternname und Tags aller Einträge lohnt sich als
+ * Aufwand nicht pro Suchanfrage – der Index selbst ändert sich zur Laufzeit
+ * nicht.
+ */
+const preparedCache = new WeakMap<readonly SearchEntry[], PreparedEntry[]>();
+
 function prepare(index: readonly SearchEntry[]): PreparedEntry[] {
-  return index.map((entry, position) => ({
+  const cached = preparedCache.get(index);
+  if (cached) return cached;
+
+  const prepared = index.map((entry, position) => ({
     entry,
     position,
     names: forms(entry.name),
@@ -99,6 +108,8 @@ function prepare(index: readonly SearchEntry[]): PreparedEntry[] {
     parents: forms(entry.parentName ?? ""),
     tags: entry.tags.map(forms),
   }));
+  preparedCache.set(index, prepared);
+  return prepared;
 }
 
 /** Punkte eines einzelnen Suchtokens gegen einen Eintrag. 0 = kein Treffer. */

@@ -14,15 +14,15 @@ import {
   UnitInput,
 } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
-import { Stat } from "@/components/ui/Readout";
+import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { toEuro } from "@/lib/finanzmath";
 import { formatDate, formatEuro, plural } from "@/lib/format";
 import { isValidIso } from "@/lib/date";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
-import { regions, type RegionCode } from "@/lib/regionen";
+import { isRegionCode, regions } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import { kindergeldAffiliate } from "./affiliate";
 import {
@@ -40,6 +40,7 @@ import { statusLabels, type KindStatus } from "./saetze";
 interface State extends Record<string, unknown>, KindergeldInput {}
 
 const DEFAULTS: State = { ...defaultInput() };
+const DEFAULT_KINDER_CODE = encodeKinder(DEFAULTS.kinder);
 
 const VERANLAGUNG_OPTIONS = [
   { value: "zusammen", label: "Zusammen veranlagt" },
@@ -52,14 +53,6 @@ const isVeranlagung = (value: unknown): value is Veranlagung =>
 const isStatus = (value: unknown): value is KindStatus =>
   value === "regulaer" || value === "ausbildung" || value === "arbeitsuchend";
 
-const isRegion = (value: unknown): value is RegionCode =>
-  typeof value === "string" && regions.some((r) => r.code === value);
-
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
-
 function initialState(params: ToolParams | undefined): State {
   return {
     ...DEFAULTS,
@@ -71,7 +64,7 @@ function initialState(params: ToolParams | undefined): State {
     zvE: toNumber(params?.zve, DEFAULTS.zvE),
     veranlagung: isVeranlagung(params?.ver) ? params.ver : DEFAULTS.veranlagung,
     kirchensteuer: toBool(params?.kist, DEFAULTS.kirchensteuer),
-    region: isRegion(params?.land) ? params.land : DEFAULTS.region,
+    region: isRegionCode(params?.land) ? params.land : DEFAULTS.region,
   };
 }
 
@@ -89,27 +82,27 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
         zvE: toNumber(search.get("zve"), fallback.zvE),
         veranlagung: isVeranlagung(ver) ? ver : fallback.veranlagung,
         kirchensteuer: toBool(search.get("kist"), fallback.kirchensteuer),
-        region: isRegion(land) ? land : fallback.region,
+        region: isRegionCode(land) ? land : fallback.region,
       };
     },
     // `heute` steht bewusst nicht in der URL: es ist kein Eingabewert, sondern
     // der Stichtag der Rechnung.
-    serialize: (next) => ({
-      kinder:
-        encodeKinder(next.kinder) === encodeKinder(DEFAULTS.kinder)
-          ? ""
-          : encodeKinder(next.kinder),
-      jahr: urlValue(next.jahr, DEFAULTS.jahr),
-      zve: urlValue(next.zvE, DEFAULTS.zvE),
-      ver: urlValue(next.veranlagung, DEFAULTS.veranlagung),
-      kist:
-        next.kirchensteuer === DEFAULTS.kirchensteuer
-          ? ""
-          : next.kirchensteuer
-            ? "1"
-            : "0",
-      land: urlValue(next.region, DEFAULTS.region),
-    }),
+    serialize: (next) => {
+      const kinderCode = encodeKinder(next.kinder);
+      return {
+        kinder: kinderCode === DEFAULT_KINDER_CODE ? "" : kinderCode,
+        jahr: urlValue(next.jahr, DEFAULTS.jahr),
+        zve: urlValue(next.zvE, DEFAULTS.zvE),
+        ver: urlValue(next.veranlagung, DEFAULTS.veranlagung),
+        kist:
+          next.kirchensteuer === DEFAULTS.kirchensteuer
+            ? ""
+            : next.kirchensteuer
+              ? "1"
+              : "0",
+        land: urlValue(next.region, DEFAULTS.region),
+      };
+    },
   });
 
   const result = useMemo(() => calculateKindergeld(state), [state]);
@@ -248,7 +241,7 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
                 value={state.region}
                 onChange={(event) => {
                   const naechstes = event.target.value;
-                  if (isRegion(naechstes)) update({ region: naechstes });
+                  if (isRegionCode(naechstes)) update({ region: naechstes });
                 }}
               >
                 {regions.map((region) => (
@@ -347,20 +340,20 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
             : "Das Kindergeld bringt mehr als der Kinderfreibetrag. Es bleibt dabei – der Freibetrag senkt aber trotzdem Soli und Kirchensteuer."}
         </p>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
-          <PostenZeile
+          <AmountRow
             label="Einkommensteuer ohne Kinderfreibetrag"
             value={toEuro(result.steuerOhneC)}
           />
-          <PostenZeile
+          <AmountRow
             label={`Einkommensteuer mit Freibetrag (${formatEuro(toEuro(result.freibetragGesamtC))})`}
             value={toEuro(result.steuerMitC)}
           />
-          <PostenZeile
+          <AmountRow
             label="Steuervorteil durch den Freibetrag"
             value={toEuro(result.steuervorteilC)}
             stark
           />
-          <PostenZeile
+          <AmountRow
             label={
               state.veranlagung === "zusammen"
                 ? "Kindergeld im Jahr, dagegengerechnet"
@@ -368,17 +361,17 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
             }
             value={toEuro(result.kindergeldVergleichC)}
           />
-          <PostenZeile
+          <AmountRow
             label="Ersparnis beim Solidaritätszuschlag"
             value={toEuro(result.soliEntlastungC)}
           />
           {state.kirchensteuer && (
-            <PostenZeile
+            <AmountRow
               label="Ersparnis bei der Kirchensteuer"
               value={toEuro(result.kirchensteuerEntlastungC)}
             />
           )}
-          <PostenZeile
+          <AmountRow
             label="Entlastung im Jahr insgesamt"
             value={toEuro(result.gesamtentlastungC)}
             stark
@@ -475,35 +468,5 @@ export default function KindergeldTool({ params }: { params?: ToolParams }) {
 
       <AffiliateBlock slots={kindergeldAffiliate} result={result} />
     </div>
-  );
-}
-
-/**
- * Eine Zeile der Aufstellung – Label links, Betrag rechts in Mono.
- *
- * Die Null wird ausdrücklich normalisiert: `-0` schreibt `Intl` als
- * "-0,00 €", und ein Minus vor einer Null, die keine ist, sieht nach einem
- * Rechenfehler aus.
- */
-function PostenZeile({
-  label,
-  value,
-  stark = false,
-}: {
-  label: string;
-  value: number;
-  stark?: boolean;
-}) {
-  return (
-    <li
-      className={`flex items-baseline justify-between gap-4 ${
-        stark ? "border-t border-line pt-2 font-semibold" : ""
-      }`}
-    >
-      <span className={stark ? "" : "text-muted"}>{label}</span>
-      <span className="font-mono tabular-nums">
-        {formatEuro(value === 0 ? 0 : value)}
-      </span>
-    </li>
   );
 }

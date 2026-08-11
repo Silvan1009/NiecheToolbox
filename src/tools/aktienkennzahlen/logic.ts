@@ -34,6 +34,7 @@
  */
 
 import { clamp, nn } from "@/lib/finanzmath";
+import { formatRate } from "@/lib/format";
 
 /** Multiplikator der Graham-Zahl: KGV 15 × KBV 1,5. */
 export const GRAHAM_FAKTOR = 22.5;
@@ -420,26 +421,26 @@ export function calculateAktie(input: AktienInput): AktienResult {
   }
   if (nettoschuldenEbitda !== null && nettoschuldenEbitda > 3.5) {
     warnings.push(
-      `Die Nettoschulden entsprechen dem ${formatKurz(nettoschuldenEbitda)}-Fachen des EBITDA. Ab etwa dem 3,5-Fachen gilt eine Bilanz als angespannt: Banken verlangen Aufschläge, und in einem schwachen Jahr wird die Refinanzierung zum bestimmenden Thema.`,
+      `Die Nettoschulden entsprechen dem ${formatRate(nettoschuldenEbitda)}-Fachen des EBITDA. Ab etwa dem 3,5-Fachen gilt eine Bilanz als angespannt: Banken verlangen Aufschläge, und in einem schwachen Jahr wird die Refinanzierung zum bestimmenden Thema.`,
     );
   }
   if (zinsdeckung !== null && zinsdeckung < 3 && ebit > 0) {
     warnings.push(
-      `Das operative Ergebnis deckt die Zinsen nur ${formatKurz(zinsdeckung)}-fach. Unter dem Dreifachen bleibt kaum Luft: Ein Gewinnrückgang von einem Drittel würde die Zinslast schon nicht mehr verdient.`,
+      `Das operative Ergebnis deckt die Zinsen nur ${formatRate(zinsdeckung)}-fach. Unter dem Dreifachen bleibt kaum Luft: Ein Gewinnrückgang von einem Drittel würde die Zinslast schon nicht mehr verdient.`,
     );
   }
   if (ausschuettungsquote !== null && ausschuettungsquote > 100) {
     warnings.push(
-      `Die Dividende übersteigt den Gewinn (Ausschüttungsquote ${formatKurz(ausschuettungsquote)} Prozent). Das lässt sich eine Zeit lang aus der Kasse oder über Schulden finanzieren, aber nicht dauerhaft – Kürzungen der Dividende folgen typischerweise auf mehrere solche Jahre.`,
+      `Die Dividende übersteigt den Gewinn (Ausschüttungsquote ${formatRate(ausschuettungsquote)} Prozent). Das lässt sich eine Zeit lang aus der Kasse oder über Schulden finanzieren, aber nicht dauerhaft – Kürzungen der Dividende folgen typischerweise auf mehrere solche Jahre.`,
     );
   } else if (ausschuettungsquote !== null && ausschuettungsquote > 80) {
     warnings.push(
-      `Mit einer Ausschüttungsquote von ${formatKurz(ausschuettungsquote)} Prozent bleibt wenig Gewinn im Unternehmen. Für Wachstum aus eigener Kraft fehlt dieses Geld, und für eine Dividendenerhöhung ist kaum Spielraum.`,
+      `Mit einer Ausschüttungsquote von ${formatRate(ausschuettungsquote)} Prozent bleibt wenig Gewinn im Unternehmen. Für Wachstum aus eigener Kraft fehlt dieses Geld, und für eine Dividendenerhöhung ist kaum Spielraum.`,
     );
   }
   if (gewinnqualitaet !== null && gewinnqualitaet < 80) {
     warnings.push(
-      `Der operative Cashflow erreicht nur ${formatKurz(gewinnqualitaet)} Prozent des Gewinns. Wenn ein Gewinn dauerhaft nicht als Geld ankommt, steckt er meist in Forderungen oder Vorräten – ein Muster, das Bilanzprobleme oft ankündigt.`,
+      `Der operative Cashflow erreicht nur ${formatRate(gewinnqualitaet)} Prozent des Gewinns. Wenn ein Gewinn dauerhaft nicht als Geld ankommt, steckt er meist in Forderungen oder Vorräten – ein Muster, das Bilanzprobleme oft ankündigt.`,
     );
   }
   if (freeCashflow < 0 && operativerCashflow > 0) {
@@ -449,19 +450,19 @@ export function calculateAktie(input: AktienInput): AktienResult {
   }
   if (peg !== null && peg > 2) {
     warnings.push(
-      `Das PEG-Verhältnis liegt bei ${formatKurz(peg)}. Als Faustregel gilt: bis 1 preiswert, bis 2 vertretbar. Darüber zahlt der Kurs Wachstum, das erst noch geliefert werden muss.`,
+      `Das PEG-Verhältnis liegt bei ${formatRate(peg)}. Als Faustregel gilt: bis 1 preiswert, bis 2 vertretbar. Darüber zahlt der Kurs Wachstum, das erst noch geliefert werden muss.`,
     );
   }
   // Nur bei positiver, aber schwacher Rendite. Ein Verlustjahr ist schon oben
   // erklärt – „nur minus 5 Prozent Rendite“ wäre kein Satz.
   if (kbv !== null && kbv > 3 && roe !== null && roe > 0 && roe < 10) {
     warnings.push(
-      `Der Kurs liegt beim ${formatKurz(kbv)}-Fachen des Buchwerts, während das Eigenkapital nur ${formatKurz(roe)} Prozent Rendite bringt. Ein solcher Aufschlag lässt sich nur mit Werten rechtfertigen, die nicht in der Bilanz stehen – Marken, Patente, Netzwerkeffekte.`,
+      `Der Kurs liegt beim ${formatRate(kbv)}-Fachen des Buchwerts, während das Eigenkapital nur ${formatRate(roe)} Prozent Rendite bringt. Ein solcher Aufschlag lässt sich nur mit Werten rechtfertigen, die nicht in der Bilanz stehen – Marken, Patente, Netzwerkeffekte.`,
     );
   }
   if (wachstum > 15) {
     warnings.push(
-      `Mit ${formatKurz(wachstum)} Prozent Gewinnwachstum pro Jahr rechnet die Projektion sehr optimistisch. Über zehn Jahre halten das nur wenige Unternehmen durch; jede Kennzahl, die darauf aufbaut – PEG, Kursziel, erwartete Rendite – steht und fällt mit dieser Annahme.`,
+      `Mit ${formatRate(wachstum)} Prozent Gewinnwachstum pro Jahr rechnet die Projektion sehr optimistisch. Über zehn Jahre halten das nur wenige Unternehmen durch; jede Kennzahl, die darauf aufbaut – PEG, Kursziel, erwartete Rendite – steht und fällt mit dieser Annahme.`,
     );
   }
   if (dividende > 0 && abstand < DDM_MIN_ABSTAND) {
@@ -471,7 +472,7 @@ export function calculateAktie(input: AktienInput): AktienResult {
   }
   if (eigenkapitalquote !== null && eigenkapitalquote < 25) {
     warnings.push(
-      `Die Eigenkapitalquote beträgt ${formatKurz(eigenkapitalquote)} Prozent. Bei Banken und Immobiliengesellschaften ist das normal, im produzierenden Gewerbe oder im Handel gilt es als dünn.`,
+      `Die Eigenkapitalquote beträgt ${formatRate(eigenkapitalquote)} Prozent. Bei Banken und Immobiliengesellschaften ist das normal, im produzierenden Gewerbe oder im Handel gilt es als dünn.`,
     );
   }
   if (
@@ -480,7 +481,7 @@ export function calculateAktie(input: AktienInput): AktienResult {
     kurzfristig > 0
   ) {
     warnings.push(
-      `Das Umlaufvermögen deckt die kurzfristigen Verbindlichkeiten nur zu ${formatKurz(liquiditaetsgrad3)} Prozent. Das Unternehmen finanziert langfristiges Vermögen mit kurzfristigem Geld und ist auf die Verlängerung dieser Kredite angewiesen.`,
+      `Das Umlaufvermögen deckt die kurzfristigen Verbindlichkeiten nur zu ${formatRate(liquiditaetsgrad3)} Prozent. Das Unternehmen finanziert langfristiges Vermögen mit kurzfristigem Geld und ist auf die Verlängerung dieser Kredite angewiesen.`,
     );
   }
 
@@ -542,11 +543,6 @@ export function calculateAktie(input: AktienInput): AktienResult {
     jahre,
     warnings,
   };
-}
-
-/** Nur für Hinweistexte: eine Dezimale mit Komma, ohne Formatierungsbibliothek. */
-function formatKurz(n: number): string {
-  return (Math.round(n * 10) / 10).toString().replace(".", ",");
 }
 
 /* ---------------------------------------------------------------------------

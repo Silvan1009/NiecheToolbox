@@ -1,9 +1,11 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import { site } from "@/config/site";
-import { toolSeo } from "@/lib/seo";
+import { toolSeo, wegSeo } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
+import { publicWege } from "@/wege/registry";
 
 /**
  * Erzeugt die OG-Bilder einmalig beim Build als PNG-Dateien unter public/og/.
@@ -13,6 +15,10 @@ import { publicTools } from "@/tools/registry";
  * und Untertitel stammen ohnehin nur aus der Tool-Registry – eine zur
  * Build-Zeit bekannte, endliche Menge –, also lässt sich jedes Bild einmal
  * hier erzeugen statt live nachzufragen.
+ *
+ * `ImageResponse` (resvg) liefert True-Color-PNGs ohne Palette-Optimierung.
+ * Das Layout kommt mit einer Handvoll Flächenfarben aus, daher komprimiert
+ * sharp verlustfrei auf eine Palette nach – rund 60 % kleiner, pixelgleich.
  */
 
 const OUT_DIR = join(process.cwd(), "public", "og");
@@ -119,7 +125,10 @@ function renderImage(title: string, subtitle: string) {
 
 async function writeImage(fileName: string, title: string, subtitle: string) {
   const response = renderImage(title, subtitle);
-  const buffer = Buffer.from(await response.arrayBuffer());
+  const rawBuffer = Buffer.from(await response.arrayBuffer());
+  const buffer = await sharp(rawBuffer)
+    .png({ compressionLevel: 9, palette: true })
+    .toBuffer();
   writeFileSync(join(OUT_DIR, fileName), buffer);
   console.log(`  ${fileName}`);
 }
@@ -139,6 +148,20 @@ async function main() {
         `${tool.slug}--${variant.slug}.png`,
         variantHeading,
         tool.name,
+      );
+    }
+  }
+
+  for (const weg of publicWege()) {
+    const { heading } = wegSeo(weg);
+    await writeImage(`${weg.slug}.png`, heading, weg.tagline);
+
+    for (const variant of weg.getVariants?.() ?? []) {
+      const { heading: variantHeading } = wegSeo(weg, variant);
+      await writeImage(
+        `${weg.slug}--${variant.slug}.png`,
+        variantHeading,
+        weg.name,
       );
     }
   }

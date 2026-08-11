@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, toolPath, variantPath } from "@/lib/seo";
+import { absoluteUrl, toolPath, variantPath, wegPath, wegVariantPath } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
+import { publicWege } from "@/wege/registry";
 
 export const dynamic = "force-static";
 
@@ -31,6 +32,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const variant of tool.getVariants?.() ?? []) {
       entries.push({
         url: absoluteUrl(variantPath(tool.slug, variant.slug)),
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  for (const weg of publicWege()) {
+    entries.push({
+      url: absoluteUrl(wegPath(weg.slug)),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
+
+    for (const variant of weg.getVariants?.() ?? []) {
+      entries.push({
+        url: absoluteUrl(wegVariantPath(weg.slug, variant.slug)),
         lastModified,
         changeFrequency: "monthly",
         priority: 0.7,

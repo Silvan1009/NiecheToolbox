@@ -21,7 +21,7 @@
  */
 
 import { anteil, cents, clamp, nn } from "@/lib/finanzmath";
-import { fromIso, isValidIso, type Iso } from "@/lib/date";
+import { diffDays, isValidIso, type Iso } from "@/lib/date";
 
 /** Mehr als drei Jahre Vorlauf plant niemand für einen Urlaub. */
 const MAX_MONATE = 36;
@@ -207,7 +207,7 @@ export function calculateUrlaub(input: UrlaubInput): UrlaubResult {
  */
 export function monateBis(heute: Iso, abreise: Iso): number {
   if (!isValidIso(heute) || !isValidIso(abreise)) return 0;
-  const tage = (fromIso(abreise) - fromIso(heute)) / 86_400_000;
+  const tage = diffDays(heute, abreise);
   if (!Number.isFinite(tage) || tage <= 0) return 0;
   return clamp(Math.floor(tage / 30.44), 0, MAX_MONATE);
 }

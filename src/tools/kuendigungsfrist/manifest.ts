@@ -2,7 +2,6 @@ import { FileClock } from "lucide-react";
 import { addDays, todayIso } from "@/lib/date";
 import type { ToolManifest } from "@/tools/types";
 import { kuendigungsfristAffiliate } from "./affiliate";
-import Component from "./Component";
 
 export const kuendigungsfrist: ToolManifest = {
   slug: "kuendigungsfrist",
@@ -22,8 +21,6 @@ export const kuendigungsfrist: ToolManifest = {
     "573c bgb",
     "probezeit kündigung",
   ],
-
-  Component,
 
   // Das Standarddatum ist "heute" – das darf erst auf dem Server entstehen,
   // sonst weicht der erste Client-Render vom vorgerenderten HTML ab.

@@ -1,10 +1,16 @@
-import type { ComponentType } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { AffiliateKey } from "@/config/site";
 import type { AdDensity } from "@/lib/adPlacement";
 
 export type ToolCategory =
-  "zeit" | "geld" | "familie" | "text" | "wohnen" | "essen" | "alltag";
+  | "zeit"
+  | "geld"
+  | "familie"
+  | "text"
+  | "wohnen"
+  | "essen"
+  | "alltag"
+  | "gesundheit";
 
 export const categoryLabels: Record<ToolCategory, string> = {
   zeit: "Zeit & Urlaub",
@@ -14,6 +20,7 @@ export const categoryLabels: Record<ToolCategory, string> = {
   wohnen: "Wohnen & Verträge",
   essen: "Essen & Feiern",
   alltag: "Alltag",
+  gesundheit: "Gesundheit",
 };
 
 /** Startparameter, die eine Tool-Component von URL oder SEO-Variante bekommt. */
@@ -84,9 +91,6 @@ export interface ToolManifest {
   /** Interne Suche + SEO. */
   keywords: string[];
   status: "live" | "beta" | "draft";
-
-  /** Die eigentliche UI. Bekommt optionale Startparameter (aus URL/Variante). */
-  Component: ComponentType<{ params?: ToolParams }>;
 
   /**
    * Startwerte, die erst zur Laufzeit feststehen (z. B. das aktuelle Jahr).

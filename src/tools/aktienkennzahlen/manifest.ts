@@ -2,7 +2,6 @@ import { ChartCandlestick } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { aktienAffiliate } from "./affiliate";
-import Component from "./Component";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -63,10 +62,6 @@ const sharedFaq: FaqEntry[] = [
 ];
 
 /* ---------------------------------------------------------------------------
- * Kennzahl-Varianten
- * ------------------------------------------------------------------------- */
-
-/* ---------------------------------------------------------------------------
  * Manifest
  * ------------------------------------------------------------------------- */
 
@@ -91,7 +86,6 @@ export const aktienkennzahlen: ToolManifest = {
     "free cashflow rendite",
   ],
 
-  Component,
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,

@@ -74,7 +74,7 @@ function holidayDates(year: number, region: RegionCode): Set<Iso> {
   const cached = holidayCache.get(key);
   if (cached) return cached;
   const set = new Set(
-    holidaysFor(year, region, { includePartial: false }).map((h) => h.date),
+    holidaysFor(year, region).map((h) => h.date),
   );
   holidayCache.set(key, set);
   return set;

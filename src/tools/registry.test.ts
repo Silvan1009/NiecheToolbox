@@ -37,6 +37,58 @@ describe("Varianten", () => {
     }
   });
 
+  /**
+   * Eine Variante, die nur andere Startwerte setzt, ist aus Sicht einer Suche
+   * wie einer AdSense-Prüfung eine Dublette der Tool-Seite – "low value
+   * content". Jede Variantenseite muss deshalb eigenen Text mitbringen, nicht
+   * den des Tools erben.
+   */
+  it("jede Variante bringt eigenen Text und eigene Fragen mit", () => {
+    for (const tool of publicTools()) {
+      for (const variant of tool.getVariants?.() ?? []) {
+        const wo = `${tool.slug}/${variant.slug}`;
+
+        expect(
+          variant.about?.length ?? 0,
+          `${wo} erbt den Erklärtext des Tools`,
+        ).toBeGreaterThan(0);
+        expect(
+          variant.faq?.length ?? 0,
+          `${wo} erbt die FAQ des Tools`,
+        ).toBeGreaterThan(0);
+
+        // Der erste Absatz trägt die Seite – er darf nicht der des Tools sein.
+        expect(variant.about?.[0], `${wo} beginnt mit dem Tool-Text`).not.toBe(
+          tool.about?.[0],
+        );
+
+        const eigene = (variant.faq ?? []).filter(
+          (entry) =>
+            !(tool.faq ?? []).some(
+              (geteilt) => geteilt.answer === entry.answer,
+            ),
+        );
+        expect(
+          eigene.length,
+          `${wo} hat keine eigene Frage, nur die des Tools`,
+        ).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("Titel und Description sind je Tool eindeutig", () => {
+    for (const tool of publicTools()) {
+      const varianten = tool.getVariants?.() ?? [];
+      for (const feld of ["title", "description"] as const) {
+        const werte = varianten.map((variant) => variant[feld]);
+        expect(
+          new Set(werte).size,
+          `Tool "${tool.slug}" hat doppelte Variant-${feld}`,
+        ).toBe(werte.length);
+      }
+    }
+  });
+
   it("getVariants() liefert bei zwei Aufrufen dieselbe Anzahl – kein zeitabhängiger Zustand", () => {
     for (const tool of publicTools()) {
       if (!tool.getVariants) continue;

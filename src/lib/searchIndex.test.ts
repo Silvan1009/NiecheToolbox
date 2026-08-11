@@ -5,10 +5,11 @@
  * roten Test statt einer stillen Lücke im Suchfeld.
  */
 import { describe, expect, it } from "vitest";
-import { toolPath, variantPath } from "./seo";
+import { toolPath, variantPath, wegPath } from "./seo";
 import { searchIndex } from "./searchIndex";
 import { toolsWithIndexedVariants } from "@/tools/groups";
 import { publicTools } from "@/tools/registry";
+import { publicWege } from "@/wege/registry";
 
 describe("searchIndex", () => {
   it("enthält genau einen Eintrag pro öffentlichem Tool, mit passendem Pfad und Namen", () => {
@@ -21,12 +22,25 @@ describe("searchIndex", () => {
     }
   });
 
-  it("führt keine Tool-Einträge ohne Registry-Gegenstück", () => {
-    const toolHrefs = new Set(publicTools().map((t) => toolPath(t.slug)));
+  it("enthält genau einen Eintrag pro öffentlichem Weg, mit passendem Pfad und Namen", () => {
+    for (const weg of publicWege()) {
+      const matches = searchIndex.filter(
+        (entry) => !entry.parentName && entry.href === wegPath(weg.slug),
+      );
+      expect(matches, `Weg "${weg.slug}" fehlt im Suchindex`).toHaveLength(1);
+      expect(matches[0]?.name).toBe(weg.name);
+    }
+  });
+
+  it("führt keine Einträge ohne Registry-Gegenstück (Tool oder Weg)", () => {
+    const knownHrefs = new Set([
+      ...publicTools().map((t) => toolPath(t.slug)),
+      ...publicWege().map((w) => wegPath(w.slug)),
+    ]);
     for (const entry of searchIndex) {
       if (entry.parentName) continue;
       expect(
-        toolHrefs.has(entry.href),
+        knownHrefs.has(entry.href),
         `verwaister Eintrag: ${entry.href}`,
       ).toBe(true);
     }

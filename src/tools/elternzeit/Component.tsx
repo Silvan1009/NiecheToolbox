@@ -8,8 +8,9 @@ import { Field, Stepper, TextInput, Toggle } from "@/components/ui/Field";
 import { NumberDisplay } from "@/components/ui/NumberDisplay";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
-import { isValidIso } from "@/lib/date";
+import { isValidIso, todayIso } from "@/lib/date";
 import { formatDate, plural } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { elternzeitAffiliate } from "./affiliate";
@@ -25,17 +26,12 @@ interface State extends Record<string, unknown> {
   startTwo: number;
 }
 
-function toCount(value: unknown, fallback: number) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? Math.trunc(parsed) : fallback;
-}
-
 function initialState(params: ToolParams | undefined): State {
   const fromParams = params?.termin;
   return {
     birthDate: isValidIso(fromParams)
       ? fromParams
-      : String(params?.heute ?? "2026-06-10"),
+      : String(params?.heute ?? todayIso()),
     extendedMutterschutz: params?.mehrlinge === "1",
     singleParent: params?.allein === "1",
     monthsOne: toCount(params?.m1, 12),

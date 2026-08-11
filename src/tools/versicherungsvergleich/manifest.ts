@@ -1,7 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { versicherungsvergleichAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "Anders als bei Zinsen oder Steuern gibt es bei einer Versicherungsprämie keine Formel, die ein exaktes Ergebnis liefert – jeder Versicherer legt seine Tarife selbst fest, nach einem eigenen, nicht veröffentlichten Tarifwerk. Was sich dagegen gut belegen lässt, sind Marktdurchschnitte und die Richtung, in die bestimmte Merkmale wirken: Eine hohe Schadenfreiheitsklasse senkt die Kfz-Prämie immer, ein körperlich fordernder Beruf erhöht die Berufsunfähigkeitsprämie immer. Dieser Rechner nimmt einen recherchierten Marktdurchschnitt als Ausgangspunkt und wendet darauf Richtungsfaktoren an, deren Größenordnung an veröffentlichten Beispielrechnungen kalibriert ist. Am Ende steht eine Spanne zur Einordnung – keine Offerte und kein Angebot.",
@@ -71,8 +70,6 @@ export const versicherungsvergleich: ToolManifest = {
     "bu versicherung beitrag berechnen",
     "haftpflichtversicherung preis",
   ],
-
-  Component,
 
   about,
   faq,

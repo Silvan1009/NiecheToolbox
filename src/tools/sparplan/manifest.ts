@@ -2,7 +2,6 @@ import { TrendingUp } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { sparplanAffiliate } from "./affiliate";
-import Component from "./Component";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -96,7 +95,6 @@ export const sparplan: ToolManifest = {
     "millionär werden sparplan",
   ],
 
-  Component,
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,

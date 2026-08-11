@@ -1,7 +1,6 @@
 import { Scale } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { erbschaftsteuerAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "Anders als bei den meisten Rechnern auf dieser Seite steht hinter jeder Zahl hier eine konkrete Gesetzesnorm statt eines Marktdurchschnitts: Die Erbschaftsteuer ist im Erbschaft- und Schenkungsteuergesetz auf den Cent genau geregelt. Drei Details daraus entscheiden über einen fünf- bis sechsstelligen Betrag und werden in den meisten Überschlagsrechnungen übersehen – deshalb bildet dieser Rechner sie ab, statt nur mit einem einzelnen Steuersatz zu multiplizieren.",
@@ -67,8 +66,6 @@ export const erbschaftsteuer: ToolManifest = {
     "schenkung steuerfrei",
     "erbschaftsteuer tabelle",
   ],
-
-  Component,
 
   about,
   faq,

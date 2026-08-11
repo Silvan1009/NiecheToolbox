@@ -2,7 +2,6 @@ import { Landmark } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { kreditAffiliate } from "./affiliate";
-import Component from "./Component";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -62,10 +61,6 @@ const sharedFaq: FaqEntry[] = [
 ];
 
 /* ---------------------------------------------------------------------------
- * Varianten
- * ------------------------------------------------------------------------- */
-
-/* ---------------------------------------------------------------------------
  * Manifest
  * ------------------------------------------------------------------------- */
 
@@ -90,7 +85,6 @@ export const kreditrechner: ToolManifest = {
     "monatsrate kredit berechnen",
   ],
 
-  Component,
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,

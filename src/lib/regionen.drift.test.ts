@@ -121,7 +121,7 @@ function apiStatewideDates(
 /** Unsere landesweiten Feiertage – alles ohne `partial`-Markierung. */
 function localStatewideDates(year: number, region: RegionCode): Set<string> {
   return new Set(
-    holidaysFor(year, region, { includePartial: true })
+    holidaysFor(year, region)
       .filter((h) => !h.partial)
       .map((h) => h.date),
   );
@@ -182,9 +182,7 @@ describe("Feiertagstabelle gegen Nager.Date", { timeout: 15_000 }, () => {
             const data = requireData(ctx, year);
             const api = apiStatewideDates(data, region.code);
 
-            const partial = holidaysFor(year, region.code, {
-              includePartial: true,
-            })
+            const partial = holidaysFor(year, region.code)
               .filter((h) => h.partial)
               .map((h) => h.date);
 

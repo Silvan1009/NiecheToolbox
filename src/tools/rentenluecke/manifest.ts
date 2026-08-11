@@ -1,7 +1,6 @@
 import { PiggyBank } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { rentenlueckeAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "Die gesetzliche Rente ersetzt bei den meisten Menschen nicht annähernd das letzte Nettoeinkommen. Das Rentenniveau – das Verhältnis einer Standardrente nach 45 Beitragsjahren zum Durchschnittseinkommen – liegt gesetzlich bei mindestens 48 Prozent, und die individuelle Nettoersatzquote fällt für die meisten Erwerbsbiografien mit Lücken, Teilzeit oder unterdurchschnittlichem Einkommen noch niedriger aus. Wer sein bisheriges Lebensniveau halten will, muss die Differenz aus eigenem Vermögen decken – diese Differenz ist die Rentenlücke, und dieser Rechner macht aus der vagen Sorge eine konkrete Zahl in Euro pro Monat und in Euro Kapitalbedarf.",
@@ -71,8 +70,6 @@ export const rentenluecke: ToolManifest = {
     "wie viel muss ich für die rente sparen",
     "rentenniveau",
   ],
-
-  Component,
 
   about,
   faq,

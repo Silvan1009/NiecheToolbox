@@ -10,10 +10,9 @@
  *   Basiszins zum 2.1.2026 – BMF-Schreiben vom 13.01.2026 (§ 18 Abs. 4 InvStG)
  */
 
-export const STEUER_STAND = "2026-01-01";
+import { SOLI_SATZ } from "@/lib/steuerdaten";
 
-export const ABGELTUNGSTEUER_PROZENT = 25;
-export const SOLI_PROZENT = 5.5;
+export const STEUER_STAND = "2026-01-01";
 
 /** § 20 Abs. 9 EStG – für Alleinstehende; Verheiratete das Doppelte. */
 export const SPARERPAUSCHBETRAG = 1000;
@@ -89,7 +88,7 @@ export function abgeltungsteuer(
 
   const k = kirchensteuerPercent / 100;
   const kapitalertragsteuer = Math.round(ertragC / (4 + k));
-  const soli = Math.round((kapitalertragsteuer * SOLI_PROZENT) / 100);
+  const soli = Math.round((kapitalertragsteuer * SOLI_SATZ) / 100);
   const kirchensteuer = Math.round(kapitalertragsteuer * k);
 
   return {

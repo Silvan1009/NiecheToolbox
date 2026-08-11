@@ -3,7 +3,6 @@ import { todayIso } from "@/lib/date";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { kindergeldAffiliate } from "./affiliate";
-import Component from "./Component";
 import { defaultInput, encodeKinder } from "./logic";
 import { variantenTexte } from "./varianten";
 
@@ -81,7 +80,6 @@ export const kindergeld: ToolManifest = {
     "kindergeld anspruch",
   ],
 
-  Component,
   /*
    * Stichtag und Startkinder kommen vom Server: Beides hängt am aktuellen
    * Datum, und ein im Client berechneter Wert würde vom SSR-HTML abweichen.

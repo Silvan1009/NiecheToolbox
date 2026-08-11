@@ -56,3 +56,15 @@ export const urlValue = (
   value: string | number,
   fallback: string | number,
 ): string => (value === fallback ? "" : String(value));
+
+/** Wie `toNumber`, aber für Toggles: "1" oder `true` aus der URL. */
+export function toBool(value: unknown, fallback: boolean): boolean {
+  if (value === null || value === undefined || value === "") return fallback;
+  return value === "1" || value === 1 || value === "true";
+}
+
+/** Wie `toNumber`, aber für Stückzahlen: immer eine ganze Zahl. */
+export function toCount(value: unknown, fallback: number): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
+}

@@ -68,8 +68,8 @@ export default function ImpressumPage() {
           garantieren, dass jedes Ergebnis auf jeden Einzelfall passt –
           insbesondere nicht bei Feiertagsregelungen einzelner Gemeinden oder
           bei arbeits- und sozialrechtlichen Fragen. Die Ergebnisse sind keine
-          Rechts-, Steuer- oder Finanzberatung. Für Entscheidungen auf Basis der
-          Ergebnisse wird keine Haftung übernommen.
+          Rechts-, Steuer-, Finanz- oder medizinische Beratung. Für
+          Entscheidungen auf Basis der Ergebnisse wird keine Haftung übernommen.
         </p>
         <p>
           Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach

@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
+import { WegCallout } from "@/components/WegCallout";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
@@ -19,7 +20,9 @@ import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
 import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/lib/regionen";
+import { wegPath } from "@/lib/seo";
 import type { ToolParams } from "@/tools/types";
+import { getWeg } from "@/wege/registry";
 import { immobilienAffiliate } from "./affiliate";
 import { GREST_STAND, grestFor } from "./grunderwerbsteuer";
 import {
@@ -30,6 +33,8 @@ import {
   type ImmobilienInput,
   type Modus,
 } from "./logic";
+
+const hauskaufWeg = getWeg("hauskauf");
 
 /** Der Zustand ist genau die Eingabe der Rechenlogik – keine zweite Wahrheit. */
 interface State extends Record<string, unknown>, ImmobilienInput {}
@@ -46,6 +51,21 @@ const isModus = (value: unknown): value is Modus =>
 
 const isAfaArt = (value: unknown): value is AfaArt =>
   typeof value === "string" && value in afaArten;
+
+/** Identisch für Kapitalanlage und Eigennutzung, deshalb einmalig definiert. */
+function MietsteigerungField({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <Field label="Mietsteigerung pro Jahr" htmlFor="im-mietplus">
+      <UnitInput id="im-mietplus" unit="%" value={value} onChange={onChange} />
+    </Field>
+  );
+}
 
 function initialState(params: ToolParams | undefined): State {
   // Die Bundesland-Varianten liefern das Land; der Steuersatz kommt aus der
@@ -445,16 +465,12 @@ export default function ImmobilienrechnerTool({
               />
             </Field>
 
-            <Field label="Mietsteigerung pro Jahr" htmlFor="im-mietplus">
-              <UnitInput
-                id="im-mietplus"
-                unit="%"
-                value={state.mietsteigerungPercent}
-                onChange={(mietsteigerungPercent) =>
-                  update({ mietsteigerungPercent })
-                }
-              />
-            </Field>
+            <MietsteigerungField
+              value={state.mietsteigerungPercent}
+              onChange={(mietsteigerungPercent) =>
+                update({ mietsteigerungPercent })
+              }
+            />
           </div>
         </Card>
       ) : (
@@ -517,16 +533,12 @@ export default function ImmobilienrechnerTool({
               />
             </Field>
 
-            <Field label="Mietsteigerung pro Jahr" htmlFor="im-mietplus">
-              <UnitInput
-                id="im-mietplus"
-                unit="%"
-                value={state.mietsteigerungPercent}
-                onChange={(mietsteigerungPercent) =>
-                  update({ mietsteigerungPercent })
-                }
-              />
-            </Field>
+            <MietsteigerungField
+              value={state.mietsteigerungPercent}
+              onChange={(mietsteigerungPercent) =>
+                update({ mietsteigerungPercent })
+              }
+            />
 
             <Field
               label="Rendite der Geldanlage"
@@ -1011,6 +1023,16 @@ export default function ImmobilienrechnerTool({
       )}
 
       <AffiliateBlock slots={immobilienAffiliate} result={result} />
+
+      {hauskaufWeg && (
+        <WegCallout
+          href={wegPath(hauskaufWeg.slug)}
+          icon={hauskaufWeg.icon}
+          eyebrow="Weg"
+          title={hauskaufWeg.name}
+          description="Dieses Ergebnis mit deinem Nettoeinkommen zusammenrechnen: komfortabel, tragbar oder eng?"
+        />
+      )}
     </div>
   );
 }

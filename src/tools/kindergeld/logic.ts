@@ -43,12 +43,9 @@ import {
   BETREUUNGSFREIBETRAG_VOLL,
   GRUNDFREIBETRAG,
   KINDERFREIBETRAG_VOLL,
-  SOLI_FREIGRENZE,
-  SOLI_FREIGRENZE_SPLITTING,
-  SOLI_MILDERUNG_SATZ,
-  SOLI_SATZ,
   einkommensteuer,
   kirchensteuersatz,
+  soliZuschlag,
 } from "@/lib/steuerdaten";
 import { ALTERSGRENZE, kindergeldSatz, type KindStatus } from "./saetze";
 
@@ -141,19 +138,14 @@ export function anspruchsende(geburtsdatum: Iso, status: KindStatus): Iso {
  *
  * Bis zur Freigrenze fällt nichts an. Direkt darüber würde der volle Zuschlag
  * einen Sprung erzeugen, deshalb ist er auf 11,9 Prozent des übersteigenden
- * Betrags begrenzt, bis der reguläre Satz günstiger ist.
+ * Betrags begrenzt, bis der reguläre Satz günstiger ist. Rechenweg siehe
+ * `soliZuschlag` in `@/lib/steuerdaten`.
  */
 function solidaritaetszuschlag(
   steuer: number,
   veranlagung: Veranlagung,
 ): number {
-  const freigrenze =
-    veranlagung === "zusammen" ? SOLI_FREIGRENZE_SPLITTING : SOLI_FREIGRENZE;
-  if (steuer <= freigrenze) return 0;
-
-  const voll = (steuer * SOLI_SATZ) / 100;
-  const milderung = ((steuer - freigrenze) * SOLI_MILDERUNG_SATZ) / 100;
-  return Math.min(voll, milderung);
+  return soliZuschlag(steuer, veranlagung === "zusammen");
 }
 
 /**

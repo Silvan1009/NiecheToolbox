@@ -1,7 +1,6 @@
 import { Car } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { autokostenAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "Die meisten Leute überschlagen ihr Auto aus Tanken plus Versicherung plus Steuer – und liegen damit oft um mehr als die Hälfte daneben. Der größte Einzelposten ist fast immer der Wertverlust, und ausgerechnet der bleibt unsichtbar, weil dafür nie eine Rechnung kommt: Ein Auto für 22.000 Euro, das nach sechs Jahren noch 9.000 Euro wert ist, kostet allein dadurch rund 2.170 Euro im Jahr – mehr als Versicherung und Steuer zusammen. Dieser Rechner rechnet den Wertverlust deshalb explizit mit, linear über die geplante Haltedauer, statt ihn wie die meisten Kostenüberschläge zu ignorieren.",
@@ -70,8 +69,6 @@ export const autokosten: ToolManifest = {
     "kfz kosten rechner",
     "autounterhalt berechnen",
   ],
-
-  Component,
 
   about,
   faq,

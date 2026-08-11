@@ -10,6 +10,7 @@
  */
 
 const rawUrl = process.env.SITE_URL ?? "https://rechnerkiste.app";
+const contactEmail = "comannsilvan@gmail.com";
 
 export const site = {
   name: "Rechnerkiste",
@@ -23,7 +24,22 @@ export const site = {
   locale: "de-DE",
   /** Ohne abschließenden Slash. Für canonical-URLs, Sitemap und OG-Bilder. */
   url: rawUrl.replace(/\/+$/, ""),
-  contactEmail: "comannsilvan@gmail.com",
+  contactEmail,
+  /**
+   * Empfänger für "Fehler melden" in jedem Rechner. Eigene Variable statt
+   * hartcodiert auf contactEmail verweisend, falls Bug-Reports später an eine
+   * andere Adresse (z. B. ein Ticket-System) gehen sollen als allgemeine Post.
+   */
+  bugReportEmail: process.env.NEXT_PUBLIC_BUG_REPORT_EMAIL ?? contactEmail,
+  /** Button vorerst ausgeblendet, Formular ist fertig, aber noch nicht live. */
+  bugReportEnabled: false,
+  /**
+   * Bestätigungscode für Google Search Console (HTML-Tag-Methode). Nur der
+   * `content`-Wert aus dem Meta-Tag, den Google beim Anlegen der Property
+   * zeigt – kein NEXT_PUBLIC_ nötig, das Metadata-Objekt entsteht ohnehin
+   * serverseitig zur Buildzeit.
+   */
+  googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
 } as const;
 
 /**

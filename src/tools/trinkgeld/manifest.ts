@@ -1,7 +1,6 @@
 import { HandCoins } from "lucide-react";
 import type { ToolManifest } from "@/tools/types";
 import { trinkgeldAffiliate } from "./affiliate";
-import Component from "./Component";
 
 export const trinkgeld: ToolManifest = {
   slug: "trinkgeld",
@@ -20,8 +19,6 @@ export const trinkgeld: ToolManifest = {
     "restaurant",
     "gruppe",
   ],
-
-  Component,
 
   about: [
     "Am Ende eines gemeinsamen Abends steht immer dieselbe Rechenaufgabe: Rechnung, Trinkgeld, geteilt durch alle. Gib den Betrag ein, wähle das Trinkgeld und die Zahl der Personen – der Rechner sagt dir sofort, was jede Person auf den Tisch legt. Wer nur weiß, was das eigene Gericht gekostet hat, schaltet auf „Pro Person“ um und gibt diesen Betrag ein – die Gesamtsumme rechnet sich von selbst.",

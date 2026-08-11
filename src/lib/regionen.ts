@@ -75,13 +75,9 @@ export const regions: readonly Region[] = [
 ] as const;
 
 const regionByCode = new Map(regions.map((r) => [r.code, r]));
-const regionBySlug = new Map(regions.map((r) => [r.slug, r]));
 
 export const getRegion = (code: string): Region | undefined =>
   regionByCode.get(code as RegionCode);
-
-export const getRegionBySlug = (slug: string): Region | undefined =>
-  regionBySlug.get(slug);
 
 export const isRegionCode = (value: unknown): value is RegionCode =>
   typeof value === "string" && regionByCode.has(value as RegionCode);
@@ -261,16 +257,10 @@ function dateOf(def: HolidayDef, year: number): Iso {
  * chronologisch sortiert.
  *
  * Teilweise geltende Feiertage (z. B. Mariä Himmelfahrt in Bayern) sind
- * enthalten und mit `partial: true` markiert. Ob sie mitzählen, entscheidet
- * der Aufrufer über `includePartial`.
+ * enthalten und mit `partial: true` markiert. Ob sie als freier Tag zählen,
+ * entscheidet der Aufrufer anhand dieses Flags – nicht diese Funktion.
  */
-export function holidaysFor(
-  year: number,
-  region: RegionCode,
-  options: { includePartial?: boolean } = {},
-): Holiday[] {
-  const includePartial = options.includePartial ?? false;
-
+export function holidaysFor(year: number, region: RegionCode): Holiday[] {
   const result: Holiday[] = [];
 
   for (const def of HOLIDAY_DEFS) {
@@ -283,21 +273,6 @@ export function holidaysFor(
 
     const until = def.until?.[region];
     if (until !== undefined && year > until) continue;
-
-    if (partialHere && !includePartial) {
-      // Als Information behalten, aber nicht als freier Tag verrechnen.
-      const date = dateOf(def, year);
-      const ms = fromIso(date);
-      result.push({
-        date,
-        name: def.name,
-        weekday: weekdayOf(ms),
-        onWeekend: isWeekendMs(ms),
-        partial: true,
-        note: def.note,
-      });
-      continue;
-    }
 
     const date = dateOf(def, year);
     const ms = fromIso(date);
@@ -318,5 +293,26 @@ export function holidaysFor(
 export function partialHolidayNames(region: RegionCode): string[] {
   return HOLIDAY_DEFS.filter((def) => def.partialRegions?.includes(region)).map(
     (def) => def.name,
+  );
+}
+
+/**
+ * Die Feiertage, die in allen 16 Ländern gelten – alles andere ist
+ * Landesrecht. Je Jahr bestimmt, weil einzelne Tage erst ab einem Stichjahr
+ * gelten (Reformationstag im Norden seit 2018) oder nur für ein Jahr
+ * beschlossen sind.
+ */
+export function nationwideHolidayNames(year: number): Set<string> {
+  const proLand = regions.map(
+    (region) =>
+      new Set(
+        holidaysFor(year, region.code)
+          .filter((holiday) => !holiday.partial)
+          .map((holiday) => holiday.name),
+      ),
+  );
+
+  return new Set(
+    [...proLand[0]].filter((name) => proLand.every((set) => set.has(name))),
   );
 }

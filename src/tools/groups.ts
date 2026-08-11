@@ -46,12 +46,19 @@ export const toolGroups: ToolGroup[] = [
     label: "Familie & Kinder",
     hint: "Was Kinder kosten, was der Staat dazugibt und wie sich beides planen lässt.",
     tools: [
+      "geburtstermin",
       "kindergeld",
       "elterngeld",
       "elternzeit",
       "bruttonetto",
       "urlaubsbudget",
     ],
+  },
+  {
+    slug: "gesundheit",
+    label: "Gesundheit & Körper",
+    hint: "BMI, Kalorienbedarf und der errechnete Geburtstermin – handfeste Zahlen zum eigenen Körper.",
+    tools: ["bmi", "kalorienbedarf", "geburtstermin"],
   },
   {
     slug: "wohnen",
@@ -84,11 +91,6 @@ export const toolGroups: ToolGroup[] = [
     tools: ["backform", "partymengen", "trinkgeld"],
   },
 ];
-
-/** Alle Gruppen, in denen ein Tool-Slug vorkommt. */
-export function groupsForSlug(slug: string): ToolGroup[] {
-  return toolGroups.filter((group) => group.tools.includes(slug));
-}
 
 /**
  * Tools, deren Unterseiten einzeln verlinkt und durchsuchbar sind.

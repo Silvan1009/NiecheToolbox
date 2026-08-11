@@ -108,6 +108,11 @@ export default function ErbschaftsteuerTool({
 
   const result = useMemo(() => calculateErbschaftsteuer(state), [state]);
   const istErbschaft = state.modus === "erbschaft";
+  const steuerLabel = istErbschaft ? "Erbschaftsteuer" : "Schenkungsteuer";
+  const wertLabel = istErbschaft
+    ? "Wert des Nachlasses"
+    : "Wert der Schenkung";
+  const steuerklasseLabel = ["I", "II", "III"][result.steuerklasse - 1];
 
   return (
     <div className="flex flex-col gap-8">
@@ -154,7 +159,7 @@ export default function ErbschaftsteuerTool({
           </div>
 
           <Field
-            label={istErbschaft ? "Wert des Nachlasses" : "Wert der Schenkung"}
+            label={wertLabel}
             htmlFor="es-wert"
           >
             <UnitInput
@@ -208,15 +213,15 @@ export default function ErbschaftsteuerTool({
         footer={
           <ShareBar
             title="Erbschaft- und Schenkungsteuer-Rechner"
-            text={`${formatEuro(result.steuer)} ${istErbschaft ? "Erbschaftsteuer" : "Schenkungsteuer"}`}
+            text={`${formatEuro(result.steuer)} ${steuerLabel}`}
           />
         }
       >
         <NumberDisplay
           value={result.steuer}
           format={formatEuro}
-          caption={istErbschaft ? "Erbschaftsteuer" : "Schenkungsteuer"}
-          announce={`${formatEuro(result.steuer)} ${istErbschaft ? "Erbschaftsteuer" : "Schenkungsteuer"}, bei ${formatEuro(result.steuerpflichtigerErwerb)} steuerpflichtigem Erwerb und ${result.steuersatz} Prozent Steuersatz.`}
+          caption={steuerLabel}
+          announce={`${formatEuro(result.steuer)} ${steuerLabel}, bei ${formatEuro(result.steuerpflichtigerErwerb)} steuerpflichtigem Erwerb und ${result.steuersatz} Prozent Steuersatz.`}
           hint={
             result.steuer === 0 ? (
               <>
@@ -243,7 +248,7 @@ export default function ErbschaftsteuerTool({
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat
           label="Steuerklasse"
-          value={`Klasse ${["I", "II", "III"][result.steuerklasse - 1]}`}
+          value={`Klasse ${steuerklasseLabel}`}
           hint={`${formatEuro(result.freibetrag)} Freibetrag`}
         />
         <Stat
@@ -280,7 +285,7 @@ export default function ErbschaftsteuerTool({
         </h2>
         <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
           <AmountRow
-            label={istErbschaft ? "Wert des Nachlasses" : "Wert der Schenkung"}
+            label={wertLabel}
             value={state.vermoegenswert}
           />
           {istErbschaft && (
@@ -312,7 +317,7 @@ export default function ErbschaftsteuerTool({
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 transition-colors duration-(--dur-fast) hover:bg-ink-soft">
           <span className="font-display text-lg font-semibold tracking-tight">
             Steuersatz je Wertstufe (Klasse{" "}
-            {["I", "II", "III"][result.steuerklasse - 1]})
+            {steuerklasseLabel})
           </span>
           <ChevronDown
             className="size-4 shrink-0 text-muted transition-transform duration-(--dur-base) group-open:rotate-180"

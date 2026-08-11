@@ -1,7 +1,6 @@
 import { HandHeart } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { elterngeldAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "„67 Prozent vom letzten Netto“ ist die Zahl, die zum Elterngeld am häufigsten kursiert – und sie stimmt nur für ein Nettoeinkommen zwischen 1.000 und 1.200 Euro im Monat. Darunter greift die Geringverdienerregelung und die Ersatzrate steigt schrittweise bis auf 100 Prozent bei 340 Euro oder weniger. Darüber sinkt sie schrittweise bis auf 65 Prozent, erreicht bei rund 1.240 Euro Netto und ab dort unverändert – wer 4.000 Euro netto verdient hat, bekommt also nicht 67, sondern 65 Prozent davon. Dieser Rechner bildet die volle Staffel ab, nicht nur die Mitte.",
@@ -61,8 +60,6 @@ export const elterngeld: ToolManifest = {
     "basiselterngeld oder elterngeldplus",
     "elterngeld höhe",
   ],
-
-  Component,
 
   about,
   faq,

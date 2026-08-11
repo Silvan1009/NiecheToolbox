@@ -21,6 +21,7 @@ import {
   formatWeekdayDate,
   plural,
 } from "@/lib/format";
+import { toCount } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import {
   isRegionCode,
@@ -30,6 +31,7 @@ import {
 } from "@/lib/regionen";
 import type { ToolParams } from "@/tools/types";
 import {
+  MONTH_NAMES,
   calculateWorkdays,
   monthRange,
   monthlyBreakdown,
@@ -54,31 +56,11 @@ const WEEK_OPTIONS = [
   { value: "7", label: "Alle Tage" },
 ] as const satisfies readonly { value: WeekPreset; label: string }[];
 
-const MONTH_NAMES = [
-  "Januar",
-  "Februar",
-  "März",
-  "April",
-  "Mai",
-  "Juni",
-  "Juli",
-  "August",
-  "September",
-  "Oktober",
-  "November",
-  "Dezember",
-];
-
 const isWeekPreset = (value: unknown): value is WeekPreset =>
   value === "5" || value === "6" || value === "7";
 
 function toIsoOr(value: unknown, fallback: string): string {
   return isValidIso(value) ? value : fallback;
-}
-
-function toCount(value: unknown, fallback: number): number {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? Math.trunc(parsed) : fallback;
 }
 
 function initialState(params: ToolParams | undefined): State {

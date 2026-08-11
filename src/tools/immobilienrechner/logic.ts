@@ -45,6 +45,7 @@ import {
   toEuro,
   MONATE_PRO_JAHR,
 } from "@/lib/finanzmath";
+import { formatEuroRounded } from "@/lib/format";
 import type { RegionCode } from "@/lib/regionen";
 import { grestFor } from "./grunderwerbsteuer";
 
@@ -335,7 +336,7 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
     ? anteil(kaufpreisC + nebenkostenC, gebaeudeanteil) + modernisierungC
     : 0;
 
-  const afa = afaArten[input.afaArt] ?? afaArten["linear-2"];
+  const afa = afaArten[input.afaArt];
 
   /* -- Jahresverlauf ------------------------------------------------------ */
 
@@ -548,7 +549,7 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
   }
   if (istAnlage && cashflowVorSteuer1C < 0) {
     warnings.push(
-      `Der Cashflow ist negativ: Du legst im ersten Jahr ${formatHinweisBetrag(-cashflowVorSteuer1C)} aus eigener Tasche dazu. Das kann aufgehen, muss aber dauerhaft tragbar sein.`,
+      `Der Cashflow ist negativ: Du legst im ersten Jahr rund ${formatEuroRounded(toEuro(-cashflowVorSteuer1C))} aus eigener Tasche dazu. Das kann aufgehen, muss aber dauerhaft tragbar sein.`,
     );
   }
   if (istAnlage && nn(input.instandhaltungProQmJahr) === 0) {
@@ -654,11 +655,6 @@ export function calculateImmobilie(input: ImmobilienInput): ImmobilienResult {
     jahre,
     warnings,
   };
-}
-
-/** Nur für Warnungstexte: grober Eurobetrag ohne Formatierungsbibliothek. */
-function formatHinweisBetrag(c: number): string {
-  return `rund ${Math.round(toEuro(c))} Euro`;
 }
 
 /* ---------------------------------------------------------------------------

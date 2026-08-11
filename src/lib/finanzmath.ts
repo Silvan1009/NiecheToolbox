@@ -362,3 +362,21 @@ export function verdopplungsdauer(renditePa: number): number | null {
   const jahre = Math.log(2) / Math.log(1 + renditePa / 100);
   return Number.isFinite(jahre) ? jahre : null;
 }
+
+/**
+ * Jahre in Rente: Lebenserwartung minus Renteneintrittsalter.
+ *
+ * Die Lebenserwartung wird auf mindestens ein Jahr nach dem Renteneintritt
+ * geklemmt – sonst wäre die Bezugsdauer negativ oder null, obwohl es um eine
+ * laufende Rente geht.
+ */
+export function jahreRentenbezug(
+  alterBeiRente: number,
+  lebenserwartungRoh: number,
+  min = 0,
+): number {
+  const lebenserwartung = Math.round(
+    clamp(lebenserwartungRoh, alterBeiRente + 1, 110),
+  );
+  return Math.max(min, lebenserwartung - alterBeiRente);
+}

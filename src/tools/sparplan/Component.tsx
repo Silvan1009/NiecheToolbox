@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { ChevronDown } from "lucide-react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
@@ -17,7 +16,7 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { toNumber, urlValue } from "@/lib/parse";
+import { toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import type { ToolParams } from "@/tools/types";
 import { sparplanAffiliate } from "./affiliate";
@@ -52,11 +51,6 @@ const isAnlageart = (value: unknown): value is Anlageart =>
   typeof value === "string" && value in anlagearten;
 
 /** Schalter kommen als 0/1 aus der URL und aus den Varianten-Params. */
-function toBool(value: unknown, fallback: boolean): boolean {
-  if (value === null || value === undefined || value === "") return fallback;
-  return value === "1" || value === 1 || value === "true";
-}
-
 function initialState(params: ToolParams | undefined): State {
   return {
     ...DEFAULTS,
@@ -529,17 +523,8 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
         </dl>
       </section>
 
-      <details className="group overflow-hidden rounded-card bg-surface shadow-[var(--elev-soft),var(--elev-inset)]">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 transition-colors duration-(--dur-fast) hover:bg-ink-soft">
-          <span className="font-display text-lg font-semibold tracking-tight">
-            Jahr für Jahr
-          </span>
-          <ChevronDown
-            className="size-4 shrink-0 text-muted transition-transform duration-(--dur-base) group-open:rotate-180"
-            aria-hidden="true"
-          />
-        </summary>
-        <div className="overflow-x-auto px-6 pb-6">
+      <Disclosure title="Jahr für Jahr">
+        <div className="overflow-x-auto">
           <table className="w-full min-w-[36rem] border-collapse text-sm">
             <thead>
               <tr className="border-b border-line text-left text-[13px] text-muted">
@@ -583,7 +568,7 @@ export default function SparplanTool({ params }: { params?: ToolParams }) {
             </tbody>
           </table>
         </div>
-      </details>
+      </Disclosure>
 
       {result.warnings.length > 0 && (
         <section aria-labelledby="sp-hinweise" className="surface-soft p-6">

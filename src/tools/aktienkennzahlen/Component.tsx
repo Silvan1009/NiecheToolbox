@@ -22,6 +22,7 @@ import {
   kennzahlen,
   kennzahlenDerGruppe,
   tendenzText,
+  tendenzVon,
   type KennzahlDef,
   type KennzahlKey,
   type Tendenz,
@@ -799,7 +800,7 @@ function Fokuszahl({
   wert: number | null;
   result: AktienResult;
 }) {
-  const tendenz = wert !== null && def.bewerten ? def.bewerten(wert) : null;
+  const tendenz = tendenzVon(def, wert);
   const einordnung = tendenz ? tendenzText(def.skala, tendenz) : null;
 
   const hint = (
@@ -877,7 +878,7 @@ function Kennzahlzeile({
   wert: number | null;
   fokussiert: boolean;
 }) {
-  const tendenz = wert !== null && def.bewerten ? def.bewerten(wert) : null;
+  const tendenz = tendenzVon(def, wert);
 
   return (
     <li

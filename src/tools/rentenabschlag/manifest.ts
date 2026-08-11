@@ -1,7 +1,6 @@
 import { Hourglass } from "lucide-react";
 import type { FaqEntry, ToolManifest } from "@/tools/types";
 import { rentenabschlagAffiliate } from "./affiliate";
-import Component from "./Component";
 
 const about: string[] = [
   "„Mit 67 in Rente“ gilt nur für Geburtsjahrgänge ab 1964. Zwischen 1947 und 1963 wurde die Regelaltersgrenze schrittweise von 65 auf 67 Jahre angehoben, und zwar nicht in ganzen Jahren, sondern in Ein- beziehungsweise Zweimonatsschritten je Jahrgang. Wer 1958 geboren ist, hat seine Regelaltersgrenze bei genau 66 Jahren, wer 1961 geboren ist, bei 66 Jahren und 6 Monaten. Dieser Rechner schaut das persönliche Geburtsjahr in der gesetzlichen Tabelle nach (§ 235 SGB VI), statt pauschal mit 67 Jahren zu rechnen.",
@@ -64,8 +63,6 @@ export const rentenabschlag: ToolManifest = {
     "rentenzuschlag berechnen",
     "regelaltersgrenze geburtsjahrgang",
   ],
-
-  Component,
 
   about,
   faq,

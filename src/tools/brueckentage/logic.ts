@@ -118,13 +118,13 @@ export function calculateBrueckentage(
   const includePartial = input.includePartial ?? false;
   const maxPerBlock = Math.min(MAX_PER_BLOCK, budget);
 
-  const holidays = holidaysFor(year, region.code, { includePartial });
+  const holidays = holidaysFor(year, region.code);
 
   // Feiertage der Nachbarjahre mitnehmen: freie Spannen dürfen über den
   // Jahreswechsel hinausreichen (Weihnachten/Neujahr).
   const holidayNames = new Map<number, string>();
   for (const y of [year - 1, year, year + 1]) {
-    for (const holiday of holidaysFor(y, region.code, { includePartial })) {
+    for (const holiday of holidaysFor(y, region.code)) {
       if (holiday.partial && !includePartial) continue;
       holidayNames.set(fromIso(holiday.date), holiday.name);
     }

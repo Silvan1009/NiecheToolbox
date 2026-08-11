@@ -38,7 +38,7 @@ export function SiteFooter() {
                   <li key={tool.slug}>
                     <Link
                       href={toolPath(tool.slug)}
-                      className="text-muted transition-colors duration-(--dur-fast) hover:text-ink"
+                      className="text-muted link-hover-ink"
                     >
                       {tool.name}
                     </Link>
@@ -57,25 +57,19 @@ export function SiteFooter() {
             </h2>
             <ul className="mt-3 space-y-2 text-sm text-muted">
               <li>
-                <Link
-                  href="/ueber/"
-                  className="transition-colors duration-(--dur-fast) hover:text-ink"
-                >
+                <Link href="/ueber/" className="link-hover-ink">
                   Über uns &amp; Kontakt
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/rechtliches/impressum/"
-                  className="transition-colors duration-(--dur-fast) hover:text-ink"
-                >
+                <Link href="/rechtliches/impressum/" className="link-hover-ink">
                   Impressum
                 </Link>
               </li>
               <li>
                 <Link
                   href="/rechtliches/datenschutz/"
-                  className="transition-colors duration-(--dur-fast) hover:text-ink"
+                  className="link-hover-ink"
                 >
                   Datenschutz
                 </Link>
@@ -100,7 +94,7 @@ export function SiteFooter() {
           </p>
           <p className="mt-2">
             Ergebnisse sind unverbindliche Orientierung und keine Rechts-,
-            Steuer- oder Finanzberatung.
+            Steuer-, Finanz- oder medizinische Beratung.
           </p>
         </div>
       </div>
