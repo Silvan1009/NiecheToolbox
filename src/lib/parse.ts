@@ -63,6 +63,11 @@ export function toBool(value: unknown, fallback: boolean): boolean {
   return value === "1" || value === 1 || value === "true";
 }
 
+/** Wie `urlValue`, aber für Toggles: "1"/"0" statt "true"/"false" – das Schreib-Gegenstück zu `toBool`. */
+export function boolValue(value: boolean, fallback: boolean): string {
+  return value === fallback ? "" : value ? "1" : "0";
+}
+
 /** Wie `toNumber`, aber für Stückzahlen: immer eine ganze Zahl. */
 export function toCount(value: unknown, fallback: number): number {
   const parsed = Number(value);

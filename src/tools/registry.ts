@@ -18,6 +18,7 @@ import { kreditrechner } from "./kreditrechner/manifest";
 import { kuendigungsfrist } from "./kuendigungsfrist/manifest";
 import { lesezeit } from "./lesezeit/manifest";
 import { partymengen } from "./partymengen/manifest";
+import { prozentrechner } from "./prozentrechner/manifest";
 import { rentenabschlag } from "./rentenabschlag/manifest";
 import { rentenluecke } from "./rentenluecke/manifest";
 import { sparplan } from "./sparplan/manifest";
@@ -64,6 +65,7 @@ export const tools: ToolManifest[] = [
   bmi,
   kalorienbedarf,
   geburtstermin,
+  prozentrechner,
 ];
 
 /** Ein Tool per Slug. `draft` ist bewusst nicht auffindbar. */

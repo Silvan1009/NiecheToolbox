@@ -1,6 +1,10 @@
 import type { ComponentType } from "react";
 import type { ToolParams } from "@/tools/types";
+import autokauf from "./autokauf/Component";
+import gehalt from "./gehalt/Component";
 import hauskauf from "./hauskauf/Component";
+import nachwuchs from "./nachwuchs/Component";
+import ruhestand from "./ruhestand/Component";
 
 /**
  * Slug → Weg-UI. Bewusst getrennt von der Registry.
@@ -19,4 +23,8 @@ export const wegComponents: Record<
   ComponentType<{ params?: ToolParams }>
 > = {
   hauskauf,
+  gehalt,
+  ruhestand,
+  autokauf,
+  nachwuchs,
 };
