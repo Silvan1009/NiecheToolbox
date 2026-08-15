@@ -6,7 +6,7 @@ export function Faq({ entries }: { entries: FaqEntry[] }) {
   if (entries.length === 0) return null;
 
   return (
-    <section aria-labelledby="faq-heading">
+    <section data-prose aria-labelledby="faq-heading">
       <h2 id="faq-heading" className="section-title">
         Häufige Fragen
       </h2>

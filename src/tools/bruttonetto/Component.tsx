@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { WegCallout } from "@/components/WegCallout";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
@@ -17,12 +16,10 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { toBool, toNumber, urlValue } from "@/lib/parse";
+import { boolValue, toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/lib/regionen";
-import { wegPath } from "@/lib/seo";
 import type { ToolParams } from "@/tools/types";
-import { getWeg } from "@/wege/registry";
 import { bruttonettoAffiliate } from "./affiliate";
 import {
   calculateBruttoNetto,
@@ -37,8 +34,6 @@ import {
   steuerklassen,
   type Steuerklasse,
 } from "@/lib/steuerdaten";
-
-const hauskaufWeg = getWeg("hauskauf");
 
 /** Der Zustand ist genau die Eingabe der Rechenlogik – keine zweite Wahrheit. */
 interface State extends Record<string, unknown>, BruttoNettoInput {}
@@ -134,7 +129,7 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
       zeitraum: urlValue(next.zeitraum, DEFAULTS.zeitraum),
       klasse: urlValue(next.steuerklasse, DEFAULTS.steuerklasse),
       land: urlValue(next.region, DEFAULTS.region),
-      kirche: bool(
+      kirche: boolValue(
         next.kirchensteuerpflichtig,
         DEFAULTS.kirchensteuerpflichtig,
       ),
@@ -143,14 +138,14 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
         DEFAULTS.kinderfreibetraege,
       ),
       kinder: urlValue(next.kinderZahl, DEFAULTS.kinderZahl),
-      kinderlos: bool(next.kinderlos, DEFAULTS.kinderlos),
-      gkv: bool(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
+      kinderlos: boolValue(next.kinderlos, DEFAULTS.kinderlos),
+      gkv: boolValue(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
       zusatz: urlValue(
         next.zusatzbeitragPercent,
         DEFAULTS.zusatzbeitragPercent,
       ),
       pkv: urlValue(next.privatBeitragMonat, DEFAULTS.privatBeitragMonat),
-      rv: bool(
+      rv: boolValue(
         next.rentenversicherungspflichtig,
         DEFAULTS.rentenversicherungspflichtig,
       ),
@@ -518,21 +513,6 @@ export default function BruttoNettoTool({ params }: { params?: ToolParams }) {
       )}
 
       <AffiliateBlock slots={bruttonettoAffiliate} result={result} />
-
-      {hauskaufWeg && (
-        <WegCallout
-          href={wegPath(hauskaufWeg.slug)}
-          icon={hauskaufWeg.icon}
-          eyebrow="Weg"
-          title={hauskaufWeg.name}
-          description="Dieses Netto mit einer Immobilienfinanzierung zusammenrechnen: komfortabel, tragbar oder eng?"
-        />
-      )}
     </div>
   );
-}
-
-/** Schalter als 0/1, damit ein bewusstes Aus vom Default unterscheidbar bleibt. */
-function bool(value: boolean, fallback: boolean): string {
-  return value === fallback ? "" : value ? "1" : "0";
 }

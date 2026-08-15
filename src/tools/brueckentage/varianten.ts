@@ -375,6 +375,10 @@ function baueTexte(baseYear: number): VariantContent[] {
         title: `Brückentage ${year} in ${region.name}`,
         description,
         heading: `Brückentage ${year} in ${region.name}`,
+        // In der Liste auf der Tool-Seite trägt „Brückentage … in …“ nichts
+        // bei – dort zählt nur, welches Land und welches Jahr.
+        listLabel: region.name,
+        listGroup: String(year),
         params: { bl: region.code, jahr: year, basisJahr: baseYear },
         about: about(fakten, region, year),
         faq: faq(fakten, region, year),

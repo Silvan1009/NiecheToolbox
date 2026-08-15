@@ -313,6 +313,8 @@ function baueTexte(baseYear: number): VariantContent[] {
         // stellt, bekommt die Antwort im Suchergebnis.
         description: `${year} hat ${region.name} ${fakten.jahr.workdays} Arbeitstage bei einer Fünftagewoche und ${fakten.werktage} Werktage. Mit allen Feiertagen, Monatsübersicht und beliebigem Zeitraum.`,
         heading: `Arbeitstage ${year} in ${region.name}`,
+        listLabel: region.name,
+        listGroup: String(year),
         params: { bl: region.code, jahr: year },
         about: about(fakten, region, year),
         faq: faq(fakten, region, year),

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { site } from "@/config/site";
 import { JsonLd } from "@/components/JsonLd";
 import { ToolCard } from "@/components/ToolCard";
@@ -79,35 +79,52 @@ export default function RechnerPage() {
                 {tools.map((tool) => {
                   // Bei Tools, deren Unterseiten je ein eigenes Thema sind,
                   // stehen sie unter der Karte – sonst wären sie nur über die
-                  // Tool-Seite erreichbar. Als Hover-Flyout statt fest im
-                  // Fluss, damit die Karten selbst alle gleich groß bleiben.
+                  // Tool-Seite erreichbar.
+                  //
+                  // Früher stand die Liste in einem Hover-Flyout (opacity-0,
+                  // erst bei Mauskontakt sichtbar). Auf dem Telefon bekam sie
+                  // damit niemand zu Gesicht, und ein Link, den nur der
+                  // Crawler sieht, ist genau das Muster, das eine
+                  // AdSense-Prüfung als Doorway-Verlinkung liest. Jetzt ein
+                  // aufklappbares <details>: sichtbar, tastaturbedienbar,
+                  // ohne JavaScript – und die Karten bleiben gleich groß,
+                  // weil zugeklappt nur eine Zeile dazukommt.
                   const varianten = toolsWithIndexedVariants.includes(tool.slug)
                     ? (tool.getVariants?.() ?? [])
                     : [];
 
                   return (
-                    <li key={tool.slug} className="group relative flex">
+                    <li key={tool.slug} className="flex flex-col">
                       <ToolCard tool={tool} showCategory={false} />
 
                       {varianten.length > 0 && (
-                        <ul
-                          className="pointer-events-none absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-1 rounded-control border border-line bg-surface p-2 opacity-0 shadow-lift transition-opacity duration-(--dur-fast) ease-(--ease-out) group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"
-                        >
-                          {varianten.map((variant) => (
-                            <li key={variant.slug}>
-                              <Link
-                                href={variantPath(tool.slug, variant.slug)}
-                                className="group/link flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
-                              >
-                                <ArrowRight
-                                  className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover/link:translate-x-0.5"
-                                  aria-hidden="true"
-                                />
-                                {variant.heading ?? variant.title}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
+                        <details className="group mt-2">
+                          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 rounded-control px-2 py-1.5 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink">
+                            {varianten.length} fertige Fälle
+                            <ChevronDown
+                              className="chevron-rotate"
+                              aria-hidden="true"
+                            />
+                          </summary>
+                          <ul className="mt-1 flex flex-col gap-1 pb-1">
+                            {varianten.map((variant) => (
+                              <li key={variant.slug}>
+                                <Link
+                                  href={variantPath(tool.slug, variant.slug)}
+                                  className="group/link flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
+                                >
+                                  <ArrowRight
+                                    className="size-3.5 shrink-0 text-muted transition-transform duration-(--dur-fast) group-hover/link:translate-x-0.5"
+                                    aria-hidden="true"
+                                  />
+                                  {variant.listLabel ??
+                                    variant.heading ??
+                                    variant.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
                       )}
                     </li>
                   );

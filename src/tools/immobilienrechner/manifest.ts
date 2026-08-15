@@ -107,6 +107,7 @@ function buildVariants(): ToolVariant[] {
       title: `Kaufnebenkosten ${region.name}: Rechner mit ${prozent(satz)} % Grunderwerbsteuer`,
       description: `Bei ${prozent(satz)} Prozent Grunderwerbsteuer kostet ein Kauf über 300.000 Euro in ${region.name} rund ${euro(nk300)} an Nebenkosten. Mit Finanzierung, Mietrendite und Cashflow.`,
       heading: `Immobilien-Rechner für ${region.name}`,
+      listLabel: `${region.name} (${prozent(satz)} %)`,
       params: { land: region.code, grest: satz },
 
       about: [

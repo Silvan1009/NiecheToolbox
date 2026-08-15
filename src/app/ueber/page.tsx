@@ -36,7 +36,8 @@ export default function UeberPage() {
           kleine Frage eine Tabelle aufzumachen.
         </p>
 
-        <div className="mt-10 flex flex-col gap-8">
+        {/* data-prose: scripts/content-audit.ts misst genau diesen Bereich. */}
+        <section data-prose className="mt-10 flex flex-col gap-8">
           <Section heading="Worum es hier geht">
             <p>
               {site.name} ist eine Sammlung von derzeit {toolCount} kleinen
@@ -136,7 +137,7 @@ export default function UeberPage() {
               {operator.city}, {operator.country}
             </p>
           </Section>
-        </div>
+        </section>
       </div>
 
       <JsonLd

@@ -13,6 +13,9 @@ export interface VariantContent {
   heading: string;
   /** Startwerte des Rechners auf dieser Seite. */
   params: ToolParams;
+  /** Kurzform und Gruppe für die Variantenliste – siehe `ToolVariant`. */
+  listLabel?: string;
+  listGroup?: string;
   /** Drei eigene Absätze; der allgemeine Erklärtext folgt danach. */
   about: string[];
   faq: FaqEntry[];
@@ -41,6 +44,8 @@ export function buildVariants(
       title: entry.title,
       description: entry.description,
       heading: entry.heading,
+      listLabel: entry.listLabel,
+      listGroup: entry.listGroup,
       params: entry.params,
       about: [...entry.about, ...about.slice(1)],
       faq: [

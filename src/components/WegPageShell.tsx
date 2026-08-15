@@ -4,6 +4,7 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { BugReportButton } from "@/components/BugReportButton";
 import { Faq } from "@/components/Faq";
 import { JsonLd } from "@/components/JsonLd";
+import { Prose } from "@/components/Prose";
 import { site } from "@/config/site";
 import {
   breadcrumbNode,
@@ -40,6 +41,7 @@ export function WegPageShell({
 
   const about = variant?.about ?? weg.about;
   const faq = variant?.faq ?? weg.faq;
+  const sections = variant?.sections ?? weg.sections;
 
   const params = { ...weg.getDefaultParams?.(), ...variant?.params };
 
@@ -96,7 +98,7 @@ export function WegPageShell({
 
       <div className="tool-column mt-14 flex flex-col gap-12">
         {about && about.length > 0 && (
-          <section aria-labelledby="about-heading">
+          <section data-prose aria-labelledby="about-heading">
             <h2 id="about-heading" className="section-title">
               So funktioniert’s
             </h2>
@@ -107,6 +109,8 @@ export function WegPageShell({
             </div>
           </section>
         )}
+
+        <Prose sections={sections} />
 
         {faq && faq.length > 0 && <Faq entries={faq} />}
 

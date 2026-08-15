@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import type { AdDensity } from "@/lib/adPlacement";
 import type {
   AffiliateSlot,
+  ContentSection,
   FaqEntry,
   ToolCategory,
   ToolParams,
@@ -23,6 +24,22 @@ export interface WegMonetization {
   affiliate?: AffiliateSlot[];
 }
 
+/**
+ * Ein Rechner, den dieser Weg verkettet – in beide Richtungen mit eigenem
+ * Text: einmal für den Verweis vom Weg zum Tool ("Im Detail weiterrechnen"),
+ * einmal für den Rückverweis vom Tool zum Weg.
+ */
+export interface WegSourceTool {
+  /** Slug aus tools/registry.ts – muss dort auflösen. */
+  slug: string;
+  /** Eyebrow über dem Tool-Namen auf der Weg-Seite, z. B. "Alle Angaben zur Immobilie". */
+  detailEyebrow: string;
+  /** Beschreibung auf der Weg-Seite, unter "Im Detail weiterrechnen". */
+  detailDescription: string;
+  /** Beschreibung auf der Tool-Seite, im Rückverweis zurück zu diesem Weg. */
+  backlinkDescription: string;
+}
+
 export interface WegManifest {
   /** URL-Segment, /wege/<slug> */
   slug: string;
@@ -36,14 +53,19 @@ export interface WegManifest {
   keywords: string[];
   status: "live" | "beta" | "draft";
 
-  /** Slugs der verketteten Rechner aus tools/registry.ts – für Rückverlinkung. */
-  sourceTools: string[];
+  /** Die verketteten Rechner – für Rückverlinkung in beide Richtungen. */
+  sourceTools: WegSourceTool[];
 
   /** Wie ToolManifest.getDefaultParams – Startwerte, die erst zur Laufzeit feststehen. */
   getDefaultParams?: () => ToolParams;
 
   /** Erklärtext nach dem Stepper. */
   about?: string[];
+  /**
+   * Der ausführliche Teil unter dem Einstieg – wie bei den Tools; siehe
+   * `ContentSection` in tools/types.ts.
+   */
+  sections?: ContentSection[];
   /** Wird zu FAQPage-JSON-LD und einer Accordion-Liste. */
   faq?: FaqEntry[];
 

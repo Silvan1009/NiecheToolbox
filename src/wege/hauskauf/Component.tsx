@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useMemo } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { WegCallout } from "@/components/WegCallout";
-import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+import { WegCarriedValue } from "@/components/WegCarriedValue";
+import { WegSourceTools } from "@/components/WegSourceTools";
+import { WegStep } from "@/components/WegStep";
+import { WegSteps, type WegStepDef } from "@/components/WegSteps";
+import { Disclosure } from "@/components/ui/Card";
 import {
   Field,
   Select,
@@ -25,16 +21,21 @@ import { AmountRow, Stat } from "@/components/ui/Readout";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { ShareBar } from "@/components/ui/ShareBar";
 import { formatDecimal, formatEuro } from "@/lib/format";
-import { toBool, toNumber, urlValue } from "@/lib/parse";
+import { boolValue, toBool, toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
-import { getRegion, isRegionCode, regions, type RegionCode } from "@/lib/regionen";
+import { useWegStepper } from "@/lib/useWegStepper";
+import {
+  getRegion,
+  isRegionCode,
+  regions,
+  type RegionCode,
+} from "@/lib/regionen";
 import {
   isSteuerklasse,
   kirchensteuersatz,
   steuerklassen,
   type Steuerklasse,
 } from "@/lib/steuerdaten";
-import { getTool } from "@/tools/registry";
 import type { ToolParams } from "@/tools/types";
 import {
   calculateBruttoNetto,
@@ -48,6 +49,7 @@ import {
   type ImmobilienInput,
 } from "@/tools/immobilienrechner/logic";
 import { hauskaufAffiliate } from "./affiliate";
+import { hauskauf } from "./manifest";
 import {
   bewerteHauskauf,
   einstufungLabel,
@@ -130,11 +132,11 @@ const ZEITRAUM_OPTIONS = [
 const isZeitraum = (value: unknown): value is Zeitraum =>
   value === "monat" || value === "jahr";
 
-/** Schalter kommen als 0/1 aus der URL und aus künftigen Varianten-Params. */
-/** Schalter als 0/1, damit ein bewusstes Aus vom Default unterscheidbar bleibt. */
-function bool(value: boolean, fallback: boolean): string {
-  return value === fallback ? "" : value ? "1" : "0";
-}
+const STEPS = [
+  { step: 1, id: "hk-immobilie", label: "1 · Immobilie" },
+  { step: 2, id: "hk-einkommen", label: "2 · Einkommen" },
+  { step: 3, id: "hk-urteil", label: "3 · Urteil" },
+] as const satisfies readonly WegStepDef[];
 
 function toSteuerklasse(value: unknown, fallback: Steuerklasse): Steuerklasse {
   const parsed = Number(value);
@@ -165,11 +167,6 @@ const einstufungHint: Record<HauskaufEinstufung, string> = {
     "Die Rechnung geht auf, aber mit wenig Spielraum für mehrere größere Ausgaben im selben Jahr.",
   eng: "Rate und Nebenkosten beanspruchen einen großen Teil des Nettos – oder es fehlt ein Nettoeinkommen.",
 };
-
-/** Wie ShareBars hasShareApi(): Query-String lesen, ohne Hydrate-Konflikt und ohne Effekt. */
-const noopSubscribe = () => () => {};
-const hasSearchParams = () => window.location.search.length > 0;
-const noSearchParamsOnServer = () => false;
 
 export default function HauskaufWeg({ params }: { params?: ToolParams }) {
   const [state, update] = useUrlState<State>({
@@ -258,7 +255,7 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
       brutto: urlValue(next.brutto, DEFAULTS.brutto),
       zeitraum: urlValue(next.zeitraum, DEFAULTS.zeitraum),
       klasse: urlValue(next.steuerklasse, DEFAULTS.steuerklasse),
-      kirche: bool(
+      kirche: boolValue(
         next.kirchensteuerpflichtig,
         DEFAULTS.kirchensteuerpflichtig,
       ),
@@ -267,56 +264,21 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
         DEFAULTS.kinderfreibetraege,
       ),
       kinder: urlValue(next.kinderZahl, DEFAULTS.kinderZahl),
-      kinderlos: bool(next.kinderlos, DEFAULTS.kinderlos),
-      gkv: bool(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
+      kinderlos: boolValue(next.kinderlos, DEFAULTS.kinderlos),
+      gkv: boolValue(next.gesetzlichVersichert, DEFAULTS.gesetzlichVersichert),
       zusatz: urlValue(
         next.zusatzbeitragPercent,
         DEFAULTS.zusatzbeitragPercent,
       ),
       pkv: urlValue(next.privatBeitragMonat, DEFAULTS.privatBeitragMonat),
-      rv: bool(
+      rv: boolValue(
         next.rentenversicherungspflichtig,
         DEFAULTS.rentenversicherungspflichtig,
       ),
     }),
   });
 
-  // Ankunft über einen geteilten Link: sofort alles zeigen statt von vorn
-  // beginnen zu lassen. useSyncExternalStore statt Effekt+setState – wie
-  // ShareBars hasShareApi() liest das einen Browser-Wert, ohne SSR-HTML und
-  // ersten Client-Render auseinanderlaufen zu lassen (kein Hydrate-Konflikt).
-  const arrivedViaLink = useSyncExternalStore(
-    noopSubscribe,
-    hasSearchParams,
-    noSearchParamsOnServer,
-  );
-
-  // Fortschritt ist kein Wert, der das Ergebnis bestimmt – bleibt lokaler
-  // State statt in der URL (README-Regel für useUrlState).
-  const [manualStep, setManualStep] = useState<1 | 2 | 3>(1);
-  const revealedUpTo = arrivedViaLink ? 3 : manualStep;
-
-  // Ziel eines Klicks auf Pill/Button: ein Ref statt State, damit der
-  // Scroll-Effekt unten keinen eigenen setState-Aufruf braucht (nur lesen +
-  // scrollIntoView). scrollPulse ist der einzige Auslöser des Effekts – auch
-  // wenn manualStep sich nicht ändert (z. B. Klick auf die bereits aktive
-  // Pille), muss trotzdem gescrollt werden.
-  const pendingScrollRef = useRef<string | null>(null);
-  const [scrollPulse, setScrollPulse] = useState(0);
-
-  useEffect(() => {
-    const target = pendingScrollRef.current;
-    if (!target) return;
-    document
-      .getElementById(target)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [scrollPulse]);
-
-  function goTo(step: 1 | 2 | 3, id: string) {
-    pendingScrollRef.current = id;
-    setManualStep((current) => (step > current ? step : current));
-    setScrollPulse((pulse) => pulse + 1);
-  }
+  const stepper = useWegStepper(STEPS.length);
 
   const immobilienInput: ImmobilienInput = useMemo(
     () => ({
@@ -376,53 +338,26 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
     [immobilie, einkommen],
   );
 
-  const immobilienTool = getTool("immobilienrechner");
-  const bruttonettoTool = getTool("bruttonetto");
   const region = getRegion(state.region);
   const warnings = [...immobilie.warnings, ...einkommen.warnings];
 
   return (
     <div className="flex flex-col gap-8">
-      <nav
-        aria-label="Fortschritt"
-        className="flex flex-wrap items-center gap-2"
-      >
-        {(
-          [
-            { step: 1, id: "hk-immobilie", label: "1 · Immobilie" },
-            { step: 2, id: "hk-einkommen", label: "2 · Einkommen" },
-            { step: 3, id: "hk-urteil", label: "3 · Urteil" },
-          ] as const
-        ).map(({ step, id, label }) => {
-          const active = revealedUpTo === step;
-          const reachable = revealedUpTo >= step;
-          return (
-            <button
-              key={step}
-              type="button"
-              onClick={() => goTo(step, id)}
-              aria-current={active ? "step" : undefined}
-              className={`rounded-pill px-3.5 py-1.5 text-[13px] font-semibold transition-colors duration-(--dur-fast) ${
-                active
-                  ? "bg-accent text-white shadow-soft"
-                  : reachable
-                    ? "bg-ink-soft text-ink hover:bg-accent-soft hover:text-accent"
-                    : "bg-ink-soft text-muted hover:bg-accent-soft hover:text-accent"
-              }`}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </nav>
+      <WegSteps
+        steps={STEPS}
+        revealedUpTo={stepper.revealedUpTo}
+        onSelect={stepper.goTo}
+      />
 
-      <Card
-        as="section"
+      <WegStep
+        step={1}
         id="hk-immobilie"
-        className="scroll-mt-8 p-6"
-        aria-label="Immobilie"
+        ariaLabel="Immobilie"
+        title="Was kostet die Immobilie?"
+        revealedUpTo={stepper.revealedUpTo}
+        continueLabel="Weiter zum Einkommen"
+        onContinue={() => stepper.goTo(2, "hk-einkommen")}
       >
-        <CardTitle>Was kostet die Immobilie?</CardTitle>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <Field label="Kaufpreis" htmlFor="hk-preis">
             <UnitInput
@@ -544,10 +479,7 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
                 />
               </Field>
 
-              <Field
-                label="Nicht umlagefähiges Hausgeld"
-                htmlFor="hk-hausgeld"
-              >
+              <Field label="Nicht umlagefähiges Hausgeld" htmlFor="hk-hausgeld">
                 <UnitInput
                   id="hk-hausgeld"
                   unit="€/Monat"
@@ -582,202 +514,177 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
             </div>
           </Disclosure>
         </div>
+      </WegStep>
 
-        {revealedUpTo === 1 && (
-          <div className="mt-6 flex justify-end">
-            <Button onClick={() => goTo(2, "hk-einkommen")}>
-              Weiter zum Einkommen
-            </Button>
-          </div>
-        )}
-      </Card>
+      <WegStep
+        step={2}
+        id="hk-einkommen"
+        ariaLabel="Einkommen"
+        title="Wie viel Netto bleibt im Haushalt?"
+        revealedUpTo={stepper.revealedUpTo}
+        continueLabel="Weiter zum Urteil"
+        onContinue={() => stepper.goTo(3, "hk-urteil")}
+      >
+        <WegCarriedValue onChange={() => stepper.goTo(1, "hk-immobilie")}>
+          Bundesland: {region?.name ?? state.region} – aus Schritt 1, bestimmt
+          hier den Kirchensteuersatz ({kirchensteuersatz(state.region)} %).
+        </WegCarriedValue>
 
-      {revealedUpTo >= 2 && (
-        <Card
-          as="section"
-          id="hk-einkommen"
-          className="scroll-mt-8 p-6"
-          aria-label="Einkommen"
-        >
-          <CardTitle>Wie viel Netto bleibt im Haushalt?</CardTitle>
+        <div className="mt-4 grid gap-5 sm:grid-cols-2">
+          <Field
+            label="Bruttolohn"
+            htmlFor="hk-brutto"
+            hint="Zwei Einkommen im Haushalt? Addiere beide Bruttogehälter."
+          >
+            <UnitInput
+              id="hk-brutto"
+              unit="€"
+              value={state.brutto}
+              onChange={(brutto) => update({ brutto })}
+            />
+          </Field>
 
-          <p className="mt-1.5 field-hint">
-            Bundesland: {region?.name ?? state.region} – aus Schritt 1,
-            bestimmt hier den Kirchensteuersatz ({kirchensteuersatz(state.region)}{" "}
-            %).{" "}
-            <button
-              type="button"
-              onClick={() => goTo(1, "hk-immobilie")}
-              className="underline decoration-line underline-offset-2 hover:text-ink"
+          <Field label="Zeitraum" htmlFor="hk-zeitraum">
+            <SegmentedControl
+              value={state.zeitraum}
+              options={ZEITRAUM_OPTIONS}
+              onChange={(zeitraum) => update({ zeitraum })}
+              ariaLabel="Zeitraum des Bruttolohns"
+            />
+          </Field>
+
+          <Field
+            label="Steuerklasse"
+            htmlFor="hk-klasse"
+            hint={steuerklassen[state.steuerklasse].hint}
+          >
+            <Select
+              id="hk-klasse"
+              value={state.steuerklasse}
+              onChange={(event) => {
+                const klasse = Number(event.target.value);
+                if (isSteuerklasse(klasse)) update({ steuerklasse: klasse });
+              }}
             >
-              Ändern
-            </button>
-          </p>
+              {Object.entries(steuerklassen).map(([key, def]) => (
+                <option key={key} value={key}>
+                  {def.label}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        </div>
 
-          <div className="mt-4 grid gap-5 sm:grid-cols-2">
-            <Field
-              label="Bruttolohn"
-              htmlFor="hk-brutto"
-              hint="Zwei Einkommen im Haushalt? Addiere beide Bruttogehälter."
-            >
-              <UnitInput
-                id="hk-brutto"
-                unit="€"
-                value={state.brutto}
-                onChange={(brutto) => update({ brutto })}
+        <div className="mt-5">
+          <Disclosure
+            title="Kirche, Kinder und Versicherung"
+            hint="Die Angaben, die das Netto am stärksten verschieben."
+          >
+            <div className="flex flex-col gap-5">
+              <Toggle
+                checked={state.kirchensteuerpflichtig}
+                onChange={(kirchensteuerpflichtig) =>
+                  update({ kirchensteuerpflichtig })
+                }
+                label="Kirchensteuerpflichtig"
+                hint={`${kirchensteuersatz(state.region)} Prozent der Lohnsteuer in diesem Bundesland.`}
               />
-            </Field>
 
-            <Field label="Zeitraum" htmlFor="hk-zeitraum">
-              <SegmentedControl
-                value={state.zeitraum}
-                options={ZEITRAUM_OPTIONS}
-                onChange={(zeitraum) => update({ zeitraum })}
-                ariaLabel="Zeitraum des Bruttolohns"
+              <Toggle
+                checked={state.kinderlos}
+                onChange={(kinderlos) => update({ kinderlos })}
+                label="Kinderlos, mindestens 23 Jahre alt"
+                hint="Zuschlag von 0,6 Prozentpunkten zur Pflegeversicherung."
               />
-            </Field>
 
-            <Field
-              label="Steuerklasse"
-              htmlFor="hk-klasse"
-              hint={steuerklassen[state.steuerklasse].hint}
-            >
-              <Select
-                id="hk-klasse"
-                value={state.steuerklasse}
-                onChange={(event) => {
-                  const klasse = Number(event.target.value);
-                  if (isSteuerklasse(klasse)) update({ steuerklasse: klasse });
-                }}
-              >
-                {Object.entries(steuerklassen).map(([key, def]) => (
-                  <option key={key} value={key}>
-                    {def.label}
-                  </option>
-                ))}
-              </Select>
-            </Field>
-          </div>
-
-          <div className="mt-5">
-            <Disclosure
-              title="Kirche, Kinder und Versicherung"
-              hint="Die Angaben, die das Netto am stärksten verschieben."
-            >
-              <div className="flex flex-col gap-5">
-                <Toggle
-                  checked={state.kirchensteuerpflichtig}
-                  onChange={(kirchensteuerpflichtig) =>
-                    update({ kirchensteuerpflichtig })
-                  }
-                  label="Kirchensteuerpflichtig"
-                  hint={`${kirchensteuersatz(state.region)} Prozent der Lohnsteuer in diesem Bundesland.`}
-                />
-
-                <Toggle
-                  checked={state.kinderlos}
-                  onChange={(kinderlos) => update({ kinderlos })}
-                  label="Kinderlos, mindestens 23 Jahre alt"
-                  hint="Zuschlag von 0,6 Prozentpunkten zur Pflegeversicherung."
-                />
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Kinder unter 25" htmlFor="hk-kinder">
-                    <Stepper
-                      id="hk-kinder"
-                      value={state.kinderZahl}
-                      min={0}
-                      max={10}
-                      onChange={(kinderZahl) =>
-                        update({
-                          kinderZahl,
-                          kinderlos: kinderZahl > 0 ? false : state.kinderlos,
-                        })
-                      }
-                      ariaLabel="Zahl der Kinder unter 25"
-                    />
-                  </Field>
-
-                  <Field label="Kinderfreibeträge" htmlFor="hk-freibetraege">
-                    <Stepper
-                      id="hk-freibetraege"
-                      value={state.kinderfreibetraege}
-                      min={0}
-                      max={10}
-                      step={0.5}
-                      onChange={(kinderfreibetraege) =>
-                        update({ kinderfreibetraege })
-                      }
-                      ariaLabel="Zahl der Kinderfreibeträge"
-                    />
-                  </Field>
-                </div>
-
-                <Toggle
-                  checked={state.gesetzlichVersichert}
-                  onChange={(gesetzlichVersichert) =>
-                    update({ gesetzlichVersichert })
-                  }
-                  label="Gesetzlich krankenversichert"
-                  hint="Ausschalten für die private Krankenversicherung."
-                />
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {state.gesetzlichVersichert ? (
-                    <Field
-                      label="Zusatzbeitrag der Krankenkasse"
-                      htmlFor="hk-zusatz"
-                    >
-                      <UnitInput
-                        id="hk-zusatz"
-                        unit="%"
-                        value={state.zusatzbeitragPercent}
-                        onChange={(zusatzbeitragPercent) =>
-                          update({ zusatzbeitragPercent })
-                        }
-                      />
-                    </Field>
-                  ) : (
-                    <Field
-                      label="Beitrag zur privaten Kranken- und Pflegeversicherung"
-                      htmlFor="hk-pkv"
-                      hint="Voller Monatsbeitrag."
-                    >
-                      <UnitInput
-                        id="hk-pkv"
-                        unit="€"
-                        value={state.privatBeitragMonat}
-                        onChange={(privatBeitragMonat) =>
-                          update({ privatBeitragMonat })
-                        }
-                      />
-                    </Field>
-                  )}
-
-                  <Toggle
-                    checked={state.rentenversicherungspflichtig}
-                    onChange={(rentenversicherungspflichtig) =>
-                      update({ rentenversicherungspflichtig })
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Kinder unter 25" htmlFor="hk-kinder">
+                  <Stepper
+                    id="hk-kinder"
+                    value={state.kinderZahl}
+                    min={0}
+                    max={10}
+                    onChange={(kinderZahl) =>
+                      update({
+                        kinderZahl,
+                        kinderlos: kinderZahl > 0 ? false : state.kinderlos,
+                      })
                     }
-                    label="Renten- und arbeitslosenversicherungspflichtig"
-                    hint="Der Normalfall. Ausschalten etwa für Beamte."
+                    ariaLabel="Zahl der Kinder unter 25"
                   />
-                </div>
+                </Field>
+
+                <Field label="Kinderfreibeträge" htmlFor="hk-freibetraege">
+                  <Stepper
+                    id="hk-freibetraege"
+                    value={state.kinderfreibetraege}
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    onChange={(kinderfreibetraege) =>
+                      update({ kinderfreibetraege })
+                    }
+                    ariaLabel="Zahl der Kinderfreibeträge"
+                  />
+                </Field>
               </div>
-            </Disclosure>
-          </div>
 
-          {revealedUpTo === 2 && (
-            <div className="mt-6 flex justify-end">
-              <Button onClick={() => goTo(3, "hk-urteil")}>
-                Weiter zum Urteil
-              </Button>
+              <Toggle
+                checked={state.gesetzlichVersichert}
+                onChange={(gesetzlichVersichert) =>
+                  update({ gesetzlichVersichert })
+                }
+                label="Gesetzlich krankenversichert"
+                hint="Ausschalten für die private Krankenversicherung."
+              />
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                {state.gesetzlichVersichert ? (
+                  <Field
+                    label="Zusatzbeitrag der Krankenkasse"
+                    htmlFor="hk-zusatz"
+                  >
+                    <UnitInput
+                      id="hk-zusatz"
+                      unit="%"
+                      value={state.zusatzbeitragPercent}
+                      onChange={(zusatzbeitragPercent) =>
+                        update({ zusatzbeitragPercent })
+                      }
+                    />
+                  </Field>
+                ) : (
+                  <Field
+                    label="Beitrag zur privaten Kranken- und Pflegeversicherung"
+                    htmlFor="hk-pkv"
+                    hint="Voller Monatsbeitrag."
+                  >
+                    <UnitInput
+                      id="hk-pkv"
+                      unit="€"
+                      value={state.privatBeitragMonat}
+                      onChange={(privatBeitragMonat) =>
+                        update({ privatBeitragMonat })
+                      }
+                    />
+                  </Field>
+                )}
+
+                <Toggle
+                  checked={state.rentenversicherungspflichtig}
+                  onChange={(rentenversicherungspflichtig) =>
+                    update({ rentenversicherungspflichtig })
+                  }
+                  label="Renten- und arbeitslosenversicherungspflichtig"
+                  hint="Der Normalfall. Ausschalten etwa für Beamte."
+                />
+              </div>
             </div>
-          )}
-        </Card>
-      )}
+          </Disclosure>
+        </div>
+      </WegStep>
 
-      {revealedUpTo >= 3 && (
+      {stepper.revealedUpTo >= 3 && (
         <div id="hk-urteil" className="scroll-mt-8 flex flex-col gap-8">
           <ResultPanel
             footer={
@@ -807,7 +714,8 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
                       : `${formatDecimal(urteil.belastungsquote)} %`}
                   </strong>{" "}
                   eures Nettoeinkommens von {formatEuro(urteil.nettoMonat)}. Das
-                  gilt als <strong className="font-semibold text-ink">
+                  gilt als{" "}
+                  <strong className="font-semibold text-ink">
                     {einstufungLabel[urteil.einstufung]}
                   </strong>{" "}
                   – {einstufungHint[urteil.einstufung]}
@@ -849,7 +757,10 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
             />
           </dl>
 
-          <section aria-labelledby="hk-aufstellung" className="surface-soft p-6">
+          <section
+            aria-labelledby="hk-aufstellung"
+            className="surface-soft p-6"
+          >
             <h2
               id="hk-aufstellung"
               className="font-display text-lg font-semibold tracking-tight"
@@ -894,38 +805,7 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
 
           <AffiliateBlock slots={hauskaufAffiliate} result={urteil} />
 
-          <section aria-labelledby="hk-weiterrechnen">
-            <h2
-              id="hk-weiterrechnen"
-              className="font-display text-lg font-semibold tracking-tight"
-            >
-              Im Detail weiterrechnen
-            </h2>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-              {immobilienTool && (
-                <li>
-                  <WegCallout
-                    href="/tools/immobilienrechner/"
-                    icon={immobilienTool.icon}
-                    eyebrow="Alle Angaben zur Immobilie"
-                    title={immobilienTool.name}
-                    description="Tilgungsplan, Jahresverlauf und Kaufen-oder-Mieten im Detail."
-                  />
-                </li>
-              )}
-              {bruttonettoTool && (
-                <li>
-                  <WegCallout
-                    href="/tools/bruttonetto/"
-                    icon={bruttonettoTool.icon}
-                    eyebrow="Alle Angaben zum Einkommen"
-                    title={bruttonettoTool.name}
-                    description="Jeder Abzug einzeln, mit Steuerklassen-Vergleich."
-                  />
-                </li>
-              )}
-            </ul>
-          </section>
+          <WegSourceTools tools={hauskauf.sourceTools} />
         </div>
       )}
     </div>

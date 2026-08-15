@@ -38,6 +38,19 @@ export interface ToolVariant {
   params: ToolParams;
 
   /**
+   * Kurzform für die Variantenliste auf der Tool-Seite. Ohne sie stünde dort
+   * 48-mal „Brückentage 2027 in …“ untereinander – der gemeinsame Teil trägt
+   * in einer Liste nichts bei. Fällt auf `heading`, dann `title` zurück.
+   */
+  listLabel?: string;
+  /**
+   * Überschrift, unter der diese Variante in der Liste einsortiert wird
+   * (z. B. das Jahr). Sobald eine Variante eine Gruppe hat, gruppiert die
+   * ganze Liste.
+   */
+  listGroup?: string;
+
+  /**
    * Eigener Erklärtext statt dem des Tools.
    *
    * Ohne das unterscheiden sich viele Variantenseiten nur in der Überschrift –
@@ -48,11 +61,43 @@ export interface ToolVariant {
   about?: string[];
   /** Eigene FAQ statt der des Tools. Wird auch zu FAQPage-JSON-LD. */
   faq?: FaqEntry[];
+  /**
+   * Der ausführliche Teil dieser Variante. Steht für sich: Was hier steht,
+   * gilt für diese eine Seite und wird nicht vom Tool geerbt.
+   */
+  sections?: ContentSection[];
 }
 
 export interface FaqEntry {
   question: string;
   answer: string;
+}
+
+/**
+ * Bausteine für den ausführlichen Teil einer Seite.
+ *
+ * `about` bleibt daneben bestehen und trägt weiterhin den Einstieg: zwei bis
+ * drei Absätze direkt unter dem Rechner. Alles, was darüber hinausgeht –
+ * Rechenbeispiele, Vergleichstabellen, Grenzen des Modells – braucht
+ * Zwischenüberschriften und Listen, sonst liest es sich als Textwand. Genau
+ * dafür sind diese Blöcke da.
+ *
+ * Bewusst eine kleine, geschlossene Menge statt Markdown: Der Inhalt liegt so
+ * als geprüfte Datenstruktur vor, nicht als Zeichenkette, die zur Laufzeit
+ * geparst werden müsste – und ohne `dangerouslySetInnerHTML`.
+ */
+export type ContentBlock =
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] }
+  | { type: "note"; text: string }
+  | { type: "table"; caption?: string; head: string[]; rows: string[][] }
+  | { type: "links"; items: { href: string; label: string; note?: string }[] };
+
+export interface ContentSection {
+  /** Wird zu einem <h2>. Ein echter Satzteil, keine Ein-Wort-Marke. */
+  heading: string;
+  blocks: ContentBlock[];
 }
 
 /**
@@ -104,6 +149,11 @@ export interface ToolManifest {
    * "echter Inhalt" ein. Absätze als einzelne Strings.
    */
   about?: string[];
+  /**
+   * Der ausführliche Teil unter dem Einstieg: Rechenbeispiel, Tabellen,
+   * Grenzen des Modells. Steht zwischen `about` und der FAQ.
+   */
+  sections?: ContentSection[];
   /** Wird zu FAQPage-JSON-LD und einer Accordion-Liste. */
   faq?: FaqEntry[];
 

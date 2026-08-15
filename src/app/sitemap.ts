@@ -1,5 +1,11 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, toolPath, variantPath, wegPath, wegVariantPath } from "@/lib/seo";
+import {
+  absoluteUrl,
+  toolPath,
+  variantPath,
+  wegPath,
+  wegVariantPath,
+} from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
 import { publicWege } from "@/wege/registry";
 
@@ -63,6 +69,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly",
     priority: 0.8,
   });
+
+  if (publicWege().length > 0) {
+    entries.push({
+      url: absoluteUrl("/wege/"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+  }
 
   entries.push({
     url: absoluteUrl("/ueber/"),
