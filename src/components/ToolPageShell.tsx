@@ -4,7 +4,10 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { BugReportButton } from "@/components/BugReportButton";
 import { Faq } from "@/components/Faq";
 import { JsonLd } from "@/components/JsonLd";
+import { Prose } from "@/components/Prose";
 import { RelatedTools } from "@/components/RelatedTools";
+import { VariantList } from "@/components/VariantList";
+import { WegBacklinks } from "@/components/WegBacklinks";
 import { site } from "@/config/site";
 import {
   breadcrumbNode,
@@ -42,6 +45,13 @@ export function ToolPageShell({
   // Tools – so bleiben alle bestehenden Varianten unverändert.
   const about = variant?.about ?? tool.about;
   const faq = variant?.faq ?? tool.faq;
+  // Auf der Tool-Seite selbst (kein variant) zeigt das die eigenen sections
+  // des Tools. Auf einer Variantenseite dagegen KEIN Fallback auf
+  // tool.sections: Sonst fiele der Abschnittstext des Tools auf jede Variante
+  // durch und läge identisch auf allen ihren Seiten – genau die
+  // Duplizierung, die scripts/content-audit.ts misst. Eine Variante ohne
+  // eigene sections hat schlicht keine.
+  const sections = variant ? variant.sections : tool.sections;
 
   // Startparameter: Laufzeit-Defaults vom Server, von der Variante überschrieben.
   const params = { ...tool.getDefaultParams?.(), ...variant?.params };
@@ -99,7 +109,7 @@ export function ToolPageShell({
 
       <div className="tool-column mt-14 flex flex-col gap-12">
         {about && about.length > 0 && (
-          <section aria-labelledby="about-heading">
+          <section data-prose aria-labelledby="about-heading">
             <h2 id="about-heading" className="section-title">
               So funktioniert’s
             </h2>
@@ -111,9 +121,15 @@ export function ToolPageShell({
           </section>
         )}
 
+        <Prose sections={sections} />
+
         {faq && faq.length > 0 && <Faq entries={faq} />}
 
         <AdSlot placement="below-content" density={density} />
+
+        <VariantList tool={tool} currentSlug={variant?.slug} />
+
+        <WegBacklinks slug={tool.slug} />
 
         <RelatedTools slug={tool.slug} />
 

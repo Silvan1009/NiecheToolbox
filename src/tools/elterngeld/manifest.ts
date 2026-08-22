@@ -1,6 +1,46 @@
 import { HandHeart } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { elterngeldAffiliate } from "./affiliate";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Die Ersatzrate-Staffel im Überblick",
+    blocks: [
+      {
+        type: "table",
+        caption: "Ersatzrate nach Nettoeinkommen vor der Geburt",
+        head: ["Nettoeinkommen", "Ersatzrate"],
+        rows: [
+          ["bis 340 €", "100 %"],
+          ["340–1.000 €", "sinkt schrittweise (Geringverdienerregelung)"],
+          ["1.000–1.200 €", "67 %"],
+          ["1.200–1.240 €", "sinkt schrittweise auf 65 %"],
+          ["ab 1.240 €", "65 % (konstant)"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Die meisten Angestellten mit einem Nettoeinkommen über 1.240 Euro landen deshalb bei der konstanten unteren Grenze von 65 Prozent – die oft zitierten 67 Prozent gelten nur für ein schmales Einkommensfenster.",
+      },
+    ],
+  },
+  {
+    heading: "Zuschläge auf einen Blick",
+    blocks: [
+      {
+        type: "ul",
+        items: [
+          "Geschwisterbonus: 10 % des errechneten Elterngeldes, mindestens 75 € im Monat.",
+          "Mehrlingszuschlag: 300 € zusätzlich für jedes weitere Kind derselben Geburt.",
+        ],
+      },
+      {
+        type: "note",
+        text: "Beide Zuschläge werden automatisch für die gesamte Bezugsdauer gezahlt, nicht nur einmalig, und lassen sich miteinander kombinieren.",
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   "„67 Prozent vom letzten Netto“ ist die Zahl, die zum Elterngeld am häufigsten kursiert – und sie stimmt nur für ein Nettoeinkommen zwischen 1.000 und 1.200 Euro im Monat. Darunter greift die Geringverdienerregelung und die Ersatzrate steigt schrittweise bis auf 100 Prozent bei 340 Euro oder weniger. Darüber sinkt sie schrittweise bis auf 65 Prozent, erreicht bei rund 1.240 Euro Netto und ab dort unverändert – wer 4.000 Euro netto verdient hat, bekommt also nicht 67, sondern 65 Prozent davon. Dieser Rechner bildet die volle Staffel ab, nicht nur die Mitte.",
@@ -60,6 +100,8 @@ export const elterngeld: ToolManifest = {
     "basiselterngeld oder elterngeldplus",
     "elterngeld höhe",
   ],
+
+  sections,
 
   about,
   faq,

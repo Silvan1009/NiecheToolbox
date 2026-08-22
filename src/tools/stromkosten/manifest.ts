@@ -1,5 +1,5 @@
 import { Zap } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { stromkostenAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -9,6 +9,51 @@ const about: string[] = [
   "Bei Wasch- und Spülmaschinen zählt außerdem nicht die Leistungsangabe, sondern der Verbrauch je Durchgang. Eine Waschmaschine zieht beim Aufheizen kurz 2000 Watt und läuft danach mit fast nichts – aus der Wattzahl allein lässt sich der Verbrauch nicht ableiten. Die Angabe in Kilowattstunden je Durchgang steht auf dem Energielabel.",
   "Der zweite oft unterschätzte Posten ist der Standby. Ein Gerät mit drei Watt Dauerlast verbraucht im Jahr rund 26 Kilowattstunden, ohne einen Handschlag zu tun – mehr als manches Gerät, das dreimal pro Woche eine Stunde läuft. Der Rechner weist den Anteil deshalb getrennt aus und rechnet ihn nur für die Zeit, in der das Gerät nicht ohnehin läuft.",
   "Der CO₂-Wert ist eine Näherung mit 380 Gramm je Kilowattstunde für den deutschen Strommix. Dieser Wert sinkt mit dem Ausbau der Erneuerbaren von Jahr zu Jahr; als Größenordnung taugt er, als exakte Bilanz nicht.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Verbrauch je Durchgang statt Wattzahl",
+    blocks: [
+      {
+        type: "p",
+        text: "Zur Orientierung: Ein moderner, effizienter Vollwaschgang liegt oft bei nur 0,5 bis 1,0 Kilowattstunden, ein älteres oder auf 60 Grad geheiztes Programm kann auf 1,5 bis 2,0 Kilowattstunden kommen. Ein Spülgang mit dem Eco-Programm braucht meist rund 0,7 bis 1,0 Kilowattstunden, ein Intensivprogramm entsprechend mehr.",
+      },
+    ],
+  },
+  {
+    heading: "Standby-Verbrauch nicht unterschätzen",
+    blocks: [
+      {
+        type: "p",
+        text: "Typische Dauerläufer im Haushalt sind der WLAN-Router, der praktisch nie ausgeschaltet wird, ein Fernseher im Standby-Modus mit aktivierter Schnellstartfunktion und Ladegeräte, die auch ohne angeschlossenes Gerät noch eine geringe Leerlaufleistung ziehen. Einzeln wirken diese Posten winzig, in Summe über ein Jahr aber nicht.",
+      },
+      {
+        type: "table",
+        caption: "Dauerlast hochgerechnet aufs Jahr (Leistung × 8.760 Stunden)",
+        head: ["Dauerlast", "Verbrauch pro Jahr"],
+        rows: [
+          ["1 Watt", "8,8 kWh"],
+          ["3 Watt", "26,3 kWh"],
+          ["5 Watt", "43,8 kWh"],
+          ["10 Watt", "87,6 kWh"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "CO₂-Wert: eine Näherung",
+    blocks: [
+      {
+        type: "p",
+        text: "Der tatsächliche Wert schwankt zudem übers Jahr: Im Sommer drückt viel Solarstrom den CO₂-Anteil des Strommixes deutlich nach unten, im Winter steigt er wieder, weil dann mehr fossil erzeugter Strom einspringt. Der hier verwendete Jahresdurchschnitt glättet diese Schwankung.",
+      },
+      {
+        type: "note",
+        text: "Zur Einordnung: Ein Gerät mit 5 Watt Dauerlast verbraucht im Jahr rund 44 Kilowattstunden, das sind etwa 16,6 Kilogramm CO₂ – ungefähr so viel wie eine Autofahrt von 100 bis 130 Kilometern bei einem durchschnittlichen Ausstoß von 130 bis 165 Gramm CO₂ je Kilometer. Bei einem Ökostromtarif mit Herkunftsnachweis fällt dieser Posten rechnerisch weg – der Rechner selbst unterscheidet aber nicht nach Tarif, sondern rechnet einheitlich mit dem deutschen Strommix.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -65,6 +110,7 @@ export const stromkosten: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

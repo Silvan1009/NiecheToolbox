@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
-import { WegCallout } from "@/components/WegCallout";
 import { Card, CardTitle, Disclosure } from "@/components/ui/Card";
 import {
   Field,
@@ -20,9 +19,7 @@ import { formatDecimal, formatEuro, formatInteger } from "@/lib/format";
 import { toNumber, urlValue } from "@/lib/parse";
 import { useUrlState } from "@/lib/useUrlState";
 import { isRegionCode, regions } from "@/lib/regionen";
-import { wegPath } from "@/lib/seo";
 import type { ToolParams } from "@/tools/types";
-import { getWeg } from "@/wege/registry";
 import { immobilienAffiliate } from "./affiliate";
 import { GREST_STAND, grestFor } from "./grunderwerbsteuer";
 import {
@@ -33,8 +30,6 @@ import {
   type ImmobilienInput,
   type Modus,
 } from "./logic";
-
-const hauskaufWeg = getWeg("hauskauf");
 
 /** Der Zustand ist genau die Eingabe der Rechenlogik – keine zweite Wahrheit. */
 interface State extends Record<string, unknown>, ImmobilienInput {}
@@ -1023,16 +1018,6 @@ export default function ImmobilienrechnerTool({
       )}
 
       <AffiliateBlock slots={immobilienAffiliate} result={result} />
-
-      {hauskaufWeg && (
-        <WegCallout
-          href={wegPath(hauskaufWeg.slug)}
-          icon={hauskaufWeg.icon}
-          eyebrow="Weg"
-          title={hauskaufWeg.name}
-          description="Dieses Ergebnis mit deinem Nettoeinkommen zusammenrechnen: komfortabel, tragbar oder eng?"
-        />
-      )}
     </div>
   );
 }

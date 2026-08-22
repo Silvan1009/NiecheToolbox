@@ -19,6 +19,7 @@ import kreditrechner from "./kreditrechner/Component";
 import kuendigungsfrist from "./kuendigungsfrist/Component";
 import lesezeit from "./lesezeit/Component";
 import partymengen from "./partymengen/Component";
+import prozentrechner from "./prozentrechner/Component";
 import rentenabschlag from "./rentenabschlag/Component";
 import rentenluecke from "./rentenluecke/Component";
 import sparplan from "./sparplan/Component";
@@ -77,6 +78,7 @@ export const toolComponents: Record<
   kuendigungsfrist,
   lesezeit,
   partymengen,
+  prozentrechner,
   rentenabschlag,
   rentenluecke,
   sparplan,

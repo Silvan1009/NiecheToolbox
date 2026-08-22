@@ -1,5 +1,5 @@
 import { PartyPopper } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { partymengenAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -9,6 +9,40 @@ const about: string[] = [
   "Ein Punkt wird dabei fast immer übersehen: Essen und Getränke skalieren unterschiedlich. Wer sechs Stunden bleibt, isst nicht doppelt so viel wie in drei Stunden – aber er trinkt doppelt so viel. Deshalb hängen die Getränke hier an der Dauer und das Essen nur an der Zahl der Gäste.",
   "Kinder zählen als halbe Portion beim Essen und bei den Getränken, beim Geschirr dagegen voll: Einen eigenen Teller braucht jedes Kind. Alkohol wird nur für Erwachsene gerechnet, und der Rechner erinnert daran, dass gut ein Viertel der Erwachsenen keinen trinkt.",
   "Alle Werte sind Erfahrungswerte und stehen als Hinweis unter jeder Zeile. Wer seine Runde kennt, korrigiert nach oben oder unten – der Schalter für kräftige Esser legt ein Viertel auf das Essen, ohne die Getränke anzufassen.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Essen skaliert mit Gästen, Getränke mit der Zeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Konkret gerechnet: Bei 10 Gästen setzt der Rechner für alkoholfreie Getränke 250 Milliliter pro Person und Stunde an. In drei Stunden sind das 7,5 Liter, in sechs Stunden 15 Liter – exakt doppelt so viel, obwohl die Zahl der Gäste gleichbleibt. Die Essensmenge dagegen ändert sich zwischen beiden Fällen nicht, weil sie von der Gästezahl abhängt, nicht von der Feierdauer.",
+      },
+    ],
+  },
+  {
+    heading: "Kinder und Alkohol getrennt gerechnet",
+    blocks: [
+      {
+        type: "p",
+        text: "Bei den alkoholischen Getränken unterscheidet der Rechner zusätzlich zwischen Bier und Wein: Bier ist mit 300 Millilitern pro Person und Stunde angesetzt, Wein mit 150 – Wein wird also nur halb so schnell getrunken wie Bier, entsprechend der üblichen Glasgröße und Trinkgeschwindigkeit.",
+      },
+      {
+        type: "note",
+        text: "Diese Verhältnisse sind Durchschnittswerte für eine gemischte Runde. Weiß eine Gastgeberin oder ein Gastgeber, dass die eigene Gesellschaft überwiegend Wein statt Bier trinkt, lässt sich das nur über die Gesamtmenge grob nachjustieren – eine feste Bier-Wein-Aufteilung fragt der Rechner nicht ab.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Die hinterlegten Faustwerte sind auf ein klassisches deutsches Grillfest kalibriert – Fleisch, Salate, Brötchen, Bier und Wein. Für ein rein veganes Buffet, eine Feier mit überwiegend anderen Küchen oder eine Kindergeburtstagsparty ohne Alkoholanteil passen die Grundannahmen weniger gut und sollten stärker über die manuellen Korrekturschalter angepasst werden.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -65,6 +99,7 @@ export const partymengen: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

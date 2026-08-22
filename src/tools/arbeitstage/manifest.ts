@@ -1,8 +1,88 @@
 import { CalendarCheck } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import { formatEuroRounded } from "@/lib/format";
+import { holidaysFor, regions } from "@/lib/regionen";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { variantenTexte } from "./varianten";
+import {
+  calculateWorkdays,
+  weekPresets,
+  yearRange,
+} from "./logic";
+
+/**
+ * Feiertagszahl je Bundesland, zur Buildzeit fürs laufende Jahr berechnet –
+ * wie `variantenTexte()` in ./varianten.ts, nur als Tabelle statt als Text.
+ * Zählt jeden gesetzlichen Feiertag, auch die wenigen, die ohnehin auf einen
+ * Sonntag fallen (Oster- und Pfingstsonntag in Brandenburg); das ist die
+ * gesetzliche Zahl, nicht die Zahl der dadurch gewonnenen Arbeitstage.
+ */
+function feiertageJeLandTabelle(): ContentSection {
+  const year = new Date().getUTCFullYear();
+  const rows = regions
+    .map((region) => ({
+      name: region.name,
+      n: holidaysFor(year, region.code).length,
+    }))
+    .sort((a, b) => b.n - a.n)
+    .map((row) => [row.name, String(row.n)]);
+
+  return {
+    heading: `Feiertage je Bundesland ${year}`,
+    blocks: [
+      {
+        type: "table",
+        caption: `Gesetzliche Feiertage insgesamt, ${year}`,
+        head: ["Bundesland", "Feiertage"],
+        rows,
+      },
+      {
+        type: "note",
+        text: "Gezählt sind alle gesetzlichen Feiertage, auch die, die ohnehin auf ein Wochenende fallen. Wie viele davon tatsächlich einen Arbeitstag kosten, hängt vom Jahr ab und steht oben im Ergebnis für den gewählten Zeitraum.",
+      },
+    ],
+  };
+}
+
+/**
+ * Bundesweite Spanne der Arbeitstage im laufenden Jahr, echt gerechnet über
+ * alle 16 Länder mit einer Fünftagewoche – für das Tagessatz-Beispiel unten.
+ */
+function tagessatzBeispiel(): ContentSection {
+  const year = new Date().getUTCFullYear();
+  const werte = regions.map(
+    (region) =>
+      calculateWorkdays({
+        ...yearRange(year),
+        region: region.code,
+        workdays: weekPresets["5"].days,
+        includePartial: false,
+        daysOff: 0,
+      }).workdays,
+  );
+  const min = Math.min(...werte);
+  const max = Math.max(...werte);
+  const jahresziel = 75000;
+  const tagessatzMin = Math.round(jahresziel / max);
+  const tagessatzMax = Math.round(jahresziel / min);
+
+  return {
+    heading: "Vom Jahreseinkommen zum Tagessatz",
+    blocks: [
+      {
+        type: "p",
+        text: `Wer freiberuflich arbeitet, kalkuliert einen Tagessatz oft rückwärts: aus dem angestrebten Jahreseinkommen geteilt durch die Zahl der tatsächlich abrechenbaren Tage. ${year} liegen die Arbeitstage bei einer Fünftagewoche je nach Bundesland zwischen ${min} und ${max} – wer ${formatEuroRounded(jahresziel)} im Jahr erzielen will, braucht deshalb, je nach Bundesland und ohne jeden Ausfalltag, einen Tagessatz zwischen ${formatEuroRounded(tagessatzMin)} und ${formatEuroRounded(tagessatzMax)}.`,
+      },
+      {
+        type: "note",
+        text: "Diese Rechnung ist die Untergrenze: Urlaub, Krankheit, Akquise und Verwaltung sind darin nicht abgezogen. Trag im Rechner oben unter „Urlaub oder Krankheit“ die realistisch erwarteten Ausfalltage ein, dann sinkt die Zahl der abrechenbaren Tage entsprechend, und der nötige Tagessatz steigt.",
+      },
+    ],
+  };
+}
+
+const sections: ContentSection[] = [feiertageJeLandTabelle(), tagessatzBeispiel()];
 
 const about: string[] = [
   "Wie viele Tage muss ich eigentlich arbeiten? Die Frage stellt sich beim Kalkulieren eines Stundensatzes, beim Planen eines Projekts, beim Umrechnen eines Monatsgehalts auf den Tag – und jedes Mal steht dieselbe Rechnung an. Zeitraum eintragen, Bundesland wählen, fertig.",
@@ -64,6 +144,7 @@ export const arbeitstage: ToolManifest = {
   getDefaultParams: () => ({ jahr: Number(todayIso().slice(0, 4)) }),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

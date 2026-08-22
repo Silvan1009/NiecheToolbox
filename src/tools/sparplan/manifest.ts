@@ -1,5 +1,5 @@
 import { TrendingUp } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { sparplanAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -15,6 +15,74 @@ const about: string[] = [
   "Die Inflation gehört in jede Rechnung über lange Zeiträume, weil sie sonst systematisch zu optimistisch ausfällt. Hunderttausend Euro in dreißig Jahren sind bei zwei Prozent Geldentwertung so viel wert wie heute 55.000 Euro. Das macht das Sparen nicht sinnlos – im Gegenteil, es ist genau das Argument gegen das Sparbuch. Aber es verschiebt die Zielzahl: Wer im Ruhestand über eine bestimmte Kaufkraft verfügen will, muss nominal deutlich höher zielen.",
   "Ein Sparplan endet nicht mit dem Endkapital, sondern mit der Frage, was sich daraus entnehmen lässt. Der Rechner weist deshalb zwei Beträge aus: die monatliche Entnahme, die das Kapital über einen gewählten Zeitraum vollständig aufbraucht, und die Entnahme, die nur aus den Erträgen kommt und die Substanz unangetastet lässt. Mathematisch ist die erste dieselbe Formel wie eine Kreditrate – ein Kapital abzubauen und eine Schuld abzutragen ist dieselbe Rechnung mit umgekehrtem Vorzeichen.",
   "Alle Ergebnisse unterstellen eine gleichbleibende Rendite, und die gibt es an der Börse nicht. Ein breiter Aktienindex hat langfristig rund sieben Prozent im Jahr gebracht, aber als Mittelwert über Jahrzehnte mit einzelnen Jahren zwischen plus dreißig und minus vierzig Prozent. Für die Planung heißt das: Die Rechnung mit mehreren Renditen durchspielen, nicht mit der optimistischsten planen, und den Anlagehorizont ernst nehmen. Dieser Rechner ist keine Anlageberatung und ersetzt keine.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Laufende Kosten über die Zeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Die vergleichbare Kennziffer heißt Total Expense Ratio (TER) und steht in den wesentlichen Anlegerinformationen jedes Fonds – sie fasst Verwaltungsvergütung, Depotbankgebühr und weitere laufende Kosten in einer einzigen Jahresprozentzahl zusammen. Nicht enthalten sind Transaktionskosten innerhalb des Fonds und eine mögliche Performance Fee, die manche aktiv gemanagten Fonds zusätzlich erheben.",
+      },
+      {
+        type: "note",
+        text: "Ein ETF auf einen breiten Aktienindex liegt meist zwischen 0,1 und 0,3 Prozent TER, ein aktiv gemanagter Aktienfonds häufig zwischen 1,0 und 2,0 Prozent – der Unterschied wirkt über Jahrzehnte wie im Rechner oben gezeigt.",
+      },
+    ],
+  },
+  {
+    heading: "Steuer: Abgeltungsteuer und Vorabpauschale",
+    blocks: [
+      {
+        type: "p",
+        text: "Bevor überhaupt Abgeltungsteuer anfällt, greift der Sparerpauschbetrag: Kapitalerträge bis 1.000 Euro im Jahr bei Alleinstehenden und 2.000 Euro bei gemeinsam veranlagten Ehepaaren bleiben komplett steuerfrei. Damit das automatisch berücksichtigt wird, muss bei der depotführenden Bank ein Freistellungsauftrag in entsprechender Höhe hinterlegt sein – ohne ihn zieht die Bank die Steuer zunächst ab, auch unterhalb der Freigrenze.",
+      },
+      {
+        type: "note",
+        text: "Die Freistellung lässt sich auf mehrere Banken und Depots aufteilen, darf in Summe aber die persönliche Höchstgrenze nicht überschreiten. Eine spätere Anpassung über die Steuererklärung ist möglich, wenn zu wenig oder zu viel freigestellt wurde.",
+      },
+    ],
+  },
+  {
+    heading: "Warum die Inflation mitgerechnet wird",
+    blocks: [
+      {
+        type: "p",
+        text: "Entscheidend ist die reale, also inflationsbereinigte Rendite – die nominale Rendite abzüglich der Geldentwertung. Bei 7 Prozent nominaler Rendite und 2 Prozent Inflation bleiben real ungefähr 5 Prozent Kaufkraftzuwachs übrig, nicht genau 5 Prozent im mathematisch strengen Sinn, aber nah genug für eine Planungsrechnung.",
+      },
+      {
+        type: "note",
+        text: "Die Europäische Zentralbank strebt mittelfristig 2 Prozent Inflation an – dieser Wert ist deshalb ein gebräuchlicher Richtwert für lange Planungszeiträume, auch wenn die tatsächliche Inflation von Jahr zu Jahr stark schwankt.",
+      },
+    ],
+  },
+  {
+    heading: "Vom Endkapital zur Entnahme",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein bekannter Referenzwert für die dauerhafte Entnahme ist die sogenannte Vier-Prozent-Regel aus einer amerikanischen Studie der 1990er-Jahre (Trinity Study): Wer im ersten Jahr 4 Prozent des Depotwerts entnimmt und diesen Betrag danach nur um die Inflation erhöht, hatte in der historischen Untersuchung über dreißig Jahre eine hohe Wahrscheinlichkeit, das Kapital nicht vollständig aufzubrauchen.",
+      },
+      {
+        type: "note",
+        text: "Die im Rechner ausgewiesene ewige Entnahme ist strenger als die Vier-Prozent-Regel: Sie geht von einer konstanten reale Rendite aus und lässt die Substanz vollständig unangetastet, während die historische Studie zeitweise Kapitalverzehr in schlechten Marktphasen einschloss.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein Risiko, das eine gleichbleibende Durchschnittsrendite nicht abbildet, ist das Sequenzrisiko: Zwei Sparpläne mit identischer Durchschnittsrendite über denselben Zeitraum können sehr unterschiedlich enden, je nachdem, ob die schlechten Jahre am Anfang oder am Ende der Laufzeit liegen. Besonders in der Entnahmephase wirkt sich eine ungünstige Reihenfolge stark aus, weil dann bereits Kapital abgezogen wird, während die Verluste noch nicht ausgeglichen sind.",
+      },
+      {
+        type: "note",
+        text: "Dieses Risiko lässt sich mit einer einzigen Durchschnittsrendite grundsätzlich nicht darstellen – nur eine Simulation mit tatsächlichen historischen Jahresrenditen in unterschiedlicher Reihenfolge zeigt es. Dieser Rechner ist keine Anlageberatung und ersetzt keine.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -98,6 +166,7 @@ export const sparplan: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

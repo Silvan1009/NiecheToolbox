@@ -36,7 +36,8 @@ export default function UeberPage() {
           kleine Frage eine Tabelle aufzumachen.
         </p>
 
-        <div className="mt-10 flex flex-col gap-8">
+        {/* data-prose: scripts/content-audit.ts misst genau diesen Bereich. */}
+        <section data-prose className="mt-10 flex flex-col gap-8">
           <Section heading="Worum es hier geht">
             <p>
               {site.name} ist eine Sammlung von derzeit {toolCount} kleinen
@@ -117,6 +118,78 @@ export default function UeberPage() {
             </p>
           </Section>
 
+          <Section heading="Wie oft die Fachdaten aktualisiert werden">
+            <p>
+              Feiertage brauchen keine Pflege im eigentlichen Sinn – sie sind
+              berechnet, nicht recherchiert, und ändern sich nur, wenn ein
+              Landesparlament einen neuen gesetzlichen Feiertag beschließt.
+              Das kommt selten vor, zuletzt beim Weltkindertag in Thüringen
+              (2019) und beim Internationalen Frauentag in
+              Mecklenburg-Vorpommern (2023). Ein regelmäßiger automatisierter
+              Abgleich gegen eine zweite, unabhängige Quelle deckt so eine
+              Änderung auf, statt sie zu übersehen.
+            </p>
+            <p>
+              Steuer- und Sozialabgabenwerte dagegen ändern sich planmäßig zum
+              Jahreswechsel: Grundfreibetrag, Beitragsbemessungsgrenzen und
+              Beitragssätze zu Kranken-, Pflege- und Rentenversicherung stehen
+              gesammelt an einer Stelle im Code mit einem Stand-Datum. Sobald
+              die Werte für ein neues Jahr amtlich feststehen – meist im
+              Spätherbst des Vorjahres –, werden sie dort nachgezogen. Bis
+              dahin rechnen die betroffenen Rechner mit dem zuletzt bekannten
+              Stand und weisen ihn aus.
+            </p>
+          </Section>
+
+          <Section heading="Technische Grundlage">
+            <p>
+              {site.name} läuft als statischer Export ohne eigene Datenbank
+              und ohne Nutzerkonten: Jede Seite wird beim Veröffentlichen
+              vollständig vorgerendert, jede Rechnung läuft anschließend
+              vollständig im Browser der besuchenden Person. Es gibt keinen
+              Server, der eine Eingabe entgegennimmt, verarbeitet und wieder
+              zurückschickt – die Rechenlogik liegt im ausgelieferten
+              JavaScript, nicht hinter einer Programmierschnittstelle.
+            </p>
+            <p>
+              Das hat einen direkten Nebeneffekt für den Datenschutz: Eingaben
+              wie Gehalt, Kaufpreis oder Kalorienbedarf verlassen das Gerät
+              gar nicht erst, weil es keine Stelle gibt, an die sie geschickt
+              werden könnten. Was ein Ergebnis-Link stattdessen enthält –
+              und was Werbe- und Analysewerkzeuge nach Einwilligung
+              zusätzlich erfassen – steht im Detail in der{" "}
+              <Link
+                href="/rechtliches/datenschutz/"
+                className="underline decoration-line underline-offset-2 hover:text-ink"
+              >
+                Datenschutzerklärung
+              </Link>
+              .
+            </p>
+          </Section>
+
+          <Section heading="Wie mit gemeldeten Fehlern umgegangen wird">
+            <p>
+              Eine gemeldete falsche Zahl hat Vorrang vor neuen Rechnern und
+              vor Gestaltung. Der übliche Ablauf: Der gemeldete Fall wird
+              nachgerechnet, die Abweichung wird auf die Ursache
+              zurückgeführt – meist eine falsch interpretierte Regelung oder
+              ein Grenzfall, der beim ersten Schreiben übersehen wurde –, und
+              zu diesem Fall entsteht ein automatisierter Test, der die
+              Korrektur dauerhaft absichert. Der Test bleibt danach
+              bestehen, damit derselbe Fehler nicht Monate später an anderer
+              Stelle wieder auftaucht.
+            </p>
+            <p>
+              Nicht jede Rückmeldung ist ein Fehler im Rechenweg – manche
+              sind ein Grenzfall, den die gewählte Vereinfachung bewusst
+              nicht abbildet. Auch dann gibt es eine Antwort: entweder eine
+              Erklärung, warum der Fall außen vor bleibt, oder eine
+              Erweiterung des Rechners, wenn der Fall häufig genug ist, um
+              die zusätzliche Komplexität zu rechtfertigen.
+            </p>
+          </Section>
+
           <Section heading="Kontakt">
             <p>
               Fehler gefunden, ein Ergebnis passt nicht, ein Rechner fehlt? Eine
@@ -136,7 +209,7 @@ export default function UeberPage() {
               {operator.city}, {operator.country}
             </p>
           </Section>
-        </div>
+        </section>
       </div>
 
       <JsonLd

@@ -84,9 +84,18 @@ function getSnapshot(): string[] {
   return current;
 }
 
-/** Immer leer: Favoriten sind Browser-Zustand, nie Teil des SSR-HTML. */
+/**
+ * Immer leer: Favoriten sind Browser-Zustand, nie Teil des SSR-HTML.
+ *
+ * Die Referenz muss dieselbe bleiben. Ein frisches `[]` je Aufruf ist für
+ * `Object.is` jedes Mal ein neuer Wert – React hält den Zustand dann für
+ * dauernd verändert und warnt "The result of getServerSnapshot should be
+ * cached to avoid an infinite loop". Gleicher Grund wie bei `current` oben.
+ */
+const EMPTY: readonly string[] = Object.freeze([]);
+
 function getServerSnapshot(): string[] {
-  return [];
+  return EMPTY as string[];
 }
 
 export function useFavorites(): {

@@ -23,6 +23,7 @@ import {
   partialHolidayNames,
   regions,
   type Region,
+  type RegionCode,
 } from "@/lib/regionen";
 import type { FaqEntry } from "@/tools/types";
 import type { VariantContent } from "@/tools/variants";
@@ -249,6 +250,132 @@ function vergleichSatz(fakten: Fakten, region: Region, year: number): string {
 }
 
 /* ---------------------------------------------------------------------------
+ * Kontext, der sich nicht aus der Rechnung ergibt
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Ein Absatz je Land, unabhängig von Jahr und Feiertagsrechnung – Gegenstück
+ * zu `reiseKontext` in tools/brueckentage/varianten.ts, hier mit
+ * Arbeitsmarkt- statt Reisebezug.
+ *
+ * Der Grund ist derselbe: Bremen, Hamburg, Niedersachsen und
+ * Schleswig-Holstein haben exakt dieselben Feiertage (die neun bundesweiten
+ * plus seit 2018 den Reformationstag), Baden-Württemberg/Bayern und
+ * Nordrhein-Westfalen/Rheinland-Pfalz teilen sich je ihre eigenen zwei
+ * Zusatzfeiertage paarweise. Für diese acht Länder unterschied sich der
+ * erzeugte Text bislang nur im Ländernamen – siehe `reiseKontext` für die
+ * damit gemessene Überlappung bei brueckentage. Dieser Absatz gibt jedem
+ * Land einen Fakt, der von der Rechnung unabhängig ist.
+ */
+const arbeitsmarktKontext: Record<RegionCode, string> = {
+  bw: "Baden-Württemberg hat mit Bayern denselben Feiertagskalender – Heilige Drei Könige, Fronleichnam und Allerheiligen zusätzlich zu den bundesweiten –, deshalb stimmen die Arbeitstage in beiden Ländern für dasselbe Jahr überein. Wirtschaftlich ist das Land stark von Automobilbau und Maschinenbau geprägt, mit einer der höchsten Industriedichten und Exportquoten unter den Bundesländern.",
+  by: "Bayern hat mit Baden-Württemberg denselben Feiertagskalender – Heilige Drei Könige, Fronleichnam und Allerheiligen zusätzlich zu den bundesweiten –, deshalb ergeben sich in beiden Ländern für dasselbe Jahr identische Arbeitstage. Regional reicht die Wirtschaftsstruktur von der Finanz- und Technologiebranche im Raum München bis zum industriellen Mittelstand in Franken.",
+  be: "Berlin hat als einziges Bundesland faktisch keinen industriellen Schwerpunkt: Verwaltung, Wissenschaft und ein seit Jahren wachsender Dienstleistungs- und Start-up-Sektor prägen den Arbeitsmarkt stärker als in jedem anderen Land. Für freiberufliche Tagessätze und Projektkalkulationen bedeutet das eine größere Bandbreite an Branchen als anderswo.",
+  bb: "Brandenburg ist wirtschaftlich eng mit Berlin verflochten: Ein großer Teil der Erwerbstätigen im Speckgürtel pendelt täglich in die Hauptstadt, während neu angesiedelte Industriebetriebe wie die Tesla-Gigafactory in Grünheide zunehmend Arbeitsplätze direkt im Land schaffen.",
+  hb: "Bremen hat mit Hamburg, Niedersachsen und Schleswig-Holstein exakt denselben Feiertagskalender – die neun bundesweiten plus seit 2018 den Reformationstag –, deshalb sind die Arbeitstage in allen vier Ländern für dasselbe Jahr identisch. Wirtschaftlich prägen Hafenwirtschaft, Luft- und Raumfahrt und Stahlverarbeitung den mit Abstand kleinsten Flächenstaat der vier.",
+  hh: "Hamburg hat mit Bremen, Niedersachsen und Schleswig-Holstein exakt denselben Feiertagskalender – die neun bundesweiten plus seit 2018 den Reformationstag –, deshalb sind die Arbeitstage in allen vier Ländern für dasselbe Jahr identisch. Als größter Hafenstandort Deutschlands und Sitz zahlreicher Medien- und Handelsunternehmen ist der Arbeitsmarkt hier stärker auf Außenhandel und Logistik ausgerichtet als im Rest der Gruppe.",
+  he: "Hessen ist durch Frankfurt als größten Finanzplatz Kontinentaleuropas geprägt – mit der Europäischen Zentralbank, zahlreichen Banken und einem der größten Flughäfen Europas als Arbeitgeber. Nordhessische Regionen um Kassel sind dagegen deutlich industrieller und ländlicher geprägt; ein Landesdurchschnitt trifft für beide Teile des Landes selten gleich gut zu.",
+  mv: "Mecklenburg-Vorpommern hat vergleichsweise wenig Industrie und ist stärker von Landwirtschaft und – besonders an der Ostseeküste – vom Tourismus geprägt, mit entsprechend ausgeprägter Saisonarbeit. Das schlägt sich auch in einer der niedrigeren Bevölkerungsdichten unter den Flächenländern nieder.",
+  ni: "Niedersachsen wird wirtschaftlich stark von der Automobilindustrie geprägt – Volkswagen mit Sitz in Wolfsburg ist der größte einzelne Arbeitgeber des Landes. Mit Hamburg, Bremen und Schleswig-Holstein teilt es sich denselben Feiertagskalender, die Arbeitstage sind in allen vier Ländern für dasselbe Jahr identisch.",
+  nw: "Nordrhein-Westfalen hat mit Rheinland-Pfalz denselben Feiertagskalender – Fronleichnam und Allerheiligen zusätzlich zu den bundesweiten –, deshalb stimmen die Arbeitstage beider Länder für dasselbe Jahr überein. Als bevölkerungsreichstes Bundesland reicht die Arbeitsmarktstruktur vom Strukturwandel im Ruhrgebiet bis zu den Konzernzentralen der Rheinschiene um Köln und Düsseldorf.",
+  rp: "Rheinland-Pfalz hat mit Nordrhein-Westfalen denselben Feiertagskalender – Fronleichnam und Allerheiligen zusätzlich zu den bundesweiten –, deshalb ergeben sich für dasselbe Jahr identische Arbeitstage. Mit dem Chemiekonzern BASF in Ludwigshafen und dem Pharmaunternehmen Boehringer Ingelheim liegen zwei der größten deutschen Industriearbeitgeber im Land, daneben prägt der Weinbau an Mosel und Rhein viele kleinere Betriebe.",
+  sl: "Das Saarland ist als kleinstes Flächenland wirtschaftlich stark vom Strukturwandel weg von Kohle und Stahl hin zu Automobilzulieferern geprägt – ein Wandel, der den regionalen Arbeitsmarkt seit Jahrzehnten begleitet. Die Nähe zu Frankreich und Luxemburg sorgt zudem für einen spürbaren Anteil an Grenzpendlern.",
+  sn: "Sachsen hat sich vom traditionellen Industrieland zu einem Zentrum der Halbleiter- und Automobilindustrie entwickelt – der Großraum Dresden gilt mit zahlreichen Chipfabriken als „Silicon Saxony“, dazu kommen Automobilwerke in Leipzig und Zwickau. Der Buß- und Bettag ist hier zusätzlich zum Reformationstag als einziges Bundesland gesetzlicher Feiertag.",
+  st: "Sachsen-Anhalt ist wirtschaftlich vom sogenannten Chemiedreieck um Leuna und Bitterfeld sowie zunehmend von erneuerbaren Energien geprägt. Das Land hat zugleich einen der stärksten Bevölkerungsrückgänge aller Bundesländer der letzten Jahrzehnte hinter sich, was sich auch im Arbeitsmarkt bemerkbar macht.",
+  sh: "Schleswig-Holstein hat mit Bremen, Hamburg und Niedersachsen exakt denselben Feiertagskalender – die neun bundesweiten plus seit 2018 den Reformationstag –, deshalb sind die Arbeitstage in allen vier Ländern für dasselbe Jahr identisch. Wirtschaftlich prägen Windenergie, Landwirtschaft und Werften wie in Kiel den nördlichsten Flächenstaat der Gruppe.",
+  th: "Thüringen liegt geografisch zentral in Deutschland und ist wirtschaftlich von einem breiten industriellen Mittelstand geprägt, darunter Optik- und Feinmechanikbetriebe in der Tradition von Zeiss in Jena sowie Automobilzulieferer. Seit 2019 ist hier zusätzlich zum Reformationstag der Weltkindertag gesetzlicher Feiertag – bundesweit einmalig.",
+};
+
+/**
+ * Eine fünfte, eigene FAQ je Land – ergänzt `faq()` unten, das vier rein aus
+ * Jahr und Feiertagsrechnung erzeugte Fragen liefert. Greift denselben Fakt
+ * wie `arbeitsmarktKontext` auf, aber aus einer anderen Frage heraus.
+ */
+const arbeitsmarktFaq: Record<RegionCode, FaqEntry> = {
+  bw: {
+    question: "Warum haben Baden-Württemberg und Bayern an denselben Tagen frei?",
+    answer:
+      "Weil beide Länder exakt dieselben zusätzlichen Feiertage kennen: Heilige Drei Könige, Fronleichnam und Allerheiligen neben den bundesweiten. Arbeitstage und Werktage stimmen für dasselbe Jahr deshalb exakt überein. Wirtschaftlich zählt Baden-Württemberg dank Automobilbau und Maschinenbau zu den Ländern mit der höchsten Exportquote.",
+  },
+  by: {
+    question: "Warum ist ein Landesdurchschnitt für Bayern wenig aussagekräftig?",
+    answer:
+      "Weil die Wirtschaftsstruktur stark variiert: Der Raum München ist von Finanz- und Technologieunternehmen geprägt, Franken dagegen vom industriellen Mittelstand. Beim Feiertagskalender gibt es diese Varianz nicht – er ist mit Heilige Drei Könige, Fronleichnam und Allerheiligen identisch mit Baden-Württemberg.",
+  },
+  be: {
+    question: "Welche Branchen prägen den Berliner Arbeitsmarkt?",
+    answer:
+      "Vor allem Verwaltung, Wissenschaft und ein seit Jahren wachsender Dienstleistungs- und Start-up-Sektor – ein industrieller Schwerpunkt wie in den meisten Flächenländern fehlt. Für freiberufliche Tagessätze und Projektkalkulationen bedeutet das eine größere Bandbreite an Vergleichswerten als anderswo.",
+  },
+  bb: {
+    question: "Warum zählt für viele Erwerbstätige in Brandenburg auch der Berliner Kalender?",
+    answer:
+      "Weil ein großer Teil der Beschäftigten aus dem Speckgürtel täglich nach Berlin pendelt. Zugleich entstehen mit Ansiedlungen wie der Tesla-Gigafactory in Grünheide zunehmend Arbeitsplätze direkt im Land, unabhängig vom Berliner Markt.",
+  },
+  hb: {
+    question:
+      "Warum unterscheidet sich der Bremer Arbeitsmarkt trotz identischem Feiertagskalender von Hamburg, Niedersachsen und Schleswig-Holstein?",
+    answer:
+      "Weil Feiertage und Wirtschaftsstruktur zwei getrennte Dinge sind: Alle vier Länder haben dieselben Arbeitstage, aber Bremen ist als kleinster der vier Flächenstaaten besonders von Hafenwirtschaft, Luft- und Raumfahrt sowie Stahlverarbeitung geprägt.",
+  },
+  hh: {
+    question: "Was unterscheidet den Hamburger Arbeitsmarkt von Bremen, Niedersachsen und Schleswig-Holstein?",
+    answer:
+      "Die Feiertage nicht – die sind in allen vier Ländern identisch. Wirtschaftlich ist Hamburg als größter deutscher Hafenstandort und Sitz zahlreicher Medien- und Handelsunternehmen aber stärker auf Außenhandel und Logistik ausgerichtet als der Rest der Gruppe.",
+  },
+  he: {
+    question: "Warum ist Frankfurt für den hessischen Arbeitsmarkt so entscheidend?",
+    answer:
+      "Als größter Finanzplatz Kontinentaleuropas mit der Europäischen Zentralbank und zahlreichen Banken prägt Frankfurt den südhessischen Arbeitsmarkt stark. Nordhessen um Kassel ist dagegen deutlich industrieller und ländlicher – ein Landeswert trifft selten auf beide Teile gleich gut zu.",
+  },
+  mv: {
+    question: "Warum spielt Saisonarbeit in Mecklenburg-Vorpommern eine größere Rolle als anderswo?",
+    answer:
+      "Weil Tourismus an der Ostseeküste einer der wichtigsten Wirtschaftszweige des Landes ist, neben einer vergleichsweise industriearmen, landwirtschaftlich geprägten Struktur im Binnenland. Beides zusammen führt zu einer der niedrigeren Bevölkerungsdichten unter den Flächenländern.",
+  },
+  ni: {
+    question: "Welcher Arbeitgeber prägt Niedersachsen am stärksten?",
+    answer:
+      "Volkswagen mit Sitz in Wolfsburg ist der mit Abstand größte einzelne Arbeitgeber des Landes. Beim Feiertagskalender steht Niedersachsen dagegen in einer Gruppe mit Hamburg, Bremen und Schleswig-Holstein – alle vier Länder haben für dasselbe Jahr identische Arbeitstage.",
+  },
+  nw: {
+    question: "Warum unterscheiden sich die Arbeitsmärkte innerhalb Nordrhein-Westfalens so stark?",
+    answer:
+      "Weil das bevölkerungsreichste Bundesland zwei sehr unterschiedliche Wirtschaftsräume vereint: das Ruhrgebiet im Strukturwandel weg von Kohle und Stahl und die Rheinschiene um Köln und Düsseldorf mit zahlreichen Konzernzentralen. Die Feiertage sind dabei mit Rheinland-Pfalz identisch.",
+  },
+  rp: {
+    question: "Welche Großunternehmen prägen den Arbeitsmarkt in Rheinland-Pfalz?",
+    answer:
+      "Vor allem der Chemiekonzern BASF in Ludwigshafen und das Pharmaunternehmen Boehringer Ingelheim – zwei der größten Industriearbeitgeber Deutschlands. Beim Feiertagskalender ist das Land mit Nordrhein-Westfalen identisch, die Arbeitstage stimmen für dasselbe Jahr exakt überein.",
+  },
+  sl: {
+    question: "Warum hat das Saarland traditionell einen hohen Anteil an Grenzpendlern?",
+    answer:
+      "Weil es als kleinstes Flächenland direkt an Frankreich und Luxemburg grenzt – beide sind für viele Beschäftigte in erreichbarer Nähe. Wirtschaftlich prägt der Strukturwandel weg von Kohle und Stahl hin zu Automobilzulieferern den Arbeitsmarkt seit Jahrzehnten.",
+  },
+  sn: {
+    question: "Was bedeutet „Silicon Saxony“?",
+    answer:
+      "Der Name für den Großraum Dresden, der sich mit zahlreichen Halbleiterfabriken zu einem der wichtigsten Chipstandorte Europas entwickelt hat. Dazu kommen Automobilwerke in Leipzig und Zwickau. Beim Feiertagskalender hat Sachsen mit dem Buß- und Bettag zusätzlich zum Reformationstag eine bundesweite Besonderheit.",
+  },
+  st: {
+    question: "Was ist das Chemiedreieck in Sachsen-Anhalt?",
+    answer:
+      "Die Region um Leuna und Bitterfeld mit einer langen Tradition der chemischen Industrie, ergänzt um einen wachsenden Anteil erneuerbarer Energien. Das Land hat zugleich einen der stärksten Bevölkerungsrückgänge aller Bundesländer der letzten Jahrzehnte hinter sich.",
+  },
+  sh: {
+    question: "Warum ist der Feiertagskalender in Schleswig-Holstein identisch mit Bremen, Hamburg und Niedersachsen?",
+    answer:
+      "Weil alle vier Länder 2018 gemeinsam den Reformationstag als zusätzlichen Feiertag eingeführt haben – zusätzlich zu den neun bundesweiten. Wirtschaftlich ist Schleswig-Holstein als nördlichster Flächenstaat besonders von Windenergie, Landwirtschaft und Werften wie in Kiel geprägt.",
+  },
+  th: {
+    question: "Was ist an Thüringens Feiertagskalender bundesweit einzigartig?",
+    answer:
+      "Der Weltkindertag, den das Land 2019 zusätzlich zum Reformationstag als bislang einziges Bundesland zum gesetzlichen Feiertag erklärt hat. Wirtschaftlich ist Thüringen von einem breiten industriellen Mittelstand geprägt, darunter Optikbetriebe in der Tradition von Zeiss in Jena.",
+  },
+};
+
+/* ---------------------------------------------------------------------------
  * Seiteninhalt
  * ------------------------------------------------------------------------- */
 
@@ -261,6 +388,7 @@ function about(fakten: Fakten, region: Region, year: number): string[] {
         : "In jedem Monat des Jahres liegt mindestens ein Feiertag – das ist ungewöhnlich."
     } ${werktageSatz(fakten, region, year)}`,
     vergleichSatz(fakten, region, year),
+    arbeitsmarktKontext[region.code],
   ];
 }
 
@@ -290,6 +418,7 @@ function faq(fakten: Fakten, region: Region, year: number): FaqEntry[] {
           ? `${aufzaehlung(fakten.amWochenende.map(mitDatum))}. Diese Tage senken die Arbeitstage nicht, weil an ihnen ohnehin nicht gearbeitet worden wäre. Wären sie stattdessen auf einen Wochentag gefallen, hätte ${region.name} ${year} nur ${arbeitstage(jahr.workdays - fakten.amWochenende.length)}.`
           : `Nein, ${year} liegt jeder gesetzliche Feiertag in ${region.name} auf einem Wochentag. Alle ${feiertage(jahr.lostToHolidays)} senken die Arbeitstage also tatsächlich.`,
     },
+    arbeitsmarktFaq[region.code],
   ];
 }
 
@@ -313,6 +442,8 @@ function baueTexte(baseYear: number): VariantContent[] {
         // stellt, bekommt die Antwort im Suchergebnis.
         description: `${year} hat ${region.name} ${fakten.jahr.workdays} Arbeitstage bei einer Fünftagewoche und ${fakten.werktage} Werktage. Mit allen Feiertagen, Monatsübersicht und beliebigem Zeitraum.`,
         heading: `Arbeitstage ${year} in ${region.name}`,
+        listLabel: region.name,
+        listGroup: String(year),
         params: { bl: region.code, jahr: year },
         about: about(fakten, region, year),
         faq: faq(fakten, region, year),

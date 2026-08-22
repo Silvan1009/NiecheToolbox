@@ -1,5 +1,5 @@
 import { Gauge } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { energiekostenAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -11,6 +11,73 @@ const about: string[] = [
   "Wer seinen Jahresverbrauch nicht kennt, bekommt einen Erwartungswert. Beim Strom wächst er nicht linear mit der Haushaltsgröße: Die erste Person bringt rund 1.500 Kilowattstunden mit, jede weitere etwa 900, weil Kühlschrank, Router und Beleuchtung unabhängig von der Personenzahl laufen. Elektrisches Warmwasser aus einem Durchlauferhitzer schlägt mit weiteren 550 Kilowattstunden je Person zu Buche und ist der Posten, der die Spanne am stärksten verschiebt. Beim Gas zählen Wohnfläche und Dämmzustand, mit 60 bis 200 Kilowattstunden je Quadratmeter zwischen Neubau und unsaniertem Altbau.",
   "Dieser Erwartungswert steht im Ergebnis immer neben dem eingetragenen Verbrauch. Er ist keine Zielgröße, sondern eine Einordnung: Erst wenn klar ist, ob 4.800 Kilowattstunden für diesen Haushalt viel oder wenig sind, lässt sich entscheiden, ob der Tarif das Problem ist oder der Verbrauch. Liegt der eigene Wert mehr als die Hälfte darüber, weist der Rechner ausdrücklich darauf hin.",
   "Der CO₂-Wert ist eine Näherung. Für Strom rechnet er mit 380 Gramm je Kilowattstunde für den deutschen Strommix – ein Wert, der mit dem Ausbau der Erneuerbaren von Jahr zu Jahr sinkt. Für Gas sind es 201 Gramm, und dieser Wert bleibt, weil er aus der Verbrennung folgt und nicht aus einer Statistik. Als Größenordnung taugen beide, als Bilanz nicht.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Warum der Arbeitspreis allein täuscht",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein Beispiel macht den Effekt greifbar: Tarif A kostet 30 Cent je Kilowattstunde plus 5 Euro Grundpreis im Monat, Tarif B nur 28 Cent, dafür 15 Euro Grundpreis. Bis rund 6.000 Kilowattstunden im Jahr ist Tarif A günstiger, darüber lohnt sich B – obwohl B durchgehend den niedrigeren Arbeitspreis hat. Der Umschlagpunkt lässt sich nur über den Effektivpreis finden, nie über den Arbeitspreis allein.",
+      },
+    ],
+  },
+  {
+    heading: "Der Abschlag ist eine Vorauszahlung",
+    blocks: [
+      {
+        type: "p",
+        text: "Aus Sicht des Versorgers ist ein zu hoch angesetzter Abschlag ein zinsloses Darlehen der Kundschaft – ein Grund, warum manche Anbieter bei der Erstkalkulation eher großzügig runden. Wer einen Rückgang des eigenen Verbrauchs erwartet, etwa nach einem energetischen Umbau oder einem Auszug aus dem Haushalt, kann eine Anpassung des Abschlags formlos beim Versorger beantragen.",
+      },
+      {
+        type: "note",
+        text: "Ein zu niedriger Abschlag ist riskanter als ein zu hoher: Die Nachzahlung wird auf einen Schlag fällig, oft im Folgemonat mit einem gleichzeitig neu berechneten, höheren Abschlag – zwei Belastungen auf einmal.",
+      },
+    ],
+  },
+  {
+    heading: "Erwartungswert für Strom und Gas",
+    blocks: [
+      {
+        type: "p",
+        text: "Der Grund für die Nicht-Linearität liegt in zwei unterschiedlichen Verbrauchsarten: Eine Grundlast aus Kühlschrank, Router und Beleuchtung fällt unabhängig davon an, ob ein oder vier Personen im Haushalt leben, während sich der personenabhängige Verbrauch – vor allem Warmwasser und Wäsche – mit jeder weiteren Person addiert.",
+      },
+      {
+        type: "table",
+        caption: "Erwartungswert Stromverbrauch nach Haushaltsgröße",
+        head: ["Haushalt", "Kilowattstunden pro Jahr"],
+        rows: [
+          ["1 Person", "1.500 kWh"],
+          ["2 Personen", "2.400 kWh"],
+          ["3 Personen", "3.300 kWh"],
+          ["4 Personen", "4.200 kWh"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Beim Gas zählen stattdessen Wohnfläche und Dämmzustand, mit 60 bis 200 Kilowattstunden je Quadratmeter zwischen Neubau und unsaniertem Altbau – die Personenzahl spielt hier eine deutlich kleinere Rolle als beim Strom.",
+      },
+    ],
+  },
+  {
+    heading: "Einordnung: viel oder wenig?",
+    blocks: [
+      {
+        type: "p",
+        text: "Bei einem Dreipersonenhaushalt mit einem Erwartungswert von 3.300 Kilowattstunden würde der Rechner erst ab etwa 4.950 Kilowattstunden – mehr als die Hälfte darüber – ausdrücklich auf die Abweichung hinweisen. Darunter gilt der eingetragene Verbrauch als plausible individuelle Schwankung, kein Anlass zur Fehlersuche.",
+      },
+    ],
+  },
+  {
+    heading: "CO₂-Werte für Strom und Gas",
+    blocks: [
+      {
+        type: "note",
+        text: "Ein gut gedämmtes Haus mit wenig Gasverbrauch kann trotzdem eine schlechtere CO₂-Bilanz haben als ein weniger gedämmtes, das vollständig elektrisch mit einer Wärmepumpe heizt und dabei überwiegend Ökostrom bezieht – weil der CO₂-Wert je Kilowattstunde beim Strommix sinkt, beim Gas als Verbrennungswert dagegen konstant bleibt. Als Größenordnung taugen beide Werte, als Bilanz nicht.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -83,6 +150,7 @@ export const energiekosten: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

@@ -1,5 +1,5 @@
 import { Route } from "lucide-react";
-import type { FaqEntry } from "@/tools/types";
+import type { ContentSection, FaqEntry } from "@/tools/types";
 import type { WegManifest } from "../types";
 import { hauskaufAffiliate } from "./affiliate";
 import {
@@ -7,6 +7,28 @@ import {
   BELASTUNGSQUOTE_KOMFORTABEL,
   RESTSCHULD_RISIKO_ANTEIL,
 } from "./urteil";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Wo die Schwellen liegen",
+    blocks: [
+      {
+        type: "table",
+        caption: "Belastungsquote: Rate plus Nebenkosten geteilt durch das Haushaltsnetto",
+        head: ["Belastungsquote", "Einordnung"],
+        rows: [
+          [`unter ${BELASTUNGSQUOTE_KOMFORTABEL} %`, "komfortabel"],
+          [`${BELASTUNGSQUOTE_KOMFORTABEL}–${BELASTUNGSQUOTE_ENG} %`, "tragbar, aber eng"],
+          [`über ${BELASTUNGSQUOTE_ENG} %`, "Vorsicht angebracht"],
+        ],
+      },
+      {
+        type: "note",
+        text: `Zusätzlich markiert der Weg eine Restschuld von über ${RESTSCHULD_RISIKO_ANTEIL} Prozent der ursprünglichen Darlehenssumme zum Ende der Zinsbindung als eigenes Risiko – unabhängig davon, wie komfortabel die heutige Rate aussieht.`,
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   `Der Immobilien-Rechner sagt dir die monatliche Rate. Der Brutto-Netto-Rechner sagt dir das Haushaltsnetto. Beide Zahlen für sich sind schnell falsch eingeordnet – ${BELASTUNGSQUOTE_ENG} Prozent Belastungsquote klingen erst mal nach viel, sind es aber nur, wenn du weißt, worauf sie sich beziehen. Dieser Weg rechnet beides in einem Zug durch und macht daraus ein Urteil: komfortabel, tragbar oder eng.`,
@@ -24,7 +46,8 @@ const faq: FaqEntry[] = [
   },
   {
     question: "Was bedeutet die Einstufung „tragbar“ genau?",
-    answer: "Tragbar heißt: Die Rechnung geht rechnerisch auf, aber ohne großen Spielraum. Zwischen 30 und 40 Prozent Belastungsquote reicht das Netto für Rate und Nebenkosten, doch mehrere unerwartete Ausgaben im selben Jahr – eine Reparatur, ein Jobwechsel mit Gehaltseinbruch, eine Geburt – können eng werden. „Tragbar“ ist kein Warnsignal, aber eine Einladung, den Puffer in Euro genauer anzusehen, bevor du unterschreibst.",
+    answer:
+      "Tragbar heißt: Die Rechnung geht rechnerisch auf, aber ohne großen Spielraum. Zwischen 30 und 40 Prozent Belastungsquote reicht das Netto für Rate und Nebenkosten, doch mehrere unerwartete Ausgaben im selben Jahr – eine Reparatur, ein Jobwechsel mit Gehaltseinbruch, eine Geburt – können eng werden. „Tragbar“ ist kein Warnsignal, aber eine Einladung, den Puffer in Euro genauer anzusehen, bevor du unterschreibst.",
   },
   {
     question: "Warum wird die Restschuld gewarnt, obwohl die Rate stimmt?",
@@ -32,21 +55,24 @@ const faq: FaqEntry[] = [
   },
   {
     question: "Wir verdienen zu zweit – wie trage ich das ein?",
-    answer: "Addiere beide Bruttogehälter und trage die Summe im zweiten Schritt ein. Der Brutto-Netto-Rechner dahinter kennt nur eine Steuerklasse und ein Gehalt; bei einer echten gemeinsamen Veranlagung mit zwei unterschiedlichen Einkommen weicht das tatsächliche Netto leicht von der Summe zweier Einzelrechnungen ab, meist zugunsten des Haushalts. Für eine grobe Einschätzung reicht die Addition.",
+    answer:
+      "Addiere beide Bruttogehälter und trage die Summe im zweiten Schritt ein. Der Brutto-Netto-Rechner dahinter kennt nur eine Steuerklasse und ein Gehalt; bei einer echten gemeinsamen Veranlagung mit zwei unterschiedlichen Einkommen weicht das tatsächliche Netto leicht von der Summe zweier Einzelrechnungen ab, meist zugunsten des Haushalts. Für eine grobe Einschätzung reicht die Addition.",
   },
   {
     question: "Sind Heizung und Strom in der Belastung enthalten?",
-    answer: "Nein. Die Wohnbelastung enthält Rate, nicht umlagefähiges Hausgeld, Instandhaltungsrücklage und Verwaltung – aus den Angaben im ersten Schritt. Heiz- und Stromkosten hängen stark vom Gebäude, seiner Dämmung und der Personenzahl ab und werden hier nicht abgefragt. Für eine genauere Schätzung dieser Posten hilft der Energiekosten-Rechner zusätzlich zu diesem Weg.",
+    answer:
+      "Nein. Die Wohnbelastung enthält Rate, nicht umlagefähiges Hausgeld, Instandhaltungsrücklage und Verwaltung – aus den Angaben im ersten Schritt. Heiz- und Stromkosten hängen stark vom Gebäude, seiner Dämmung und der Personenzahl ab und werden hier nicht abgefragt. Für eine genauere Schätzung dieser Posten hilft der Energiekosten-Rechner zusätzlich zu diesem Weg.",
   },
   {
     question: "Ersetzt dieses Urteil ein Beratungsgespräch bei der Bank?",
-    answer: "Nein. Der Weg zeigt, ob sich Kaufpreis und Einkommen überhaupt zusammen rechnen lassen, und macht das an zwei nachvollziehbaren Zahlen fest. Eine Bank prüft zusätzlich Bonität, Schufa, Beleihungswert des Objekts und eigene, oft konservativere Haushaltsrechnungen. Wer hier komfortabel abschneidet, hat eine gute Ausgangslage für das Gespräch – keine Zusage.",
+    answer:
+      "Nein. Der Weg zeigt, ob sich Kaufpreis und Einkommen überhaupt zusammen rechnen lassen, und macht das an zwei nachvollziehbaren Zahlen fest. Eine Bank prüft zusätzlich Bonität, Schufa, Beleihungswert des Objekts und eigene, oft konservativere Haushaltsrechnungen. Wer hier komfortabel abschneidet, hat eine gute Ausgangslage für das Gespräch – keine Zusage.",
   },
 ];
 
 export const hauskauf: WegManifest = {
   slug: "hauskauf",
-  name: "Hauskauf-Weg",
+  name: "Check: Hauskauf",
   tagline:
     "Immobilie, Finanzierung und Nettoeinkommen in einem Urteil: trägt die Rate deinen Haushalt?",
   category: "wohnen",
@@ -63,9 +89,26 @@ export const hauskauf: WegManifest = {
     "haus kaufen gehalt",
   ],
 
-  sourceTools: ["immobilienrechner", "bruttonetto"],
+  sourceTools: [
+    {
+      slug: "immobilienrechner",
+      detailEyebrow: "Alle Angaben zur Immobilie",
+      detailDescription:
+        "Tilgungsplan, Jahresverlauf und Kaufen-oder-Mieten im Detail.",
+      backlinkDescription:
+        "Dieses Ergebnis mit deinem Nettoeinkommen zusammenrechnen: komfortabel, tragbar oder eng?",
+    },
+    {
+      slug: "bruttonetto",
+      detailEyebrow: "Alle Angaben zum Einkommen",
+      detailDescription: "Jeder Abzug einzeln, mit Steuerklassen-Vergleich.",
+      backlinkDescription:
+        "Dieses Netto mit einer Immobilienfinanzierung zusammenrechnen: komfortabel, tragbar oder eng?",
+    },
+  ],
 
   about,
+  sections,
   faq,
 
   monetization: {

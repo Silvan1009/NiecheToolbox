@@ -1,5 +1,5 @@
 import { ChartCandlestick } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { aktienAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -15,6 +15,88 @@ const about: string[] = [
   "Die zweite Zahl, die selten nachgerechnet wird, ist die Gewinnqualität: der operative Cashflow im Verhältnis zum ausgewiesenen Gewinn. Werte über 100 Prozent sind der Normalfall, weil Abschreibungen den Gewinn mindern, aber kein Geld kosten. Bleibt der Cashflow dagegen über mehrere Jahre deutlich unter dem Gewinn, steckt der Gewinn in Forderungen oder Vorräten statt auf dem Konto – ein Muster, das den meisten Bilanzskandalen vorausgeht. Der Rechner weist die Kennzahl aus und meldet sich, wenn sie unter 80 Prozent fällt.",
   "Der faire Wert wird mit drei Verfahren gerechnet, die absichtlich verschieden vorgehen: das KGV-Modell bewertet den Gewinn mit dem Vielfachen, das du dem Unternehmen zutraust; die Graham-Zahl bindet die Bewertung zusätzlich an die Substanz; das Dividendenmodell diskontiert die künftigen Ausschüttungen. Weichen die drei Ergebnisse stark voneinander ab, ist genau das die Information – dann hängt die Bewertung an einer einzelnen Annahme. Zusätzlich rechnet der Rechner die Erwartung über den Anlagehorizont: Gewinn und Dividende wachsen mit der eingetragenen Rate, am Ende gilt das faire KGV, und daraus ergibt sich eine Rendite pro Jahr.",
   "Alle Kennzahlen sind Näherungen und keine Anlageberatung. Sondereffekte, Minderheitenanteile, Pensions- und Leasingverpflichtungen, Aktienrückkäufe, Währungseffekte und Steuern auf Kursgewinne bleiben außen vor. Die Faustwerte für die Einordnung sind bewusst branchenblind: Ein KGV von 25 ist bei Software normal und bei einem Stahlwerk teuer, eine Eigenkapitalquote von 10 Prozent bei einer Bank unauffällig und in der Industrie alarmierend. Wer eine Kennzahl ernst nimmt, vergleicht sie mit der Historie desselben Unternehmens und mit direkten Wettbewerbern – nicht mit einer Tabelle.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Woher die Eingaben kommen",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein häufiger Stolperstein ist die Einheit: Manche Unternehmen weisen ihre Zahlen in Tausend Euro statt in Millionen aus, gerade kleinere börsennotierte Gesellschaften. Wird das übersehen, verschieben sich alle Kennzahlen um den Faktor 1.000 – ein KGV von 12 würde dann als 12.000 erscheinen. Ein Blick auf die Einheitenangabe direkt über der Tabelle im Geschäftsbericht schützt davor.",
+      },
+      {
+        type: "table",
+        caption: "Welche Zahl in welchem Teil des Geschäftsberichts steht",
+        head: ["Kapitel", "Enthält"],
+        rows: [
+          ["Gewinn- und Verlustrechnung", "Umsatz, EBITDA, EBIT, Jahresüberschuss"],
+          ["Bilanz", "Eigenkapital, Bilanzsumme, Finanzschulden, liquide Mittel"],
+          ["Kapitalflussrechnung", "Operativer Cashflow, Investitionen"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Bei international bilanzierenden Konzernen heißt die Gewinn- und Verlustrechnung oft „Income Statement“, die Bilanz „Balance Sheet“ und die Kapitalflussrechnung „Cash Flow Statement“ – die Gliederung dahinter ist aber dieselbe.",
+      },
+    ],
+  },
+  {
+    heading: "Der Unternehmenswert (Enterprise Value)",
+    blocks: [
+      {
+        type: "p",
+        text: "Rechnerisch ist der Enterprise Value die Marktkapitalisierung plus Nettoschulden, wobei sich die Nettoschulden aus Finanzschulden minus liquiden Mitteln ergeben. Bei einer prallen Kasse können die Nettoschulden sogar negativ werden – dann liegt der Unternehmenswert unter dem, was die Börse für die Aktien allein verlangt.",
+      },
+      {
+        type: "note",
+        text: "Genau das kommt bei sehr kapitalstarken Technologieunternehmen gelegentlich vor: Die liquiden Mittel übersteigen die Finanzschulden so deutlich, dass ein Käufer des gesamten Unternehmens rechnerisch weniger für das operative Geschäft zahlt, als der Börsenwert allein vermuten lässt.",
+      },
+    ],
+  },
+  {
+    heading: "Gewinnqualität: Cashflow im Verhältnis zum Gewinn",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein niedriges Verhältnis hat meist einen von zwei Gründen: Entweder wächst der Umsatz schnell und die Kunden zahlen erst mit Verzögerung, sodass sich Forderungen aufbauen, die noch nicht als Geld auf dem Konto sind – oder das Unternehmen füllt seine Lager im Vorgriff auf erwartete Nachfrage, was ebenfalls Kapital bindet, ohne im Gewinn sichtbar zu werden.",
+      },
+      {
+        type: "note",
+        text: "Beides für sich ist nicht zwingend ein Warnsignal – schnelles Wachstum bindet naturgemäß Kapital. Kritisch wird es erst, wenn das Muster über mehrere Jahre anhält, ohne dass sich die Forderungslaufzeit oder der Lagerumschlag verbessert.",
+      },
+    ],
+  },
+  {
+    heading: "Drei Modelle für den fairen Wert",
+    blocks: [
+      {
+        type: "ul",
+        items: [
+          "KGV-Modell: bewertet den Gewinn mit dem Vielfachen, das du dem Unternehmen zutraust.",
+          "Graham-Zahl: bindet die Bewertung zusätzlich an die bilanzielle Substanz.",
+          "Dividendenmodell: diskontiert die künftigen Ausschüttungen.",
+        ],
+      },
+      {
+        type: "note",
+        text: "Die Graham-Zahl folgt einer festen Formel: Wurzel aus 22,5 mal Gewinn je Aktie mal Buchwert je Aktie. Die 22,5 kombiniert ein als fair geltendes KGV von 15 mit einem KBV von 1,5 – ein bewusst konservativer Maßstab aus der Value-Investing-Tradition von Benjamin Graham, der bei wachstumsstarken, substanzarmen Unternehmen wie Softwarefirmen kaum erreichbar ist.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Sondereffekte sind zum Beispiel ein einmaliger Buchgewinn aus dem Verkauf einer Unternehmenssparte oder umgekehrt eine Restrukturierungsrückstellung, die den Gewinn eines einzelnen Jahres nach oben oder unten verzerrt, ohne dass sich am laufenden Geschäft etwas geändert hätte. Wer eine ungewöhnliche Kennzahl sieht, lohnt sich, im Geschäftsbericht nach solchen einmaligen Posten zu suchen.",
+      },
+      {
+        type: "note",
+        text: "Die Faustwerte für die Einordnung sind bewusst branchenblind: Ein KGV von 25 ist bei Software normal und bei einem Stahlwerk teuer, eine Eigenkapitalquote von 10 Prozent bei einer Bank unauffällig und in der Industrie alarmierend.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -89,6 +171,7 @@ export const aktienkennzahlen: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

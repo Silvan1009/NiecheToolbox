@@ -39,6 +39,7 @@ export const toolGroups: ToolGroup[] = [
       "abfindung",
       "urlaubsbudget",
       "trinkgeld",
+      "prozentrechner",
     ],
   },
   {
@@ -114,4 +115,15 @@ export const toolsWithIndexedVariants: string[] = [
   "energiekosten",
   "urlaubsbudget",
   "kindergeld",
+  // Dazugekommen, weil auch hier jede Unterseite eine eigene Suchanfrage ist
+  // ("Backform 26 auf 20", "Grillen für 20 Personen", "Trockner Stromkosten",
+  // "Umzugskartons 70 qm") und nicht bloß dieselbe Frage mit anderem Namen.
+  // Bundesland- und Jahresraster bleiben draußen: Brückentage, Arbeitstage
+  // und die 16 Kaufnebenkosten-Seiten würden das Suchfeld mit fast
+  // gleichlautenden Treffern fluten. Erreichbar sind sie trotzdem – über die
+  // Variantenliste auf der jeweiligen Tool-Seite (components/VariantList.tsx).
+  "backform",
+  "umzug",
+  "partymengen",
+  "stromkosten",
 ];

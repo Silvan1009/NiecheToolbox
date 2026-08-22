@@ -6,7 +6,7 @@
     "dev": "next dev",
     "prebuild": "tsx scripts/generate-og-images.tsx && tsx scripts/generate-htaccess.ts",
     "build": "next build",
-    "postbuild": "tsx scripts/prune-export.ts",
+    "postbuild": "tsx scripts/prune-export.ts && tsx scripts/content-audit.ts",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

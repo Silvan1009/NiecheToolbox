@@ -2,10 +2,12 @@ import Link from "next/link";
 import { ads, analytics, site } from "@/config/site";
 import { toolPath } from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
+import { publicWege } from "@/wege/registry";
 import { ConsentSettingsButton } from "./consent/ConsentSettingsButton";
 
 export function SiteFooter() {
   const tools = publicTools();
+  const wege = publicWege();
   const year = new Date().getFullYear();
 
   return (
@@ -34,6 +36,16 @@ export function SiteFooter() {
                     Rechner nach Thema
                   </Link>
                 </li>
+                {wege.length > 0 && (
+                  <li>
+                    <Link
+                      href="/wege/"
+                      className="font-medium text-ink transition-colors duration-(--dur-fast) hover:text-accent"
+                    >
+                      Wege
+                    </Link>
+                  </li>
+                )}
                 {tools.map((tool) => (
                   <li key={tool.slug}>
                     <Link

@@ -22,7 +22,10 @@ export function LegalPage({
 
         {legal.isPlaceholder && <PlaceholderNotice />}
 
-        <div className="mt-10 flex flex-col gap-8">{children}</div>
+        {/* data-prose: scripts/content-audit.ts misst genau diesen Bereich. */}
+        <section data-prose className="mt-10 flex flex-col gap-8">
+          {children}
+        </section>
       </div>
     </div>
   );

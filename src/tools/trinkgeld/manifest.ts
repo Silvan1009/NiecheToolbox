@@ -1,6 +1,61 @@
 import { HandCoins } from "lucide-react";
-import type { ToolManifest } from "@/tools/types";
+import type { ContentSection, ToolManifest } from "@/tools/types";
 import { trinkgeldAffiliate } from "./affiliate";
+
+/**
+ * Der ausführliche Teil unter dem Einstieg: internationale Gepflogenheiten,
+ * die im Rechner selbst keinen Platz haben, aber zur Frage "wie viel
+ * Trinkgeld" naheliegend dazugehören.
+ */
+const sections: ContentSection[] = [
+  {
+    heading: "Trinkgeld international",
+    blocks: [
+      {
+        type: "p",
+        text: "Wie viel Trinkgeld angemessen ist, unterscheidet sich stark von Land zu Land – wer im Ausland isst, sollte die dortige Gepflogenheit kennen und nicht die deutsche mitnehmen.",
+      },
+      {
+        type: "table",
+        caption: "Übliches Trinkgeld im Restaurant, grobe Richtwerte",
+        head: ["Land", "Üblich"],
+        rows: [
+          ["Deutschland, Österreich, Schweiz", "5–10 %, aufgerundet"],
+          ["USA", "15–20 %, gilt als fester Bestandteil des Lohns"],
+          ["Vereinigtes Königreich", "10–12,5 %, oft schon als „service charge“ auf der Rechnung"],
+          ["Frankreich, Italien", "Bedienung meist gesetzlich inbegriffen, zusätzlich wenig oder nichts üblich"],
+          ["Japan", "Kein Trinkgeld – gilt teils sogar als unhöflich"],
+        ],
+      },
+      {
+        type: "note",
+        text: "In den USA ist Trinkgeld praktisch keine Kür: Der gesetzliche Mindestlohn für Servicekräfte liegt dort in vielen Bundesstaaten deutlich unter dem allgemeinen Mindestlohn, weil das Trinkgeld den Unterschied ausgleichen soll.",
+      },
+    ],
+  },
+  {
+    heading: "Wann Trinkgeld schon inbegriffen ist",
+    blocks: [
+      {
+        type: "p",
+        text: "Manche Rechnungen weisen bereits ein „Bedienungsgeld“ oder eine „Service Charge“ aus – dann ist das Trinkgeld bereits Teil des Preises, und was zusätzlich gegeben wird, ist eine Extra-Anerkennung, keine Pflicht. Steht auf der Rechnung nichts dergleichen, ist das Trinkgeld in Deutschland vollständig freiwillig und geht direkt an die Bedienung, nicht an den Betrieb.",
+      },
+    ],
+  },
+  {
+    heading: "Woher der Name kommt und wie es steuerlich behandelt wird",
+    blocks: [
+      {
+        type: "p",
+        text: "Das Wort „Trinkgeld“ meint wörtlich Geld für ein Getränk – ursprünglich eine kleine Zugabe, mit der sich die Bedienung nach Feierabend selbst ein Getränk leisten konnte, nicht eine Bewertung der Servicequalität wie im heutigen Verständnis. Ähnliche Ursprünge hat das englische „tip“, das häufig, aber nicht gesichert, auf „to insure promptness“ zurückgeführt wird.",
+      },
+      {
+        type: "note",
+        text: "Steuerlich ist Deutschland ungewöhnlich großzügig: Trinkgeld, das Angestellte freiwillig von Gästen erhalten, ist nach § 3 Nr. 51 EStG vollständig steuerfrei, ohne Obergrenze – solange kein Rechtsanspruch darauf besteht. Für Selbstständige, etwa eine Friseurmeisterin mit eigenem Salon, gilt diese Steuerfreiheit dagegen nicht.",
+      },
+    ],
+  },
+];
 
 export const trinkgeld: ToolManifest = {
   slug: "trinkgeld",
@@ -56,6 +111,8 @@ export const trinkgeld: ToolManifest = {
         "Ja. Betrag, Trinkgeld, Personenzahl und Rundung stehen in der Adresszeile. Der Button „Link kopieren“ erzeugt einen Link, der bei allen dasselbe Ergebnis zeigt – praktisch für die Gruppenchat-Abrechnung.",
     },
   ],
+
+  sections,
 
   monetization: {
     adDensity: "low",
