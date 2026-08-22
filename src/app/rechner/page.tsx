@@ -135,6 +135,34 @@ export default function RechnerPage() {
         })}
       </div>
 
+      {/* data-prose: scripts/content-audit.ts misst genau diesen Bereich. */}
+      <div className="tool-column mt-14 pb-4">
+        <section data-prose aria-labelledby="einordnung-heading">
+          <h2 id="einordnung-heading" className="section-title">
+            Wie die Gruppen zustande kommen
+          </h2>
+          <div className="mt-4 flex flex-col gap-4 text-[17px] leading-relaxed text-muted">
+            <p>
+              Jeder Rechner hat in der Registry genau eine feste Kategorie –
+              für die Suche, die Meta-Beschreibung und die Karte auf der
+              Startseite. Diese Seite sortiert zusätzlich nach Anlass, und ein
+              Anlass kennt keine Fachgrenzen: Der Immobilienrechner steht
+              deshalb sowohl unter „Geld & Finanzen“ als auch unter „Wohnen &
+              Verträge“, weil eine Kaufentscheidung beides zugleich ist. Das
+              ist Absicht und kein Fehler in der Zuordnung.
+            </p>
+            <p>
+              Innerhalb einer Gruppe stehen die Rechner nicht alphabetisch,
+              sondern in der Reihenfolge, in der eine Frage typischerweise auf
+              die nächste folgt – bei „Familie & Kinder“ etwa vom errechneten
+              Geburtstermin über Kindergeld und Elterngeld bis zur Elternzeit.
+              Wer stattdessen schon weiß, welcher Rechner es sein soll, findet
+              ihn über die Suche oben schneller als über diese Liste.
+            </p>
+          </div>
+        </section>
+      </div>
+
       <JsonLd
         data={jsonLdGraph([
           {

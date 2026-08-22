@@ -1,5 +1,5 @@
 import { Weight } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 
 const about: string[] = [
   "Der Body-Mass-Index setzt Gewicht und Größe zueinander ins Verhältnis: Gewicht in Kilogramm geteilt durch die Körpergröße in Metern zum Quadrat. Die WHO-Kategorien – Untergewicht, Normalgewicht, Übergewicht und drei Adipositas-Grade – gelten für Erwachsene unabhängig vom Geschlecht. Ein eigenes Feld dafür würde am Ergebnis nichts ändern, deshalb fragt dieser Rechner es auch nicht ab.",
@@ -41,6 +41,53 @@ const faq: FaqEntry[] = [
   },
 ];
 
+const sections: ContentSection[] = [
+  {
+    heading: "Die WHO-Kategorien im Überblick",
+    blocks: [
+      {
+        type: "table",
+        caption: "BMI-Einteilung der Weltgesundheitsorganisation (WHO)",
+        head: ["BMI", "Kategorie"],
+        rows: [
+          ["unter 18,5", "Untergewicht"],
+          ["18,5–24,9", "Normalgewicht"],
+          ["25,0–29,9", "Übergewicht (Präadipositas)"],
+          ["30,0–34,9", "Adipositas Grad I"],
+          ["35,0–39,9", "Adipositas Grad II"],
+          ["ab 40,0", "Adipositas Grad III"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Diese Grenzwerte gelten für Erwachsene unabhängig von Geschlecht und Alter. Für Kinder, Jugendliche und hochtrainierte Sportlerinnen und Sportler sind sie nicht geeignet – siehe die Hinweise unter „So funktioniert’s“.",
+      },
+    ],
+  },
+  {
+    heading: "Herkunft des BMI",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Formel geht auf den belgischen Statistiker Adolphe Quetelet zurück, der sie in den 1830er-Jahren als rein statistisches Maß für Bevölkerungsstudien entwickelte – nicht als Diagnoseinstrument für Einzelpersonen. Ursprünglich hieß sie Quetelet-Index; der heutige Name „Body-Mass-Index“ setzte sich erst ab den 1970er-Jahren durch, als er zunehmend in der Medizin verwendet wurde.",
+      },
+    ],
+  },
+  {
+    heading: "Warum der BMI sich trotz seiner Schwächen hält",
+    blocks: [
+      {
+        type: "p",
+        text: "Genauere Verfahren gibt es längst: die Bioimpedanzmessung schätzt den Körperfettanteil über den elektrischen Widerstand des Gewebes, die Kalipermessung über Hautfaltendicke an mehreren Körperstellen, der Taille-Hüft-Quotient über das Verhältnis zweier Umfänge, das enger mit gesundheitlichen Risiken zusammenhängt als der BMI allein. Keines davon verdrängt den BMI in der Praxis, weil alle drei entweder ein Messgerät, geschultes Personal oder zusätzliche Messpunkte brauchen.",
+      },
+      {
+        type: "note",
+        text: "Der BMI braucht dagegen nur zwei Werte, die praktisch jeder ohne Hilfsmittel kennt oder leicht ermitteln kann: Gewicht und Größe. Das macht ihn ungenau im Einzelfall, aber unschlagbar praktisch für einen ersten Anhaltspunkt – und genau dafür ist er auch gedacht, nicht als abschließendes Urteil über die Gesundheit einer Person.",
+      },
+    ],
+  },
+];
+
 export const bmi: ToolManifest = {
   slug: "bmi",
   name: "BMI-Rechner",
@@ -62,6 +109,7 @@ export const bmi: ToolManifest = {
   ],
 
   about,
+  sections,
   faq,
 
   monetization: {

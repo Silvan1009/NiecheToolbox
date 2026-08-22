@@ -1,7 +1,53 @@
 import { Baby } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import type { ToolManifest } from "@/tools/types";
+import type { ContentSection, ToolManifest } from "@/tools/types";
 import { elternzeitAffiliate } from "./affiliate";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Alle Fristen auf einen Blick",
+    blocks: [
+      {
+        type: "table",
+        caption: "Fristen rund um Geburt, Mutterschutz und Elternzeit",
+        head: ["Frist", "Zeitpunkt"],
+        rows: [
+          ["Mutterschutz vor der Geburt", "6 Wochen vor dem errechneten Termin"],
+          ["Mutterschutz nach der Geburt", "8 Wochen (12 bei Mehrlings-/Frühgeburt)"],
+          ["Anmeldung Elternzeit (bis 3. Geburtstag)", "spätestens 7 Wochen vor Beginn"],
+          ["Anmeldung Elternzeit (ab 3. Geburtstag)", "spätestens 13 Wochen vor Beginn"],
+          ["Rückwirkender Elterngeld-Antrag", "höchstens 3 Monate"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Kündigungsschutz während der Elternzeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Der besondere Kündigungsschutz nach § 18 BEEG beginnt nicht erst mit der Elternzeit selbst, sondern schon mit deren Anmeldung – frühestens acht Wochen vor dem geplanten Beginn. Bei Elternzeit zwischen dem dritten und dem achten Geburtstag des Kindes verlängert sich dieser Vorlauf auf vierzehn Wochen.",
+      },
+      {
+        type: "note",
+        text: "Der Schutz gilt bis zum Ende der Elternzeit und schließt an den Mutterschutz nahtlos an, wenn beide Zeiträume direkt aufeinanderfolgen. Eine Kündigung durch den Arbeitgeber ist in dieser Zeit nur in eng begrenzten Ausnahmefällen möglich, etwa bei einer Betriebsstilllegung.",
+      },
+    ],
+  },
+  {
+    heading: "Teilzeit während der Elternzeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Elternzeit bedeutet nicht zwingend, vollständig zu pausieren: Nach § 15 Abs. 5 bis 7 BEEG besteht in Betrieben mit mehr als 15 Beschäftigten ein Anspruch auf Teilzeitarbeit während der Elternzeit, in der Regel zwischen 15 und 32 Wochenstunden. Der Antrag muss spätestens sieben Wochen vor dem gewünschten Beginn gestellt werden – dieselbe Frist wie für die Elternzeit selbst.",
+      },
+      {
+        type: "note",
+        text: "Wird während des Elterngeldbezugs in Teilzeit gearbeitet, wird das Einkommen auf das Elterngeld angerechnet – bei ElterngeldPlus günstiger als beim Basiselterngeld. Der Arbeitgeber kann den Teilzeitwunsch nur aus dringenden betrieblichen Gründen ablehnen, muss das aber schriftlich innerhalb von vier Wochen begründen.",
+      },
+    ],
+  },
+];
 
 export const elternzeit: ToolManifest = {
   slug: "elternzeit",
@@ -22,6 +68,8 @@ export const elternzeit: ToolManifest = {
   ],
 
   getDefaultParams: () => ({ heute: todayIso() }),
+
+  sections,
 
   about: [
     "Elternzeit wird in Lebensmonaten des Kindes gerechnet, nicht in Kalendermonaten: Der erste Lebensmonat beginnt am Geburtstag und endet am Tag vor dem gleichen Datum im Folgemonat. Genau danach richten sich Elterngeld-Monate und Anmeldefristen – deshalb rechnet der Planer alles aus dem Geburtstermin heraus.",

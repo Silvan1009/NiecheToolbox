@@ -1,9 +1,64 @@
 import { TrendingUp } from "lucide-react";
-import type { FaqEntry } from "@/tools/types";
+import type { ContentSection, FaqEntry } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import type { WegManifest } from "../types";
 import { SPARHORIZONT_JAHRE_STANDARD } from "./urteil";
 import { variantenTexte } from "./varianten";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Durchschnittssatz und Grenzbelastung im Vergleich",
+    blocks: [
+      {
+        type: "table",
+        caption: "Typische Größenordnung für Angestellte im mittleren Einkommensbereich",
+        head: ["Kennzahl", "Übliche Spanne"],
+        rows: [
+          ["Durchschnittssteuersatz auf das gesamte Gehalt", "30–35 %"],
+          ["Grenzbelastung auf eine Erhöhung", "40–48 %"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Zur Grenzbelastung tragen zwei getrennte Mechanismen bei: der progressive Einkommensteuertarif, der mit steigendem Einkommen einen wachsenden Anteil abzieht, und die Sozialabgaben, die bei den meisten Gehältern noch unterhalb ihrer jeweiligen Beitragsbemessungsgrenze liegen und deshalb auf jeden zusätzlichen Euro in gleicher Höhe anfallen. Zusammen ergeben beide die 40 bis 48 Prozent.",
+      },
+    ],
+  },
+  {
+    heading: "Was aus der Differenz über die Zeit wird",
+    blocks: [
+      {
+        type: "p",
+        text: `Wird die Netto-Differenz stattdessen einfach ausgegeben, ist sie im nächsten Monat wieder weg – der dritte Schritt zeigt die Alternative: über ${SPARHORIZONT_JAHRE_STANDARD} Jahre angelegt, wächst aus einem monatlichen Betrag, der im laufenden Konsum kaum auffällt, ein Kapital im fünf- bis sechsstelligen Bereich. Der Unterschied zwischen beiden Wegen ist reiner Zinseszins auf Geld, das ohne die Erhöhung gar nicht da gewesen wäre.`,
+      },
+      {
+        type: "note",
+        text: "Der Anlagehorizont ist ein Startwert, kein fester Wert – im Sparplan-Rechner selbst lässt er sich auf jeden Zeitraum zwischen einem und sechzig Jahren einstellen.",
+      },
+    ],
+  },
+  {
+    heading: "Ein durchgerechnetes Beispiel",
+    blocks: [
+      {
+        type: "table",
+        caption: "3.500 € auf 3.675 € brutto (+5 %), Steuerklasse I, NRW, ohne Kirchensteuer, kein Kind",
+        head: ["Größe", "Betrag"],
+        rows: [
+          ["Netto vorher", "2.333 € / Monat"],
+          ["Netto nachher", "2.429 € / Monat"],
+          ["Brutto-Plus", "175 € / Monat"],
+          ["Netto-Plus", "96 € / Monat"],
+          ["Grenzbelastung", "45,1 %"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Von den 175 Euro mehr Brutto kommen in diesem Beispiel 96 Euro netto an – der Rest, gut 45 Prozent, geht an Steuer und Sozialabgaben. Bei anderer Steuerklasse, anderem Bundesland oder mit Kirchensteuer verschiebt sich diese Zahl; die eigene Grenzbelastung zeigt der Rechner oben mit den persönlichen Angaben.",
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   `Eine Gehaltserhöhung wird fast immer in Brutto verhandelt, aber nur das Netto landet auf dem Konto. Dieser Weg rechnet beides durch: den Prozentrechner für die Erhöhung selbst, den Brutto-Netto-Rechner zweimal – einmal mit dem aktuellen, einmal mit dem erhöhten Gehalt – und zeigt aus der Differenz die Grenzbelastung: den Anteil der Erhöhung, der an Steuer und Sozialabgaben geht.`,
@@ -44,7 +99,7 @@ const faq: FaqEntry[] = [
 
 export const gehalt: WegManifest = {
   slug: "gehalt",
-  name: "Gehaltserhöhungs-Weg",
+  name: "Check: Gehaltserhöhung",
   tagline:
     "Brutto-Plus, Netto-Plus und Grenzbelastung einer Gehaltserhöhung in einem Zug – plus die Wirkung über die Jahre angelegt.",
   category: "geld",
@@ -89,6 +144,7 @@ export const gehalt: WegManifest = {
   getVariants: () => buildVariants(variantenTexte, about, faq),
 
   about,
+  sections,
   faq,
 
   monetization: {

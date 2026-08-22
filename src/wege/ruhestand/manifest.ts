@@ -1,6 +1,58 @@
 import { Landmark } from "lucide-react";
-import type { FaqEntry } from "@/tools/types";
+import type { ContentSection, FaqEntry } from "@/tools/types";
 import type { WegManifest } from "../types";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Das Beispiel im Überblick",
+    blocks: [
+      {
+        type: "table",
+        caption: "40-Jährige/r, Renteneintritt mit 63 statt Regelaltersgrenze 67",
+        head: ["Kennzahl", "Wert"],
+        rows: [
+          ["Rentenabschlag (48 Monate × 0,3 %)", "14,4 %"],
+          ["Rente nach Abschlag", "1.455 € statt 1.700 €"],
+          ["Kumulierter Effekt über 22 Jahre Rentenbezug", "rund 64.600 €"],
+          ["Ansparzeit bis Renteneintritt", "23 statt 27 Jahre"],
+          ["Projiziertes Kapital bei 250 €/Monat", "rund 159.600 €"],
+          ["Kapitalbedarf für das Wunscheinkommen", "rund 262.400 €"],
+          ["Fehlbetrag", "rund 102.800 €"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Drei Stellschrauben gegen den Fehlbetrag",
+    blocks: [
+      {
+        type: "ul",
+        items: [
+          "Eine höhere monatliche Sparrate: Schon 50 Euro mehr im Monat schlagen sich über 20 oder mehr Jahre Ansparzeit spürbar im projizierten Kapital nieder, dank Zinseszins stärker als eine reine Vervielfachung vermuten lässt.",
+          "Ein späterer Renteneintritt: wirkt doppelt, weil er gleichzeitig den Abschlag verkleinert und mehr Zeit zum Sparen lässt – deshalb lohnt es sich, diesen Hebel im Rechner zuerst durchzuspielen.",
+          "Ein niedrigeres Wunscheinkommen im Ruhestand: Schon ein kleiner Abschlag beim gewünschten Lebensstandard senkt den Kapitalbedarf überproportional, weil er sich über die gesamte Rentenbezugsdauer multipliziert.",
+        ],
+      },
+      {
+        type: "note",
+        text: "Die drei Stellschrauben schließen sich nicht gegenseitig aus: Oft reicht schon eine moderate Kombination aus allen dreien – etwas mehr sparen, ein Jahr später aufhören, ein leicht niedrigeres Wunscheinkommen ansetzen –, um denselben Fehlbetrag zu schließen, den eine einzelne Stellschraube allein kaum auffangen könnte.",
+      },
+    ],
+  },
+  {
+    heading: "Die andere Richtung: Zuschlag statt Abschlag",
+    blocks: [
+      {
+        type: "p",
+        text: "Wer über die Regelaltersgrenze hinaus arbeitet, bekommt keinen Abschlag, sondern einen Zuschlag von 0,5 Prozent je Monat – ohne gesetzliche Obergrenze nach oben. Bei derselben Beispielrente von 1.700 Euro ergäbe ein Jahr Aufschub, also zwölf Monate, einen Zuschlag von 6 Prozent: rund 1.802 Euro statt 1.700 Euro, und zwar lebenslang.",
+      },
+      {
+        type: "note",
+        text: "Der Zuschlag ist damit gut anderthalbmal so hoch wie der Abschlag pro Monat – 0,5 statt 0,3 Prozent. Wer zwischen einem Jahr früher und einem Jahr später schwankt, sollte diesen Unterschied kennen, bevor er sich für die eine oder andere Richtung entscheidet.",
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   "Wer früher in Rente geht, verliert doppelt: einen lebenslangen Abschlag auf die gesetzliche Rente – 0,3 Prozent je Monat vor der persönlichen Regelaltersgrenze – und ein kürzeres Zeitfenster, um privat vorzusorgen. Dieser Weg rechnet beides zusammen: den Rentenabschlags-Rechner für die tatsächliche Rentenhöhe, den Rentenlücken-Rechner für den Kapitalbedarf und den Sparplan-Rechner für das, was die aktuelle Sparrate bis dahin tatsächlich aufbaut.",
@@ -34,7 +86,7 @@ const faq: FaqEntry[] = [
 
 export const ruhestand: WegManifest = {
   slug: "ruhestand",
-  name: "Ruhestands-Weg",
+  name: "Check: Ruhestand",
   tagline:
     "Rente nach Abschlag, Kapitalbedarf und projiziertes Kapital in einem Urteil: trägt die Sparrate den früheren Ruhestand?",
   category: "geld",
@@ -78,6 +130,7 @@ export const ruhestand: WegManifest = {
   ],
 
   about,
+  sections,
   faq,
 
   monetization: {

@@ -41,7 +41,9 @@ export function WegPageShell({
 
   const about = variant?.about ?? weg.about;
   const faq = variant?.faq ?? weg.faq;
-  const sections = variant?.sections ?? weg.sections;
+  // Auf der Weg-Seite selbst (kein variant) die eigenen sections des Wegs;
+  // auf einer Variantenseite kein Fallback darauf – siehe ToolPageShell.tsx.
+  const sections = variant ? variant.sections : weg.sections;
 
   const params = { ...weg.getDefaultParams?.(), ...variant?.params };
 

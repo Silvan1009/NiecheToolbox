@@ -1156,7 +1156,7 @@ export const searchIndex: SearchEntry[] = [
   },
   {
     href: "/wege/hauskauf/",
-    name: "Hauskauf-Weg",
+    name: "Check: Hauskauf",
     hint: "Immobilie und Einkommen zusammen: leistbar oder nicht?",
     tags: [
       "Hauskauf",
@@ -1170,7 +1170,7 @@ export const searchIndex: SearchEntry[] = [
   },
   {
     href: "/wege/gehalt/",
-    name: "Gehaltserhöhungs-Weg",
+    name: "Check: Gehaltserhöhung",
     hint: "Brutto-Plus, Netto-Plus und Grenzbelastung in einem Zug.",
     tags: [
       "Gehaltserhöhung",
@@ -1185,33 +1185,33 @@ export const searchIndex: SearchEntry[] = [
     href: "/wege/gehalt/3-prozent/",
     name: "3 Prozent mehr Gehalt",
     hint: "Was von 3 Prozent Erhöhung netto ankommt.",
-    parentName: "Gehaltserhöhungs-Weg",
+    parentName: "Check: Gehaltserhöhung",
     tags: ["3 Prozent", "kleine Erhöhung"],
   },
   {
     href: "/wege/gehalt/5-prozent/",
     name: "5 Prozent mehr Gehalt",
     hint: "Was von 5 Prozent Erhöhung netto ankommt.",
-    parentName: "Gehaltserhöhungs-Weg",
+    parentName: "Check: Gehaltserhöhung",
     tags: ["5 Prozent", "übliche Erhöhung"],
   },
   {
     href: "/wege/gehalt/10-prozent/",
     name: "10 Prozent mehr Gehalt",
     hint: "Was von 10 Prozent Erhöhung netto ankommt.",
-    parentName: "Gehaltserhöhungs-Weg",
+    parentName: "Check: Gehaltserhöhung",
     tags: ["10 Prozent", "Stellenwechsel", "Beförderung"],
   },
   {
     href: "/wege/gehalt/15-prozent/",
     name: "15 Prozent mehr Gehalt",
     hint: "Was von 15 Prozent Erhöhung netto ankommt.",
-    parentName: "Gehaltserhöhungs-Weg",
+    parentName: "Check: Gehaltserhöhung",
     tags: ["15 Prozent", "großer Sprung", "Jobwechsel"],
   },
   {
     href: "/wege/ruhestand/",
-    name: "Ruhestands-Weg",
+    name: "Check: Ruhestand",
     hint: "Rente nach Abschlag, Kapitalbedarf und Sparrate zusammen.",
     tags: [
       "Früher in Rente",
@@ -1225,7 +1225,7 @@ export const searchIndex: SearchEntry[] = [
   },
   {
     href: "/wege/autokauf/",
-    name: "Auto-Weg",
+    name: "Check: Auto",
     hint: "Kreditrate, Unterhalt und Versicherung gegen das Netto.",
     tags: [
       "Autokauf",
@@ -1238,7 +1238,7 @@ export const searchIndex: SearchEntry[] = [
   },
   {
     href: "/wege/nachwuchs/",
-    name: "Nachwuchs-Weg",
+    name: "Check: Nachwuchs",
     hint: "Termin, Einkommen, Elterngeld und Elternzeit zusammen.",
     tags: [
       "Elterngeld",

@@ -1,6 +1,6 @@
 import { CalendarHeart } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { geburtsterminAffiliate } from "./affiliate";
 
 const about: string[] = [
@@ -43,6 +43,54 @@ const faq: FaqEntry[] = [
   },
 ];
 
+const sections: ContentSection[] = [
+  {
+    heading: "Die drei Trimester",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Schwangerschaft wird üblicherweise in drei Abschnitte zu je rund dreizehn Wochen geteilt – gezählt ab demselben Bezugspunkt wie der errechnete Termin, dem ersten Tag der letzten Periode.",
+      },
+      {
+        type: "table",
+        caption: "Trimester nach Schwangerschaftswoche (SSW)",
+        head: ["Trimester", "SSW"],
+        rows: [
+          ["1. Trimester", "1–13"],
+          ["2. Trimester", "14–27"],
+          ["3. Trimester", "28–40"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Mutterschutz: wann er beginnt",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Mutterschutzfrist knüpft direkt an den errechneten Termin an, nicht an das tatsächliche Geburtsdatum: Sie beginnt sechs Wochen davor und endet acht Wochen nach der tatsächlichen Entbindung – bei Mehrlings- oder Frühgeburten zwölf Wochen danach (§ 3 Mutterschutzgesetz).",
+      },
+      {
+        type: "note",
+        text: "Verschiebt sich die tatsächliche Geburt gegenüber dem errechneten Termin, verschiebt sich die Schutzfrist danach entsprechend mit – vorzeitig ist sie an den errechneten Termin gebunden, nachträglich an den echten Geburtstag.",
+      },
+    ],
+  },
+  {
+    heading: "Woher die Naegele-Regel kommt",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Formel ist nach dem Heidelberger Geburtshelfer Franz Karl Naegele benannt, der sie Anfang des 19. Jahrhunderts anhand einer damals ungewöhnlich großen Zahl dokumentierter Geburten entwickelte. Sie unterstellt einen Zyklus von 28 Tagen mit Eisprung an Tag 14 und eine Tragzeit von 280 Tagen ab dem ersten Tag der letzten Periode – zwei Jahrhunderte später gilt sie in leicht modifizierter Form noch immer als Standardverfahren in der Geburtshilfe, gerade weil sie ohne zusätzliche Messwerte auskommt.",
+      },
+      {
+        type: "note",
+        text: "Moderne Studien mit großen Fallzahlen bestätigen die durchschnittliche Tragzeit von rund 280 Tagen weitgehend, auch wenn die Streuung um diesen Mittelwert größer ist, als die einfache Formel vermuten lässt – daher der Zeitraum von der 37. bis zur 42. Woche als normale Spanne.",
+      },
+    ],
+  },
+];
+
 export const geburtstermin: ToolManifest = {
   slug: "geburtstermin",
   name: "Geburtstermin-Rechner",
@@ -67,6 +115,7 @@ export const geburtstermin: ToolManifest = {
   getDefaultParams: () => ({ heute: todayIso() }),
 
   about,
+  sections,
   faq,
 
   monetization: {

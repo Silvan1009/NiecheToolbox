@@ -1,6 +1,6 @@
 import { Users } from "lucide-react";
 import { todayIso } from "@/lib/date";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { kindergeldAffiliate } from "./affiliate";
 import { defaultInput, encodeKinder } from "./logic";
@@ -13,6 +13,76 @@ const about: string[] = [
   "Der Umschlagpunkt liegt 2026 bei Zusammenveranlagung mit einem Kind bei rund 86.000 Euro zu versteuerndem Einkommen. Wichtig ist dabei das Wort „zu versteuernd“: Das ist nicht das Bruttogehalt, sondern was nach Werbungskosten, Vorsorgeaufwendungen und Sonderausgaben übrig bleibt. Bei mehreren Kindern verschiebt sich die Schwelle nach oben, weil die Freibeträge das Einkommen in Zonen mit niedrigerem Grenzsteuersatz ziehen, das Kindergeld aber linear wächst.",
   "Eine Feinheit, an der Standardrechner regelmäßig scheitern: Solidaritätszuschlag und Kirchensteuer bemessen sich nach § 3 Abs. 2 SolZG immer nach der Einkommensteuer mit Kinderfreibetrag – auch dann, wenn die Günstigerprüfung zugunsten des Kindergelds ausgeht. Diese Entlastung gibt es also zusätzlich und nicht statt dessen. Der Rechner weist sie deshalb getrennt aus und zählt sie zur Gesamtentlastung hinzu.",
   "Die Günstigerprüfung hier ist eine Näherung. Sie rechnet mit dem zu versteuernden Einkommen und den Kinderfreibeträgen, aber ohne Entlastungsbetrag für Alleinerziehende, ohne Kinderbetreuungskosten als Sonderausgaben und ohne die Übertragung eines Freibetragsanteils auf den anderen Elternteil. Für die Größenordnung reicht das; für den Steuerbescheid nicht. Das hier ist keine Steuerberatung – verbindliche Auskünfte geben das Finanzamt, ein Lohnsteuerhilfeverein oder eine Steuerberatung.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Bis wann Kindergeld gezahlt wird",
+    blocks: [
+      {
+        type: "p",
+        text: "Eine oft übersehene Regel betrifft die Lücke zwischen zwei Ausbildungsabschnitten, etwa zwischen Schulabschluss und Studienbeginn oder zwischen Ausbildung und Bundesfreiwilligendienst: Eine solche Übergangszeit von höchstens vier Monaten unterbricht den Kindergeldanspruch nicht (§ 32 Abs. 4 EStG), er läuft einfach weiter.",
+      },
+      {
+        type: "note",
+        text: "Dauert die Pause länger als vier Monate, entfällt der Anspruch für die überschüssige Zeit und lebt erst mit dem nächsten Ausbildungsabschnitt wieder auf.",
+      },
+    ],
+  },
+  {
+    heading: "Kindergeld oder Kinderfreibetrag: die Günstigerprüfung",
+    blocks: [
+      {
+        type: "p",
+        text: "Im laufenden Jahr merken die meisten Eltern von dieser Unterscheidung nichts: Die Familienkasse zahlt das Kindergeld unabhängig davon monatlich aus. Erst der Steuerbescheid am Jahresende zeigt, ob stattdessen der Kinderfreibetrag angesetzt wurde – für viele überraschend, weil im Alltag nur die monatliche Überweisung sichtbar ist.",
+      },
+      {
+        type: "table",
+        caption: "Kinderfreibetrag 2026, je Kind für beide Elternteile",
+        head: ["Bestandteil", "Betrag"],
+        rows: [
+          ["Sächliches Existenzminimum", "6.828 €"],
+          ["Betreuung, Erziehung, Ausbildung", "2.928 €"],
+          ["Summe", "9.756 €"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Der Umschlagpunkt zum Freibetrag",
+    blocks: [
+      {
+        type: "p",
+        text: "Für unverheiratete Elternteile liegt der Umschlagpunkt strukturell niedriger: Ohne Zusammenveranlagung steht regulär nur der halbe Kinderfreibetrag zu, sofern er nicht ausdrücklich auf einen Elternteil übertragen wird. Wer das alleinige Sorgerecht hat oder das Kind überwiegend betreut, kann die Übertragung des anderen Elternteils beim Finanzamt beantragen.",
+      },
+      {
+        type: "note",
+        text: "Bei mehreren Kindern verschiebt sich die Schwelle nach oben, weil die Freibeträge das Einkommen in Zonen mit niedrigerem Grenzsteuersatz ziehen, das Kindergeld aber linear wächst.",
+      },
+    ],
+  },
+  {
+    heading: "Soli und Kirchensteuer: eine oft übersehene Feinheit",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein Beispiel macht die Feinheit greifbar: Fällt die Günstigerprüfung zugunsten des Kindergelds aus, bleibt trotzdem der Kinderfreibetrag als Rechengröße für Soli und Kirchensteuer bestehen. Bei einem zu versteuernden Einkommen, das ohne Kinderfreibetrag über der Soli-Freigrenze läge, mit Kinderfreibetrag aber knapp darunter, kann diese Regel den gesamten Solidaritätszuschlag entfallen lassen – zusätzlich zum ausgezahlten Kindergeld, nicht anstelle davon.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Konkret nicht mitgerechnet ist etwa der Entlastungsbetrag für Alleinerziehende von 4.260 Euro im Jahr plus 240 Euro für jedes weitere Kind – eine eigene Steuerermäßigung, die parallel zum Kinderfreibetrag greifen kann und die Günstigerprüfung in solchen Fällen zusätzlich verschiebt.",
+      },
+      {
+        type: "note",
+        text: "Für die Größenordnung reicht die hier gezeigte Näherung; für den Steuerbescheid nicht. Das hier ist keine Steuerberatung – verbindliche Auskünfte geben das Finanzamt, ein Lohnsteuerhilfeverein oder eine Steuerberatung.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -91,6 +161,7 @@ export const kindergeld: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

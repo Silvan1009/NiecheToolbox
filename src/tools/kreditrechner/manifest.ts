@@ -1,5 +1,5 @@
 import { Landmark } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { kreditAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -15,6 +15,79 @@ const about: string[] = [
   "Bei einer Baufinanzierung verschiebt sich die entscheidende Frage von der Rate zur Restschuld. Wer 300.000 Euro zu 3,5 Prozent mit 1.375 Euro im Monat bedient, hat nach zehn Jahren Zinsbindung 165.000 Euro gezahlt und schuldet immer noch 228.284 Euro – der Rest ging in Zinsen. Genau dieser Betrag muss zu einem heute unbekannten Zins neu finanziert werden. Deshalb rechnet dieser Rechner den Tilgungsplan monatsgenau und nicht über eine Jahresnäherung, die hier um Tausende danebenläge.",
   "Sondertilgungen wirken stärker, als ihr Betrag vermuten lässt, weil sie sämtliche künftigen Zinsen auf den getilgten Betrag streichen. Bei der Baufinanzierung von oben verkürzen jährlich 5.000 Euro die Laufzeit von 29 auf gut 19 Jahre und sparen 63.149 Euro Zinsen. Der Effekt ist am Anfang der Laufzeit am größten, weil die Restschuld dann am höchsten und die verbleibende Zeit am längsten ist. Ein Sondertilgungsrecht ist bei vielen Banken kostenlos zu haben – aber nur, wenn danach gefragt wird.",
   "Zwei Rechte gelten bei Verbraucherkrediten unabhängig vom Vertrag. Die vorzeitige Rückzahlung ist immer möglich; die Bank darf dafür höchstens 1 Prozent der zurückgezahlten Summe verlangen, bei weniger als zwölf Monaten Restlaufzeit höchstens 0,5 Prozent. Und jeder Kreditvertrag kann innerhalb von vierzehn Tagen ohne Begründung widerrufen werden. Bei Immobiliendarlehen gilt die Deckelung der Vorfälligkeitsentschädigung nicht – dafür darf nach § 489 BGB jedes Darlehen zehn Jahre nach Vollauszahlung mit sechs Monaten Frist gekündigt werden. Dieser Rechner ist keine Rechts- oder Finanzberatung.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Der effektive Jahreszins",
+    blocks: [
+      {
+        type: "p",
+        text: "Gesetzlich vorgeschrieben ist die Angabe des effektiven Jahreszinses in jeder Werbung, die einen Zinssatz oder eine Zahl zu den Kreditkosten nennt (§ 6a PAngV) – ein reiner Sollzins ohne Effektivzins daneben darf in der Werbung nicht stehen. Trotzdem bleibt Spielraum: Kontoführungsgebühren für das Darlehenskonto zählen nur mit hinein, wenn die Kontoführung nicht unabhängig vom Kredit wählbar ist.",
+      },
+      {
+        type: "note",
+        text: "Auch die Laufzeit selbst verändert den Effektivzins bei sonst gleichen Konditionen leicht: Bei fester Bearbeitungsgebühr verteilt sich ihr Effekt über mehr oder weniger Jahre und verschiebt die Differenz zum Sollzins entsprechend.",
+      },
+    ],
+  },
+  {
+    heading: "Restschuldversicherung: teuer und leicht zu übersehen",
+    blocks: [
+      {
+        type: "p",
+        text: "Häufig wird die Restschuldversicherung direkt am Verkaufsort mitangeboten, oft als vorausgefüllte Option im Vertrag – wer sie nicht ausdrücklich abwählt, zahlt automatisch mit. Ein genereller Zwang zum Abschluss besteht rechtlich nicht, außer die Bank macht ihn zur ausdrücklichen Bedingung für die Kreditvergabe.",
+      },
+      {
+        type: "table",
+        caption: "Beispiel: 10.000 Euro Kredit über fünf Jahre",
+        head: ["", "Effektiver Jahreszins"],
+        rows: [
+          ["Ohne Restschuldversicherung", "6,70 %"],
+          ["Mit 900 Euro mitfinanzierter Prämie", "10,65 %"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Baufinanzierung: von der Rate zur Restschuld",
+    blocks: [
+      {
+        type: "p",
+        text: "Zum Ende der Zinsbindung stehen grundsätzlich zwei Wege offen: eine Anschlussfinanzierung bei der bisherigen Bank oder ein Wechsel zu einem neuen Anbieter, der die Restschuld ablöst. Wer sich früh festlegen will, kann ein Forward-Darlehen abschließen – bis zu fünf Jahre vor Ablauf der aktuellen Zinsbindung, gegen einen Zinsaufschlag für die Wartezeit.",
+      },
+      {
+        type: "note",
+        text: "Ein Bankwechsel bei der Anschlussfinanzierung ist rechtlich unkompliziert: Die neue Bank löst die Restschuld direkt bei der alten ab, ohne dass sich am Grundbuch mehr ändert als der Gläubiger der eingetragenen Grundschuld.",
+      },
+    ],
+  },
+  {
+    heading: "Wirkung von Sondertilgungen",
+    blocks: [
+      {
+        type: "p",
+        text: "Üblich vereinbart ist ein kostenloses Sondertilgungsrecht von bis zu 5 Prozent der ursprünglichen Darlehenssumme pro Jahr – bei 300.000 Euro Darlehen also bis zu 15.000 Euro jährlich, ohne dass die Bank dafür eine Vorfälligkeitsentschädigung verlangen darf. Höhere Sondertilgungen sind oft ebenfalls möglich, aber Verhandlungssache und nicht automatisch im Standardvertrag enthalten.",
+      },
+    ],
+  },
+  {
+    heading: "Gesetzliche Rechte bei Krediten",
+    blocks: [
+      {
+        type: "ul",
+        items: [
+          "Vor jeder Kreditvergabe muss die Bank die Kreditwürdigkeit prüfen (§ 505a BGB) – ein Darlehen ohne jede Bonitätsprüfung ist in Deutschland nicht zulässig.",
+          "Der Kreditvertrag muss den effektiven Jahreszins, die Gesamtkosten und den Tilgungsplan in verständlicher Form ausweisen, nicht nur die Monatsrate.",
+          "Bei Immobiliendarlehen gilt die Deckelung der Vorfälligkeitsentschädigung nicht – dafür darf nach § 489 BGB jedes Darlehen zehn Jahre nach Vollauszahlung mit sechs Monaten Frist gekündigt werden.",
+        ],
+      },
+      {
+        type: "note",
+        text: "Dieser Rechner ist keine Rechts- oder Finanzberatung.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -88,6 +161,7 @@ export const kreditrechner: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

@@ -1,7 +1,55 @@
 import { Car } from "lucide-react";
-import type { FaqEntry } from "@/tools/types";
+import type { ContentSection, FaqEntry } from "@/tools/types";
 import type { WegManifest } from "../types";
 import { ANTEIL_ENG, ANTEIL_KOMFORTABEL } from "./urteil";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Wo die Schwellen liegen",
+    blocks: [
+      {
+        type: "table",
+        caption: "Anteil der Autokosten am Nettoeinkommen",
+        head: ["Anteil vom Netto", "Einordnung"],
+        rows: [
+          [`unter ${ANTEIL_KOMFORTABEL} %`, "komfortabel"],
+          [`${ANTEIL_KOMFORTABEL}–${ANTEIL_ENG} %`, "tragbar, aber eng"],
+          [`über ${ANTEIL_ENG} %`, "Vorsicht angebracht"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Das Beispiel im Überblick",
+    blocks: [
+      {
+        type: "table",
+        caption: "28.000-Euro-Auto, 5.000 Euro Anzahlung, 6 Jahre Laufzeit, 6,5 % Sollzins",
+        head: ["Posten", "Betrag"],
+        rows: [
+          ["Kreditrate", "rund 387 € / Monat"],
+          ["Laufender Unterhalt inkl. Teilkasko", "rund 443 € / Monat"],
+          ["Gesamtkosten", "rund 829 € / Monat"],
+          ["Kosten pro Kilometer (12.000 km/Jahr)", "rund 83 Cent"],
+          ["Anteil bei 2.600 € Netto", "über 30 %"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Warum Leasing hier nicht abgebildet ist",
+    blocks: [
+      {
+        type: "p",
+        text: "Dieser Weg rechnet einen Kauf, finanziert oder bar bezahlt – kein Leasing. Der Grund ist strukturell: Bei einem Kauf gehört das Auto irgendwann, der Kredit endet, und der Wertverlust ist eine reine Kalkulationsgröße, die niemand als Rechnung bekommt. Bei Leasing dagegen ist die monatliche Rate der Vertrag selbst, meist mit einer Anzahlung, einer Kilometergrenze und Regelungen für Mehrkilometer oder Schäden bei Rückgabe – Größen, die von Anbieter zu Anbieter stark variieren und sich nicht aus Kaufpreis, Zins und Marktrichtwert ableiten lassen wie beim Kauf.",
+      },
+      {
+        type: "note",
+        text: "Wer ein konkretes Leasingangebot vergleichen will, kann die dort ausgewiesene monatliche Rate direkt als Ersatz für die Kreditrate in diesem Weg eintragen – Unterhalt und Versicherung bleiben davon unabhängig gültig, denn die fallen bei einem geleasten Fahrzeug genauso an.",
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   "Ein Auto kostet mehr als die Kreditrate, und die Kreditrate ist mehr als der Unterhalt. Dieser Weg rechnet drei Rechner in einem Zug durch: den Autokosten-Rechner für Wertverlust, Kraftstoff, Steuer, Wartung und Verschleiß, den Versicherungs-Vergleichsrechner für einen realistischen Marktrichtwert der Kfz-Prämie statt einer geschätzten Zahl, und den Kredit-Rechner für die monatliche Rate, die der Autokosten-Rechner bewusst ausklammert. Am Ende steht eine einzige Zahl: der Anteil, den das Auto vom Nettoeinkommen beansprucht.",
@@ -36,7 +84,7 @@ const faq: FaqEntry[] = [
 
 export const autokauf: WegManifest = {
   slug: "autokauf",
-  name: "Auto-Weg",
+  name: "Check: Auto",
   tagline:
     "Kreditrate, Unterhalt und Versicherung eines Autos in einem Urteil: welcher Anteil vom Netto geht dafür drauf?",
   category: "geld",
@@ -87,6 +135,7 @@ export const autokauf: WegManifest = {
   ],
 
   about,
+  sections,
   faq,
 
   monetization: {

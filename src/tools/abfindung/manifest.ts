@@ -1,6 +1,37 @@
 import { DoorOpen } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { abfindungAffiliate } from "./affiliate";
+
+/**
+ * Nachvollziehbares Rechenbeispiel mit denselben Zahlen wie der Rechner
+ * selbst (lib/steuerdaten.ts::einkommensteuer), nicht hingeschrieben.
+ */
+const sections: ContentSection[] = [
+  {
+    heading: "Die Fünftelregelung Schritt für Schritt",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein Beispiel macht das Verfahren greifbar: 40.000 Euro reguläres zu versteuerndes Einkommen, dazu eine Abfindung von 30.000 Euro. Ein Fünftel davon sind 6.000 Euro.",
+      },
+      {
+        type: "table",
+        caption: "Beispiel: 40.000 € Einkommen, 30.000 € Abfindung",
+        head: ["Schritt", "Wert"],
+        rows: [
+          ["Steuer auf 40.000 € (ohne Abfindung)", "7.209 €"],
+          ["Steuer auf 46.000 € (plus ein Fünftel)", "9.171 €"],
+          ["Differenz", "1.962 €"],
+          ["Differenz × 5 = Steuer auf die Abfindung", "9.810 €"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Zum Vergleich: Bei sofortiger voller Versteuerung der Abfindung im selben Jahr fielen 11.055 Euro Steuer an – die Fünftelregelung spart in diesem Beispiel 1.245 Euro. Der Effekt ist bei diesem Einkommen also spürbar, aber kein Wunder: effektiv rund 32,7 Prozent Steuer statt der vollen 36,9 Prozent.",
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   "Eine Abfindung ist kein steuerfreies Trostpflaster – sie wird zum übrigen Jahreseinkommen addiert und dort ganz normal besteuert. Ohne Korrektur würde eine große Einmalzahlung den Grenzsteuersatz für dieses Jahr in die Höhe treiben, obwohl sie wirtschaftlich eine Entschädigung für mehrere Jahre entgangenes Gehalt ist. Die Fünftelregelung nach § 34 EStG gleicht genau das aus: Sie besteuert rechnerisch nur ein Fünftel der Abfindung zusätzlich und multipliziert die daraus entstehende Steuer mit fünf – bei einer progressiven Steuerkurve kommt dabei nie mehr heraus als bei sofortiger voller Versteuerung.",
@@ -59,6 +90,8 @@ export const abfindung: ToolManifest = {
     "abfindungsrechner",
     "steuer auf abfindung",
   ],
+
+  sections,
 
   about,
   faq,

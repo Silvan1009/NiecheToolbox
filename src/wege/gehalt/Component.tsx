@@ -433,7 +433,7 @@ export default function GehaltWeg({ params }: { params?: ToolParams }) {
           <ResultPanel
             footer={
               <ShareBar
-                title="Gehaltserhöhungs-Weg"
+                title="Check: Gehaltserhöhung"
                 text={`${formatEuro(nettoPlusMonat)} netto mehr im Monat`}
               />
             }

@@ -1,8 +1,9 @@
 import { Wallet } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { bruttonettoAffiliate } from "./affiliate";
-import { STEUERJAHR } from "@/lib/steuerdaten";
+import { formatEuroRounded } from "@/lib/format";
+import { BBG_KRANKEN, BBG_RENTE, STEUERJAHR } from "@/lib/steuerdaten";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -16,6 +17,75 @@ const about: string[] = [
   "Zwei Beitragsbemessungsgrenzen prägen den Verlauf der Abgabenquote. Für Renten- und Arbeitslosenversicherung liegt sie 2026 bei 101.400 Euro im Jahr, für Kranken- und Pflegeversicherung bei 69.750 Euro. Oberhalb dieser Grenzen steigen die jeweiligen Beiträge nicht weiter. Deshalb sinkt die Grenzbelastung bei hohen Einkommen wieder: Von hundert Euro mehr Brutto bleiben bei 5.000 Euro Monatsgehalt rund 51 Euro, bei 12.500 Euro dagegen wieder rund 56 Euro.",
   "Kinderfreibeträge wirken im Lohnsteuerabzug anders, als der Name vermuten lässt: Sie mindern nicht die Lohnsteuer, sondern nur die Bemessungsgrundlage für Solidaritätszuschlag und Kirchensteuer. Für die Lohnsteuer gibt es stattdessen Kindergeld. Erst mit der Steuererklärung prüft das Finanzamt automatisch, was günstiger war – bei höheren Einkommen der Freibetrag, dann wird die Differenz erstattet. Der Kinderlosenzuschlag zur Pflegeversicherung von 0,6 Prozentpunkten hingegen wirkt sofort und wird vom Arbeitnehmer allein getragen.",
   `Das Ergebnis ist eine Schätzung und keine Lohnabrechnung. Nicht abgebildet sind Freibeträge aus den ELStAM, der Altersentlastungsbetrag, geldwerte Vorteile wie ein Dienstwagen, betriebliche Altersvorsorge, vermögenswirksame Leistungen, Einmalzahlungen wie Urlaubs- und Weihnachtsgeld sowie der Übergangsbereich für Midijobs. Die Steuerklassen V und VI folgen der Grundformel des Gesetzes ohne die zusätzlichen Stützstellen der amtlichen Programmablaufpläne. Für den Regelfall in den Klassen I bis IV liegt der Rechner im Bereich weniger Euro an den veröffentlichten Vergleichswerten für ${STEUERJAHR}. Dieser Rechner ist keine Steuerberatung.`,
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Der Rechenweg nach § 39b EStG",
+    blocks: [
+      {
+        type: "p",
+        text: "§ 39b EStG regelt ausdrücklich nur den monatlichen Lohnsteuerabzug durch den Arbeitgeber – eine vorläufige Schätzung, die auf zwölf Monate hochrechnet, was übers Jahr gleichmäßig verdient wird. Die endgültige Steuerschuld wird erst mit der Steuererklärung nach § 32a EStG auf das tatsächliche Jahreseinkommen ermittelt.",
+      },
+      {
+        type: "note",
+        text: "Deshalb weichen Lohnsteuerabzug und tatsächliche Steuerlast oft voneinander ab – am stärksten bei schwankendem Einkommen, Jobwechsel unterjährig oder einer Gehaltserhöhung mitten im Jahr. Die Differenz gleicht die Steuererklärung aus, als Nachzahlung oder Erstattung.",
+      },
+    ],
+  },
+  {
+    heading: "Die Vorsorgepauschale 2026",
+    blocks: [
+      {
+        type: "p",
+        text: "Sinn der Vorsorgepauschale ist es, schon beim monatlichen Lohnsteuerabzug ungefähr das zu berücksichtigen, was tatsächlich in die Sozialversicherung fließt – ohne die realen Beiträge im Einzelnen abzufragen. Ohne sie würde der Lohnsteuerabzug systematisch zu hoch ausfallen und erst über die Steuererklärung wieder ausgeglichen, ein Jahr oder länger nach dem eigentlichen Verdienst.",
+      },
+    ],
+  },
+  {
+    heading: "Beitragsbemessungsgrenzen 2026",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Beitragsbemessungsgrenzen werden jährlich per Rechtsverordnung an die bundesweite Lohnentwicklung des Vorjahres angepasst, nicht durch ein einzelnes Gesetz mit festem Datum. Oberhalb dieser Grenzen steigen die jeweiligen Beiträge nicht weiter. Deshalb sinkt die Grenzbelastung bei hohen Einkommen wieder: Von hundert Euro mehr Brutto bleiben bei 5.000 Euro Monatsgehalt rund 51 Euro, bei 12.500 Euro dagegen wieder rund 56 Euro.",
+      },
+      {
+        type: "table",
+        caption: `Beitragsbemessungsgrenzen ${STEUERJAHR}, jährlich`,
+        head: ["Versicherungszweig", "Grenze"],
+        rows: [
+          ["Renten- und Arbeitslosenversicherung", formatEuroRounded(BBG_RENTE)],
+          ["Kranken- und Pflegeversicherung", formatEuroRounded(BBG_KRANKEN)],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Kinderfreibetrag im Lohnsteuerabzug",
+    blocks: [
+      {
+        type: "p",
+        text: "Kindergeld ist rechtlich eine laufende Vorauszahlung auf den Kinderfreibetrag, kein eigenständiger Anspruch daneben. Deshalb zahlt die Familienkasse monatlich einen festen Betrag aus, während der eigentliche Freibetrag erst bei der jährlichen Steuererklärung zum Tragen kommt – und auch nur, wenn er günstiger ist als das bereits erhaltene Kindergeld.",
+      },
+      {
+        type: "note",
+        text: "Der Kinderlosenzuschlag zur Pflegeversicherung von 0,6 Prozentpunkten hingegen wirkt sofort im Lohnsteuerabzug und wird vom Arbeitnehmer allein getragen, unabhängig von der Kinderfreibetrag-Frage.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Konkret nicht abgebildet sind etwa ein beim Finanzamt eingetragener Freibetrag für außergewöhnlich hohe Werbungskosten oder Kinderbetreuungskosten, der laufende geldwerte Vorteil eines Dienstwagens nach der Ein-Prozent-Regel, sowie vermögenswirksame Leistungen des Arbeitgebers. Die Steuerklassen V und VI folgen der Grundformel des Gesetzes ohne die zusätzlichen Stützstellen der amtlichen Programmablaufpläne.",
+      },
+      {
+        type: "note",
+        text: `Für den Regelfall in den Klassen I bis IV liegt der Rechner im Bereich weniger Euro an den veröffentlichten Vergleichswerten für ${STEUERJAHR}. Dieser Rechner ist keine Steuerberatung.`,
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -92,6 +162,7 @@ export const bruttonetto: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

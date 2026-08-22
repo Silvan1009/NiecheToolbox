@@ -661,7 +661,7 @@ export default function NachwuchsWeg({ params }: { params?: ToolParams }) {
           <ResultPanel
             footer={
               <ShareBar
-                title="Nachwuchs-Weg"
+                title="Check: Nachwuchs"
                 text={`${formatEuro(Math.abs(urteil.deltaMonat))} ${urteil.deltaMonat >= 0 ? "Plus" : "Lücke"} während des Bezugs`}
               />
             }

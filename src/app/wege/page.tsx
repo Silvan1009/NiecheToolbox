@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { WegCard } from "@/components/WegCard";
 import { site } from "@/config/site";
@@ -39,6 +40,40 @@ export default function WegePage() {
           </li>
         ))}
       </ul>
+
+      {/* data-prose: scripts/content-audit.ts misst genau diesen Bereich. */}
+      <div className="tool-column mt-14 pb-4">
+        <section data-prose aria-labelledby="unterschied-heading">
+          <h2 id="unterschied-heading" className="section-title">
+            Was einen Weg von einem Rechner unterscheidet
+          </h2>
+          <div className="mt-4 flex flex-col gap-4 text-[17px] leading-relaxed text-muted">
+            <p>
+              Ein einzelner Rechner beantwortet eine Frage: Wie hoch ist die
+              Grunderwerbsteuer, wie viel Netto bleibt von einer
+              Gehaltserhöhung, wie stark sinkt die Rente bei vorzeitigem
+              Ruhestand. Ein Weg verkettet mehrere dieser Rechner zu einem
+              Urteil, das keiner von ihnen allein liefern kann – etwa, ob sich
+              ein Immobilienkauf beim eigenen Einkommen überhaupt trägt. Dafür
+              übergibt ein Weg die Ergebnisse eines Schritts als Startwerte an
+              den nächsten, statt sie erneut abzufragen.
+            </p>
+            <p>
+              Jeder Schritt bleibt trotzdem ein vollständiger, einzeln
+              nutzbarer Rechner: Ein Weg führt zu ihm hin und zurück, ersetzt
+              ihn aber nicht. Wer nur eine der Teilfragen hat, findet den
+              passenden Rechner auch direkt über die{" "}
+              <Link
+                href="/rechner/"
+                className="underline decoration-line underline-offset-2 hover:text-ink"
+              >
+                Übersicht nach Thema
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      </div>
 
       <JsonLd
         data={jsonLdGraph([

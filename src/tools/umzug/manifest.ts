@@ -1,5 +1,5 @@
 import { Boxes } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { umzugAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -9,6 +9,68 @@ const about: string[] = [
   "Bücher gehören in kleine Kartons. Ein Standardkarton voller Bücher wiegt schnell 40 Kilo und reißt beim Tragen aus; ein Bücherkarton mit rund 55 × 35 × 30 cm bleibt handhabbar. Als Faustregel füllt ein laufender Regalmeter genau einen Bücherkarton.",
   "Für die Fahrzeugwahl zählt nicht die Kartonzahl, sondern das Gesamtvolumen inklusive Möbel – und die machen den größten Teil aus. Ein durchschnittlicher Haushalt kommt auf etwa 0,25 m³ je Quadratmeter Wohnfläche. Eine 80-m²-Wohnung landet damit bei rund 20 m³, also mehr als ein großer Transporter in einer Fahrt schafft. Über die Zahl der Fahrten lässt sich das Fahrzeug kleiner rechnen.",
   "Alle Zahlen hier sind Erfahrungswerte, keine Messung. Wie viel jemand besitzt, lässt sich aus Quadratmetern nur annähern. Die Annahmen stehen offen unter dem Ergebnis, damit du sie gegen deine Wohnung halten kannst.",
+];
+
+const sections: ContentSection[] = [
+  {
+    heading: "Bücher brauchen eigene Kartons",
+    blocks: [
+      {
+        type: "p",
+        text: "Ein Bücherkarton mit 55 × 35 × 30 cm fasst rechnerisch rund 58 Liter – deutlich weniger als ein Standardkarton, aber genau deshalb tragbar, wenn er randvoll mit Büchern beladen ist. Wer noch Platz nach oben hat, füllt ihn besser mit leichteren Gegenständen wie Kissen oder Textilien auf, statt eine zweite Lage Bücher draufzulegen.",
+      },
+      {
+        type: "note",
+        text: "Als Faustregel füllt ein laufender Regalmeter genau einen Bücherkarton.",
+      },
+    ],
+  },
+  {
+    heading: "Volumen statt Kartonzahl",
+    blocks: [
+      {
+        type: "p",
+        text: "Zur Einordnung: 20 Kubikmeter entsprechen etwa 20.000 Litern – umgerechnet auf einen 60-Liter-Standardkarton wären das rein rechnerisch mehr als 300 Kartons voll, obwohl ein großer Teil davon tatsächlich Möbel und keine Kartons sind. Genau deshalb zählt für die Fahrzeuggröße das Gesamtvolumen und nicht die im Rechner ausgewiesene Kartonzahl allein.",
+      },
+      {
+        type: "table",
+        caption: "Geschätztes Umzugsvolumen (0,25 m³ je m² Wohnfläche)",
+        head: ["Wohnfläche", "Volumen"],
+        rows: [
+          ["40 m²", "10 m³"],
+          ["60 m²", "15 m³"],
+          ["80 m²", "20 m³"],
+          ["120 m²", "30 m³"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Eine 80-m²-Wohnung landet damit bei rund 20 m³, also mehr als ein großer Transporter in einer Fahrt schafft. Über die Zahl der Fahrten lässt sich das Fahrzeug kleiner rechnen.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Systematisch unterschätzt wird der Umzugsumfang bei Haushalten mit viel Ausrüstung außerhalb der Wohnfläche selbst – Werkstattinhalt, Fahrräder, Sportgeräte oder ein voller Keller korrelieren kaum mit den Quadratmetern der Wohnung. Überschätzt wird er dagegen häufig bei jungen, bewusst minimalistisch eingerichteten Haushalten. Die Annahmen stehen offen unter dem Ergebnis, damit du sie gegen deine Wohnung halten kannst.",
+      },
+    ],
+  },
+  {
+    heading: "Wann sich Umzugskosten von der Steuer absetzen lassen",
+    blocks: [
+      {
+        type: "p",
+        text: "Ist der Umzug beruflich veranlasst – etwa durch einen neuen Arbeitsort, einen Jobwechsel oder eine deutliche Verkürzung des Arbeitswegs –, zählen die Kosten als Werbungskosten und mindern das zu versteuernde Einkommen. Nachgewiesene Ausgaben wie Spedition, Fahrtkosten oder eine doppelte Mietzahlung im Übergang lassen sich in tatsächlicher Höhe absetzen.",
+      },
+      {
+        type: "note",
+        text: "Für Kosten, die sich schlecht einzeln belegen lassen – etwa Trinkgelder für Helfer oder Kleinigkeiten –, erkennt das Finanzamt zusätzlich eine jährlich angepasste Umzugskostenpauschale ohne Einzelnachweis an. Ein rein privater Umzug, etwa in eine größere Wohnung ohne beruflichen Anlass, zählt dagegen nicht als Werbungskosten.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -60,6 +122,7 @@ export const umzug: ToolManifest = {
   getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

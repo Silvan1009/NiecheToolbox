@@ -45,7 +45,13 @@ export function ToolPageShell({
   // Tools – so bleiben alle bestehenden Varianten unverändert.
   const about = variant?.about ?? tool.about;
   const faq = variant?.faq ?? tool.faq;
-  const sections = variant?.sections ?? tool.sections;
+  // Auf der Tool-Seite selbst (kein variant) zeigt das die eigenen sections
+  // des Tools. Auf einer Variantenseite dagegen KEIN Fallback auf
+  // tool.sections: Sonst fiele der Abschnittstext des Tools auf jede Variante
+  // durch und läge identisch auf allen ihren Seiten – genau die
+  // Duplizierung, die scripts/content-audit.ts misst. Eine Variante ohne
+  // eigene sections hat schlicht keine.
+  const sections = variant ? variant.sections : tool.sections;
 
   // Startparameter: Laufzeit-Defaults vom Server, von der Variante überschrieben.
   const params = { ...tool.getDefaultParams?.(), ...variant?.params };

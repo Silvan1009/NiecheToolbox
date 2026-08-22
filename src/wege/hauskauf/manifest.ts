@@ -1,5 +1,5 @@
 import { Route } from "lucide-react";
-import type { FaqEntry } from "@/tools/types";
+import type { ContentSection, FaqEntry } from "@/tools/types";
 import type { WegManifest } from "../types";
 import { hauskaufAffiliate } from "./affiliate";
 import {
@@ -7,6 +7,28 @@ import {
   BELASTUNGSQUOTE_KOMFORTABEL,
   RESTSCHULD_RISIKO_ANTEIL,
 } from "./urteil";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Wo die Schwellen liegen",
+    blocks: [
+      {
+        type: "table",
+        caption: "Belastungsquote: Rate plus Nebenkosten geteilt durch das Haushaltsnetto",
+        head: ["Belastungsquote", "Einordnung"],
+        rows: [
+          [`unter ${BELASTUNGSQUOTE_KOMFORTABEL} %`, "komfortabel"],
+          [`${BELASTUNGSQUOTE_KOMFORTABEL}–${BELASTUNGSQUOTE_ENG} %`, "tragbar, aber eng"],
+          [`über ${BELASTUNGSQUOTE_ENG} %`, "Vorsicht angebracht"],
+        ],
+      },
+      {
+        type: "note",
+        text: `Zusätzlich markiert der Weg eine Restschuld von über ${RESTSCHULD_RISIKO_ANTEIL} Prozent der ursprünglichen Darlehenssumme zum Ende der Zinsbindung als eigenes Risiko – unabhängig davon, wie komfortabel die heutige Rate aussieht.`,
+      },
+    ],
+  },
+];
 
 const about: string[] = [
   `Der Immobilien-Rechner sagt dir die monatliche Rate. Der Brutto-Netto-Rechner sagt dir das Haushaltsnetto. Beide Zahlen für sich sind schnell falsch eingeordnet – ${BELASTUNGSQUOTE_ENG} Prozent Belastungsquote klingen erst mal nach viel, sind es aber nur, wenn du weißt, worauf sie sich beziehen. Dieser Weg rechnet beides in einem Zug durch und macht daraus ein Urteil: komfortabel, tragbar oder eng.`,
@@ -50,7 +72,7 @@ const faq: FaqEntry[] = [
 
 export const hauskauf: WegManifest = {
   slug: "hauskauf",
-  name: "Hauskauf-Weg",
+  name: "Check: Hauskauf",
   tagline:
     "Immobilie, Finanzierung und Nettoeinkommen in einem Urteil: trägt die Rate deinen Haushalt?",
   category: "wohnen",
@@ -86,6 +108,7 @@ export const hauskauf: WegManifest = {
   ],
 
   about,
+  sections,
   faq,
 
   monetization: {

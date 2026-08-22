@@ -105,10 +105,29 @@ function about(fakten: Fakten): string[] {
     praxis.push(fakten.ergebnis.warnings.join(" "));
   }
 
+  // Zweites, unabhängiges Zahlenbeispiel: Der Faktor gilt für jede Menge,
+  // nicht nur für das Beispielrezept oben – hier an 500 g Mehl vorgeführt,
+  // echt aus demselben ConversionResult gerechnet statt hingeschrieben.
+  const faktorZahl = fakten.ergebnis.factor;
+  const generalisierung = `Der Faktor ${faktor} gilt dabei für jede Menge in jedem Rezept für eine Ø-${von}-Form, nicht nur für das Beispiel oben: Aus 500 g Mehl würden ${formatAmount(Math.round(500 * faktorZahl))} g, aus 1 kg Äpfeln ${formatAmount(Math.round(1000 * faktorZahl))} g. Trag deine eigene Zutatenliste oben ins Textfeld ein, dann wendet der Rechner genau diesen Faktor Zeile für Zeile an.`;
+
+  // Absolute Flächendifferenz in cm² – dieselbe Geometrie wie der Faktor,
+  // nur als Zahl statt als Verhältnis. Rein aus von/zu gerechnet, nicht aus
+  // dem Rechner übernommen, weil die Grundfläche selbst dort nicht ausgewiesen
+  // wird.
+  // Auf die bereits gerundeten Flächen bezogen, nicht auf die exakten Werte –
+  // sonst geht die im Text gezeigte Subtraktion (Ø-zu minus Ø-von) nicht mehr
+  // exakt auf, wenn beide Flächen einzeln gerundet dastehen.
+  const flaecheVonGerundet = Math.round(Math.PI * (von / 2) ** 2);
+  const flaecheZuGerundet = Math.round(Math.PI * (zu / 2) ** 2);
+  const flaechenDiff = Math.abs(flaecheZuGerundet - flaecheVonGerundet);
+  const flaechenSatz = `In Quadratzentimetern ausgedrückt: Die Ø-${von}-Form hat rund ${flaecheVonGerundet} cm² Grundfläche, die Ø-${zu}-Form rund ${flaecheZuGerundet} cm² – ein Unterschied von ${flaechenDiff} cm², also mehr als nur die ${Math.abs(von - zu)} Zentimeter Differenz im Durchmesser vermuten lassen.`;
+
   return [
     `Ein Rezept ist für eine Springform mit Ø ${von} cm gedacht, im Schrank steht eine mit Ø ${zu} cm. ${geometrie}`,
     beispiel,
     praxis.join(" "),
+    `${generalisierung} ${flaechenSatz}`,
   ];
 }
 
@@ -131,6 +150,10 @@ function faq(fakten: Fakten): FaqEntry[] {
     {
       question: `Muss ich die Backzeit anpassen, wenn ich von ${von} auf ${zu} cm wechsle?`,
       answer: `Kaum. Beide Formen sind 3,5 cm tief, und wenn die Mengen mit dem Faktor ${faktor} mitwachsen, steht der Teig in der Ø-${zu}-Form genauso hoch wie vorher in der Ø-${von}-Form – die Teighöhe bestimmt die Backzeit, nicht der Durchmesser. Plane trotzdem ${kleiner ? "fünf bis zehn Minuten weniger" : "fünf bis zehn Minuten mehr"} ein, weil ${kleiner ? `die kleinere Form die Wärme schneller bis in die Mitte trägt` : `die größere Form länger braucht, bis die Mitte durch ist`}, und prüfe mit einem Holzstäbchen. Anders ist es beim Wechsel der Bauart: Eine Kastenform ist mit 6,5 cm deutlich tiefer, ein Blech mit 1,8 cm viel flacher.`,
+    },
+    {
+      question: `Funktioniert der Faktor ${faktor} auch für ein anderes Rezept als das Beispiel?`,
+      answer: `Ja – der Faktor hängt nur von den beiden Formgrößen ab, ${von} cm und ${zu} cm, nicht vom Rezept. Aus 500 g Mehl würden damit ${formatAmount(Math.round(500 * fakten.ergebnis.factor))} g, aus 1 kg Äpfeln ${formatAmount(Math.round(1000 * fakten.ergebnis.factor))} g. Am schnellsten geht es trotzdem über das Textfeld oben: Rezept einfügen, Formen einstellen, fertig umgerechnet.`,
     },
   ];
 }

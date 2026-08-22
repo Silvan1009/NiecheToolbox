@@ -1,10 +1,17 @@
 import { House } from "lucide-react";
 import { formatInteger } from "@/lib/format";
 import { regions } from "@/lib/regionen";
-import type { FaqEntry, ToolManifest, ToolVariant } from "@/tools/types";
+import type {
+  ContentSection,
+  FaqEntry,
+  ToolManifest,
+  ToolVariant,
+} from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
 import {
+  grestFaq,
   grestHistorie,
+  grestKontext,
   grestSpanne,
   grunderwerbsteuer,
 } from "./grunderwerbsteuer";
@@ -28,11 +35,88 @@ const prozent = (n: number) =>
 
 const about: string[] = [
   "Beim Immobilienkauf entscheidet selten der Kaufpreis, sondern das, was daneben steht. Grunderwerbsteuer, Notar, Grundbuch und Maklerprovision summieren sich je nach Bundesland auf 8 bis 12 Prozent – bei einer Wohnung für 350.000 Euro sind das 28.000 bis 42.000 Euro. Diese Summe ist zum Notartermin fällig und wird von Banken so gut wie nie mitfinanziert. Wer sie nicht als Guthaben hat, bekommt die Finanzierung nicht. Deshalb steht sie hier ganz vorne und nicht im Kleingedruckten.",
-  "Die zweite Zahl, die häufig falsch gelesen wird, ist die Rendite. Die Bruttomietrendite setzt die Jahreskaltmiete ins Verhältnis zum Kaufpreis und ignoriert damit sowohl die Nebenkosten als auch alles, was laufend abgeht: nicht umlagefähiges Hausgeld, Verwaltung, Instandhaltungsrücklage und das Risiko, dass eine Wohnung mal leer steht. Die Nettomietrendite rechnet all das mit und liegt regelmäßig ein bis anderthalb Prozentpunkte darunter. Für die Frage, ob sich ein Objekt trägt, ist nur sie brauchbar.",
-  "Beim Darlehen ist nicht die heutige Rate das Risiko, sondern die Restschuld am Ende der Zinsbindung. Bei zwei Prozent Anfangstilgung und zehn Jahren Bindung sind nach Ablauf noch rund drei Viertel der Darlehenssumme offen – zu einem Zinssatz, den heute niemand kennt. Der Rechner ermittelt diese Restschuld über einen echten monatlichen Tilgungsplan, nicht über eine Jahresnäherung, und zeigt im Jahresverlauf, wie sich das Verhältnis von Zins zu Tilgung mit der Zeit dreht.",
-  "Bei vermieteten Objekten entscheidet die Steuer über Plus oder Minus. Abgeschrieben wird nur das Gebäude, nicht der Grund und Boden – deshalb fragt der Rechner nach dem Gebäudeanteil, der je nach Lage zwischen 60 und 85 Prozent liegt. Zusammen mit den Schuldzinsen führt die Abschreibung oft zu einem steuerlichen Verlust, obwohl tatsächlich Geld hereinkommt. Diese Erstattung ist ein echter Teil der Rendite und steht hier als eigene Zeile im Ergebnis.",
-  "Im Modus Eigennutzung fällt die Mieteinnahme weg, dafür zählt die Miete, die du nach dem Kauf nicht mehr zahlst. Der Vergleich mit dem Mieten ist nur dann fair, wenn das Eigenkapital auf der anderen Seite ebenfalls arbeitet: Wer nicht kauft, kann die 80.000 Euro anlegen und die monatliche Differenz zwischen Rate und Miete dazulegen. Genau so rechnet der Rechner – und deshalb kann Mieten je nach angenommener Rendite auch dann besser abschneiden, wenn die Immobilie im Wert steigt.",
-  "Alle Angaben sind Näherungen und keine Steuer- oder Anlageberatung. Solidaritätszuschlag, Kirchensteuer, der progressive Verlauf des Steuertarifs und Sonderfälle wie Denkmalabschreibung oder Förderkredite bleiben außen vor. Die Wertentwicklung ist die unsicherste Annahme im ganzen Rechner: Sie lässt sich nicht vorhersagen, sondern nur durchspielen. Wer wissen will, ob eine Kalkulation trägt, sollte sie einmal mit null Prozent Wertsteigerung rechnen.",
+];
+
+/**
+ * Der ausführliche Teil unter dem Einstieg. Bis zur Aufteilung in Etappe 3
+ * stand dieser Inhalt als `about[1..5]` in einem einzigen Fließtext ohne
+ * Zwischenüberschrift – fünf verschiedene Themen (Rendite, Restschuld,
+ * Abschreibung, Eigennutzung, Modellgrenzen) ohne sichtbare Gliederung. Als
+ * `sections` bekommt jedes Thema eine eigene Überschrift, und die
+ * AfA-Sätze stehen zusätzlich als Tabelle statt nur im Fließtext.
+ */
+const sections: ContentSection[] = [
+  {
+    heading: "Bruttorendite und Nettorendite",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Bruttomietrendite setzt die Jahreskaltmiete ins Verhältnis zum Kaufpreis und ignoriert damit sowohl die Nebenkosten als auch alles, was laufend abgeht: nicht umlagefähiges Hausgeld, Verwaltung, Instandhaltungsrücklage und das Risiko, dass eine Wohnung mal leer steht.",
+      },
+      {
+        type: "p",
+        text: "Die Nettomietrendite rechnet all das mit und liegt regelmäßig ein bis anderthalb Prozentpunkte darunter. Für die Frage, ob sich ein Objekt trägt, ist nur sie brauchbar – die Bruttorendite taugt höchstens für einen ersten, groben Vergleich zwischen zwei Angeboten.",
+      },
+    ],
+  },
+  {
+    heading: "Restschuld nach der Zinsbindung",
+    blocks: [
+      {
+        type: "p",
+        text: "Beim Darlehen ist nicht die heutige Rate das Risiko, sondern die Restschuld am Ende der Zinsbindung. Bei zwei Prozent Anfangstilgung und zehn Jahren Bindung sind nach Ablauf noch rund drei Viertel der Darlehenssumme offen – zu einem Zinssatz, den heute niemand kennt.",
+      },
+      {
+        type: "note",
+        text: "Der Rechner ermittelt die Restschuld über einen echten monatlichen Tilgungsplan, nicht über eine Jahresnäherung, und zeigt im Jahresverlauf, wie sich das Verhältnis von Zins zu Tilgung mit der Zeit dreht.",
+      },
+    ],
+  },
+  {
+    heading: "Abschreibung bei vermieteten Objekten",
+    blocks: [
+      {
+        type: "p",
+        text: "Abgeschrieben wird nur das Gebäude, nicht der Grund und Boden – deshalb fragt der Rechner nach dem Gebäudeanteil, der je nach Lage zwischen 60 und 85 Prozent liegt. Zusammen mit den Schuldzinsen führt die Abschreibung oft zu einem steuerlichen Verlust, obwohl tatsächlich Geld hereinkommt. Diese Erstattung ist ein echter Teil der Rendite und steht im Ergebnis als eigene Zeile.",
+      },
+      {
+        type: "table",
+        caption: "Linearer AfA-Satz nach Baujahr (§ 7 Abs. 4 EStG)",
+        head: ["Fertigstellung", "AfA-Satz p. a.", "Abschreibungsdauer"],
+        rows: [
+          ["vor 1925", "2,5 %", "40 Jahre"],
+          ["1925–2022", "2 %", "50 Jahre"],
+          ["ab 2023", "3 %", "rund 33 Jahre"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Kaufen oder Mieten: der faire Vergleich",
+    blocks: [
+      {
+        type: "p",
+        text: "Im Modus Eigennutzung fällt die Mieteinnahme weg, dafür zählt die Miete, die du nach dem Kauf nicht mehr zahlst. Der Vergleich mit dem Mieten ist nur dann fair, wenn das Eigenkapital auf der anderen Seite ebenfalls arbeitet: Wer nicht kauft, kann die Kaufnebenkosten und das restliche Eigenkapital anlegen und die monatliche Differenz zwischen Rate und Miete dazulegen.",
+      },
+      {
+        type: "p",
+        text: "Genau so rechnet der Rechner – und deshalb kann Mieten je nach angenommener Rendite auch dann besser abschneiden, wenn die Immobilie im Wert steigt. Wer beide Seiten ehrlich vergleichen will, braucht also nicht nur eine Wertsteigerungs-Annahme für die Immobilie, sondern auch eine Rendite-Annahme für das nicht gebundene Kapital.",
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Alle Angaben sind Näherungen und keine Steuer- oder Anlageberatung. Solidaritätszuschlag, Kirchensteuer, der progressive Verlauf des Steuertarifs und Sonderfälle wie Denkmalabschreibung oder Förderkredite bleiben außen vor.",
+      },
+      {
+        type: "note",
+        text: "Die Wertentwicklung ist die unsicherste Annahme im ganzen Rechner: Sie lässt sich nicht vorhersagen, sondern nur durchspielen. Wer wissen will, ob eine Kalkulation trägt, sollte sie einmal mit null Prozent Wertsteigerung rechnen.",
+      },
+    ],
+  },
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -94,6 +178,8 @@ function buildVariants(): ToolVariant[] {
     // Was dasselbe Objekt im günstigsten und im teuersten Land kosten würde.
     const gegenBayern = Math.round((300000 * (satz - spanne.min)) / 100);
     const gegenHoechst = Math.round((300000 * (spanne.max - satz)) / 100);
+    const gegenBayern500 = Math.round((500000 * (satz - spanne.min)) / 100);
+    const gegenHoechst500 = Math.round((500000 * (spanne.max - satz)) / 100);
 
     const vergleich =
       satz === spanne.min
@@ -101,6 +187,25 @@ function buildVariants(): ToolVariant[] {
         : satz === spanne.max
           ? `Damit gehört ${region.name} zu den teuersten Bundesländern: Derselbe Kauf über 300.000 Euro kostet hier ${euro(gegenBayern)} mehr Steuer als in Bayern.`
           : `Gegenüber Bayern mit ${prozent(spanne.min)} Prozent sind das bei 300.000 Euro Kaufpreis ${euro(gegenBayern)} mehr, gegenüber den Ländern mit ${prozent(spanne.max)} Prozent ${euro(gegenHoechst)} weniger.`;
+
+    // Zweite, eigene Frage zum Landesvergleich – rechnet dieselbe Spanne bei
+    // 500.000 Euro durch, damit sie nicht nur `vergleich` in Frageform
+    // wiederholt.
+    const vergleichFaqAnswer =
+      satz === spanne.min
+        ? `${region.name} hat mit ${prozent(satz)} Prozent den niedrigsten Satz aller Bundesländer. Gegenüber den Ländern mit ${prozent(spanne.max)} Prozent spart ein Kauf hier ${euro(gegenHoechst)} bei 300.000 Euro und ${euro(gegenHoechst500)} bei 500.000 Euro Kaufpreis.`
+        : satz === spanne.max
+          ? `${region.name} gehört mit ${prozent(satz)} Prozent zu den teuersten Bundesländern. Gegenüber dem günstigsten Land, Bayern mit ${prozent(spanne.min)} Prozent, kostet derselbe Kauf hier ${euro(gegenBayern)} mehr bei 300.000 Euro und ${euro(gegenBayern500)} mehr bei 500.000 Euro Kaufpreis.`
+          : `Bei 300.000 Euro Kaufpreis zahlt ${region.name} ${euro(gegenBayern)} mehr Grunderwerbsteuer als im günstigsten Bundesland (Bayern, ${prozent(spanne.min)} Prozent) und ${euro(gegenHoechst)} weniger als im teuersten (${prozent(spanne.max)} Prozent). Bei 500.000 Euro Kaufpreis sind es entsprechend ${euro(gegenBayern500)} mehr beziehungsweise ${euro(gegenHoechst500)} weniger.`;
+
+    // Aufschlüsselung der Nebenkosten für diese eine Landesseite – dieselbe
+    // Rechnung wie `nebenkosten()`, nur nach Posten statt nur als Summe.
+    const grest300 = Math.round((300000 * satz) / 100);
+    const grest500 = Math.round((500000 * satz) / 100);
+    const notar300 = Math.round((300000 * notarPercent) / 100);
+    const notar500 = Math.round((500000 * notarPercent) / 100);
+    const makler300 = Math.round((300000 * maklerPercent) / 100);
+    const makler500 = Math.round((500000 * maklerPercent) / 100);
 
     return {
       slug: `kaufnebenkosten-${region.slug}`,
@@ -114,7 +219,31 @@ function buildVariants(): ToolVariant[] {
         `In ${region.name} beträgt die Grunderwerbsteuer ${prozent(satz)} Prozent des Kaufpreises – ${grestHistorie[region.code]}. Sie ist der größte Einzelposten der Kaufnebenkosten und wird fällig, sobald der Kaufvertrag notariell beurkundet ist. Das Finanzamt schickt den Bescheid meist wenige Wochen nach dem Termin; erst wenn die Steuer bezahlt ist, gibt es die Unbedenklichkeitsbescheinigung, ohne die keine Eintragung ins Grundbuch erfolgt.`,
         `Zusammen mit Notar und Grundbuch (rund 2 Prozent) und einer Maklerprovision von 3,57 Prozent kommt ein Kauf in ${region.name} damit auf etwa ${prozent(quote)} Prozent Nebenkosten. Bei 300.000 Euro Kaufpreis sind das rund ${euro(nk300)}, bei 500.000 Euro rund ${euro(nk500)}. ${vergleich}`,
         `Diese Summe muss als Eigenkapital vorhanden sein: Banken finanzieren die Nebenkosten praktisch nie mit, weil ihnen dafür keine Sicherheit gegenübersteht – im Fall einer Zwangsversteigerung ist das Geld weg. Wer in ${region.name} mit 300.000 Euro Kaufpreis rechnet, braucht also mindestens ${euro(nk300)} auf dem Konto, bevor über die eigentliche Finanzierung gesprochen wird.`,
-        ...about.slice(1),
+        grestKontext[region.code],
+        `Bundesweit reicht die Grunderwerbsteuer von ${prozent(spanne.min)} Prozent in Bayern bis ${prozent(spanne.max)} Prozent in den teuersten Ländern – eine Spanne von ${prozent(spanne.max - spanne.min)} Prozentpunkten, die bei 400.000 Euro Kaufpreis schon ${euro(Math.round((400000 * (spanne.max - spanne.min)) / 100))} Unterschied allein bei dieser einen Position ausmacht. ${region.name} steht mit ${prozent(satz)} Prozent an einer bestimmten Stelle in dieser Spanne, und anders als beim Kaufpreis selbst lässt sich dieser Satz durch die Wahl des Bundeslandes nicht verhandeln – er hängt ausschließlich am Ort des Grundstücks, nicht am Wohnsitz der Käuferin oder des Käufers.`,
+      ],
+
+      // Eigene Aufschlüsselung statt der geerbten Modellerklärung des Tools
+      // (Rendite, Restschuld, Abschreibung, Eigennutzung, Modellgrenzen –
+      // die steht jetzt nur noch auf der Tool-Seite selbst, als `sections`
+      // dort). Die Zahlen hier gelten nur für dieses eine Bundesland.
+      sections: [
+        {
+          heading: `Nebenkosten in ${region.name} im Detail`,
+          blocks: [
+            {
+              type: "table",
+              caption: `Aufschlüsselung bei ${prozent(satz)} Prozent Grunderwerbsteuer`,
+              head: ["Posten", "bei 300.000 €", "bei 500.000 €"],
+              rows: [
+                [`Grunderwerbsteuer (${prozent(satz)} %)`, euro(grest300), euro(grest500)],
+                ["Notar & Grundbuch (2 %)", euro(notar300), euro(notar500)],
+                ["Maklerprovision (3,57 %)", euro(makler300), euro(makler500)],
+                ["Summe Nebenkosten", euro(nk300), euro(nk500)],
+              ],
+            },
+          ],
+        },
       ],
 
       faq: [
@@ -130,7 +259,15 @@ function buildVariants(): ToolVariant[] {
           question: `Lässt sich die Grunderwerbsteuer in ${region.name} senken?`,
           answer: `Legal und in Grenzen: Bewegliches Zubehör wie eine Einbauküche, Markisen oder eine Sauna gehört nicht zum Grundstück und darf im Kaufvertrag gesondert ausgewiesen werden – auf diesen Teil fällt keine Grunderwerbsteuer an. Bei einer Küche im Wert von 15.000 Euro spart das in ${region.name} ${euro(Math.round((15000 * satz) / 100))}. Der Betrag muss angemessen sein, das Finanzamt prüft bei auffälligen Ansätzen. Bei Neubauten kann außerdem die Trennung von Grundstückskauf und Bauvertrag helfen, wenn beide Verträge tatsächlich unabhängig sind.`,
         },
-        ...sharedFaq.slice(0, 5),
+        {
+          question: `Wie viel Grunderwerbsteuer spart oder kostet ${region.name} im Vergleich zu anderen Bundesländern?`,
+          answer: vergleichFaqAnswer,
+        },
+        grestFaq[region.code],
+        {
+          question: `Ist ein Kauf innerhalb der Familie in ${region.name} steuerfrei?`,
+          answer: `Teilweise, und zwar bundesweit einheitlich, nicht nach Landesrecht: Der Erwerb durch Ehegatten, eingetragene Lebenspartner oder Verwandte in gerader Linie – Kinder, Enkel, Eltern, Großeltern – ist nach § 3 Grunderwerbsteuergesetz von der Steuer befreit. Bei einem Hauskauf von den Eltern für 400.000 Euro spart das in ${region.name} genau die sonst fällige Steuer von ${euro(Math.round((400000 * satz) / 100))}. Geschwister zählen nicht zur geraden Linie und sind von der Befreiung ausdrücklich ausgenommen – zwischen ihnen fällt die Steuer normal an, auch wenn beide vom selben Elternteil erben oder kaufen.`,
+        },
       ],
     };
   });
@@ -163,6 +300,7 @@ export const immobilienrechner: ToolManifest = {
   getVariants: buildVariants,
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

@@ -689,7 +689,7 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
           <ResultPanel
             footer={
               <ShareBar
-                title="Hauskauf-Weg"
+                title="Check: Hauskauf"
                 text={`${formatEuro(urteil.liquiditaetspuffer)} Puffer im Monat – ${einstufungLabel[urteil.einstufung]}`}
               />
             }

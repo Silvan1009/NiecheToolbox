@@ -428,7 +428,7 @@ export default function RuhestandWeg({ params }: { params?: ToolParams }) {
           <ResultPanel
             footer={
               <ShareBar
-                title="Ruhestands-Weg"
+                title="Check: Ruhestand"
                 text={`${formatEuro(Math.abs(urteil.differenz))} ${urteil.gedeckt ? "Überschuss" : "Fehlbetrag"} zum Renteneintritt`}
               />
             }

@@ -851,7 +851,7 @@ export default function AutokaufWeg({ params }: { params?: ToolParams }) {
           <ResultPanel
             footer={
               <ShareBar
-                title="Auto-Weg"
+                title="Check: Auto"
                 text={`${formatEuro(gesamtkostenMonat)} Gesamtkosten im Monat`}
               />
             }

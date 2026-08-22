@@ -1,5 +1,5 @@
 import { Flame } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 
 const about: string[] = [
   "Der Kalorienbedarf setzt sich aus zwei Größen zusammen: dem Grundumsatz, den der Körper allein für Atmung, Kreislauf und Zellstoffwechsel in völliger Ruhe braucht, und dem Aktivitätsanteil, der aus Bewegung und Alltag dazukommt. Der Grundumsatz wird hier nach der Mifflin-St-Jeor-Formel berechnet – aus Gewicht, Größe, Alter und Geschlecht, dem Faktor, der bei gleichem Gewicht und gleicher Größe die Konstante ändert.",
@@ -41,6 +41,56 @@ const faq: FaqEntry[] = [
   },
 ];
 
+const sections: ContentSection[] = [
+  {
+    heading: "PAL-Stufen im Überblick",
+    blocks: [
+      {
+        type: "p",
+        text: "Der Aktivitätsfaktor ist die am schwersten einzuschätzende Eingabe, weil er den ganzen Alltag in eine einzige Zahl übersetzt. Als Orientierung helfen fünf Stufen, die in der Ernährungswissenschaft gebräuchlich sind.",
+      },
+      {
+        type: "table",
+        caption: "Physical Activity Level (PAL) nach Alltagsbelastung",
+        head: ["PAL", "Typischer Alltag"],
+        rows: [
+          ["1,2", "Überwiegend sitzend, kaum Bewegung"],
+          ["1,375", "Sitzende Tätigkeit, leichte Bewegung 1–3 Tage pro Woche"],
+          ["1,55", "Sitzende bis stehende Tätigkeit, Sport 3–5 Tage pro Woche"],
+          ["1,725", "Körperlich fordernder Alltag, Sport 6–7 Tage pro Woche"],
+          ["1,9", "Leistungssport oder sehr körperlich fordernder Beruf"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Die meisten Menschen mit Bürojob und etwas Sport landen zwischen 1,375 und 1,55 – im Zweifel eher die niedrigere Stufe wählen, denn der eigene Alltag wird beim Schätzen fast immer aktiver eingeschätzt, als er tatsächlich ist.",
+      },
+    ],
+  },
+  {
+    heading: "Woher die Formel kommt",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Mifflin-St-Jeor-Formel wurde 1990 im American Journal of Clinical Nutrition veröffentlicht und an einer deutlich größeren und repräsentativeren Stichprobe validiert als ihre Vorgängerin. Die Harris-Benedict-Formel von 1919 überschätzt den Grundumsatz nach heutigem Kenntnisstand systematisch, besonders bei Menschen mit höherem Körpergewicht.",
+      },
+    ],
+  },
+  {
+    heading: "Die Formel im Detail",
+    blocks: [
+      {
+        type: "p",
+        text: "Ausgeschrieben lautet die Mifflin-St-Jeor-Formel für Männer: 10 mal Gewicht in Kilogramm, plus 6,25 mal Größe in Zentimetern, minus 5 mal Alter in Jahren, plus 5. Für Frauen gilt dieselbe Rechnung, nur wird am Ende 161 abgezogen statt 5 addiert.",
+      },
+      {
+        type: "note",
+        text: "Der einzige Unterschied zwischen beiden Formeln ist diese eine Konstante am Ende – sie bildet grob ab, dass der Körper bei sonst gleichem Gewicht und gleicher Größe im Schnitt einen etwas anderen Anteil an Muskel- und Fettmasse hat. Individuelle Abweichungen von diesem Durchschnitt bildet die Formel naturgemäß nicht ab.",
+      },
+    ],
+  },
+];
+
 export const kalorienbedarf: ToolManifest = {
   slug: "kalorienbedarf",
   name: "Kalorienbedarf-Rechner",
@@ -62,6 +112,7 @@ export const kalorienbedarf: ToolManifest = {
   ],
 
   about,
+  sections,
   faq,
 
   monetization: {

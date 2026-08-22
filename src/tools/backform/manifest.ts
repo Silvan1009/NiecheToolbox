@@ -1,5 +1,5 @@
 import { CakeSlice } from "lucide-react";
-import type { FaqEntry, ToolManifest } from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { backformAffiliate } from "./affiliate";
 import { variantenTexte } from "./varianten";
@@ -49,6 +49,67 @@ const sharedFaq: FaqEntry[] = [
   },
 ];
 
+/**
+ * Der ausführliche Teil unter dem Einstieg – Teighöhen als Tabelle statt nur
+ * im Fließtext, plus die Grenzen des Modells: Was reine Geometrie nicht
+ * abbildet (Material, Farbe, Umluft, Höhenlage).
+ */
+const sections: ContentSection[] = [
+  {
+    heading: "Teighöhen der Standardformen",
+    blocks: [
+      {
+        type: "p",
+        text: "Diese Werte stehen auch offen unter jedem Formularfeld im Rechner und lassen sich dort anpassen, falls deine Form abweicht.",
+      },
+      {
+        type: "table",
+        caption: "Angenommene Teighöhe je Bauart",
+        head: ["Bauart", "Teighöhe"],
+        rows: [
+          ["Springform (rund oder quadratisch)", "3,5 cm"],
+          ["Rechteckig", "3,5 cm"],
+          ["Kastenform", "6,5 cm"],
+          ["Backblech", "1,8 cm"],
+          ["Muffinmulde", "75 ml je Mulde"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Grenzen des Modells",
+    blocks: [
+      {
+        type: "p",
+        text: "Die Umrechnung selbst ist reine Geometrie – Fläche beziehungsweise Volumen der Form. Wie lange und bei welcher Temperatur der Teig darin gart, hängt aber auch von Dingen ab, die sich nicht messen lassen: Dunkle oder mattschwarze Formen nehmen mehr Wärme auf als helle, blanke, Umluft backt gleichmäßiger, aber oft etwas schneller als Ober- und Unterhitze, und in größerer Höhenlage verdunstet Flüssigkeit schneller.",
+      },
+      {
+        type: "note",
+        text: "Der Rechner liefert die Mengen, nicht die Backzeit. Stell den Timer eher zu kurz als zu lang und prüfe mit der Stäbchenprobe – gerade beim ersten Versuch in einer neuen Form.",
+      },
+    ],
+  },
+  {
+    heading: "Die Flächenformeln dahinter",
+    blocks: [
+      {
+        type: "table",
+        caption: "Grundfläche je Bauart",
+        head: ["Bauart", "Formel"],
+        rows: [
+          ["Rund", "π × Radius²"],
+          ["Quadratisch", "Seitenlänge²"],
+          ["Rechteckig, Kastenform, Blech", "Länge × Breite"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Bei Muffins zählt statt einer Fläche direkt die Anzahl der Mulden zu je 75 Milliliter – deshalb steht dort im Rechner ein Zähler statt zweier Maße. Bei allen anderen Bauarten multipliziert sich diese Grundfläche mit der jeweiligen Teighöhe zum Volumen, und genau dieses Volumen – nicht die Fläche allein – ist die Größe, die beim Wechsel der Bauart wirklich zählt.",
+      },
+    ],
+  },
+];
+
 export const backform: ToolManifest = {
   slug: "backform",
   name: "Backform-Umrechner",
@@ -67,9 +128,10 @@ export const backform: ToolManifest = {
     "zutaten umrechnen",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
+  sections,
   faq: sharedFaq,
 
   monetization: {

@@ -1,5 +1,68 @@
 import { Percent } from "lucide-react";
-import type { ToolManifest } from "@/tools/types";
+import type { ContentSection, ToolManifest } from "@/tools/types";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Die vier Fragen mit Beispiel",
+    blocks: [
+      {
+        type: "table",
+        caption: "Dieselbe Gleichung, nach vier verschiedenen Größen aufgelöst",
+        head: ["Frage", "Beispiel", "Ergebnis"],
+        rows: [
+          ["Wie viel sind p % von X?", "20 % von 80 €", "16 €"],
+          ["Wovon sind das p %?", "16 € sind 20 % wovon?", "80 €"],
+          ["Wie viel % ist ein Teil vom Ganzen?", "16 von 80", "20 %"],
+          ["Um wie viel % hat sich der Wert verändert?", "von 80 auf 100", "+25 %"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Prozent im Kopf überschlagen",
+    blocks: [
+      {
+        type: "p",
+        text: "Für einen schnellen Überschlag ohne Rechner reichen ein paar Faustregeln, die sich alle aus den 10 Prozent ableiten.",
+      },
+      {
+        type: "ul",
+        items: [
+          "10 %: Komma eine Stelle nach links verschieben.",
+          "1 %: Komma zwei Stellen nach links verschieben.",
+          "5 %: die 10 % halbieren.",
+          "20 %: die 10 % verdoppeln, oder durch 5 teilen.",
+          "25 %: durch 4 teilen.",
+          "50 %: halbieren.",
+        ],
+      },
+      {
+        type: "note",
+        text: "15 % lässt sich als 10 % plus die Hälfte davon zusammensetzen – bei 80 Euro also 8 Euro plus 4 Euro, macht 12 Euro. Für die exakte Zahl mit Nachkommastellen bleibt der Rechner oben trotzdem zuverlässiger.",
+      },
+    ],
+  },
+  {
+    heading: "Prozentsätze, die im Alltag oft gebraucht werden",
+    blocks: [
+      {
+        type: "table",
+        caption: "Häufig gesuchte Prozentangaben",
+        head: ["Anlass", "Üblicher Satz"],
+        rows: [
+          ["Regulärer Mehrwertsteuersatz", "19 %"],
+          ["Ermäßigter Mehrwertsteuersatz (u. a. Lebensmittel, Bücher)", "7 %"],
+          ["Trinkgeld in Deutschland", "5–10 %"],
+          ["Rabatt im Schlussverkauf", "20–50 %"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Für die Mehrwertsteuer gilt: Ein Nettopreis plus 19 % ist nicht dasselbe wie ein Bruttopreis minus 19 %. Um aus einem Bruttopreis den enthaltenen Steueranteil herauszurechnen, muss durch 1,19 geteilt werden, nicht mit 0,19 multipliziert – ein klassischer Fall für die Frage „Wovon sind das p Prozent?“ oben im Rechner.",
+      },
+    ],
+  },
+];
 
 export const prozentrechner: ToolManifest = {
   slug: "prozentrechner",
@@ -20,6 +83,8 @@ export const prozentrechner: ToolManifest = {
     "prozentuale veränderung",
     "prozentrechnung",
   ],
+
+  sections,
 
   about: [
     "Prozentrechnung stellt fast immer dieselbe Frage in einer von vier Varianten: Wie viel sind p Prozent von einem Wert? Wovon sind das p Prozent? Wie viel Prozent ist ein Teil vom Ganzen? Und: Um wie viel Prozent hat sich ein Wert verändert? Oben wird die Frage gewechselt, unten steht sofort das passende Ergebnis – alle vier rechnen aus derselben Gleichung, nur nach einer anderen Größe aufgelöst.",

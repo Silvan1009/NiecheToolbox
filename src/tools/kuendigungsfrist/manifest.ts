@@ -1,7 +1,65 @@
 import { FileClock } from "lucide-react";
 import { addDays, todayIso } from "@/lib/date";
-import type { ToolManifest } from "@/tools/types";
+import type { ContentSection, ToolManifest } from "@/tools/types";
 import { kuendigungsfristAffiliate } from "./affiliate";
+
+const sections: ContentSection[] = [
+  {
+    heading: "Kündigungsfristen des Arbeitgebers nach Betriebszugehörigkeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Kündigt der Arbeitgeber, verlängert sich die gesetzliche Grundfrist von vier Wochen stufenweise nach § 622 Abs. 2 BGB. Für Arbeitnehmer selbst bleibt es unabhängig von der Betriebszugehörigkeit bei vier Wochen, sofern der Vertrag nichts anderes regelt.",
+      },
+      {
+        type: "table",
+        caption: "Kündigungsfrist des Arbeitgebers, jeweils zum Monatsende",
+        head: ["Betriebszugehörigkeit", "Frist"],
+        rows: [
+          ["ab 2 Jahren", "1 Monat"],
+          ["ab 5 Jahren", "2 Monate"],
+          ["ab 8 Jahren", "3 Monate"],
+          ["ab 10 Jahren", "4 Monate"],
+          ["ab 12 Jahren", "5 Monate"],
+          ["ab 15 Jahren", "6 Monate"],
+          ["ab 20 Jahren", "7 Monate"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Kündigungsfristen des Vermieters nach Wohndauer",
+    blocks: [
+      {
+        type: "p",
+        text: "Bei Wohnraum gilt die Dreimonatsfrist nur für den Mieter als Höchstgrenze. Für den Vermieter verlängert sie sich mit der Dauer des Mietverhältnisses – ein Ausgleich dafür, dass er im Gegensatz zum Mieter überhaupt nur bei berechtigtem Interesse kündigen darf, etwa Eigenbedarf.",
+      },
+      {
+        type: "table",
+        caption: "Kündigungsfrist des Vermieters nach Wohndauer (§ 573c BGB)",
+        head: ["Wohndauer", "Frist"],
+        rows: [
+          ["bis 5 Jahre", "3 Monate"],
+          ["ab 5 Jahren", "6 Monate"],
+          ["ab 8 Jahren", "9 Monate"],
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Sonderfall Probezeit",
+    blocks: [
+      {
+        type: "p",
+        text: "Während einer vereinbarten Probezeit gilt eine eigene, kürzere Frist: zwei Wochen ohne festen Endtermin, weder zum 15. noch zum Monatsende (§ 622 Abs. 3 BGB). Das gilt für beide Seiten gleichermaßen und höchstens für die ersten sechs Monate des Arbeitsverhältnisses – danach greift automatisch die reguläre Grundfrist von vier Wochen.",
+      },
+      {
+        type: "note",
+        text: "Eine Probezeit muss ausdrücklich im Arbeitsvertrag vereinbart sein; ohne diese Vereinbarung gilt von Anfang an die reguläre Frist, auch in den ersten Monaten. Für Auszubildende gilt eine eigene Regelung: Während der Probezeit im Ausbildungsverhältnis kann fristlos gekündigt werden, danach nur noch aus wichtigem Grund oder mit vierwöchiger Frist bei einer Aufgabe des Ausbildungsziels.",
+      },
+    ],
+  },
+];
 
 export const kuendigungsfrist: ToolManifest = {
   slug: "kuendigungsfrist",
@@ -32,6 +90,8 @@ export const kuendigungsfrist: ToolManifest = {
       beginn: addDays(today, -1095),
     };
   },
+
+  sections,
 
   about: [
     "Zwei Fragen, dieselbe Rechnung: „Ich kündige heute – wann bin ich raus?“ und „Ich will zum 30. Juni raus – bis wann muss die Kündigung da sein?“ Der Rechner beantwortet beide Richtungen, für Wohnung und Arbeitsvertrag, und zeigt den Rechenweg dazu.",
