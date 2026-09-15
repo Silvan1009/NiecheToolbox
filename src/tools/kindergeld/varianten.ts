@@ -17,68 +17,6 @@ import type { VariantContent } from "@/tools/variants";
 
 export const variantenTexte: VariantContent[] = [
   {
-    slug: "kindergeld-2026",
-    title: "Kindergeld 2026: 259 Euro pro Kind – Höhe, Dauer und Anspruch",
-    description:
-      "Kindergeld 2026 beträgt 259 Euro je Kind und Monat. Rechner für alle Kinder, die Restlaufzeit je Kind und die Summe bis zum Ende des Anspruchs.",
-    heading: "Kindergeld 2026",
-    params: { jahr: 2026, kinder: "2019-05-10r" },
-    about: [
-      "Zum 1. Januar 2026 ist das Kindergeld von 255 auf 259 Euro je Kind und Monat gestiegen. Der Betrag gilt einheitlich für jedes Kind – die früheren Staffelungen nach Reihenfolge sind seit 2023 abgeschafft. Für ein Kind sind das 3.108 Euro im Jahr, und über die vollen achtzehn Jahre bis zur Volljährigkeit summiert sich der Anspruch auf 55.944 Euro. Damit ist Kindergeld für die meisten Familien die größte planbare Einnahme überhaupt.",
-      "Die Erhöhung erfolgt automatisch. Wer bereits Kindergeld bezieht, muss nichts tun und bekommt ab Januar den höheren Betrag überwiesen – ein neuer Antrag ist ausdrücklich nicht nötig. Ausgezahlt wird von der Familienkasse der Bundesagentur für Arbeit, bei Beschäftigten im öffentlichen Dienst teils von der eigenen Bezügestelle.",
-      "Interessanter als der Monatsbetrag ist bei einem laufenden Anspruch die Restlaufzeit. Gezahlt wird bis einschließlich des Monats, in dem das Kind achtzehn wird – bei Ausbildung oder Studium bis 25, bei gemeldeter Arbeitsuche bis 21. Der Rechner weist deshalb je Kind aus, bis wann der Anspruch läuft, wie viele Zahlungsmonate das noch sind und welche Summe daraus folgt.",
-    ],
-    faq: [
-      {
-        question: "Wie hoch ist das Kindergeld 2026?",
-        answer:
-          "259 Euro je Kind und Monat, einheitlich für jedes Kind. 2025 waren es 255 Euro, 2024 und 2023 jeweils 250 Euro. Für ein Kind ergeben sich 3.108 Euro im Jahr, für zwei Kinder 6.216 Euro und für drei Kinder 9.324 Euro.",
-      },
-      {
-        question: "Muss ich einen neuen Antrag stellen?",
-        answer:
-          "Nein. Die Erhöhung wird von der Familienkasse automatisch umgesetzt. Ein Antrag ist nur bei der Geburt eines Kindes nötig sowie dann, wenn ein volljähriges Kind weiter berücksichtigt werden soll – dafür braucht die Familienkasse einen Nachweis über Ausbildung, Studium oder Arbeitsuche.",
-      },
-      {
-        question: "Bis wann wird Kindergeld gezahlt?",
-        answer:
-          "Grundsätzlich bis einschließlich des Monats, in dem das Kind 18 wird. Danach nur weiter, wenn das Kind eine Ausbildung oder ein Studium absolviert – dann bis 25 – oder ohne Ausbildungsplatz bei der Arbeitsagentur gemeldet ist, dann bis 21. Eine Übergangszeit zwischen zwei Ausbildungsabschnitten wird bis zu vier Monate überbrückt.",
-      },
-    ],
-  },
-
-  {
-    slug: "kinderfreibetrag-berechnen",
-    title: "Kinderfreibetrag 2026 berechnen: 9.756 Euro und was sie bringen",
-    description:
-      "Kinderfreibetrag 2026 berechnen: 6.828 Euro plus 2.928 Euro Betreuungsfreibetrag. Mit Steuervorteil, Günstigerprüfung und Wirkung auf Soli und Kirchensteuer.",
-    heading: "Kinderfreibetrag berechnen",
-    params: { zve: 90000, ver: "zusammen", kinder: "2019-05-10r" },
-    about: [
-      "Der Kinderfreibetrag besteht 2026 aus zwei Teilen: 6.828 Euro für das sächliche Existenzminimum des Kindes und 2.928 Euro für Betreuung, Erziehung und Ausbildung. Zusammen sind das 9.756 Euro je Kind für beide Elternteile. Bei Einzelveranlagung steht jedem Elternteil die Hälfte zu, also 4.878 Euro. Der Freibetrag mindert nicht die Auszahlung, sondern das zu versteuernde Einkommen – seine Wirkung hängt deshalb vom Steuersatz ab.",
-      "Bei 90.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung sieht die Rechnung so aus: ohne Freibetrag 17.670 Euro Einkommensteuer, mit Freibetrag 14.496 Euro. Der Steuervorteil beträgt damit 3.174 Euro – gerade eben mehr als die 3.108 Euro Kindergeld. Das Finanzamt setzt hier also den Freibetrag an und rechnet das gezahlte Kindergeld gegen; unterm Strich bleiben 66 Euro mehr im Jahr.",
-      "Dieses Beispiel liegt fast genau auf dem Umschlagpunkt, der 2026 bei Zusammenveranlagung mit einem Kind bei rund 86.000 Euro zu versteuerndem Einkommen liegt. Darunter gewinnt das Kindergeld, darüber der Freibetrag – und je weiter darüber, desto deutlicher, weil der Grenzsteuersatz steigt. Wichtig dabei: Das ist zu versteuerndes Einkommen, nicht Bruttogehalt. Zwischen beiden liegen Werbungskosten, Vorsorgeaufwendungen und Sonderausgaben, bei Angestellten typischerweise ein gutes Stück.",
-    ],
-    faq: [
-      {
-        question: "Wie hoch ist der Kinderfreibetrag 2026?",
-        answer:
-          "9.756 Euro je Kind für beide Elternteile zusammen: 6.828 Euro Kinderfreibetrag plus 2.928 Euro Freibetrag für Betreuung, Erziehung und Ausbildung. Bei Einzelveranlagung erhält jeder Elternteil die Hälfte, also 4.878 Euro.",
-      },
-      {
-        question: "Bekomme ich Kindergeld und Kinderfreibetrag zusammen?",
-        answer:
-          "Nein, es gibt entweder das eine oder das andere. Das Finanzamt führt von Amts wegen eine Günstigerprüfung durch und setzt die für dich bessere Variante an. Fällt sie zugunsten des Freibetrags aus, wird das bereits gezahlte Kindergeld der Steuer wieder hinzugerechnet – du behältst also nur die Differenz.",
-      },
-      {
-        question: "Ab welchem Einkommen lohnt sich der Kinderfreibetrag?",
-        answer:
-          "2026 bei Zusammenveranlagung mit einem Kind ab rund 86.000 Euro zu versteuerndem Einkommen. Mit zwei Kindern liegt die Schwelle etwas höher, weil sich Freibetrag und Kindergeld gemeinsam verdoppeln, der Grenzsteuersatz aber nicht. Bei Einzelveranlagung liegt sie deutlich tiefer, weil dort beide Seiten halbiert werden.",
-      },
-    ],
-  },
-
-  {
     slug: "guenstigerpruefung-kinderfreibetrag",
     title:
       "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
@@ -111,37 +49,6 @@ export const variantenTexte: VariantContent[] = [
         question: "Senkt der Kinderfreibetrag auch Soli und Kirchensteuer?",
         answer:
           "Ja, und zwar immer – auch dann, wenn das Kindergeld die Günstigerprüfung gewinnt. Bemessungsgrundlage für beide ist stets die Einkommensteuer mit Kinderfreibetrag. Bei der Kirchensteuer wirkt das ab dem ersten Euro, beim Solidaritätszuschlag erst oberhalb der Freigrenze von 20.350 Euro Steuer, bei Zusammenveranlagung 40.700 Euro.",
-      },
-    ],
-  },
-
-  {
-    slug: "kindergeld-3-kinder",
-    title: "Kindergeld für 3 Kinder: 777 Euro im Monat – Höhe und Freibeträge",
-    description:
-      "Kindergeld für drei Kinder berechnen: 777 Euro im Monat, 9.324 Euro im Jahr. Mit Günstigerprüfung gegen den dreifachen Kinderfreibetrag.",
-    heading: "Kindergeld für 3 Kinder",
-    params: { kinder: "2015-04-02r,2018-09-11r,2021-06-30r" },
-    about: [
-      "Seit 2023 ist das Kindergeld für alle Kinder gleich hoch – die frühere Staffelung, bei der das dritte Kind mehr brachte als das erste, gibt es nicht mehr. Für drei Kinder sind das 2026 dreimal 259 Euro, also 777 Euro im Monat und 9.324 Euro im Jahr. Weil die Kinder unterschiedlich alt sind, endet der Anspruch gestaffelt: Der Rechner weist deshalb je Kind aus, bis wann gezahlt wird und welche Summe für dieses Kind noch aussteht.",
-      "Bei der Günstigerprüfung dreht die Kinderzahl das Ergebnis zugunsten des Kindergelds. Der Grund ist der progressive Tarif: Drei Freibeträge von zusammen 29.268 Euro schieben das zu versteuernde Einkommen weit nach unten, in Zonen mit niedrigerem Grenzsteuersatz – der Vorteil je Freibetrag sinkt also mit jedem weiteren. Das Kindergeld dagegen wächst linear. Bei 60.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung stehen 7.424 Euro Steuervorteil gegen 9.324 Euro Kindergeld: Das Kindergeld gewinnt um 1.900 Euro.",
-      "Ab drei Kindern kommen Leistungen in Betracht, die dieser Rechner bewusst nicht abbildet, weil sie von Wohnkosten und Einkommen im Einzelfall abhängen: der Kinderzuschlag für Familien mit kleinem Erwerbseinkommen, das Bildungs- und Teilhabepaket sowie in einigen Bundesländern eigene Familienleistungen. Wer nahe an den jeweiligen Einkommensgrenzen liegt, sollte sie prüfen lassen – die Familienkasse berät dazu kostenfrei.",
-    ],
-    faq: [
-      {
-        question: "Wie viel Kindergeld gibt es für 3 Kinder?",
-        answer:
-          "777 Euro im Monat und 9.324 Euro im Jahr – dreimal 259 Euro. Seit 2023 ist der Betrag für jedes Kind gleich; die frühere Staffelung nach Reihenfolge wurde abgeschafft.",
-      },
-      {
-        question: "Gibt es für das dritte Kind mehr Geld?",
-        answer:
-          "Nein, nicht mehr. Bis 2022 stieg das Kindergeld ab dem dritten Kind, seit 2023 gilt für alle Kinder derselbe Betrag. Wer mehrere Kinder hat, profitiert dafür in der Günstigerprüfung meist stärker vom Kindergeld als vom Freibetrag.",
-      },
-      {
-        question: "Ab wann lohnt sich der Freibetrag bei drei Kindern?",
-        answer:
-          "Deutlich später als bei einem Kind. Drei Freibeträge senken das zu versteuernde Einkommen um 29.268 Euro und ziehen es damit in Tarifzonen mit niedrigerem Grenzsteuersatz – der Vorteil je Kind sinkt also. Bei 60.000 Euro zu versteuerndem Einkommen gewinnt das Kindergeld hier klar; die Schwelle liegt bei drei Kindern erst im sechsstelligen Bereich.",
       },
     ],
   },

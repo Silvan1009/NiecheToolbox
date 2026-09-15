@@ -1,9 +1,8 @@
 import { TrendingUp } from "lucide-react";
 import type { ContentSection, FaqEntry } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import type { WegManifest } from "../types";
+import { buildUebersichtSection } from "./uebersicht";
 import { SPARHORIZONT_JAHRE_STANDARD } from "./urteil";
-import { variantenTexte } from "./varianten";
 
 const sections: ContentSection[] = [
   {
@@ -58,6 +57,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const about: string[] = [
@@ -140,8 +140,6 @@ export const gehalt: WegManifest = {
         "Die Netto-Differenz einer Gehaltserhöhung als Sparrate durchrechnen – mit eigener Rendite und Laufzeit.",
     },
   ],
-
-  getVariants: () => buildVariants(variantenTexte, about, faq),
 
   about,
   sections,

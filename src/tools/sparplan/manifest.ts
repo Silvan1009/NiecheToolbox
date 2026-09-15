@@ -2,6 +2,7 @@ import { TrendingUp } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { sparplanAffiliate } from "./affiliate";
+import { buildUebersichtSection } from "./uebersicht";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -83,6 +84,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [

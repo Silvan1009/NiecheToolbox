@@ -4,6 +4,7 @@ import { buildVariants } from "@/tools/variants";
 import { bruttonettoAffiliate } from "./affiliate";
 import { formatEuroRounded } from "@/lib/format";
 import { BBG_KRANKEN, BBG_RENTE, STEUERJAHR } from "@/lib/steuerdaten";
+import { buildUebersichtSection } from "./uebersicht";
 import { variantenTexte } from "./varianten";
 
 /* ---------------------------------------------------------------------------
@@ -86,6 +87,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [

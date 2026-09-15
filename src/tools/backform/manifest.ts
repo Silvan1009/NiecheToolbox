@@ -1,8 +1,7 @@
 import { CakeSlice } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import { backformAffiliate } from "./affiliate";
-import { variantenTexte } from "./varianten";
+import { buildUebersichtSection } from "./uebersicht";
 
 const about: string[] = [
   "Das Rezept ist für eine 26er-Springform, im Schrank steht eine 20er. Der Reflex ist, die Mengen zu dritteln oder zu halbieren – beides ist falsch. Entscheidend ist nicht der Durchmesser, sondern die Fläche, und die wächst im Quadrat: Eine 26er-Form hat nicht 30 Prozent mehr Platz als eine 20er, sondern 69 Prozent.",
@@ -108,6 +107,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 export const backform: ToolManifest = {
@@ -127,8 +127,6 @@ export const backform: ToolManifest = {
     "kastenform springform",
     "zutaten umrechnen",
   ],
-
-  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

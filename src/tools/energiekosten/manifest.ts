@@ -2,6 +2,7 @@ import { Gauge } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { energiekostenAffiliate } from "./affiliate";
+import { buildUebersichtSection } from "./uebersicht";
 import { variantenTexte } from "./varianten";
 
 const about: string[] = [
@@ -78,6 +79,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [

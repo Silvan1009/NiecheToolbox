@@ -1,8 +1,7 @@
 import { Zap } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import { stromkostenAffiliate } from "./affiliate";
-import { variantenTexte } from "./varianten";
+import { buildUebersichtSection } from "./uebersicht";
 
 const about: string[] = [
   "Die Rechnung selbst ist einfach: Verbrauch mal Preis. Schwierig ist die Eingabe – und daran scheitern die meisten Rechner. Ein Fernseher läuft Stunden am Tag, eine Waschmaschine in Durchgängen pro Woche, ein Backofen ein paar Stunden im Monat. Alles in „Stunden pro Tag“ zu pressen führt zu Zahlen, die niemand kennt. Hier wählst du das Muster, das zu deinem Gerät passt.",
@@ -54,6 +53,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -106,8 +106,6 @@ export const stromkosten: ToolManifest = {
     "stromkosten pro jahr",
     "watt in euro",
   ],
-
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
   sections,

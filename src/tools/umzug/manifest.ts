@@ -1,8 +1,7 @@
 import { Boxes } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import { umzugAffiliate } from "./affiliate";
-import { variantenTexte } from "./varianten";
+import { buildUebersichtSection } from "./uebersicht";
 
 const about: string[] = [
   "Kartons kauft man einmal zu wenig und ärgert sich, oder einmal zu viel und schleppt sie leer mit. Der Rechner schätzt aus Wohnfläche, Personenzahl und einer ehrlichen Selbsteinschätzung, wie viele es werden – getrennt nach Standardkartons, Bücherkartons und Kleiderboxen, weil die drei völlig unterschiedlich befüllt werden.",
@@ -71,6 +70,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -118,8 +118,6 @@ export const umzug: ToolManifest = {
     "kubikmeter umzug",
     "umzug planen",
   ],
-
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
   sections,
