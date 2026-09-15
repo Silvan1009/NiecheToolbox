@@ -123,6 +123,11 @@ export const variantenTexte: VariantContent[] = [
         answer:
           "Ein Urlaubssemester wegen Krankheit, Schwangerschaft oder eines Auslandsaufenthalts unterbricht den Anspruch in der Regel nicht, solange die Immatrikulation formal bestehen bleibt. Ein Urlaubssemester allein zur freien Verfügung ohne anerkannten Grund kann dagegen als Unterbrechung der Ausbildung gewertet werden, mit der Folge, dass für diese Zeit kein Kindergeld gezahlt wird. Die Familienkasse prüft dabei den konkreten Grund, nicht allein die formale Immatrikulation – ein Nachweis über den Anlass des Urlaubssemesters ist deshalb ratsam.",
       },
+      {
+        question: "Wirkt sich ein Urlaubssemester auf die Höchstdauer bis 25 Jahre aus?",
+        answer:
+          "Nein, die Altersgrenze von 25 Jahren bleibt unverändert – ein anerkanntes Urlaubssemester verlängert sie nicht, verkürzt sie aber auch nicht. Es zählt lediglich als Zeit ohne Kindergeldanspruch, falls es nicht als Fortsetzung der Ausbildung anerkannt wird, während die Frist bis zum 25. Geburtstag unbeeinflusst weiterläuft.",
+      },
     ],
   },
 ];

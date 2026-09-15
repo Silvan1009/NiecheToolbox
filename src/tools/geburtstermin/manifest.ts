@@ -89,6 +89,28 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Wenn der Empfängnistermin bekannt ist",
+    blocks: [
+      {
+        type: "p",
+        text: "Bei einer künstlichen Befruchtung ist der Zeitpunkt der Befruchtung oder des Embryotransfers exakt bekannt, ganz ohne Rückrechnung über die letzte Periode. In diesem Fall rechnet sich der Termin einfacher: Befruchtungsdatum plus 266 Tage, also 38 statt 40 Wochen – weil hier bereits ab der tatsächlichen Befruchtung gezählt wird und nicht ab dem ersten Tag der letzten Periode rund zwei Wochen davor. Bei einem Embryotransfer nach künstlicher Befruchtung verschiebt sich die Rechnung zusätzlich um das genaue Alter des Embryos zum Transferzeitpunkt.",
+      },
+      {
+        type: "note",
+        text: "Dieser Rechner arbeitet mit der klassischen Naegele-Regel ab der letzten Periode, weil dieses Datum den meisten Nutzerinnen bekannt ist. Wer den exakten Befruchtungs- oder Transfertermin kennt, kann als Näherung 14 Tage zum eigenen Zyklusstart addieren und das Ergebnis mit der behandelnden Praxis abgleichen.",
+      },
+    ],
+  },
+  {
+    heading: "Warum sich der Termin nach dem ersten Ultraschall manchmal ändert",
+    blocks: [
+      {
+        type: "p",
+        text: "Bestätigt der erste Ultraschall im frühen Schwangerschaftsverlauf einen anderen Termin als die Naegele-Rechnung, gilt ab diesem Zeitpunkt üblicherweise der per Ultraschall gemessene Termin – er beruht auf der tatsächlichen Größe des Embryos und ist deshalb genauer als eine reine Rückrechnung über die letzte Periode, besonders bei unregelmäßigem Zyklus. Der Mutterpass wird entsprechend angepasst, und alle weiteren Angaben zur Schwangerschaftswoche richten sich danach.",
+      },
+    ],
+  },
 ];
 
 export const geburtstermin: ToolManifest = {

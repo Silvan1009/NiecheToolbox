@@ -82,6 +82,11 @@ const faq: FaqEntry[] = [
     answer:
       "Nein. Die abschlagsfreie Altersrente für besonders langjährig Versicherte setzt mindestens 45 Beitragsjahre voraus und ist ein Sonderfall, kein Regelfall. Wer diese Voraussetzung erfüllt oder in Kürze erfüllt, sollte sie vorrangig bei der Deutschen Rentenversicherung prüfen – der hier gezeigte Abschlag gilt für einen Renteneintritt vor der Regelaltersgrenze ohne diese Sonderregelung.",
   },
+  {
+    question: "Wie oft sollte ich diesen Weg neu durchrechnen?",
+    answer:
+      "Immer dann, wenn sich eine der drei Grundlagen deutlich ändert: die gesetzliche Rentenprognose nach einer neuen Renteninformation, das Sparverhalten nach einer Gehaltsänderung, oder das Wunscheinkommen im Ruhestand nach einer veränderten Lebensplanung. Ein jährlicher Check passend zur jährlichen Renteninformation der Deutschen Rentenversicherung ist ein sinnvoller fester Rhythmus dafür.",
+  },
 ];
 
 export const ruhestand: WegManifest = {

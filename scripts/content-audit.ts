@@ -173,9 +173,23 @@ const distinctRatio = uniqueShingles / occurrences.size;
  */
 const LISTING_PAGES = new Set(["/rechner/", "/wege/"]);
 
+/**
+ * Rechtsseiten. Ein Impressum oder eine Datenschutzerklärung mit Text
+ * aufzufüllen wäre kontraproduktiv – ihre Aufgabe ist die gesetzlich
+ * vorgeschriebene Angabe, nicht redaktionelle Länge. Beide bleiben deshalb
+ * von der Wortgrenze ausgenommen, unabhängig davon, wie kurz sie sind.
+ */
+const LEGAL_PAGES = new Set([
+  "/rechtliches/impressum/",
+  "/rechtliches/datenschutz/",
+]);
+
+const EXEMPT_FROM_MIN_WORDS = new Set([...LISTING_PAGES, ...LEGAL_PAGES]);
+
 const tooShort = pages
   .filter(
-    (page) => !LISTING_PAGES.has(page.path) && page.words < TARGETS.minWords,
+    (page) =>
+      !EXEMPT_FROM_MIN_WORDS.has(page.path) && page.words < TARGETS.minWords,
   )
   .sort((a, b) => a.words - b.words);
 
