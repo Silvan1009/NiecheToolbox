@@ -55,6 +55,19 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Trinkgeld außerhalb des Restaurants",
+    blocks: [
+      {
+        type: "p",
+        text: "Die 5-bis-10-Prozent-Faustregel stammt aus dem Restaurant und passt nicht überall gleich gut. Beim Friseur ist Aufrunden auf den nächsten Fünf- oder Zehn-Euro-Betrag üblicher als eine feste Prozentzahl, beim Taxi reicht meist das Aufrunden der Fahrtkosten. Beim Lieferdienst ist Trinkgeld inzwischen oft direkt in der Bestell-App als Option vorgesehen, häufig als fester Betrag statt als Prozentsatz der Bestellsumme. Für Zimmerservice und Gepäckträger im Hotel gilt traditionell ein kleiner Bargeldbetrag pro Leistung statt eines Prozentsatzes vom Zimmerpreis.",
+      },
+      {
+        type: "note",
+        text: "Gemeinsam ist all diesen Fällen dasselbe Prinzip wie im Restaurant: Trinkgeld bleibt freiwillig und honoriert eine als gut empfundene Leistung – der Rechner selbst ist für die klassische Rechnungssituation zu zweit oder in der Gruppe gedacht, das Prinzip der prozentualen Aufteilung lässt sich aber sinngemäß auf jede geteilte Rechnung übertragen.",
+      },
+    ],
+  },
 ];
 
 export const trinkgeld: ToolManifest = {

@@ -1,6 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadEnvConfig } from "@next/env";
+import { retiredPaths } from "../src/lib/retiredPaths";
 import { securityHeaders, type CspMode } from "../src/lib/securityHeaders";
 
 /**
@@ -53,6 +54,24 @@ const headerLines = headers
   )
   .join("\n");
 
+/** Regex-Sonderzeichen in einem URL-Pfad entschärfen, bevor er in RedirectMatch landet. */
+function escapeRegex(path: string): string {
+  return path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * 301-Weiterleitungen für Variantenseiten, die in ihre Elternseite
+ * eingeschmolzen wurden (siehe src/lib/retiredPaths.ts). `RedirectMatch` statt
+ * `Redirect`, damit ein exakter, verankerter Pfad geprüft wird (`^...$`) und
+ * kein versehentliches Präfix-Matching zwei Einträge kollidieren lässt.
+ *
+ * mod_alias-Direktiven gehören zur AllowOverride-Klasse "FileInfo" – derselben
+ * Klasse wie `ErrorDocument` oben, die auf diesem Hosting bereits aktiv ist.
+ */
+const redirectLines = retiredPaths
+  .map(({ from, to }) => `  RedirectMatch 301 "^${escapeRegex(from)}$" "${to}"`)
+  .join("\n");
+
 const htaccess = `# Automatisch erzeugt von scripts/generate-htaccess.ts – nicht von Hand pflegen.
 
 <IfModule mod_headers.c>
@@ -71,6 +90,13 @@ ${headerLines}
 # 500 – ein Totalausfall, um eine Kleinigkeit abzusichern.
 
 ErrorDocument 404 /404.html
+
+# Eingeschmolzene Variantenseiten (AdSense-Konsolidierung, siehe
+# src/lib/retiredPaths.ts) – dauerhafte Weiterleitung statt 404, sowohl für
+# Besucher mit alten Links als auch für Google beim erneuten Crawlen.
+<IfModule mod_alias.c>
+${redirectLines}
+</IfModule>
 `;
 
 writeFileSync(join(process.cwd(), "public", ".htaccess"), htaccess);

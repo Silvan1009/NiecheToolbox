@@ -89,6 +89,28 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Warum der Grundumsatz mit dem Alter sinkt",
+    blocks: [
+      {
+        type: "p",
+        text: "Bei gleichem Gewicht und gleicher Größe liegt der Grundumsatz einer 25-Jährigen rechnerisch höher als der einer 65-Jährigen – die Formel zieht für jedes Lebensjahr einen festen Betrag ab. Der Hauptgrund dahinter ist der allmähliche Rückgang der Muskelmasse mit zunehmendem Alter, dem sogenannten Muskelschwund oder Sarkopenie: Muskelgewebe verbraucht im Ruhezustand deutlich mehr Energie als Fettgewebe, weshalb ein Körper mit weniger Muskelanteil bei gleichem Gesamtgewicht weniger Kalorien allein für die Grundfunktionen benötigt.",
+      },
+      {
+        type: "note",
+        text: "Regelmäßiges Krafttraining kann diesem Effekt entgegenwirken, weil erhaltene oder aufgebaute Muskelmasse den Grundumsatz gegenüber dem reinen Altersdurchschnitt anhebt – die Formel selbst kennt aber nur das Alter in Jahren, nicht den tatsächlichen Trainingszustand, und schätzt deshalb bei muskulösen älteren Menschen tendenziell zu niedrig.",
+      },
+    ],
+  },
+  {
+    heading: "Warum der geschätzte Wert von Tag zu Tag schwanken darf",
+    blocks: [
+      {
+        type: "p",
+        text: "Der hier errechnete Gesamtumsatz ist ein Durchschnittswert für einen typischen Tag, keine exakte Vorgabe für jeden einzelnen Tag. Der tatsächliche Verbrauch schwankt spürbar mit Schlafqualität, Umgebungstemperatur, Stresslevel und sogar der Verdauungsarbeit für die zuletzt gegessene Mahlzeit – all das verändert den Energieumsatz um mehrere Prozent, ohne dass sich Gewicht, Größe oder Aktivitätslevel geändert hätten. Wer die eigene Zahl für eine längerfristige Planung nutzt, sollte sie deshalb als Richtwert über mehrere Wochen verstehen, nicht als exaktes Tagesbudget.",
+      },
+    ],
+  },
 ];
 
 export const kalorienbedarf: ToolManifest = {

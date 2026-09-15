@@ -168,7 +168,7 @@ export const aktienkennzahlen: ToolManifest = {
     "free cashflow rendite",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

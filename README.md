@@ -168,6 +168,15 @@ Das Design ist bewusst ein reines Light-Theme: ein Akzent, ein Payoff-Moment.
 - **[`/ads.txt`](src/app/ads.txt/route.ts)** wird aus der Publisher-ID erzeugt.
   Ohne ID liefert die Route 404 statt einer leeren Datei: eine ads.txt ohne
   Einträge lesen manche Prüfer als „autorisiert niemanden".
+  In der AdSense-Weboberfläche kann der ads.txt-Status trotz korrekt
+  ausgelieferter Datei „Nicht gefunden" zeigen, solange das Konto noch nicht
+  freigeschaltet ist und die Seite keine Anzeigenanfragen stellt – Google
+  crawlt und verifiziert ads.txt anhand solcher Anfragen. Das ist kein
+  Hinweis auf einen Konfigurationsfehler; `npx tsx scripts/check-live.ts`
+  bzw. der Workflow
+  [`.github/workflows/live-check.yaml`](.github/workflows/live-check.yaml)
+  prüft nach jedem Deploy, dass die Datei live tatsächlich mit 200 und dem
+  richtigen Inhalt antwortet.
 - **Affiliate** läuft über `monetization.affiliate` mit `when(result)`: die
   Empfehlung erscheint nur, wenn das Ergebnis sie rechtfertigt – der Reise-Tipp
   erst ab sieben freien Tagen am Stück. Höchstens eine, immer gekennzeichnet,
@@ -221,11 +230,16 @@ Vor der Bewerbung muss all das stimmen – AdSense prüft die Seite, wie sie ist
 
 - [ ] Echte Angaben in `legal.operator`, `legal.isPlaceholder = false`. Ein
       Impressum mit `PLATZHALTER` führt zur Ablehnung.
-- [ ] Inhaltstiefe je Tool (`about` + `faq`). **Größtes Risiko sind die
-      Variantenseiten** (Brückentage je Bundesland und Jahr): über hundert
-      nahezu identische Seiten sind der klassische Auslöser für „low value
-      content". Entweder variantenspezifischer Text oder die dünnste Ebene
-      vorher auf `noindex`.
+- [x] Inhaltstiefe je Tool (`about` + `faq`). Die 151 fast identischen
+      Variantenseiten (Brückentage je Bundesland und Jahr, Backform je
+      Formpaar, …) sind bei der AdSense-Konsolidierung (Aug/Sep 2026) in ihre
+      Elternseite eingeschmolzen worden, mit dauerhaften Redirects
+      ([`src/lib/retiredPaths.ts`](src/lib/retiredPaths.ts)). `npx tsx
+      scripts/content-audit.ts` nach `npm run build` hält die drei Zielwerte
+      fest (≥ 85 % einmalige Wortfolgen, ≤ 40 % Seitenüberlappung, 0 Seiten
+      unter 800 Wörtern eigener Prosa); `CONTENT_AUDIT=enforce` ist seit
+      dieser Etappe im Build-Workflow aktiv und bricht den Deploy bei einem
+      Rückfall.
 - [ ] Etwas organischer Traffic, kein bezahlter oder incentivierter.
 - [ ] Seitenverifizierung über den `google-adsense-account`-Meta-Tag oder
       `/ads.txt` – **nicht** über ein ungegatetes Werbe-Skript. Der übliche Weg

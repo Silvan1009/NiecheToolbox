@@ -196,6 +196,45 @@ export default function HomePage() {
               einen Steuerberater oder einfach als Gedankenstütze für später.
             </p>
           </Section>
+
+          <Section heading="Wie ein Rechner entsteht und aktuell bleibt">
+            <p>
+              Ein neuer Rechner beginnt mit der Rechenlogik als eigenständigem,
+              automatisiert getesteten Baustein – erst danach kommt die
+              Eingabemaske dazu. Dieser Aufbau erzwingt, dass jede Formel für
+              sich nachvollziehbar bleibt: Ein Rechenfehler zeigt sich im Test,
+              bevor er auf der Seite landet, und lässt sich an genau der
+              Formel beheben, ohne die Eingabefelder anzufassen. Bei
+              gesetzlich geregelten Werten – Steuersätzen,
+              Beitragsbemessungsgrenzen, Kindergeldbeträgen – trägt die
+              zugrunde liegende Tabelle ein Stand-Datum, damit sichtbar bleibt,
+              für welches Jahr eine Zahl gilt.
+            </p>
+            <p>
+              Ändert sich ein Gesetz oder ein Grenzwert zum Jahreswechsel, wird
+              die betroffene Tabelle nachgezogen und nicht stillschweigend
+              fortgeschrieben – ein Rechner, der zwei Jahre alte Werte
+              ausgibt, ist schlechter als gar keiner. Wer eine veraltete Zahl
+              oder einen Rechenfehler findet, kann das über die Kontaktseite
+              melden; solche Hinweise fließen direkt in die jeweilige Tabelle
+              oder Formel ein.
+            </p>
+          </Section>
+
+          <Section heading="Rechner, die zusammengehören">
+            <p>
+              Manche Fragen lassen sich nicht mit einem einzigen Rechner
+              beantworten, sondern erst, wenn mehrere Ergebnisse
+              zusammenkommen: Was eine Gehaltserhöhung netto bringt, hängt vom
+              Brutto-Netto-Rechner ab und davon, was sich aus der Differenz
+              über Jahre ansparen lässt. Ob sich ein Auto leisten lässt, hängt
+              von Kreditrate, laufenden Kosten und Versicherung gemeinsam ab,
+              nicht von einer dieser Zahlen allein. Für solche
+              zusammengesetzten Fragen gibt es die Wege weiter oben auf dieser
+              Seite – sie verketten mehrere Rechner zu einem einzigen Urteil,
+              statt mehrere Ergebnisse von Hand zusammenzählen zu müssen.
+            </p>
+          </Section>
         </section>
       </div>
 

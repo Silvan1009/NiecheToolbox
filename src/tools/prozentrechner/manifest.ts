@@ -119,6 +119,11 @@ export const prozentrechner: ToolManifest = {
       answer:
         "Ja. Die eingegebenen Werte stehen in der Adresszeile, sortiert nach der gewählten Frage. Der Button „Link kopieren“ erzeugt einen Link, der bei allen dieselbe Rechnung mit denselben Zahlen zeigt.",
     },
+    {
+      question: "Was ist der Unterschied zwischen Prozent und Promille?",
+      answer:
+        "Beide sind Bruchteile von hundert beziehungsweise von tausend: Ein Prozent ist ein Hundertstel, ein Promille ein Tausendstel – ein Promille entspricht also einem Zehntel Prozent. Promille wird vor allem dort verwendet, wo Anteile sehr klein sind und Prozent unhandliche Nachkommastellen bräuchte, etwa bei der Blutalkoholkonzentration oder bei sehr niedrigen Fehler- und Ausfallquoten in der Industrie. Rechnerisch lässt sich jeder Promillewert einfach durch Teilen durch 10 in Prozent umrechnen, und umgekehrt durch Multiplizieren mit 10.",
+    },
   ],
 
   monetization: {

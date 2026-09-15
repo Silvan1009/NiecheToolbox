@@ -86,6 +86,28 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Andere Grenzwerte für andere Bevölkerungsgruppen",
+    blocks: [
+      {
+        type: "p",
+        text: "Die hier verwendeten WHO-Grenzwerte wurden ursprünglich an Daten aus überwiegend europäischen und nordamerikanischen Bevölkerungen entwickelt. Für Menschen asiatischer Herkunft empfiehlt die WHO in einer separaten Leitlinie niedrigere Schwellenwerte, weil gesundheitliche Risiken wie Typ-2-Diabetes dort schon bei niedrigerem BMI messbar zunehmen – dort gilt Übergewicht teils bereits ab einem BMI von 23 statt 25. Dieser Rechner verwendet durchgehend die international gebräuchlicheren Standardgrenzwerte, weil sie den größten Teil der Besucherinnen und Besucher betreffen.",
+      },
+      {
+        type: "note",
+        text: "Auch bei Menschen über 65 Jahren wird in Teilen der Forschung ein etwas höherer Zielbereich diskutiert, weil ein leicht erhöhter BMI im höheren Alter mit einer gewissen Reserve bei Krankheit verbunden sein kann. Eine einheitliche, allgemein anerkannte Altersanpassung der WHO-Grenzwerte gibt es dafür bislang nicht.",
+      },
+    ],
+  },
+  {
+    heading: "BMI als Screening-Werkzeug in der Praxis",
+    blocks: [
+      {
+        type: "p",
+        text: "In Arztpraxen dient der BMI meist als erster, schneller Anhaltspunkt, nicht als abschließende Diagnose. Liegt er deutlich außerhalb des Normalbereichs, folgen in der Regel weitere Untersuchungen – etwa Blutwerte, Blutdruck oder eine genauere Körperzusammensetzungsmessung –, bevor eine gesundheitliche Einschätzung getroffen wird. Der BMI allein löst selten eine Behandlung aus, er lenkt aber den Blick dorthin, wo ein genauerer Blick sich lohnen könnte.",
+      },
+    ],
+  },
 ];
 
 export const bmi: ToolManifest = {

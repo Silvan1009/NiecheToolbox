@@ -3,13 +3,8 @@ import { todayIso } from "@/lib/date";
 import { formatEuroRounded } from "@/lib/format";
 import { holidaysFor, regions } from "@/lib/regionen";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
-import { variantenTexte } from "./varianten";
-import {
-  calculateWorkdays,
-  weekPresets,
-  yearRange,
-} from "./logic";
+import { calculateWorkdays, weekPresets, yearRange } from "./logic";
+import { arbeitsmarktFaq, buildUebersichtSection } from "./uebersicht";
 
 /**
  * Feiertagszahl je Bundesland, zur Buildzeit fürs laufende Jahr berechnet –
@@ -82,7 +77,13 @@ function tagessatzBeispiel(): ContentSection {
   };
 }
 
-const sections: ContentSection[] = [feiertageJeLandTabelle(), tagessatzBeispiel()];
+const baseYear = new Date().getUTCFullYear();
+
+const sections: ContentSection[] = [
+  feiertageJeLandTabelle(),
+  tagessatzBeispiel(),
+  ...buildUebersichtSection(baseYear),
+];
 
 const about: string[] = [
   "Wie viele Tage muss ich eigentlich arbeiten? Die Frage stellt sich beim Kalkulieren eines Stundensatzes, beim Planen eines Projekts, beim Umrechnen eines Monatsgehalts auf den Tag – und jedes Mal steht dieselbe Rechnung an. Zeitraum eintragen, Bundesland wählen, fertig.",
@@ -137,15 +138,13 @@ export const arbeitstage: ToolManifest = {
     "arbeitstage rechner",
   ],
 
-  getVariants: () => buildVariants(variantenTexte(), about, sharedFaq),
-
   // Das Standardjahr ist das laufende – erst auf dem Server bestimmt, damit
   // der erste Client-Render zum vorgerenderten HTML passt.
   getDefaultParams: () => ({ jahr: Number(todayIso().slice(0, 4)) }),
 
   about,
   sections,
-  faq: sharedFaq,
+  faq: [...sharedFaq, ...Object.values(arbeitsmarktFaq)],
 
   monetization: {
     adDensity: "low",

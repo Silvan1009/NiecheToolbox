@@ -67,6 +67,19 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Woher die Wörter-pro-Minute-Werte stammen",
+    blocks: [
+      {
+        type: "p",
+        text: "Lesegeschwindigkeit wird seit den 1970er-Jahren mit Eye-Tracking gemessen: Kameras zeichnen auf, wo genau das Auge beim Lesen hinschaut und wie lange es dort verweilt. Grundlegende Arbeiten dazu stammen vom Psychologen Keith Rayner, dessen Untersuchungen zeigten, dass das Auge beim Lesen nicht gleichmäßig über die Zeile gleitet, sondern in kurzen Sprüngen – Sakkaden genannt – von Fixationspunkt zu Fixationspunkt springt, mit kurzen Rückwärtssprüngen bei schwer verständlichen Stellen. Die Wörter-pro-Minute-Werte, die dieser Rechner verwendet, sind aus solchen Messungen über große Gruppen von Lesenden gemittelte Richtwerte, keine Naturkonstante.",
+      },
+      {
+        type: "note",
+        text: "Der größte Einzelfaktor für langsames Lesen ist Subvokalisation – das innere Mitsprechen jedes Wortes. Wer diese Angewohnheit stark ausgeprägt hat, liest selten schneller als er spräche, also kaum über 150 bis 180 Wörter pro Minute. Geübte, schnelle Leser unterdrücken dieses innere Mitsprechen weitgehend und nehmen stattdessen ganze Wortgruppen auf einen Blick auf.",
+      },
+    ],
+  },
 ];
 
 export const lesezeit: ToolManifest = {
@@ -115,6 +128,16 @@ export const lesezeit: ToolManifest = {
       question: "Wird mein Text gespeichert oder übertragen?",
       answer:
         "Nein. Die Berechnung passiert vollständig in deinem Browser. Beim Teilen wandert nur die Wortzahl in den Link, nie der Text selbst.",
+    },
+    {
+      question: "Kann man die eigene Lesegeschwindigkeit trainieren?",
+      answer:
+        "In Grenzen ja. Der größte Hebel ist, das innere Mitsprechen jedes Wortes – Subvokalisation genannt – bewusst zu reduzieren, etwa indem man beim Lesen im Kopf mitzählt oder einen Rhythmus summt, der das Mitsprechen blockiert. Auch das Vermeiden von Rücksprüngen zu bereits gelesenen Stellen hilft messbar. Die oft beworbenen Schnelllese-Methoden mit 700 oder mehr Wörtern pro Minute gehen dabei allerdings fast immer auf Kosten des Verständnisses – Studien zeigen, dass Verstehen und Lesetempo ab einer bestimmten Geschwindigkeit gegenläufig werden.",
+    },
+    {
+      question: "Warum liest man einen Bildschirm langsamer als Papier?",
+      answer:
+        "Mehrere Studien finden auf Bildschirmen ein etwas geringeres Lesetempo und eine leicht schlechtere Verständnisleistung als auf Papier, wobei sich der Unterschied mit besseren Displays und mehr Bildschirm-Gewöhnung über die Jahre verkleinert hat. Als Gründe gelten unter anderem Bildschirmflimmern älterer Geräte, ungünstigere Beleuchtung und die geringere haptische Orientierung – auf Papier lässt sich die eigene Position im Text leichter über die Dicke der bereits gelesenen Seiten einschätzen als beim Scrollen.",
     },
   ],
 
