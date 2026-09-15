@@ -1,0 +1,46 @@
+# Eigener Workflow, nicht von IONOS verwaltet – anders als die drei
+# "Deploy Now"-Dateien in diesem Ordner darf diese Datei frei geändert
+# werden.
+#
+# Prüft nach jedem Deploy die tatsächlich ausgelieferte Seite:
+# /ads.txt, /robots.txt, den google-adsense-account-Meta-Tag auf der
+# Startseite und eine Stichprobe der 301-Redirects aus src/lib/retiredPaths.ts
+# (siehe scripts/check-live.ts). Der Export selbst kann fehlerfrei sein und
+# live trotzdem etwas anderes zeigen – ein vergessenes .htaccess-Deployment,
+# ein falsch konfigurierter Apache, ein CDN mit alter Fassung.
+
+name: "Live-Check: rechnerkiste.app"
+
+on:
+  workflow_run:
+    workflows: ["Deploy Now: Deploy to IONOS"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  check-live:
+    name: check live site
+    runs-on: ubuntu-latest
+    # Nur laufen, wenn das auslösende Deploy tatsächlich erfolgreich war –
+    # ein fehlgeschlagenes Deploy hat ohnehin nichts Neues ausgeliefert.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: v22.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check live site
+        env:
+          SITE_URL: https://rechnerkiste.app
+          NEXT_PUBLIC_ADSENSE_CLIENT: ca-pub-4379452218973991
+        run: npx tsx scripts/check-live.ts
