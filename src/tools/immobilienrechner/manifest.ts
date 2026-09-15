@@ -1,16 +1,10 @@
 import { House } from "lucide-react";
 import { formatInteger } from "@/lib/format";
 import { regions } from "@/lib/regionen";
-import type {
-  ContentSection,
-  FaqEntry,
-  ToolManifest,
-  ToolVariant,
-} from "@/tools/types";
+import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { immobilienAffiliate } from "./affiliate";
 import {
   grestFaq,
-  grestHistorie,
   grestKontext,
   grestSpanne,
   grunderwerbsteuer,
@@ -119,6 +113,50 @@ const sections: ContentSection[] = [
   },
 ];
 
+/**
+ * Bundesländer-Vergleich auf der Tool-Seite selbst – Ersatz für die 16
+ * `kaufnebenkosten-<land>`-Unterseiten, die im Zuge der AdSense-
+ * Konsolidierung entfernt wurden (siehe docs/adsense/etappe-0-ausgangslage.md
+ * und src/lib/retiredPaths.ts). `grestKontext` und `grestFaq` stammen von
+ * dort und werden hier weiterverwendet statt neu geschrieben.
+ */
+function uebersichtSection(): ContentSection {
+  const spanne = grestSpanne();
+  const rows = [...regions]
+    .sort((a, b) => grunderwerbsteuer[a.code] - grunderwerbsteuer[b.code])
+    .map((region) => {
+      const satz = grunderwerbsteuer[region.code];
+      return [
+        region.name,
+        `${prozent(satz)} %`,
+        euro(nebenkosten(300000, satz)),
+        euro(nebenkosten(500000, satz)),
+      ];
+    });
+
+  return {
+    heading: "Kaufnebenkosten je Bundesland im Vergleich",
+    blocks: [
+      {
+        type: "p",
+        text: `Die Grunderwerbsteuer reicht von ${prozent(spanne.min)} Prozent in Bayern bis ${prozent(spanne.max)} Prozent in den teuersten Ländern – zusammen mit Notar, Grundbuch und Maklerprovision ergibt das die gesamten Kaufnebenkosten. Wer sein Bundesland im Rechner oben auswählt, bekommt die vollständige Kalkulation mit Finanzierung, Mietrendite und Cashflow.`,
+      },
+      {
+        type: "table",
+        caption: "Grunderwerbsteuer und Kaufnebenkosten gesamt",
+        head: ["Bundesland", "Grunderwerbsteuer", "Nebenkosten bei 300.000 €", "Nebenkosten bei 500.000 €"],
+        rows,
+      },
+      {
+        type: "ul",
+        items: regions.map(
+          (region) => `${region.name}: ${grestKontext[region.code]}`,
+        ),
+      },
+    ],
+  };
+}
+
 const sharedFaq: FaqEntry[] = [
   {
     question: "Wie viel Eigenkapital brauche ich für eine Immobilie?",
@@ -163,117 +201,6 @@ const sharedFaq: FaqEntry[] = [
 ];
 
 /* ---------------------------------------------------------------------------
- * Bundesland-Varianten
- * ------------------------------------------------------------------------- */
-
-function buildVariants(): ToolVariant[] {
-  const spanne = grestSpanne();
-
-  return regions.map((region) => {
-    const satz = grunderwerbsteuer[region.code];
-    const quote = satz + notarPercent + maklerPercent;
-    const nk300 = nebenkosten(300000, satz);
-    const nk500 = nebenkosten(500000, satz);
-
-    // Was dasselbe Objekt im günstigsten und im teuersten Land kosten würde.
-    const gegenBayern = Math.round((300000 * (satz - spanne.min)) / 100);
-    const gegenHoechst = Math.round((300000 * (spanne.max - satz)) / 100);
-    const gegenBayern500 = Math.round((500000 * (satz - spanne.min)) / 100);
-    const gegenHoechst500 = Math.round((500000 * (spanne.max - satz)) / 100);
-
-    const vergleich =
-      satz === spanne.min
-        ? `Damit ist ${region.name} das günstigste Bundesland – im Vergleich zu den Ländern mit ${prozent(spanne.max)} Prozent spart ein Kauf hier ${euro(gegenHoechst)} bei 300.000 Euro Kaufpreis.`
-        : satz === spanne.max
-          ? `Damit gehört ${region.name} zu den teuersten Bundesländern: Derselbe Kauf über 300.000 Euro kostet hier ${euro(gegenBayern)} mehr Steuer als in Bayern.`
-          : `Gegenüber Bayern mit ${prozent(spanne.min)} Prozent sind das bei 300.000 Euro Kaufpreis ${euro(gegenBayern)} mehr, gegenüber den Ländern mit ${prozent(spanne.max)} Prozent ${euro(gegenHoechst)} weniger.`;
-
-    // Zweite, eigene Frage zum Landesvergleich – rechnet dieselbe Spanne bei
-    // 500.000 Euro durch, damit sie nicht nur `vergleich` in Frageform
-    // wiederholt.
-    const vergleichFaqAnswer =
-      satz === spanne.min
-        ? `${region.name} hat mit ${prozent(satz)} Prozent den niedrigsten Satz aller Bundesländer. Gegenüber den Ländern mit ${prozent(spanne.max)} Prozent spart ein Kauf hier ${euro(gegenHoechst)} bei 300.000 Euro und ${euro(gegenHoechst500)} bei 500.000 Euro Kaufpreis.`
-        : satz === spanne.max
-          ? `${region.name} gehört mit ${prozent(satz)} Prozent zu den teuersten Bundesländern. Gegenüber dem günstigsten Land, Bayern mit ${prozent(spanne.min)} Prozent, kostet derselbe Kauf hier ${euro(gegenBayern)} mehr bei 300.000 Euro und ${euro(gegenBayern500)} mehr bei 500.000 Euro Kaufpreis.`
-          : `Bei 300.000 Euro Kaufpreis zahlt ${region.name} ${euro(gegenBayern)} mehr Grunderwerbsteuer als im günstigsten Bundesland (Bayern, ${prozent(spanne.min)} Prozent) und ${euro(gegenHoechst)} weniger als im teuersten (${prozent(spanne.max)} Prozent). Bei 500.000 Euro Kaufpreis sind es entsprechend ${euro(gegenBayern500)} mehr beziehungsweise ${euro(gegenHoechst500)} weniger.`;
-
-    // Aufschlüsselung der Nebenkosten für diese eine Landesseite – dieselbe
-    // Rechnung wie `nebenkosten()`, nur nach Posten statt nur als Summe.
-    const grest300 = Math.round((300000 * satz) / 100);
-    const grest500 = Math.round((500000 * satz) / 100);
-    const notar300 = Math.round((300000 * notarPercent) / 100);
-    const notar500 = Math.round((500000 * notarPercent) / 100);
-    const makler300 = Math.round((300000 * maklerPercent) / 100);
-    const makler500 = Math.round((500000 * maklerPercent) / 100);
-
-    return {
-      slug: `kaufnebenkosten-${region.slug}`,
-      title: `Kaufnebenkosten ${region.name}: Rechner mit ${prozent(satz)} % Grunderwerbsteuer`,
-      description: `Bei ${prozent(satz)} Prozent Grunderwerbsteuer kostet ein Kauf über 300.000 Euro in ${region.name} rund ${euro(nk300)} an Nebenkosten. Mit Finanzierung, Mietrendite und Cashflow.`,
-      heading: `Immobilien-Rechner für ${region.name}`,
-      listLabel: `${region.name} (${prozent(satz)} %)`,
-      params: { land: region.code, grest: satz },
-
-      about: [
-        `In ${region.name} beträgt die Grunderwerbsteuer ${prozent(satz)} Prozent des Kaufpreises – ${grestHistorie[region.code]}. Sie ist der größte Einzelposten der Kaufnebenkosten und wird fällig, sobald der Kaufvertrag notariell beurkundet ist. Das Finanzamt schickt den Bescheid meist wenige Wochen nach dem Termin; erst wenn die Steuer bezahlt ist, gibt es die Unbedenklichkeitsbescheinigung, ohne die keine Eintragung ins Grundbuch erfolgt.`,
-        `Zusammen mit Notar und Grundbuch (rund 2 Prozent) und einer Maklerprovision von 3,57 Prozent kommt ein Kauf in ${region.name} damit auf etwa ${prozent(quote)} Prozent Nebenkosten. Bei 300.000 Euro Kaufpreis sind das rund ${euro(nk300)}, bei 500.000 Euro rund ${euro(nk500)}. ${vergleich}`,
-        `Diese Summe muss als Eigenkapital vorhanden sein: Banken finanzieren die Nebenkosten praktisch nie mit, weil ihnen dafür keine Sicherheit gegenübersteht – im Fall einer Zwangsversteigerung ist das Geld weg. Wer in ${region.name} mit 300.000 Euro Kaufpreis rechnet, braucht also mindestens ${euro(nk300)} auf dem Konto, bevor über die eigentliche Finanzierung gesprochen wird.`,
-        grestKontext[region.code],
-        `Bundesweit reicht die Grunderwerbsteuer von ${prozent(spanne.min)} Prozent in Bayern bis ${prozent(spanne.max)} Prozent in den teuersten Ländern – eine Spanne von ${prozent(spanne.max - spanne.min)} Prozentpunkten, die bei 400.000 Euro Kaufpreis schon ${euro(Math.round((400000 * (spanne.max - spanne.min)) / 100))} Unterschied allein bei dieser einen Position ausmacht. ${region.name} steht mit ${prozent(satz)} Prozent an einer bestimmten Stelle in dieser Spanne, und anders als beim Kaufpreis selbst lässt sich dieser Satz durch die Wahl des Bundeslandes nicht verhandeln – er hängt ausschließlich am Ort des Grundstücks, nicht am Wohnsitz der Käuferin oder des Käufers.`,
-      ],
-
-      // Eigene Aufschlüsselung statt der geerbten Modellerklärung des Tools
-      // (Rendite, Restschuld, Abschreibung, Eigennutzung, Modellgrenzen –
-      // die steht jetzt nur noch auf der Tool-Seite selbst, als `sections`
-      // dort). Die Zahlen hier gelten nur für dieses eine Bundesland.
-      sections: [
-        {
-          heading: `Nebenkosten in ${region.name} im Detail`,
-          blocks: [
-            {
-              type: "table",
-              caption: `Aufschlüsselung bei ${prozent(satz)} Prozent Grunderwerbsteuer`,
-              head: ["Posten", "bei 300.000 €", "bei 500.000 €"],
-              rows: [
-                [`Grunderwerbsteuer (${prozent(satz)} %)`, euro(grest300), euro(grest500)],
-                ["Notar & Grundbuch (2 %)", euro(notar300), euro(notar500)],
-                ["Maklerprovision (3,57 %)", euro(makler300), euro(makler500)],
-                ["Summe Nebenkosten", euro(nk300), euro(nk500)],
-              ],
-            },
-          ],
-        },
-      ],
-
-      faq: [
-        {
-          question: `Wie hoch ist die Grunderwerbsteuer in ${region.name}?`,
-          answer: `${prozent(satz)} Prozent des Kaufpreises. Der Satz ist Landesrecht: Seit der Föderalismusreform 2006 legt ihn jedes Bundesland selbst fest, vorher galten bundesweit einheitlich 3,5 Prozent. Der Satz in ${region.name}: ${grestHistorie[region.code]}. Bei einem Kaufpreis von 300.000 Euro sind das ${euro(Math.round((300000 * satz) / 100))}, bei 500.000 Euro ${euro(Math.round((500000 * satz) / 100))}.`,
-        },
-        {
-          question: `Wie viel Eigenkapital brauche ich für einen Kauf in ${region.name}?`,
-          answer: `In ${region.name} mindestens die Kaufnebenkosten, also bei ${prozent(satz)} Prozent Grunderwerbsteuer rund ${prozent(quote)} Prozent des Kaufpreises – bei 300.000 Euro etwa ${euro(nk300)}, bei 500.000 Euro ${euro(nk500)}. Das ist die absolute Untergrenze und führt zu einer Vollfinanzierung des Kaufpreises mit entsprechendem Zinsaufschlag. Komfortabel wird es, wenn zusätzlich rund 20 Prozent des Kaufpreises als Eigenkapital eingebracht werden, in diesem Beispiel also weitere 60.000 Euro.`,
-        },
-        {
-          question: `Lässt sich die Grunderwerbsteuer in ${region.name} senken?`,
-          answer: `Legal und in Grenzen: Bewegliches Zubehör wie eine Einbauküche, Markisen oder eine Sauna gehört nicht zum Grundstück und darf im Kaufvertrag gesondert ausgewiesen werden – auf diesen Teil fällt keine Grunderwerbsteuer an. Bei einer Küche im Wert von 15.000 Euro spart das in ${region.name} ${euro(Math.round((15000 * satz) / 100))}. Der Betrag muss angemessen sein, das Finanzamt prüft bei auffälligen Ansätzen. Bei Neubauten kann außerdem die Trennung von Grundstückskauf und Bauvertrag helfen, wenn beide Verträge tatsächlich unabhängig sind.`,
-        },
-        {
-          question: `Wie viel Grunderwerbsteuer spart oder kostet ${region.name} im Vergleich zu anderen Bundesländern?`,
-          answer: vergleichFaqAnswer,
-        },
-        grestFaq[region.code],
-        {
-          question: `Ist ein Kauf innerhalb der Familie in ${region.name} steuerfrei?`,
-          answer: `Teilweise, und zwar bundesweit einheitlich, nicht nach Landesrecht: Der Erwerb durch Ehegatten, eingetragene Lebenspartner oder Verwandte in gerader Linie – Kinder, Enkel, Eltern, Großeltern – ist nach § 3 Grunderwerbsteuergesetz von der Steuer befreit. Bei einem Hauskauf von den Eltern für 400.000 Euro spart das in ${region.name} genau die sonst fällige Steuer von ${euro(Math.round((400000 * satz) / 100))}. Geschwister zählen nicht zur geraden Linie und sind von der Befreiung ausdrücklich ausgenommen – zwischen ihnen fällt die Steuer normal an, auch wenn beide vom selben Elternteil erben oder kaufen.`,
-        },
-      ],
-    };
-  });
-}
-
-/* ---------------------------------------------------------------------------
  * Manifest
  * ------------------------------------------------------------------------- */
 
@@ -297,11 +224,9 @@ export const immobilienrechner: ToolManifest = {
     "cashflow immobilie berechnen",
   ],
 
-  getVariants: buildVariants,
-
   about,
-  sections,
-  faq: sharedFaq,
+  sections: [...sections, uebersichtSection()],
+  faq: [...sharedFaq, ...Object.values(grestFaq)],
 
   monetization: {
     adDensity: "medium",

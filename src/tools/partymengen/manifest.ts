@@ -1,8 +1,7 @@
 import { PartyPopper } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import { partymengenAffiliate } from "./affiliate";
-import { variantenTexte } from "./varianten";
+import { buildUebersichtSection } from "./uebersicht";
 
 const about: string[] = [
   "Die Frage kommt bei jedem Grillfest: Wie viel kauft man ein? Zu wenig ist peinlich, zu viel landet im Müll. Der Rechner nimmt die übliche Faustregel – etwa 350 Gramm Fleisch, 200 Gramm Beilagen und anderthalb Brötchen je Erwachsenem – und rechnet Kinder, Vegetarier und die Dauer mit ein.",
@@ -43,6 +42,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -95,8 +95,6 @@ export const partymengen: ToolManifest = {
     "grillfest planen",
     "einkaufsliste party",
   ],
-
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
 
   about,
   sections,

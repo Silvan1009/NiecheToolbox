@@ -80,6 +80,11 @@ const faq: FaqEntry[] = [
     answer:
       "Um die Eingabe kurz zu halten, leitet der Weg beides aus bereits eingegebenen Werten ab: die Fahrzeugklasse für die Versicherung aus dem Kaufpreis, die Kilometerklasse aus der jährlichen Fahrleistung. Das ist eine grobe Einordnung – für eine genauere Versicherungsschätzung mit allen Reglern steht der Versicherungs-Vergleichsrechner einzeln zur Verfügung.",
   },
+  {
+    question: "Rechnet der Weg auch für einen Gebrauchtwagen?",
+    answer:
+      "Ja, ohne Unterschied in der Bedienung – einfach den tatsächlichen Kaufpreis des gebrauchten Fahrzeugs eintragen. Der Wertverlust im Autokosten-Rechner ist prozentual gerechnet und passt sich damit automatisch an einen niedrigeren Kaufpreis an, fällt bei einem günstigeren Gebrauchtwagen also auch in Euro entsprechend kleiner aus. Ein Unterschied bleibt beim Kreditzins: Für Gebrauchtwagen verlangen Banken teils einen kleinen Aufschlag gegenüber einem Neuwagenkredit, den im Kreditrechner-Feld für den Sollzins direkt berücksichtigen kann, wer ein konkretes Finanzierungsangebot vorliegen hat.",
+  },
 ];
 
 export const autokauf: WegManifest = {

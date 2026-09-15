@@ -1,8 +1,7 @@
 import { CalendarRange } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
-import { buildVariants } from "@/tools/variants";
 import { brueckentageAffiliate } from "./affiliate";
-import { variantenTexte } from "./varianten";
+import { buildUebersichtSection, reiseFaq } from "./uebersicht";
 
 const about: string[] = [
   "Ein Brückentag ist ein einzelner Arbeitstag zwischen einem Feiertag und dem Wochenende. Wer ihn als Urlaubstag nimmt, verbindet beides zu einer langen freien Spanne. Aus einem eingesetzten Urlaubstag werden so schnell vier freie Tage – manchmal mehr.",
@@ -97,6 +96,11 @@ const sharedFaq: FaqEntry[] = [
   },
 ];
 
+// Einmal pro Build berechnet, nicht pro Anfrage – dieselbe Überlegung wie
+// beim vormaligen Varianten-Cache: calculateBrueckentage() läuft für 16
+// Länder × 3 Jahre, das soll nicht mehrfach passieren.
+const baseYear = new Date().getUTCFullYear();
+
 export const brueckentage: ToolManifest = {
   slug: "brueckentage",
   name: "Brückentage-Optimierer",
@@ -116,12 +120,11 @@ export const brueckentage: ToolManifest = {
     "feiertagskalender",
   ],
 
-  getDefaultParams: () => ({ basisJahr: new Date().getUTCFullYear() }),
-  getVariants: () => buildVariants(variantenTexte(), about, sharedFaq),
+  getDefaultParams: () => ({ basisJahr: baseYear }),
 
   about,
-  sections,
-  faq: sharedFaq,
+  sections: [...sections, ...buildUebersichtSection(baseYear)],
+  faq: [...sharedFaq, ...Object.values(reiseFaq)],
 
   monetization: {
     adDensity: "low",

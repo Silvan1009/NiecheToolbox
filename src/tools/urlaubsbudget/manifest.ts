@@ -3,6 +3,7 @@ import { todayIso } from "@/lib/date";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { urlaubsbudgetAffiliate } from "./affiliate";
+import { buildUebersichtSection } from "./uebersicht";
 import { variantenTexte } from "./varianten";
 
 const about: string[] = [
@@ -85,6 +86,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -148,7 +150,7 @@ export const urlaubsbudget: ToolManifest = {
   // Das Abreisedatum darf nicht im Client entstehen: sonst weicht der erste
   // Client-Render vom SSR-HTML ab.
   getDefaultParams: () => ({ heute: todayIso() }),
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

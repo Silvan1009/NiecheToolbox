@@ -85,6 +85,11 @@ const faq: FaqEntry[] = [
     answer:
       "Dann die Monate von Elternteil 2 auf null setzen. Ohne Partnermonate bleibt es bei 12 Basiselterngeld-Monaten statt 14, und die Ersatzquote in diesem Weg sinkt entsprechend, sobald Elternteil 1 länger als 12 Monate zu Hause bleibt, weil die zusätzliche Zeit dann unbezahlt ist.",
   },
+  {
+    question: "Berücksichtigt der Weg auch ElterngeldPlus?",
+    answer:
+      "Ja, über den Elterngeld-Rechner, dessen Ergebnis dieser Weg übernimmt. Bei ElterngeldPlus verdoppelt sich die Bezugsdauer gegenüber dem Basiselterngeld, während der monatliche Betrag jeweils halbiert wird – besonders vorteilhaft, wenn während des Bezugs bereits in Teilzeit gearbeitet wird, weil sich Teilzeiteinkommen und ElterngeldPlus günstiger kombinieren als Teilzeiteinkommen und Basiselterngeld. Stell die Variante direkt im Elterngeld-Rechner um, dann übernimmt dieser Weg das neue Ergebnis in die Gesamtrechnung.",
+  },
 ];
 
 export const nachwuchs: WegManifest = {

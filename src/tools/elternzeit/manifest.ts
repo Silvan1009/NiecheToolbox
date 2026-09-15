@@ -47,6 +47,19 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  {
+    heading: "Gleichzeitig oder nacheinander: die Wahl beider Elternteile",
+    blocks: [
+      {
+        type: "p",
+        text: "Beide Elternteile können Elternzeit gleichzeitig nehmen, nacheinander, oder sich abwechseln – gesetzlich vorgeschrieben ist keine bestimmte Reihenfolge. Für die zwei zusätzlichen Partnermonate beim Elterngeld reicht es bereits, wenn ein Elternteil in dieser Zeit sein Einkommen reduziert, unabhängig davon, ob beide gleichzeitig zu Hause sind. Wer die volle Bezugsdauer von vierzehn Monaten ausschöpfen will, muss also nicht zwingend zeitgleich pausieren – oft ist ein versetztes Modell finanziell und organisatorisch günstiger, etwa wenn ein Elternteil in Teilzeit weiterarbeitet, während der andere die Betreuung übernimmt.",
+      },
+      {
+        type: "note",
+        text: "Bei einer weiteren Schwangerschaft während laufender Elternzeit für ein älteres Geschwisterkind gilt ein eigener Mutterschutz für das neue Kind, unabhängig vom Elternzeitstatus für das ältere Kind. Die beiden Elternzeit-Ansprüche laufen dann parallel und werden bei der Anmeldung beim Arbeitgeber getrennt betrachtet.",
+      },
+    ],
+  },
 ];
 
 export const elternzeit: ToolManifest = {

@@ -4,6 +4,7 @@ import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { buildVariants } from "@/tools/variants";
 import { kindergeldAffiliate } from "./affiliate";
 import { defaultInput, encodeKinder } from "./logic";
+import { buildUebersichtSection } from "./uebersicht";
 import { variantenTexte } from "./varianten";
 
 const about: string[] = [
@@ -83,6 +84,7 @@ const sections: ContentSection[] = [
       },
     ],
   },
+  buildUebersichtSection(),
 ];
 
 const sharedFaq: FaqEntry[] = [
@@ -158,7 +160,7 @@ export const kindergeld: ToolManifest = {
     const start = defaultInput();
     return { heute: todayIso(), kinder: encodeKinder(start.kinder) };
   },
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

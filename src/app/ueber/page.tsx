@@ -190,6 +190,17 @@ export default function UeberPage() {
             </p>
           </Section>
 
+          <Section heading="Sprache und Zielgruppe">
+            <p>
+              Die Seite ist durchgehend auf Deutsch und für den deutschen
+              Rechtsrahmen gebaut – Feiertage, Steuersätze und Fristen gelten
+              für Deutschland, nicht für Österreich oder die Schweiz, auch
+              wenn manche Rechenwege ähnlich sind. Fachbegriffe werden im
+              Fließtext erklärt statt vorausgesetzt, damit ein Rechner auch
+              dann verständlich bleibt, wenn das Thema neu ist.
+            </p>
+          </Section>
+
           <Section heading="Kontakt">
             <p>
               Fehler gefunden, ein Ergebnis passt nicht, ein Rechner fehlt? Eine

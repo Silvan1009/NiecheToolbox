@@ -51,6 +51,12 @@ jobs:
         env:
           CI: true
           CSP_MODE : enforce
+          # Haelt die AdSense-Konsolidierung (Aug/Sep 2026) dauerhaft fest:
+          # ein Rueckfall unter die drei Zielwerte (eindeutige Wortfolgen,
+          # Seitenueberlappung, Mindestwortzahl je Seite) bricht den Build,
+          # statt still auf main zu landen. Siehe scripts/content-audit.ts
+          # und docs/adsense/etappe-0-ausgangslage.md.
+          CONTENT_AUDIT: enforce
           NEXT_PUBLIC_ADS_ENABLED: false
           NEXT_PUBLIC_ADSENSE_CLIENT : ca-pub-4379452218973991
           NEXT_PUBLIC_ANALYTICS_PROVIDER : umami

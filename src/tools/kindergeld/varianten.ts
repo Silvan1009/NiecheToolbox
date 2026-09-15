@@ -17,68 +17,6 @@ import type { VariantContent } from "@/tools/variants";
 
 export const variantenTexte: VariantContent[] = [
   {
-    slug: "kindergeld-2026",
-    title: "Kindergeld 2026: 259 Euro pro Kind – Höhe, Dauer und Anspruch",
-    description:
-      "Kindergeld 2026 beträgt 259 Euro je Kind und Monat. Rechner für alle Kinder, die Restlaufzeit je Kind und die Summe bis zum Ende des Anspruchs.",
-    heading: "Kindergeld 2026",
-    params: { jahr: 2026, kinder: "2019-05-10r" },
-    about: [
-      "Zum 1. Januar 2026 ist das Kindergeld von 255 auf 259 Euro je Kind und Monat gestiegen. Der Betrag gilt einheitlich für jedes Kind – die früheren Staffelungen nach Reihenfolge sind seit 2023 abgeschafft. Für ein Kind sind das 3.108 Euro im Jahr, und über die vollen achtzehn Jahre bis zur Volljährigkeit summiert sich der Anspruch auf 55.944 Euro. Damit ist Kindergeld für die meisten Familien die größte planbare Einnahme überhaupt.",
-      "Die Erhöhung erfolgt automatisch. Wer bereits Kindergeld bezieht, muss nichts tun und bekommt ab Januar den höheren Betrag überwiesen – ein neuer Antrag ist ausdrücklich nicht nötig. Ausgezahlt wird von der Familienkasse der Bundesagentur für Arbeit, bei Beschäftigten im öffentlichen Dienst teils von der eigenen Bezügestelle.",
-      "Interessanter als der Monatsbetrag ist bei einem laufenden Anspruch die Restlaufzeit. Gezahlt wird bis einschließlich des Monats, in dem das Kind achtzehn wird – bei Ausbildung oder Studium bis 25, bei gemeldeter Arbeitsuche bis 21. Der Rechner weist deshalb je Kind aus, bis wann der Anspruch läuft, wie viele Zahlungsmonate das noch sind und welche Summe daraus folgt.",
-    ],
-    faq: [
-      {
-        question: "Wie hoch ist das Kindergeld 2026?",
-        answer:
-          "259 Euro je Kind und Monat, einheitlich für jedes Kind. 2025 waren es 255 Euro, 2024 und 2023 jeweils 250 Euro. Für ein Kind ergeben sich 3.108 Euro im Jahr, für zwei Kinder 6.216 Euro und für drei Kinder 9.324 Euro.",
-      },
-      {
-        question: "Muss ich einen neuen Antrag stellen?",
-        answer:
-          "Nein. Die Erhöhung wird von der Familienkasse automatisch umgesetzt. Ein Antrag ist nur bei der Geburt eines Kindes nötig sowie dann, wenn ein volljähriges Kind weiter berücksichtigt werden soll – dafür braucht die Familienkasse einen Nachweis über Ausbildung, Studium oder Arbeitsuche.",
-      },
-      {
-        question: "Bis wann wird Kindergeld gezahlt?",
-        answer:
-          "Grundsätzlich bis einschließlich des Monats, in dem das Kind 18 wird. Danach nur weiter, wenn das Kind eine Ausbildung oder ein Studium absolviert – dann bis 25 – oder ohne Ausbildungsplatz bei der Arbeitsagentur gemeldet ist, dann bis 21. Eine Übergangszeit zwischen zwei Ausbildungsabschnitten wird bis zu vier Monate überbrückt.",
-      },
-    ],
-  },
-
-  {
-    slug: "kinderfreibetrag-berechnen",
-    title: "Kinderfreibetrag 2026 berechnen: 9.756 Euro und was sie bringen",
-    description:
-      "Kinderfreibetrag 2026 berechnen: 6.828 Euro plus 2.928 Euro Betreuungsfreibetrag. Mit Steuervorteil, Günstigerprüfung und Wirkung auf Soli und Kirchensteuer.",
-    heading: "Kinderfreibetrag berechnen",
-    params: { zve: 90000, ver: "zusammen", kinder: "2019-05-10r" },
-    about: [
-      "Der Kinderfreibetrag besteht 2026 aus zwei Teilen: 6.828 Euro für das sächliche Existenzminimum des Kindes und 2.928 Euro für Betreuung, Erziehung und Ausbildung. Zusammen sind das 9.756 Euro je Kind für beide Elternteile. Bei Einzelveranlagung steht jedem Elternteil die Hälfte zu, also 4.878 Euro. Der Freibetrag mindert nicht die Auszahlung, sondern das zu versteuernde Einkommen – seine Wirkung hängt deshalb vom Steuersatz ab.",
-      "Bei 90.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung sieht die Rechnung so aus: ohne Freibetrag 17.670 Euro Einkommensteuer, mit Freibetrag 14.496 Euro. Der Steuervorteil beträgt damit 3.174 Euro – gerade eben mehr als die 3.108 Euro Kindergeld. Das Finanzamt setzt hier also den Freibetrag an und rechnet das gezahlte Kindergeld gegen; unterm Strich bleiben 66 Euro mehr im Jahr.",
-      "Dieses Beispiel liegt fast genau auf dem Umschlagpunkt, der 2026 bei Zusammenveranlagung mit einem Kind bei rund 86.000 Euro zu versteuerndem Einkommen liegt. Darunter gewinnt das Kindergeld, darüber der Freibetrag – und je weiter darüber, desto deutlicher, weil der Grenzsteuersatz steigt. Wichtig dabei: Das ist zu versteuerndes Einkommen, nicht Bruttogehalt. Zwischen beiden liegen Werbungskosten, Vorsorgeaufwendungen und Sonderausgaben, bei Angestellten typischerweise ein gutes Stück.",
-    ],
-    faq: [
-      {
-        question: "Wie hoch ist der Kinderfreibetrag 2026?",
-        answer:
-          "9.756 Euro je Kind für beide Elternteile zusammen: 6.828 Euro Kinderfreibetrag plus 2.928 Euro Freibetrag für Betreuung, Erziehung und Ausbildung. Bei Einzelveranlagung erhält jeder Elternteil die Hälfte, also 4.878 Euro.",
-      },
-      {
-        question: "Bekomme ich Kindergeld und Kinderfreibetrag zusammen?",
-        answer:
-          "Nein, es gibt entweder das eine oder das andere. Das Finanzamt führt von Amts wegen eine Günstigerprüfung durch und setzt die für dich bessere Variante an. Fällt sie zugunsten des Freibetrags aus, wird das bereits gezahlte Kindergeld der Steuer wieder hinzugerechnet – du behältst also nur die Differenz.",
-      },
-      {
-        question: "Ab welchem Einkommen lohnt sich der Kinderfreibetrag?",
-        answer:
-          "2026 bei Zusammenveranlagung mit einem Kind ab rund 86.000 Euro zu versteuerndem Einkommen. Mit zwei Kindern liegt die Schwelle etwas höher, weil sich Freibetrag und Kindergeld gemeinsam verdoppeln, der Grenzsteuersatz aber nicht. Bei Einzelveranlagung liegt sie deutlich tiefer, weil dort beide Seiten halbiert werden.",
-      },
-    ],
-  },
-
-  {
     slug: "guenstigerpruefung-kinderfreibetrag",
     title:
       "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
@@ -94,8 +32,14 @@ export const variantenTexte: VariantContent[] = [
       "Die Günstigerprüfung ist kein Antrag, sondern ein Automatismus: Das Finanzamt rechnet bei jeder Steuererklärung beide Varianten durch und setzt die bessere an. Verglichen wird der Steuervorteil aus dem Kinderfreibetrag mit dem Anspruch auf Kindergeld – nicht mit dem tatsächlich Gezahlten. Wer Kindergeld zu beantragen vergessen hat, verliert deshalb doppelt: Das Geld fließt nicht, wird aber trotzdem gegengerechnet.",
       "Für zwei Kinder und 120.000 Euro zu versteuerndes Einkommen bei Zusammenveranlagung ergibt sich: Freibeträge von zusammen 19.512 Euro senken die Einkommensteuer von 28.466 auf 21.268 Euro, also um 7.198 Euro. Dem stehen 6.216 Euro Kindergeld für zwei Kinder gegenüber. Der Freibetrag gewinnt hier um 982 Euro im Jahr – ein Betrag, der ohne Steuererklärung schlicht verfällt.",
       "Eine Feinheit, an der viele Rechner scheitern: Solidaritätszuschlag und Kirchensteuer bemessen sich nach § 3 Abs. 2 SolZG immer nach der Steuer mit Kinderfreibetrag – unabhängig davon, wie die Günstigerprüfung ausgeht. Diese Entlastung kommt also zum Kindergeld hinzu und nicht statt dessen. Sie fällt allerdings erst ins Gewicht, wenn die Einkommensteuer die Soli-Freigrenze überschreitet, die bei Zusammenveranlagung bei 40.700 Euro Steuer liegt. Bei der Kirchensteuer wirkt sie dagegen ab dem ersten Euro.",
+      "Der Umschlagpunkt, ab dem der Freibetrag das Kindergeld übertrifft, liegt nicht bei einer festen Einkommensgrenze, sondern verschiebt sich mit der Zahl der Kinder und der Veranlagungsart. Bei einem Kind und Zusammenveranlagung liegt er 2026 bei einem zu versteuernden Einkommen von rund 86.000 Euro; bei zwei Kindern verschiebt er sich wegen der doppelten Freibetragswirkung auf ein niedrigeres Einkommen je Kind, weil beide Freibeträge gemeinsam schneller in eine höhere Progressionsstufe hineinwirken. Bei Einzelveranlagung ohne Übertragung des halben Freibetrags liegt die Schwelle wiederum deutlich höher, weil nur der halbe Freibetrag zur Verfügung steht. Wer nahe an dieser Schwelle liegt, für den lohnt sich die Steuererklärung besonders genau nachzurechnen, weil dort schon kleine Einkommensschwankungen darüber entscheiden können, welche Variante gewinnt.",
     ],
     faq: [
+      {
+        question: "Bei welchem Einkommen gewinnt der Kinderfreibetrag?",
+        answer:
+          "Es gibt keine einzelne feste Grenze – der Umschlagpunkt hängt von der Kinderzahl und der Veranlagungsart ab. Bei Zusammenveranlagung und einem Kind liegt er 2026 bei rund 86.000 Euro zu versteuerndem Einkommen, bei mehreren Kindern verschiebt er sich, weil zusätzliche Freibeträge zusammen schneller in eine höhere Progressionsstufe wirken. Bei Einzelveranlagung ohne übertragenen halben Freibetrag liegt die Schwelle deutlich höher, weil pro Elternteil nur der halbe Freibetrag zählt. In der Nähe dieser Grenze entscheidet oft schon eine kleine Einkommensschwankung darüber, welche Variante das Finanzamt ansetzt.",
+      },
       {
         question: "Was ist die Günstigerprüfung?",
         answer:
@@ -112,36 +56,20 @@ export const variantenTexte: VariantContent[] = [
         answer:
           "Ja, und zwar immer – auch dann, wenn das Kindergeld die Günstigerprüfung gewinnt. Bemessungsgrundlage für beide ist stets die Einkommensteuer mit Kinderfreibetrag. Bei der Kirchensteuer wirkt das ab dem ersten Euro, beim Solidaritätszuschlag erst oberhalb der Freigrenze von 20.350 Euro Steuer, bei Zusammenveranlagung 40.700 Euro.",
       },
-    ],
-  },
-
-  {
-    slug: "kindergeld-3-kinder",
-    title: "Kindergeld für 3 Kinder: 777 Euro im Monat – Höhe und Freibeträge",
-    description:
-      "Kindergeld für drei Kinder berechnen: 777 Euro im Monat, 9.324 Euro im Jahr. Mit Günstigerprüfung gegen den dreifachen Kinderfreibetrag.",
-    heading: "Kindergeld für 3 Kinder",
-    params: { kinder: "2015-04-02r,2018-09-11r,2021-06-30r" },
-    about: [
-      "Seit 2023 ist das Kindergeld für alle Kinder gleich hoch – die frühere Staffelung, bei der das dritte Kind mehr brachte als das erste, gibt es nicht mehr. Für drei Kinder sind das 2026 dreimal 259 Euro, also 777 Euro im Monat und 9.324 Euro im Jahr. Weil die Kinder unterschiedlich alt sind, endet der Anspruch gestaffelt: Der Rechner weist deshalb je Kind aus, bis wann gezahlt wird und welche Summe für dieses Kind noch aussteht.",
-      "Bei der Günstigerprüfung dreht die Kinderzahl das Ergebnis zugunsten des Kindergelds. Der Grund ist der progressive Tarif: Drei Freibeträge von zusammen 29.268 Euro schieben das zu versteuernde Einkommen weit nach unten, in Zonen mit niedrigerem Grenzsteuersatz – der Vorteil je Freibetrag sinkt also mit jedem weiteren. Das Kindergeld dagegen wächst linear. Bei 60.000 Euro zu versteuerndem Einkommen und Zusammenveranlagung stehen 7.424 Euro Steuervorteil gegen 9.324 Euro Kindergeld: Das Kindergeld gewinnt um 1.900 Euro.",
-      "Ab drei Kindern kommen Leistungen in Betracht, die dieser Rechner bewusst nicht abbildet, weil sie von Wohnkosten und Einkommen im Einzelfall abhängen: der Kinderzuschlag für Familien mit kleinem Erwerbseinkommen, das Bildungs- und Teilhabepaket sowie in einigen Bundesländern eigene Familienleistungen. Wer nahe an den jeweiligen Einkommensgrenzen liegt, sollte sie prüfen lassen – die Familienkasse berät dazu kostenfrei.",
-    ],
-    faq: [
       {
-        question: "Wie viel Kindergeld gibt es für 3 Kinder?",
+        question: "Muss ich die Günstigerprüfung selbst beantragen?",
         answer:
-          "777 Euro im Monat und 9.324 Euro im Jahr – dreimal 259 Euro. Seit 2023 ist der Betrag für jedes Kind gleich; die frühere Staffelung nach Reihenfolge wurde abgeschafft.",
+          "Nein, sie läuft automatisch bei jeder abgegebenen Einkommensteuererklärung, in der Kinder eingetragen sind – ein gesonderter Antrag ist nicht nötig und in den Steuerformularen auch nicht vorgesehen. Voraussetzung ist allein, dass überhaupt eine Steuererklärung abgegeben wird: Wer als Angestellter dazu nicht verpflichtet ist und keine freiwillige Erklärung einreicht, bekommt die Prüfung nicht und damit im Zweifel weniger, als ihm zustünde. Gerade bei höheren Einkommen mit mehreren Kindern lohnt sich deshalb eine freiwillige Steuererklärung allein wegen dieser automatischen Prüfung, selbst wenn sonst keine steuerliche Pflicht dazu besteht.",
       },
       {
-        question: "Gibt es für das dritte Kind mehr Geld?",
+        question: "Was passiert bei drei oder mehr Kindern mit der Günstigerprüfung?",
         answer:
-          "Nein, nicht mehr. Bis 2022 stieg das Kindergeld ab dem dritten Kind, seit 2023 gilt für alle Kinder derselbe Betrag. Wer mehrere Kinder hat, profitiert dafür in der Günstigerprüfung meist stärker vom Kindergeld als vom Freibetrag.",
+          "Die Freibeträge summieren sich linear mit der Kinderzahl, das Kindergeld ebenfalls seit der Abschaffung der Staffelung nach Geschwisterreihenfolge – trotzdem verschiebt sich der Umschlagpunkt zugunsten des Freibetrags mit jedem weiteren Kind tendenziell nach unten. Der Grund liegt in der Steuerprogression: Mehrere Freibeträge zusammen mindern das zu versteuernde Einkommen stärker und wirken damit häufiger auch auf höhere Grenzsteuersätze, während das Kindergeld je Kind unverändert bleibt. Bei drei oder mehr Kindern lohnt sich die genaue Nachrechnung deshalb besonders, weil der Vorteil des Freibetrags gegenüber wenigen Kindern spürbar zunehmen kann.",
       },
       {
-        question: "Ab wann lohnt sich der Freibetrag bei drei Kindern?",
+        question: "Wie wirkt sich die Günstigerprüfung bei getrennter Veranlagung aus?",
         answer:
-          "Deutlich später als bei einem Kind. Drei Freibeträge senken das zu versteuernde Einkommen um 29.268 Euro und ziehen es damit in Tarifzonen mit niedrigerem Grenzsteuersatz – der Vorteil je Kind sinkt also. Bei 60.000 Euro zu versteuerndem Einkommen gewinnt das Kindergeld hier klar; die Schwelle liegt bei drei Kindern erst im sechsstelligen Bereich.",
+          "Bei Einzelveranlagung steht jedem Elternteil regulär nur der halbe Kinderfreibetrag zu, was den Umschlagpunkt zugunsten des Freibetrags gegenüber der Zusammenveranlagung nach oben verschiebt – es braucht ein höheres Einkommen, bis sich der halbe Freibetrag gegenüber dem hälftigen Kindergeldanspruch lohnt. Lebt ein Elternteil im Ausland oder zahlt keinen Unterhalt, kann der volle Freibetrag auf Antrag auf den anderen Elternteil übertragen werden, wodurch sich die Rechnung wieder der bei Zusammenveranlagung annähert. Diese Übertragung muss beim Finanzamt gesondert beantragt werden und geschieht nicht automatisch.",
       },
     ],
   },
@@ -157,8 +85,14 @@ export const variantenTexte: VariantContent[] = [
       "Für ein Kind in Ausbildung oder Studium wird Kindergeld bis einschließlich des Monats gezahlt, in dem es 25 Jahre alt wird. Das sind gegenüber der regulären Grenze von 18 sieben zusätzliche Jahre und damit 21.756 Euro. Anders als bis zur Volljährigkeit läuft das nicht automatisch: Die Familienkasse braucht einen Nachweis – die Immatrikulationsbescheinigung oder den Ausbildungsvertrag – und fordert ihn in der Regel jährlich erneut an.",
       "Als Ausbildung zählt jede Maßnahme, die auf einen Beruf vorbereitet: Studium, betriebliche Ausbildung, Schule, Fachschule, aber auch ein freiwilliges soziales oder ökologisches Jahr und der Bundesfreiwilligendienst. Zwischen zwei Ausbildungsabschnitten überbrückt die Familienkasse bis zu vier Monate. Wird diese Lücke länger – etwa durch ein Wartesemester –, entfällt der Anspruch für die dazwischenliegenden Monate und lebt danach wieder auf.",
       "Ein Nebenjob ist während der ersten Ausbildung unschädlich, unabhängig vom Verdienst. Nach einem abgeschlossenen Erststudium oder einer abgeschlossenen Erstausbildung wird es strenger: Dann darf die Erwerbstätigkeit 20 Wochenstunden nicht dauerhaft überschreiten, sonst entfällt der Anspruch. Ausbildungsdienstverhältnisse und Minijobs bleiben dabei außen vor. Ein Masterstudium, das auf den Bachelor aufbaut, gilt in der Regel noch als Teil der Erstausbildung – diese Einordnung entscheidet über mehrere tausend Euro und lohnt die genaue Prüfung.",
+      "Ein häufiger Sonderfall ist ein Auslandsstudium oder ein Auslandssemester: Der Kindergeldanspruch bleibt grundsätzlich bestehen, solange das Kind weiterhin an einer deutschen Hochschule eingeschrieben ist oder das Auslandsstudium als gleichwertig anerkannt wird und innerhalb der EU beziehungsweise des EWR stattfindet. Bei einem Studium außerhalb der EU wird zusätzlich geprüft, ob noch ein Inlandswohnsitz besteht – etwa das Kinderzimmer bei den Eltern, das während des Auslandsaufenthalts weiter genutzt wird. Fehlt dieser Bezug zum Inland vollständig und ist auch keine deutsche Immatrikulation mehr vorhanden, kann der Anspruch für die Dauer des Auslandsaufenthalts entfallen. Wer einen mehrsemestrigen Auslandsaufenthalt plant, sollte das vorab mit der Familienkasse klären, statt es nachträglich zu korrigieren.",
     ],
     faq: [
+      {
+        question: "Gibt es Kindergeld während eines Auslandssemesters?",
+        answer:
+          "In der Regel ja, solange die Immatrikulation an einer deutschen Hochschule bestehen bleibt oder das Auslandsstudium als gleichwertig anerkannt ist und innerhalb der EU beziehungsweise des EWR stattfindet. Bei einem Studium außerhalb der EU prüft die Familienkasse zusätzlich, ob noch ein Inlandswohnsitz besteht, etwa das Kinderzimmer bei den Eltern. Fehlt sowohl die deutsche Immatrikulation als auch ein Inlandsbezug vollständig, kann der Anspruch für die Auslandszeit entfallen. Bei mehrsemestrigen Auslandsaufenthalten empfiehlt sich eine vorherige Rückfrage bei der zuständigen Familienkasse, um Überraschungen bei der nächsten Nachweisprüfung zu vermeiden.",
+      },
       {
         question: "Wie lange gibt es Kindergeld im Studium?",
         answer:
@@ -173,6 +107,26 @@ export const variantenTexte: VariantContent[] = [
         question: "Gilt der Master noch als Erstausbildung?",
         answer:
           "In der Regel ja, wenn er inhaltlich auf dem Bachelor aufbaut und zeitlich unmittelbar folgt – dann bleibt ein Nebenjob unschädlich. Wird zwischen beiden längere Zeit gearbeitet oder ein fachfremder Master begonnen, wertet die Familienkasse ihn als Zweitausbildung mit der 20-Stunden-Grenze.",
+      },
+      {
+        question: "Welche Nachweise verlangt die Familienkasse während des Studiums?",
+        answer:
+          "In der Regel jährlich eine aktuelle Immatrikulationsbescheinigung der Hochschule, manchmal ergänzt um einen Nachweis der bisherigen Studiendauer oder eine Erklärung zum Ausbildungsstand. Ohne fristgerecht eingereichten Nachweis stellt die Familienkasse die Zahlung vorübergehend ein, bis die Unterlagen nachgereicht sind – rückwirkend wird dann aber in der Regel nachgezahlt, sofern die Voraussetzungen tatsächlich vorlagen. Bei einem Wechsel der Hochschule, einer Unterbrechung oder einem Fachwechsel ist es sinnvoll, die Familienkasse von sich aus zu informieren, statt auf die nächste turnusmäßige Nachweisanforderung zu warten.",
+      },
+      {
+        question: "Wer bekommt das Kindergeld ausgezahlt, wenn das Kind volljährig ist?",
+        answer:
+          "Grundsätzlich weiterhin der antragstellende Elternteil, bei dem das Kind gemeldet ist oder überwiegend lebt – die Volljährigkeit ändert daran nichts Automatisches. Zieht das Kind während des Studiums aus, etwa in eine eigene Wohnung oder ein Wohnheim am Studienort, bleibt der Anspruch beim Elternteil bestehen, solange das Kind wirtschaftlich noch nicht auf eigenen Füßen steht. Auf Antrag des volljährigen Kindes kann die Familienkasse das Kindergeld aber auch direkt an das Kind selbst auszahlen, insbesondere wenn der bisherige Berechtigte seiner Unterhaltspflicht nicht angemessen nachkommt.",
+      },
+      {
+        question: "Zählt ein Urlaubssemester als Unterbrechung des Kindergeldanspruchs?",
+        answer:
+          "Ein Urlaubssemester wegen Krankheit, Schwangerschaft oder eines Auslandsaufenthalts unterbricht den Anspruch in der Regel nicht, solange die Immatrikulation formal bestehen bleibt. Ein Urlaubssemester allein zur freien Verfügung ohne anerkannten Grund kann dagegen als Unterbrechung der Ausbildung gewertet werden, mit der Folge, dass für diese Zeit kein Kindergeld gezahlt wird. Die Familienkasse prüft dabei den konkreten Grund, nicht allein die formale Immatrikulation – ein Nachweis über den Anlass des Urlaubssemesters ist deshalb ratsam.",
+      },
+      {
+        question: "Wirkt sich ein Urlaubssemester auf die Höchstdauer bis 25 Jahre aus?",
+        answer:
+          "Nein, die Altersgrenze von 25 Jahren bleibt unverändert – ein anerkanntes Urlaubssemester verlängert sie nicht, verkürzt sie aber auch nicht. Es zählt lediglich als Zeit ohne Kindergeldanspruch, falls es nicht als Fortsetzung der Ausbildung anerkannt wird, während die Frist bis zum 25. Geburtstag unbeeinflusst weiterläuft.",
       },
     ],
   },
