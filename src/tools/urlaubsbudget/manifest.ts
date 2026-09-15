@@ -150,7 +150,7 @@ export const urlaubsbudget: ToolManifest = {
   // Das Abreisedatum darf nicht im Client entstehen: sonst weicht der erste
   // Client-Render vom SSR-HTML ab.
   getDefaultParams: () => ({ heute: todayIso() }),
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

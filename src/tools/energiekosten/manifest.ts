@@ -149,7 +149,7 @@ export const energiekosten: ToolManifest = {
     "tarifwechsel ersparnis",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

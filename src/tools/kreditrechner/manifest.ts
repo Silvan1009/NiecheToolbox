@@ -160,7 +160,7 @@ export const kreditrechner: ToolManifest = {
     "monatsrate kredit berechnen",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

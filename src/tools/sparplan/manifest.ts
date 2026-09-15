@@ -165,7 +165,7 @@ export const sparplan: ToolManifest = {
     "millionär werden sparplan",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

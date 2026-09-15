@@ -160,7 +160,7 @@ export const kindergeld: ToolManifest = {
     const start = defaultInput();
     return { heute: todayIso(), kinder: encodeKinder(start.kinder) };
   },
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,

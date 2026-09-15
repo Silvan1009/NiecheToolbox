@@ -161,7 +161,7 @@ export const bruttonetto: ToolManifest = {
     "gehaltserhöhung netto",
   ],
 
-  getVariants: () => buildVariants(variantenTexte, about, sharedFaq),
+  getVariants: () => buildVariants(variantenTexte),
 
   about,
   sections,
