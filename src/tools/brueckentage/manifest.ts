@@ -1,7 +1,7 @@
 import { CalendarRange } from "lucide-react";
 import type { ContentSection, FaqEntry, ToolManifest } from "@/tools/types";
 import { brueckentageAffiliate } from "./affiliate";
-import { buildUebersichtSection, reiseFaq } from "./uebersicht";
+import { buildUebersichtSection, brueckentageFaq } from "./uebersicht";
 
 const about: string[] = [
   "Ein Brückentag ist ein einzelner Arbeitstag zwischen einem Feiertag und dem Wochenende. Wer ihn als Urlaubstag nimmt, verbindet beides zu einer langen freien Spanne. Aus einem eingesetzten Urlaubstag werden so schnell vier freie Tage – manchmal mehr.",
@@ -133,7 +133,7 @@ export const brueckentage: ToolManifest = {
 
   about,
   sections: [...sections, ...buildUebersichtSection(baseYear)],
-  faq: [...sharedFaq, ...Object.values(reiseFaq)],
+  faq: [...sharedFaq, ...brueckentageFaq],
 
   monetization: {
     adDensity: "low",
