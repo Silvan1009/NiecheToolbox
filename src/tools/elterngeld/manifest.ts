@@ -87,6 +87,24 @@ export const elterngeld: ToolManifest = {
   name: "Elterngeld-Rechner",
   tagline:
     "Ersatzrate, Mindest- und Höchstbetrag, Geschwisterbonus und Mehrlingszuschlag nach dem BEEG – Basis und ElterngeldPlus im Vergleich.",
+  seoTitle: "Elterngeld-Rechner: Basiselterngeld und ElterngeldPlus",
+  metaDescription:
+    "Elterngeld nach dem BEEG berechnen: Ersatzrate, Mindest- und Höchstbetrag, Geschwisterbonus und Mehrlingszuschlag – Basis und ElterngeldPlus im Vergleich.",
+  sources: [
+    {
+      label: "§ 2 BEEG – Höhe des Elterngeldes",
+      href: "https://www.gesetze-im-internet.de/beeg/__2.html",
+      note: "Ersatzrate, Mindest- und Höchstbetrag",
+    },
+    {
+      label: "§ 2a BEEG – Geschwisterbonus und Mehrlingszuschlag",
+      href: "https://www.gesetze-im-internet.de/beeg/__2a.html",
+    },
+    {
+      label: "§ 4a BEEG – Berechnung von Basiselterngeld und Elterngeld Plus",
+      href: "https://www.gesetze-im-internet.de/beeg/__4a.html",
+    },
+  ],
   category: "familie",
   icon: HandHeart,
   status: "live",

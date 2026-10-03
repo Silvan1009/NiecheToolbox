@@ -13,7 +13,11 @@ const sections: ContentSection[] = [
           ["Wie viel sind p % von X?", "20 % von 80 €", "16 €"],
           ["Wovon sind das p %?", "16 € sind 20 % wovon?", "80 €"],
           ["Wie viel % ist ein Teil vom Ganzen?", "16 von 80", "20 %"],
-          ["Um wie viel % hat sich der Wert verändert?", "von 80 auf 100", "+25 %"],
+          [
+            "Um wie viel % hat sich der Wert verändert?",
+            "von 80 auf 100",
+            "+25 %",
+          ],
         ],
       },
     ],
@@ -69,6 +73,9 @@ export const prozentrechner: ToolManifest = {
   name: "Prozentrechner",
   tagline:
     "Anteil, Grundwert, Prozentsatz oder Veränderung – die vier Prozentfragen des Alltags in einem Rechner.",
+  seoTitle: "Prozentrechner: Prozentwert, Grundwert, Prozentsatz",
+  metaDescription:
+    "Prozent berechnen in vier Varianten: Prozentwert, Grundwert, Prozentsatz und prozentuale Veränderung – für Rabatte, Preisänderungen und Alltagsfragen.",
   category: "alltag",
   icon: Percent,
   status: "live",

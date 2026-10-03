@@ -35,8 +35,14 @@ const sections: ContentSection[] = [
         caption: "Feiertage, die nicht bundesweit gelten",
         head: ["Feiertag", "Gilt in"],
         rows: [
-          ["Heilige Drei Könige (6. Jan.)", "Baden-Württemberg, Bayern, Sachsen-Anhalt"],
-          ["Internationaler Frauentag (8. März)", "Berlin, Mecklenburg-Vorpommern"],
+          [
+            "Heilige Drei Könige (6. Jan.)",
+            "Baden-Württemberg, Bayern, Sachsen-Anhalt",
+          ],
+          [
+            "Internationaler Frauentag (8. März)",
+            "Berlin, Mecklenburg-Vorpommern",
+          ],
           [
             "Fronleichnam",
             "Baden-Württemberg, Bayern, Hessen, Nordrhein-Westfalen, Rheinland-Pfalz, Saarland – regional auch Sachsen und Thüringen",
@@ -106,6 +112,9 @@ export const brueckentage: ToolManifest = {
   name: "Brückentage-Optimierer",
   tagline:
     "Finde die Tage, an denen ein Urlaubstag drei geschenkte dazu bringt – für dein Bundesland.",
+  seoTitle: "Brückentage-Rechner: Urlaub clever planen je Bundesland",
+  metaDescription:
+    "Brückentage für dein Bundesland berechnen: Der Rechner zeigt, an welchen Tagen ein Urlaubstag die längste freie Spanne bringt – mit Jahresplan.",
   category: "zeit",
   icon: CalendarRange,
   status: "live",

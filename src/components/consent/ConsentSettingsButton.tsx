@@ -20,7 +20,7 @@ export function ConsentSettingsButton({
     <button
       type="button"
       onClick={openConsentSettings}
-      className={`text-left underline decoration-line underline-offset-2 transition-colors duration-(--dur-fast) hover:text-ink ${className}`}
+      className={`text-left underline decoration-(--link-line) underline-offset-2 transition-colors duration-(--dur-fast) hover:text-ink ${className}`}
     >
       Einwilligung für Werbung ändern
     </button>

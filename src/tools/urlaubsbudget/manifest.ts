@@ -132,6 +132,9 @@ export const urlaubsbudget: ToolManifest = {
   name: "Urlaubsbudget-Planer",
   tagline:
     "Was der Urlaub am Ende kostet – und was du bis zur Abreise monatlich zurücklegen musst.",
+  seoTitle: "Urlaubsbudget-Rechner: Reisekosten und Sparrate planen",
+  metaDescription:
+    "Urlaubsbudget berechnen: die Gesamtkosten der Reise ermitteln und sehen, wie viel du bis zur Abreise jeden Monat dafür zurücklegen musst.",
   category: "alltag",
   icon: Luggage,
   status: "live",

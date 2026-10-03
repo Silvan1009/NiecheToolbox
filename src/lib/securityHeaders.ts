@@ -19,6 +19,14 @@ export interface SecurityHeaderOptions {
   isProduction?: boolean;
   /** Origin der cookiefreien Reichweitenmessung, z. B. "https://plausible.io". */
   analyticsOrigin?: string | null;
+  /**
+   * Origins, an die das Mess-Skript seine Daten schickt, wenn das ein anderer
+   * Host ist als der, von dem es geladen wird. Umami Cloud lädt von
+   * cloud.umami.is und sendet an gateway.umami.is – fehlt der zweite Host in
+   * `connect-src`, blockiert die CSP jeden Messpunkt, ohne dass die Seite
+   * sonst etwas davon merkt. Siehe lib/analyticsOrigins.ts.
+   */
+  analyticsConnectOrigins?: string[];
 }
 
 export interface HttpHeader {
@@ -131,16 +139,24 @@ function permissionsPolicy(): string {
  * Ehrliche Einordnung: das ist eine **Origin-Allowlist, kein XSS-Schutz**.
  * `script-src` braucht `'unsafe-inline'`, weil Next die RSC-Payload als inline
  * `self.__next_f.push(...)` streamt und Werbe-Tags eigene Inline-Skripte
- * nachziehen. `style-src` braucht es wegen `experimental.inlineCss`, das pro
- * Seite wechselnde `<style>`-Blöcke ausgibt – Hashes müssten je Route neu
- * erzeugt werden, ein Nonce steht ohne dynamisches Rendern nicht zur Verfügung.
+ * nachziehen. `style-src` braucht es, weil die Rechner Balken und Verläufe
+ * über `style`-Attribute zeichnen und next/font seine Variablen inline setzt –
+ * Hashes müssten je Route neu erzeugt werden, ein Nonce steht im statischen
+ * Export nicht zur Verfügung.
  *
  * Der Gewinn liegt darin, dass Skripte, Bilder, Verbindungen und Frames nur von
  * bekannten Hosts kommen dürfen.
  */
 function contentSecurityPolicy(options: SecurityHeaderOptions): string {
-  const { isProduction = true, analyticsOrigin } = options;
+  const {
+    isProduction = true,
+    analyticsOrigin,
+    analyticsConnectOrigins = [],
+  } = options;
   const analytics = analyticsOrigin ? [analyticsOrigin] : [];
+  const analyticsConnect = [
+    ...new Set([...analytics, ...analyticsConnectOrigins]),
+  ];
 
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
@@ -155,7 +171,7 @@ function contentSecurityPolicy(options: SecurityHeaderOptions): string {
     "style-src": ["'self'", "'unsafe-inline'"],
     "img-src": ["'self'", "data:", "blob:", ...AD_IMAGE_ORIGINS],
     "font-src": ["'self'", "data:"],
-    "connect-src": ["'self'", ...AD_CONNECT_ORIGINS, ...analytics],
+    "connect-src": ["'self'", ...AD_CONNECT_ORIGINS, ...analyticsConnect],
     "frame-src": AD_FRAME_ORIGINS,
     "worker-src": ["'self'", "blob:"],
     "object-src": ["'none'"],
@@ -189,7 +205,14 @@ export function securityHeaders(
   const headers: HttpHeader[] = [
     { key: "X-Content-Type-Options", value: "nosniff" },
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-    { key: "X-Frame-Options", value: "SAMEORIGIN" },
+    // Deckungsgleich mit `frame-ancestors 'none'` in der CSP: Die Seite wird
+    // nirgends eingebettet, auch nicht von sich selbst. Zwei Header mit
+    // unterschiedlicher Aussage wären ein Widerspruch, den jeder Browser
+    // anders auflöst.
+    { key: "X-Frame-Options", value: "DENY" },
+    // Trennt das Fenster von fremden Öffnern, lässt aber eigene Pop-ups (den
+    // Einwilligungsdialog, angeklickte Anzeigen) weiter zu.
+    { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
     { key: "X-DNS-Prefetch-Control", value: "on" },
     { key: "Permissions-Policy", value: permissionsPolicy() },
   ];

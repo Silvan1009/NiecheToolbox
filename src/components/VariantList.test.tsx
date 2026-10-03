@@ -19,6 +19,8 @@ const toolWith = (variants: ToolVariant[]): ToolManifest => ({
   slug: "beispiel",
   name: "Beispielrechner",
   tagline: "Ein Satz.",
+  seoTitle: "Beispielrechner",
+  metaDescription: "Eine Beschreibung.",
   category: "alltag",
   icon: Calculator,
   keywords: [],

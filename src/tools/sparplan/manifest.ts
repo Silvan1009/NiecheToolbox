@@ -149,6 +149,30 @@ export const sparplan: ToolManifest = {
   name: "Sparplan-Rechner",
   tagline:
     "Was aus einer Sparrate wirklich wird: mit Zinseszins, Fondskosten, Abgeltungsteuer, Vorabpauschale und Inflation – plus der Entnahme am Ende.",
+  seoTitle: "Sparplan-Rechner mit Steuern, Kosten und Inflation",
+  metaDescription:
+    "Sparplan berechnen mit Zinseszins, Fondskosten, Abgeltungsteuer, Vorabpauschale und Inflation – inklusive Entnahmeplan für die Zeit nach dem Ansparen.",
+  sources: [
+    {
+      label: "§ 18 InvStG – Vorabpauschale",
+      href: "https://www.gesetze-im-internet.de/invstg_2018/__18.html",
+    },
+    {
+      label: "§ 20 InvStG – Teilfreistellung",
+      href: "https://www.gesetze-im-internet.de/invstg_2018/__20.html",
+    },
+    {
+      label:
+        "§ 32d EStG – Gesonderter Steuertarif für Einkünfte aus Kapitalvermögen",
+      href: "https://www.gesetze-im-internet.de/estg/__32d.html",
+      note: "Abgeltungsteuer und die Formel für die Kirchensteuer",
+    },
+    {
+      label: "§ 20 EStG – Einkünfte aus Kapitalvermögen",
+      href: "https://www.gesetze-im-internet.de/estg/__20.html",
+      note: "der Sparer-Pauschbetrag in Absatz 9",
+    },
+  ],
   category: "geld",
   icon: TrendingUp,
   status: "live",

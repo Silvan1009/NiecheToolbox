@@ -144,7 +144,12 @@ function uebersichtSection(): ContentSection {
       {
         type: "table",
         caption: "Grunderwerbsteuer und Kaufnebenkosten gesamt",
-        head: ["Bundesland", "Grunderwerbsteuer", "Nebenkosten bei 300.000 €", "Nebenkosten bei 500.000 €"],
+        head: [
+          "Bundesland",
+          "Grunderwerbsteuer",
+          "Nebenkosten bei 300.000 €",
+          "Nebenkosten bei 500.000 €",
+        ],
         rows,
       },
       {
@@ -209,6 +214,21 @@ export const immobilienrechner: ToolManifest = {
   name: "Immobilien-Rechner",
   tagline:
     "Kaufnebenkosten, Finanzierung, Mietrendite und Cashflow nach Steuern – für Kapitalanlage und Eigennutzung.",
+  seoTitle: "Immobilienrechner: Nebenkosten, Rendite und Cashflow",
+  metaDescription:
+    "Immobilie durchrechnen: Kaufnebenkosten je Bundesland, Finanzierung, Mietrendite und Cashflow nach Steuern – für Kapitalanlage und Eigennutzung.",
+  sources: [
+    {
+      label: "§ 11 GrEStG – Steuersatz, Abrundung",
+      href: "https://www.gesetze-im-internet.de/grestg_1983/__11.html",
+      note: "der Regelsatz; die abweichenden Sätze legen die Länder selbst fest",
+    },
+    {
+      label: "§ 7 EStG – Absetzung für Abnutzung oder Substanzverringerung",
+      href: "https://www.gesetze-im-internet.de/estg/__7.html",
+      note: "die Gebäudeabschreibung nach Absatz 4",
+    },
+  ],
   category: "wohnen",
   icon: House,
   status: "live",

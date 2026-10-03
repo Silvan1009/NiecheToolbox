@@ -135,6 +135,26 @@ export const kindergeld: ToolManifest = {
   name: "Kindergeld-Rechner",
   tagline:
     "Kindergeld für alle Kinder, die Restlaufzeit je Kind – und die Günstigerprüfung gegen den Kinderfreibetrag.",
+  seoTitle: "Kindergeld-Rechner mit Günstigerprüfung",
+  metaDescription:
+    "Kindergeld für alle Kinder berechnen, die Restlaufzeit je Kind sehen und per Günstigerprüfung vergleichen, ob der Kinderfreibetrag mehr bringt.",
+  sources: [
+    {
+      label: "§ 66 EStG – Höhe des Kindergeldes, Zahlungszeitraum",
+      href: "https://www.gesetze-im-internet.de/estg/__66.html",
+      note: "der monatliche Betrag je Kind",
+    },
+    {
+      label: "§ 32 EStG – Kinder, Freibeträge für Kinder",
+      href: "https://www.gesetze-im-internet.de/estg/__32.html",
+      note: "Kinderfreibetrag und Altersgrenzen, auch für Kinder in Ausbildung",
+    },
+    {
+      label: "§ 31 EStG – Familienleistungsausgleich",
+      href: "https://www.gesetze-im-internet.de/estg/__31.html",
+      note: "die Günstigerprüfung zwischen Kindergeld und Freibeträgen",
+    },
+  ],
   category: "familie",
   // `Baby` gehört dem Elternzeit-Planer; zwei Karten mit demselben Symbol
   // lesen sich wie ein Duplikat.

@@ -166,8 +166,8 @@ export function SiteSearch() {
         {results.map((entry, index) => (
           <li key={entry.href} role="presentation">
             <Link
-              href={entry.href}
               prefetch={false}
+              href={entry.href}
               role="option"
               id={`${listboxId}-opt-${index}`}
               aria-selected={index === activeIndex}

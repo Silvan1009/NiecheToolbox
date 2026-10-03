@@ -125,6 +125,9 @@ export const arbeitstage: ToolManifest = {
   name: "Arbeitstage-Rechner",
   tagline:
     "Wie viele Arbeitstage liegen in einem Zeitraum? Mit den Feiertagen deines Bundeslandes.",
+  seoTitle: "Arbeitstage berechnen: Zeitraum, Monat und Bundesland",
+  metaDescription:
+    "Arbeitstage zwischen zwei Daten berechnen – mit den gesetzlichen Feiertagen deines Bundeslandes, Monatsübersicht und Tagessatz aus dem Jahreseinkommen.",
   category: "zeit",
   icon: CalendarCheck,
   status: "live",

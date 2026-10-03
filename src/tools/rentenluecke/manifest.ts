@@ -56,6 +56,9 @@ export const rentenluecke: ToolManifest = {
   name: "Rentenlücken-Rechner",
   tagline:
     "Wunscheinkommen im Ruhestand minus erwarteter Rente – mit Kapitalbedarf und der Sparrate, die die Lücke schließt.",
+  seoTitle: "Rentenlücke berechnen: Kapitalbedarf und Sparrate",
+  metaDescription:
+    "Rentenlücke berechnen: Wunscheinkommen im Ruhestand minus erwarteter Rente – mit dem nötigen Kapital und der Sparrate, die die Lücke schließt.",
   category: "geld",
   icon: PiggyBank,
   status: "live",

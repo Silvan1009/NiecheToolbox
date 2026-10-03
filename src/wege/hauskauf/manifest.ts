@@ -14,11 +14,15 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "Belastungsquote: Rate plus Nebenkosten geteilt durch das Haushaltsnetto",
+        caption:
+          "Belastungsquote: Rate plus Nebenkosten geteilt durch das Haushaltsnetto",
         head: ["Belastungsquote", "Einordnung"],
         rows: [
           [`unter ${BELASTUNGSQUOTE_KOMFORTABEL} %`, "komfortabel"],
-          [`${BELASTUNGSQUOTE_KOMFORTABEL}–${BELASTUNGSQUOTE_ENG} %`, "tragbar, aber eng"],
+          [
+            `${BELASTUNGSQUOTE_KOMFORTABEL}–${BELASTUNGSQUOTE_ENG} %`,
+            "tragbar, aber eng",
+          ],
           [`über ${BELASTUNGSQUOTE_ENG} %`, "Vorsicht angebracht"],
         ],
       },
@@ -75,6 +79,21 @@ export const hauskauf: WegManifest = {
   name: "Check: Hauskauf",
   tagline:
     "Immobilie, Finanzierung und Nettoeinkommen in einem Urteil: trägt die Rate deinen Haushalt?",
+  seoTitle: "Hauskauf-Check: Kann ich mir die Immobilie leisten?",
+  metaDescription:
+    "Hauskauf durchrechnen: Immobilie, Finanzierung und Nettoeinkommen in einem Urteil – trägt dein Haushalt die Rate, und wie hoch ist die Belastung?",
+  sources: [
+    {
+      label: "§ 11 GrEStG – Steuersatz, Abrundung",
+      href: "https://www.gesetze-im-internet.de/grestg_1983/__11.html",
+      note: "Grunderwerbsteuer als Teil der Kaufnebenkosten",
+    },
+    {
+      label: "§ 489 BGB – Ordentliches Kündigungsrecht des Darlehensnehmers",
+      href: "https://www.gesetze-im-internet.de/bgb/__489.html",
+      note: "Kündigung nach zehn Jahren Zinsbindung",
+    },
+  ],
   category: "wohnen",
   icon: Route,
   status: "live",

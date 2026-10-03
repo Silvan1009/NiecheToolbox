@@ -96,6 +96,21 @@ export const rentenabschlag: ToolManifest = {
   name: "Rentenabschlags-Rechner",
   tagline:
     "Regelaltersgrenze nach Geburtsjahrgang, Abschlag bei früherem und Zuschlag bei späterem Renteneintritt – mit dem lebenslangen Effekt in Euro.",
+  seoTitle: "Rentenabschlag berechnen: Früher in Rente gehen",
+  metaDescription:
+    "Rentenabschlag berechnen: Regelaltersgrenze nach Geburtsjahrgang, Abschlag bei früherem und Zuschlag bei späterem Rentenbeginn – in Euro auf Lebenszeit.",
+  sources: [
+    {
+      label: "§ 77 SGB VI – Zugangsfaktor",
+      href: "https://www.gesetze-im-internet.de/sgb_6/__77.html",
+      note: "Abschlag je vorgezogenem und Zuschlag je aufgeschobenem Monat",
+    },
+    {
+      label: "§ 235 SGB VI – Regelaltersrente",
+      href: "https://www.gesetze-im-internet.de/sgb_6/__235.html",
+      note: "Anhebung der Regelaltersgrenze nach Geburtsjahrgang",
+    },
+  ],
   category: "geld",
   icon: Hourglass,
   status: "live",

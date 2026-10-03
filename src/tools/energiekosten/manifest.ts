@@ -133,6 +133,9 @@ export const energiekosten: ToolManifest = {
     "Was die Jahresrechnung für Strom und Gas wirklich kostet – mit Grundpreis, Effektivpreis und der Nachzahlung, die aus dem Abschlag folgt.",
   // Bewusst "wohnen" und nicht "geld": der Stromkosten-Rechner steht schon in
   // "geld", und zwei Karten mit derselben Kategorie lesen sich wie Duplikate.
+  seoTitle: "Energiekosten-Rechner: Strom, Gas und Abschlag prüfen",
+  metaDescription:
+    "Jahreskosten für Strom und Gas berechnen: Grundpreis, Arbeitspreis und Effektivpreis je kWh – und ob der Abschlag zu Nachzahlung oder Guthaben führt.",
   category: "wohnen",
   icon: Gauge,
   status: "live",

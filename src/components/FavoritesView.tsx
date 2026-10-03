@@ -34,8 +34,9 @@ export function FavoritesView({
           Stern tippen, um sie hier zu merken.
         </p>
         <Link
+          prefetch={false}
           href="/rechner/"
-          className="mt-1 text-sm font-semibold text-accent underline decoration-line underline-offset-2"
+          className="mt-1 text-sm font-semibold text-accent underline decoration-(--link-line) underline-offset-2"
         >
           Rechner durchsuchen
         </Link>

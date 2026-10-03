@@ -53,9 +53,15 @@ src/tools/mein-tool/
    erzeugt, läuft über [`useUrlState`](src/lib/useUrlState.ts) und landet damit
    in der Adresszeile: jedes Ergebnis ist teil- und verlinkbar.
 4. **`manifest.ts`** – füllt [`ToolManifest`](src/tools/types.ts) aus:
-   `slug`, `name`, `tagline`, `category`, `icon`, `keywords`, `status`,
-   `Component`. Optional `about`, `faq`, `getVariants`, `getDefaultParams`,
-   `monetization`.
+   `slug`, `name`, `tagline`, `seoTitle`, `metaDescription`, `category`,
+   `icon`, `keywords`, `status`. Optional `about`, `sections`, `faq`,
+   `sources`, `getVariants`, `getDefaultParams`, `monetization`.
+   `seoTitle` (höchstens 60 Zeichen) und `metaDescription` (120 bis 160)
+   stehen im Suchergebnis; `sources` sind die Primärquellen, auf die sich der
+   Rechenweg stützt, und erscheinen als Abschnitt „Quellen und
+   Rechtsgrundlagen“. Jede Adresse vor dem Eintragen abrufen und prüfen.
+   Die Component kommt nicht ins Manifest, sondern als eine Zeile in
+   [`src/tools/components.tsx`](src/tools/components.tsx).
 5. **Registrieren** – in [`src/tools/registry.ts`](src/tools/registry.ts)
    importieren und ins `tools`-Array aufnehmen. Fertig.
 
@@ -111,6 +117,63 @@ src/
 Die Open-Graph-Bilder sind keine Route mehr: `scripts/generate-og-images.tsx`
 rendert sie beim Build als PNGs nach `public/og/` – bei `output: "export"`
 gibt es keinen Server, der sie zur Laufzeit erzeugen könnte.
+
+## Auslieferung und Qualitätsprüfungen
+
+Die Seite ist ein statischer Export auf Apache. Was ein Next-Server zur
+Laufzeit erledigen würde, entsteht hier beim Build – und wird beim Build
+geprüft. Jede Regel unten stammt aus einem Befund, der vorher unbemerkt live
+war.
+
+**Vor dem Build** (`prebuild`):
+
+- [`scripts/generate-last-modified.ts`](scripts/generate-last-modified.ts)
+  liest je Seite den Tag der letzten Änderung aus der Git-Historie. Daraus
+  entstehen `lastmod` in der Sitemap, `dateModified` im strukturierten Datum
+  und die sichtbare Zeile „Zuletzt aktualisiert“. Braucht die vollständige
+  Historie – der Build-Workflow checkt deshalb mit `fetch-depth: 0` aus.
+- [`scripts/generate-htaccess.ts`](scripts/generate-htaccess.ts) schreibt die
+  `.htaccess` aus [`lib/htaccess.ts`](src/lib/htaccess.ts): Sicherheits-Header,
+  gzip für HTML, CSS, JavaScript und JSON, ein Jahr Cache für die gehashten
+  Dateien unter `/_next/static/`, „immer nachfragen“ für Seiten, `noindex` für
+  die Navigationsdateien des Routers und die 301-Weiterleitungen
+  eingeschmolzener Seiten. **Alles außer Kern-Direktiven steht in
+  `<IfModule>`** – eine Direktive, deren Modul fehlt, beantwortet Apache auf
+  jeder Anfrage mit 500. `htaccess.test.ts` setzt das durch.
+
+**Nach dem Build** (`postbuild`), jeder Schritt bricht bei einem Verstoß ab:
+
+| Skript             | prüft                                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `prune-export.ts`  | entfernt die doppelte 404-Seite und legt die Navigationsdateien des Routers unter dem Namen ab, unter dem der Browser sie anfragt                                                                                                                                                     |
+| `check-links.ts`   | jeder interne Link führt zu einer Datei im Export                                                                                                                                                                                                                                     |
+| `seo-audit.ts`     | je Seite: Titel ≤ 60 Zeichen, Beschreibung 120–160, genau ein `<h1>`, keine übersprungene Überschriftenebene, Canonical auf sich selbst, vollständiges Open Graph mit vorhandenem Bild, gültiges JSON-LD, JavaScript-Gewicht unter der Grenze; dazu Sitemap gegen indexierbare Seiten |
+| `content-audit.ts` | einmalige Wortfolgen, Seitenüberlappung, Mindestlänge, Exportgröße                                                                                                                                                                                                                    |
+
+**Nach dem Deploy** prüft
+[`scripts/check-live.ts`](scripts/check-live.ts) die ausgelieferte Seite: ob
+JavaScript und CSS komprimiert und gecacht ankommen, ob die CSP jeden Host
+zulässt, an den das Mess-Skript sendet, ob die Navigationsdateien erreichbar
+sind. Der Export kann fehlerfrei sein und live trotzdem etwas anderes zeigen –
+ein Apache-Modul, das auf dem Hosting fehlt, sieht man nur dort.
+
+Drei Entscheidungen, die sich nicht von selbst erklären:
+
+- **Jeder Rechner ist ein eigener Chunk.** `tools/components.tsx` lädt die
+  Components über `next/dynamic` aus einem Client-Modul. Mit statischen
+  Importen lag der Code aller 29 Rechner im Bundle jeder Rechnerseite.
+- **Kein `<Link>` lädt sein Ziel vor** (`prefetch={false}`,
+  `linkPolicy.test.ts`). Das Vorladen der vier Links im Seitenkopf allein
+  kostete 112 KiB je Aufruf.
+- **Client-Module importieren keine Registry.** `tools/registry.ts` enthält die
+  Texte aller Rechner. Ein Import aus einem `"use client"`-Modul legt sie
+  komplett ins Bundle – so entstand ein 461-KiB-Chunk auf jeder Weg-Seite.
+  Was die Registry braucht, rendert der Server und reicht es als Knoten
+  hinein (siehe `WegSourceTools`).
+
+Die Seitensymbole (`icon.png`, `apple-icon.png`, `favicon.ico`) erzeugt
+`npx tsx scripts/generate-icons.tsx` aus dem Markenzeichen. Das läuft nicht im
+Build; die Dateien sind eingecheckt.
 
 ## Design-System
 
@@ -188,22 +251,28 @@ Das Design ist bewusst ein reines Light-Theme: ein Akzent, ein Payoff-Moment.
 ## Sicherheits-Header
 
 [`lib/securityHeaders.ts`](src/lib/securityHeaders.ts) baut die Header,
-[`next.config.ts`](next.config.ts) hängt sie an jede Antwort. Header wirken zur
-Antwortzeit und lassen Rendering-Modus und Route-Cache unberührt – deshalb dort
-und nicht in `proxy.ts` (in Next 16 der neue Name für `middleware.ts`). Ein
-CSP-Nonce bräuchte pro Anfrage einen frischen Wert, würde dynamisches Rendern
-erzwingen und das `revalidate = 86400` der Tool-Seiten aushebeln.
+[`scripts/generate-htaccess.ts`](scripts/generate-htaccess.ts) schreibt sie beim
+Build als `Header set`-Direktiven in die `.htaccess` – bei `output: "export"`
+gibt es keinen Server, der `headers()` aus `next.config.ts` anwenden könnte.
+Ein CSP-Nonce bräuchte pro Anfrage einen frischen Wert und steht im statischen
+Export deshalb nicht zur Verfügung.
 
 - **Die Permissions-Policy gibt die Privacy-Sandbox-Signale frei**, über die
   AdSense aussteuert und abrechnet. **Hier nichts entfernen.** Den Header ganz
   wegzulassen ist unproblematisch; einen restriktiven zu schreiben nicht. Ein
   blankes `browsing-topics=()` schaltet die Signale stumm ab: keine Warnung,
   kein Fehler, nur weniger Umsatz. `securityHeaders.test.ts` hält das fest.
-- **Die CSP läuft als `Report-Only`** (`CSP_MODE`). Sie ist ehrlicherweise eine
-  Origin-Allowlist und kein XSS-Schutz: `script-src` braucht `'unsafe-inline'`,
-  weil Next die RSC-Payload inline streamt, `style-src` wegen
-  `experimental.inlineCss`. Der Gewinn liegt darin, dass Skripte, Bilder,
-  Verbindungen und Frames nur von bekannten Hosts kommen.
+- **Die CSP läuft lokal als `Report-Only`, im Deploy als `enforce`**
+  (`CSP_MODE` im Build-Workflow). Sie ist ehrlicherweise eine Origin-Allowlist
+  und kein XSS-Schutz: `script-src` braucht `'unsafe-inline'`, weil Next die
+  RSC-Payload inline streamt, `style-src` wegen der `style`-Attribute der
+  Rechner. Der Gewinn liegt darin, dass Skripte, Bilder, Verbindungen und
+  Frames nur von bekannten Hosts kommen.
+- **Skript-Host und Sende-Host der Reichweitenmessung sind zwei Einträge.**
+  Umami Cloud lädt von `cloud.umami.is` und sendet an `gateway.umami.is`.
+  Stand nur der erste in der CSP, wurde jeder Messpunkt blockiert – die Seite
+  lief so, ohne eine einzige Zählung. [`lib/analyticsOrigins.ts`](src/lib/analyticsOrigins.ts)
+  kennt beide; `check-live.ts` prüft nach jedem Deploy gegen das Skript selbst.
 - **Vor dem Umschalten auf `enforce`**: mit echten IDs und
   `NEXT_PUBLIC_ADS_TEST=true` bauen, jede Tool-Seite mit offener Konsole laden,
   auf `[Report Only]` filtern und blockierte Hosts nachtragen. Nach einer Woche
@@ -235,7 +304,7 @@ Vor der Bewerbung muss all das stimmen – AdSense prüft die Seite, wie sie ist
       Formpaar, …) sind bei der AdSense-Konsolidierung (Aug/Sep 2026) in ihre
       Elternseite eingeschmolzen worden, mit dauerhaften Redirects
       ([`src/lib/retiredPaths.ts`](src/lib/retiredPaths.ts)). `npx tsx
-      scripts/content-audit.ts` nach `npm run build` hält die drei Zielwerte
+    scripts/content-audit.ts` nach `npm run build` hält die drei Zielwerte
       fest (≥ 85 % einmalige Wortfolgen, ≤ 40 % Seitenüberlappung, 0 Seiten
       unter 800 Wörtern eigener Prosa); `CONTENT_AUDIT=enforce` ist seit
       dieser Etappe im Build-Workflow aktiv und bricht den Deploy bei einem

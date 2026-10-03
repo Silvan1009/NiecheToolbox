@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Arbeitskopien von Claude Code. Jede ist ein vollständiger Checkout samt
+    // eigenem Build – ohne diese Zeile meldet `npm run lint` lokal tausende
+    // Fehler aus Dateien, die nicht zu diesem Stand gehören.
+    ".claude/**",
+    ".generated/**",
   ]),
 ]);
 

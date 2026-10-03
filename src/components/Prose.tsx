@@ -150,7 +150,7 @@ function Block({ block }: { block: ContentBlock }) {
             <li key={item.href}>
               <a
                 href={item.href}
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
                 // Quellen zeigen nach außen: Referrer sparsam halten und das
                 // Zielfenster vom eigenen Kontext trennen.
                 rel="noopener noreferrer"

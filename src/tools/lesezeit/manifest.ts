@@ -87,6 +87,9 @@ export const lesezeit: ToolManifest = {
   name: "Lesezeit-Rechner",
   tagline:
     "Wie lange dauert dieser Text? Wörter zählen, Lesedauer schätzen, Vorlesezeit gleich mit.",
+  seoTitle: "Lesezeit-Rechner: Lesedauer und Wörter zählen",
+  metaDescription:
+    "Text einfügen und Lesezeit berechnen: Wörter und Zeichen zählen, die Lesedauer für stilles Lesen schätzen und die Vorlesezeit gleich mit ausgeben.",
   category: "text",
   icon: BookOpenText,
   status: "live",

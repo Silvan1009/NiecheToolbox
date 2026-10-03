@@ -115,6 +115,16 @@ export const bmi: ToolManifest = {
   name: "BMI-Rechner",
   tagline:
     "Body-Mass-Index aus Gewicht und Größe – mit WHO-Kategorie und Normalgewichtsspanne in Kilogramm.",
+  seoTitle: "BMI-Rechner: Body-Mass-Index nach WHO berechnen",
+  metaDescription:
+    "BMI aus Gewicht und Körpergröße berechnen: Einordnung nach den WHO-Kategorien für Erwachsene und die Normalgewichtsspanne in Kilogramm für deine Größe.",
+  sources: [
+    {
+      label: "Weltgesundheitsorganisation (WHO): Obesity and overweight",
+      href: "https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight",
+      note: "Faktenblatt in englischer Sprache mit den Grenzwerten für Übergewicht und Adipositas bei Erwachsenen",
+    },
+  ],
   category: "gesundheit",
   icon: Weight,
   status: "live",

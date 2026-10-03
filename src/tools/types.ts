@@ -74,6 +74,18 @@ export interface FaqEntry {
 }
 
 /**
+ * Eine Quelle, auf die sich Rechenweg oder Text stützen – bevorzugt die
+ * Primärquelle: der Gesetzestext, die Behörde, die Originalveröffentlichung.
+ */
+export interface SourceLink {
+  /** Was dort steht, z. B. "§ 622 BGB – Kündigungsfristen bei Arbeitsverhältnissen". */
+  label: string;
+  href: string;
+  /** Wofür der Rechner diese Quelle braucht. */
+  note?: string;
+}
+
+/**
  * Bausteine für den ausführlichen Teil einer Seite.
  *
  * `about` bleibt daneben bestehen und trägt weiterhin den Einstieg: zwei bis
@@ -129,11 +141,21 @@ export interface ToolManifest {
   slug: string;
   /** Anzeigename */
   name: string;
-  /** Ein Satz – für Karte und Meta-Description. */
+  /** Ein Satz – für die Karte und als Einleitung unter der Überschrift. */
   tagline: string;
+  /**
+   * Seitentitel im Suchergebnis, ohne Markennamen (lib/seo.ts hängt ihn an,
+   * wenn er noch passt). Höchstens 60 Zeichen – tools/registry.test.ts prüft.
+   */
+  seoTitle: string;
+  /**
+   * Beschreibung im Suchergebnis: was der Rechner ausrechnet und womit.
+   * 120 bis 160 Zeichen – tools/registry.test.ts prüft.
+   */
+  metaDescription: string;
   category: ToolCategory;
   icon: LucideIcon;
-  /** Interne Suche + SEO. */
+  /** Für die interne Suche. Landet nicht als Meta-Tag im HTML. */
   keywords: string[];
   status: "live" | "beta" | "draft";
 
@@ -156,6 +178,11 @@ export interface ToolManifest {
   sections?: ContentSection[];
   /** Wird zu FAQPage-JSON-LD und einer Accordion-Liste. */
   faq?: FaqEntry[];
+  /**
+   * Worauf sich Rechenweg und Text stützen. Erscheint als eigener Abschnitt
+   * „Quellen und Rechtsgrundlagen“ – auf der Tool-Seite und ihren Varianten.
+   */
+  sources?: SourceLink[];
 
   /** Programmatische SEO: erzeugt statische Unterseiten (Bundesland/Jahr etc.). */
   getVariants?: () => ToolVariant[];

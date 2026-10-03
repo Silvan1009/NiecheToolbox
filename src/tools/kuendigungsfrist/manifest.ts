@@ -66,6 +66,21 @@ export const kuendigungsfrist: ToolManifest = {
   name: "Kündigungsfrist-Rechner",
   tagline:
     "Wohnung oder Job kündigen: wann der Vertrag endet – und bis wann die Kündigung zugehen muss.",
+  seoTitle: "Kündigungsfrist-Rechner für Wohnung und Arbeitsvertrag",
+  metaDescription:
+    "Kündigungsfrist für Mietvertrag und Arbeitsverhältnis berechnen: Vertragsende und spätester Zugang der Kündigung nach § 573c und § 622 BGB.",
+  sources: [
+    {
+      label: "§ 622 BGB – Kündigungsfristen bei Arbeitsverhältnissen",
+      href: "https://www.gesetze-im-internet.de/bgb/__622.html",
+      note: "Grundfrist, verlängerte Fristen nach Betriebszugehörigkeit und Probezeit",
+    },
+    {
+      label: "§ 573c BGB – Fristen der ordentlichen Kündigung",
+      href: "https://www.gesetze-im-internet.de/bgb/__573c.html",
+      note: "Kündigung von Wohnraum bis zum dritten Werktag eines Monats",
+    },
+  ],
   category: "wohnen",
   icon: FileClock,
   status: "beta",
