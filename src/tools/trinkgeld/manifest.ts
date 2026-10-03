@@ -22,8 +22,14 @@ const sections: ContentSection[] = [
         rows: [
           ["Deutschland, Österreich, Schweiz", "5–10 %, aufgerundet"],
           ["USA", "15–20 %, gilt als fester Bestandteil des Lohns"],
-          ["Vereinigtes Königreich", "10–12,5 %, oft schon als „service charge“ auf der Rechnung"],
-          ["Frankreich, Italien", "Bedienung meist gesetzlich inbegriffen, zusätzlich wenig oder nichts üblich"],
+          [
+            "Vereinigtes Königreich",
+            "10–12,5 %, oft schon als „service charge“ auf der Rechnung",
+          ],
+          [
+            "Frankreich, Italien",
+            "Bedienung meist gesetzlich inbegriffen, zusätzlich wenig oder nichts üblich",
+          ],
           ["Japan", "Kein Trinkgeld – gilt teils sogar als unhöflich"],
         ],
       },
@@ -75,6 +81,9 @@ export const trinkgeld: ToolManifest = {
   name: "Trinkgeld-Splitter",
   tagline:
     "Rechnung plus Trinkgeld fair auf alle aufteilen – mit dem Betrag, den jede Person wirklich zahlt.",
+  seoTitle: "Trinkgeld-Rechner: Rechnung fair aufteilen",
+  metaDescription:
+    "Rechnung und Trinkgeld fair auf mehrere Personen aufteilen: Trinkgeld wählen und sofort sehen, welchen Betrag jede Person am Ende tatsächlich zahlt.",
   category: "geld",
   icon: HandCoins,
   status: "live",

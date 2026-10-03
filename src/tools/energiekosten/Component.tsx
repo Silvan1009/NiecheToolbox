@@ -524,7 +524,7 @@ function SparteCard({
                 <button
                   type="button"
                   onClick={() => onChange({ verbrauchKwh: vergleichKwh })}
-                  className="underline decoration-line underline-offset-2 hover:text-ink"
+                  className="text-link"
                 >
                   Schätzwert {formatInteger(vergleichKwh)} kWh übernehmen
                 </button>

@@ -1,14 +1,32 @@
 import { AlertTriangle } from "lucide-react";
 import type { ReactNode } from "react";
+import { JsonLd } from "@/components/JsonLd";
 import { legal } from "@/config/site";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
+import {
+  breadcrumbNode,
+  jsonLdGraph,
+  siteNodes,
+  staticOgImagePath,
+  webPageNode,
+} from "@/lib/seo";
 
 /** Einheitlicher Rahmen für die Rechtsseiten. */
 export function LegalPage({
   title,
+  description,
+  path,
+  pageKey,
   updated,
   children,
 }: {
   title: string;
+  /** Dieselbe Beschreibung wie in den Metadaten der Seite. */
+  description: string;
+  /** Pfad der Seite, z. B. "/rechtliches/impressum/". */
+  path: string;
+  /** Schlüssel für lib/lastModified.ts, z. B. "impressum". */
+  pageKey: string;
   updated: string;
   children: ReactNode;
 }) {
@@ -27,6 +45,23 @@ export function LegalPage({
           {children}
         </section>
       </div>
+
+      <JsonLd
+        data={jsonLdGraph([
+          ...siteNodes(),
+          webPageNode({
+            name: title,
+            description,
+            path,
+            image: staticOgImagePath("rechtliches"),
+            dateModified: lastModified(lastModifiedKey.page(pageKey)),
+          }),
+          breadcrumbNode([
+            { name: "Start", path: "/" },
+            { name: title, path },
+          ]),
+        ])}
+      />
     </div>
   );
 }

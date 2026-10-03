@@ -53,6 +53,29 @@ export const erbschaftsteuer: ToolManifest = {
   name: "Erbschaft- und Schenkungsteuer-Rechner",
   tagline:
     "Freibetrag, Steuerklasse, Stufentarif und Härteausgleich nach dem ErbStG – mit dem Fallstrick bei Eltern und Großeltern.",
+  seoTitle: "Erbschaftsteuer-Rechner: Freibetrag und Steuersatz",
+  metaDescription:
+    "Erbschaft- und Schenkungsteuer berechnen: Freibetrag nach Verwandtschaftsgrad, Steuerklasse, Stufentarif und Härteausgleich nach dem ErbStG.",
+  sources: [
+    {
+      label: "§ 15 ErbStG – Steuerklassen",
+      href: "https://www.gesetze-im-internet.de/erbstg_1974/__15.html",
+    },
+    {
+      label: "§ 16 ErbStG – Freibeträge",
+      href: "https://www.gesetze-im-internet.de/erbstg_1974/__16.html",
+    },
+    {
+      label: "§ 19 ErbStG – Steuersätze",
+      href: "https://www.gesetze-im-internet.de/erbstg_1974/__19.html",
+      note: "Stufentarif und Härteausgleich nach Absatz 3",
+    },
+    {
+      label: "§ 14 ErbStG – Berücksichtigung früherer Erwerbe",
+      href: "https://www.gesetze-im-internet.de/erbstg_1974/__14.html",
+      note: "Zusammenrechnung von Schenkungen innerhalb von zehn Jahren",
+    },
+  ],
   category: "geld",
   icon: Scale,
   status: "live",

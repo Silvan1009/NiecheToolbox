@@ -4,7 +4,7 @@ import { publicWege, wege } from "./registry";
 
 /**
  * Component und Manifest liegen bewusst in getrennten Dateien (siehe
- * components.ts). Der Preis dafür ist, dass beide auseinanderlaufen können –
+ * components.tsx). Der Preis dafür ist, dass beide auseinanderlaufen können –
  * ohne diesen Test würde ein neu registrierter Weg erst beim Aufruf seiner
  * Seite als leere Stelle auffallen.
  */
@@ -13,7 +13,7 @@ describe("wegComponents", () => {
     for (const weg of publicWege()) {
       expect(
         wegComponents[weg.slug],
-        `Weg "${weg.slug}" fehlt in wege/components.ts`,
+        `Weg "${weg.slug}" fehlt in wege/components.tsx`,
       ).toBeDefined();
     }
   });
@@ -23,7 +23,7 @@ describe("wegComponents", () => {
     for (const slug of Object.keys(wegComponents)) {
       expect(
         slugs.has(slug),
-        `"${slug}" steht in wege/components.ts, aber in keinem Manifest`,
+        `"${slug}" steht in wege/components.tsx, aber in keinem Manifest`,
       ).toBe(true);
     }
   });

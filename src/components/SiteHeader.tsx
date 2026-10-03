@@ -14,6 +14,7 @@ export function SiteHeader() {
         {/* Kein aria-label: der zugängliche Name ist der sichtbare Wortmarken-
             Text. Ein abweichendes Label würde als Label/Inhalt-Konflikt gelten. */}
         <Link
+          prefetch={false}
           href="/"
           className="group order-1 flex items-center gap-2.5 rounded-control"
         >
@@ -34,13 +35,17 @@ export function SiteHeader() {
           className="order-2 ml-auto flex items-center gap-1 sm:order-3 sm:ml-0"
         >
           <FavoritesNavLink />
-          <Link href="/rechner/" className="nav-pill">
+          <Link prefetch={false} href="/rechner/" className="nav-pill">
             Rechner finden
           </Link>
-          <Link href="/#tools" className="nav-pill hidden sm:inline-block">
+          <Link
+            prefetch={false}
+            href="/#tools"
+            className="nav-pill hidden sm:inline-block"
+          >
             Alle Rechner
           </Link>
-          <Link href="/ueber/" className="nav-pill">
+          <Link prefetch={false} href="/ueber/" className="nav-pill">
             Über uns
           </Link>
         </nav>

@@ -16,7 +16,7 @@ import type { VariantContent } from "@/tools/variants";
 export const variantenTexte: VariantContent[] = [
   {
     slug: "urlaubskasse-sparen",
-    title: "Urlaubskasse: Wie viel muss ich monatlich für den Urlaub sparen?",
+    title: "Urlaubskasse: Monatliche Sparrate für den Urlaub berechnen",
     description:
       "Aus dem Reisebudget die monatliche Sparrate bis zur Abreise berechnen – mit vorhandener Rücklage und realistischem Puffer.",
     heading: "Für den Urlaub sparen",
@@ -29,7 +29,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Warum direkt nach dem Gehaltseingang sparen statt am Monatsende?",
+        question:
+          "Warum direkt nach dem Gehaltseingang sparen statt am Monatsende?",
         answer:
           "Weil sich sonst systematisch zu wenig ansammelt. Wird das Sparen an den Monatsanfang gestellt, gilt die Urlaubskasse als feste Ausgabe wie die Miete – unabhängig davon, was später im Monat passiert. Wird stattdessen erst am Monatsende gespart, was übrig bleibt, ist die Urlaubskasse der erste Posten, der in einem knappen Monat gestrichen wird. Dieses Prinzip, in der Verhaltensökonomie als „pay yourself first“ bekannt, lässt sich am einfachsten über einen automatischen Dauerauftrag umsetzen, der direkt am Tag des Gehaltseingangs ausgeführt wird.",
       },
@@ -54,12 +55,14 @@ export const variantenTexte: VariantContent[] = [
           "Ja, unbedingt – aus zwei Gründen. Erstens verlängert ein früherer Start die Zahl der Monate bis zur Abreise und senkt damit die nötige Monatsrate, ganz ohne dass sich am Gesamtbudget etwas ändert. Zweitens steigt der Preis für Flug und Unterkunft in den meisten Fällen, je näher der Reisetermin rückt, besonders in den Schulferien. Wer schon vor der eigentlichen Buchung mit einer groben Kostenschätzung zu sparen beginnt, hat bei der eigentlichen Buchung nicht nur das Geld zusammen, sondern oft auch die größere Auswahl an noch verfügbaren, günstigeren Terminen.",
       },
       {
-        question: "Wie gehe ich mit unerwarteten Zusatzkosten während der Reise um?",
+        question:
+          "Wie gehe ich mit unerwarteten Zusatzkosten während der Reise um?",
         answer:
           "Am zuverlässigsten mit dem eingeplanten Puffer, der genau für diesen Fall da ist: eine spontane Aktivität, ein teureres Abendessen, ein Taxi bei Regen. Reicht der Puffer nicht, ist die zweite Verteidigungslinie das Tagesbudget vor Ort – ein Tag mit bewusst günstigerem Essen gleicht einen teureren vorher meist aus, ohne dass die Gesamtkasse gesprengt wird. Wichtig ist, Zusatzkosten laufend im Blick zu behalten statt erst am Ende der Reise nachzurechnen: Wer nach der Hälfte der Zeit merkt, dass mehr als die Hälfte des Tagesbudgets weg ist, kann für die restlichen Tage bewusst gegensteuern, statt am letzten Tag von einem leeren Konto überrascht zu werden.",
       },
       {
-        question: "Lohnt sich ein Dauerauftrag auch bei schwankendem Einkommen?",
+        question:
+          "Lohnt sich ein Dauerauftrag auch bei schwankendem Einkommen?",
         answer:
           "Ja, dann aber am besten mit einer vorsichtig niedrig angesetzten Rate, die auch in einem schwächeren Monat sicher aufgebracht werden kann, statt mit dem Durchschnitt guter und schlechter Monate zu kalkulieren. Ein niedrigerer, aber garantiert durchgehaltener Dauerauftrag baut die Urlaubskasse zuverlässiger auf als ein ambitionierter Betrag, der in mageren Monaten ausgesetzt und dann oft ganz vergessen wird. In besonders guten Monaten lässt sich zusätzlich manuell aufstocken, ohne den automatischen Betrag selbst anzupassen.",
       },

@@ -56,6 +56,9 @@ export const autokosten: ToolManifest = {
   name: "Auto-Unterhaltskosten-Rechner",
   tagline:
     "Wertverlust, Kraftstoff, Steuer, Versicherung, Wartung und Verschleiß zusammen – als Kosten pro Monat und pro Kilometer.",
+  seoTitle: "Autokosten-Rechner: Kosten pro Monat und Kilometer",
+  metaDescription:
+    "Unterhaltskosten eines Autos berechnen: Wertverlust, Kraftstoff, Kfz-Steuer, Versicherung, Wartung und Verschleiß – pro Monat und pro Kilometer.",
   category: "geld",
   icon: Car,
   status: "live",

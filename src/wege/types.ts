@@ -4,6 +4,7 @@ import type {
   AffiliateSlot,
   ContentSection,
   FaqEntry,
+  SourceLink,
   ToolCategory,
   ToolParams,
   ToolVariant,
@@ -45,11 +46,15 @@ export interface WegManifest {
   slug: string;
   /** Anzeigename */
   name: string;
-  /** Ein Satz – für Karte und Meta-Description. */
+  /** Ein Satz – für die Karte und als Einleitung unter der Überschrift. */
   tagline: string;
+  /** Seitentitel im Suchergebnis, ohne Markennamen. Höchstens 60 Zeichen. */
+  seoTitle: string;
+  /** Beschreibung im Suchergebnis, 120 bis 160 Zeichen. */
+  metaDescription: string;
   category: ToolCategory;
   icon: LucideIcon;
-  /** Interne Suche + SEO. */
+  /** Für die interne Suche. Landet nicht als Meta-Tag im HTML. */
   keywords: string[];
   status: "live" | "beta" | "draft";
 
@@ -68,6 +73,8 @@ export interface WegManifest {
   sections?: ContentSection[];
   /** Wird zu FAQPage-JSON-LD und einer Accordion-Liste. */
   faq?: FaqEntry[];
+  /** Worauf sich der Weg stützt – wie ToolManifest.sources. */
+  sources?: SourceLink[];
 
   /**
    * Programmatische SEO-Varianten – für diesen ersten Weg ungenutzt, aber

@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/legal/LegalPage";
-import { absoluteUrl, breadcrumbNode, jsonLdGraph } from "@/lib/seo";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
+import {
+  breadcrumbNode,
+  jsonLdGraph,
+  pageMetadata,
+  siteNodes,
+  staticOgImagePath,
+  webPageNode,
+} from "@/lib/seo";
 import { legal, site } from "@/config/site";
 import { publicTools } from "@/tools/registry";
 
@@ -15,11 +23,16 @@ import { publicTools } from "@/tools/registry";
  * und wie man den Betreiber erreicht. Ein Impressum allein wird von Prüfern
  * außerhalb Deutschlands regelmäßig nicht als "About/Contact" gelesen.
  */
-export const metadata: Metadata = {
-  title: "Über uns & Kontakt",
-  description: `Wer hinter ${site.name} steht, wie die Rechner entstehen, wie sie geprüft werden und wie du uns erreichst.`,
-  alternates: { canonical: "/ueber/" },
-};
+const TITLE = "Über uns & Kontakt";
+const DESCRIPTION = `Wer hinter ${site.name} steht, wie die Rechner entstehen und geprüft werden, womit sich die Seite finanziert und wie du den Betreiber erreichst.`;
+
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: "/ueber/",
+  image: staticOgImagePath("ueber"),
+  imageAlt: `Über ${site.name}`,
+});
 
 export default function UeberPage() {
   const { operator } = legal;
@@ -61,8 +74,9 @@ export default function UeberPage() {
               Das ist kein Redaktionsteam und keine Firma, sondern eine
               Einzelperson – die vollständige Anbieterkennzeichnung steht im{" "}
               <Link
+                prefetch={false}
                 href="/rechtliches/impressum/"
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 Impressum
               </Link>
@@ -109,8 +123,9 @@ export default function UeberPage() {
               das im Detail funktioniert und welche Daten dabei anfallen, steht
               in der{" "}
               <Link
+                prefetch={false}
                 href="/rechtliches/datenschutz/"
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 Datenschutzerklärung
               </Link>
@@ -122,12 +137,12 @@ export default function UeberPage() {
             <p>
               Feiertage brauchen keine Pflege im eigentlichen Sinn – sie sind
               berechnet, nicht recherchiert, und ändern sich nur, wenn ein
-              Landesparlament einen neuen gesetzlichen Feiertag beschließt.
-              Das kommt selten vor, zuletzt beim Weltkindertag in Thüringen
-              (2019) und beim Internationalen Frauentag in
-              Mecklenburg-Vorpommern (2023). Ein regelmäßiger automatisierter
-              Abgleich gegen eine zweite, unabhängige Quelle deckt so eine
-              Änderung auf, statt sie zu übersehen.
+              Landesparlament einen neuen gesetzlichen Feiertag beschließt. Das
+              kommt selten vor, zuletzt beim Weltkindertag in Thüringen (2019)
+              und beim Internationalen Frauentag in Mecklenburg-Vorpommern
+              (2023). Ein regelmäßiger automatisierter Abgleich gegen eine
+              zweite, unabhängige Quelle deckt so eine Änderung auf, statt sie
+              zu übersehen.
             </p>
             <p>
               Steuer- und Sozialabgabenwerte dagegen ändern sich planmäßig zum
@@ -135,16 +150,16 @@ export default function UeberPage() {
               Beitragssätze zu Kranken-, Pflege- und Rentenversicherung stehen
               gesammelt an einer Stelle im Code mit einem Stand-Datum. Sobald
               die Werte für ein neues Jahr amtlich feststehen – meist im
-              Spätherbst des Vorjahres –, werden sie dort nachgezogen. Bis
-              dahin rechnen die betroffenen Rechner mit dem zuletzt bekannten
-              Stand und weisen ihn aus.
+              Spätherbst des Vorjahres –, werden sie dort nachgezogen. Bis dahin
+              rechnen die betroffenen Rechner mit dem zuletzt bekannten Stand
+              und weisen ihn aus.
             </p>
           </Section>
 
           <Section heading="Technische Grundlage">
             <p>
-              {site.name} läuft als statischer Export ohne eigene Datenbank
-              und ohne Nutzerkonten: Jede Seite wird beim Veröffentlichen
+              {site.name} läuft als statischer Export ohne eigene Datenbank und
+              ohne Nutzerkonten: Jede Seite wird beim Veröffentlichen
               vollständig vorgerendert, jede Rechnung läuft anschließend
               vollständig im Browser der besuchenden Person. Es gibt keinen
               Server, der eine Eingabe entgegennimmt, verarbeitet und wieder
@@ -153,14 +168,15 @@ export default function UeberPage() {
             </p>
             <p>
               Das hat einen direkten Nebeneffekt für den Datenschutz: Eingaben
-              wie Gehalt, Kaufpreis oder Kalorienbedarf verlassen das Gerät
-              gar nicht erst, weil es keine Stelle gibt, an die sie geschickt
-              werden könnten. Was ein Ergebnis-Link stattdessen enthält –
-              und was Werbe- und Analysewerkzeuge nach Einwilligung
-              zusätzlich erfassen – steht im Detail in der{" "}
+              wie Gehalt, Kaufpreis oder Kalorienbedarf verlassen das Gerät gar
+              nicht erst, weil es keine Stelle gibt, an die sie geschickt werden
+              könnten. Was ein Ergebnis-Link stattdessen enthält – und was
+              Werbe- und Analysewerkzeuge nach Einwilligung zusätzlich erfassen
+              – steht im Detail in der{" "}
               <Link
+                prefetch={false}
                 href="/rechtliches/datenschutz/"
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 Datenschutzerklärung
               </Link>
@@ -170,23 +186,22 @@ export default function UeberPage() {
 
           <Section heading="Wie mit gemeldeten Fehlern umgegangen wird">
             <p>
-              Eine gemeldete falsche Zahl hat Vorrang vor neuen Rechnern und
-              vor Gestaltung. Der übliche Ablauf: Der gemeldete Fall wird
-              nachgerechnet, die Abweichung wird auf die Ursache
-              zurückgeführt – meist eine falsch interpretierte Regelung oder
-              ein Grenzfall, der beim ersten Schreiben übersehen wurde –, und
-              zu diesem Fall entsteht ein automatisierter Test, der die
-              Korrektur dauerhaft absichert. Der Test bleibt danach
-              bestehen, damit derselbe Fehler nicht Monate später an anderer
-              Stelle wieder auftaucht.
+              Eine gemeldete falsche Zahl hat Vorrang vor neuen Rechnern und vor
+              Gestaltung. Der übliche Ablauf: Der gemeldete Fall wird
+              nachgerechnet, die Abweichung wird auf die Ursache zurückgeführt –
+              meist eine falsch interpretierte Regelung oder ein Grenzfall, der
+              beim ersten Schreiben übersehen wurde –, und zu diesem Fall
+              entsteht ein automatisierter Test, der die Korrektur dauerhaft
+              absichert. Der Test bleibt danach bestehen, damit derselbe Fehler
+              nicht Monate später an anderer Stelle wieder auftaucht.
             </p>
             <p>
-              Nicht jede Rückmeldung ist ein Fehler im Rechenweg – manche
-              sind ein Grenzfall, den die gewählte Vereinfachung bewusst
-              nicht abbildet. Auch dann gibt es eine Antwort: entweder eine
-              Erklärung, warum der Fall außen vor bleibt, oder eine
-              Erweiterung des Rechners, wenn der Fall häufig genug ist, um
-              die zusätzliche Komplexität zu rechtfertigen.
+              Nicht jede Rückmeldung ist ein Fehler im Rechenweg – manche sind
+              ein Grenzfall, den die gewählte Vereinfachung bewusst nicht
+              abbildet. Auch dann gibt es eine Antwort: entweder eine Erklärung,
+              warum der Fall außen vor bleibt, oder eine Erweiterung des
+              Rechners, wenn der Fall häufig genug ist, um die zusätzliche
+              Komplexität zu rechtfertigen.
             </p>
           </Section>
 
@@ -194,10 +209,10 @@ export default function UeberPage() {
             <p>
               Die Seite ist durchgehend auf Deutsch und für den deutschen
               Rechtsrahmen gebaut – Feiertage, Steuersätze und Fristen gelten
-              für Deutschland, nicht für Österreich oder die Schweiz, auch
-              wenn manche Rechenwege ähnlich sind. Fachbegriffe werden im
-              Fließtext erklärt statt vorausgesetzt, damit ein Rechner auch
-              dann verständlich bleibt, wenn das Thema neu ist.
+              für Deutschland, nicht für Österreich oder die Schweiz, auch wenn
+              manche Rechenwege ähnlich sind. Fachbegriffe werden im Fließtext
+              erklärt statt vorausgesetzt, damit ein Rechner auch dann
+              verständlich bleibt, wenn das Thema neu ist.
             </p>
           </Section>
 
@@ -211,7 +226,7 @@ export default function UeberPage() {
               E-Mail:{" "}
               <a
                 href={`mailto:${operator.email}`}
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 {operator.email}
               </a>
@@ -225,28 +240,17 @@ export default function UeberPage() {
 
       <JsonLd
         data={jsonLdGraph([
-          {
-            "@type": "AboutPage",
-            name: `Über ${site.name}`,
-            url: absoluteUrl("/ueber/"),
-            inLanguage: "de-DE",
-            publisher: {
-              "@type": "Organization",
-              name: site.name,
-              url: site.url,
-              email: operator.email,
-              founder: { "@type": "Person", name: operator.name },
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: operator.street,
-                postalCode: operator.zip,
-                addressLocality: operator.city,
-                addressCountry: "DE",
-              },
-            },
-          },
+          ...siteNodes(),
+          webPageNode({
+            type: "AboutPage",
+            name: TITLE,
+            description: DESCRIPTION,
+            path: "/ueber/",
+            image: staticOgImagePath("ueber"),
+            dateModified: lastModified(lastModifiedKey.page("ueber")),
+          }),
           breadcrumbNode([
-            { name: site.name, path: "/" },
+            { name: "Start", path: "/" },
             { name: "Über uns", path: "/ueber/" },
           ]),
         ])}

@@ -59,8 +59,9 @@ export function VariantList({
                     </span>
                   ) : (
                     <Link
+                      prefetch={false}
                       href={variantPath(tool.slug, variant.slug)}
-                      className="text-muted link-hover-ink underline decoration-line underline-offset-2"
+                      className="text-muted link-hover-ink underline decoration-(--link-line) underline-offset-2"
                     >
                       {labelOf(variant)}
                     </Link>

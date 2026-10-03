@@ -16,6 +16,7 @@ export function WegCard({ weg }: { weg: WegManifest }) {
     <div className="relative w-full">
       <FavoriteButton slug={weg.slug} name={weg.name} />
       <Link
+        prefetch={false}
         href={wegPath(weg.slug)}
         className="group surface-soft flex h-full w-full flex-col p-6 transition-[box-shadow,transform] duration-(--dur-base) ease-(--ease-out) hover:-translate-y-0.5 hover:shadow-lift"
       >

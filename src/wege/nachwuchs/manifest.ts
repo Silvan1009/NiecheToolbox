@@ -14,7 +14,10 @@ const sections: ContentSection[] = [
         head: ["Ersatzquote", "Einordnung"],
         rows: [
           [`ab ${ERSATZQUOTE_KOMFORTABEL} %`, "komfortabel"],
-          [`${ERSATZQUOTE_ENG}–${ERSATZQUOTE_KOMFORTABEL} %`, "tragbar, aber eng"],
+          [
+            `${ERSATZQUOTE_ENG}–${ERSATZQUOTE_KOMFORTABEL} %`,
+            "tragbar, aber eng",
+          ],
           [`unter ${ERSATZQUOTE_ENG} %`, "Lücke deutlich spürbar"],
         ],
       },
@@ -29,7 +32,8 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "2.713 € Haushaltsnetto vorher, 12+2 Monate Elterngeld, 65 % Ersatzrate",
+        caption:
+          "2.713 € Haushaltsnetto vorher, 12+2 Monate Elterngeld, 65 % Ersatzrate",
         head: ["Posten", "Betrag"],
         rows: [
           ["Haushaltsnetto vor der Geburt", "2.713 € / Monat"],
@@ -97,6 +101,23 @@ export const nachwuchs: WegManifest = {
   name: "Check: Nachwuchs",
   tagline:
     "Termin, Einkommen, Elterngeld und Elternzeit in einem Urteil: wie groß ist die Lücke während des Bezugs?",
+  seoTitle: "Nachwuchs-Check: Elterngeld, Elternzeit und Einkommen",
+  metaDescription:
+    "Familienzuwachs durchrechnen: Geburtstermin, Elterngeld, Elternzeit und Haushaltseinkommen in einem Urteil – wie groß ist die Lücke während des Bezugs?",
+  sources: [
+    {
+      label: "§ 2 BEEG – Höhe des Elterngeldes",
+      href: "https://www.gesetze-im-internet.de/beeg/__2.html",
+    },
+    {
+      label: "§ 4 BEEG – Bezugsdauer, Anspruchsumfang",
+      href: "https://www.gesetze-im-internet.de/beeg/__4.html",
+    },
+    {
+      label: "§ 66 EStG – Höhe des Kindergeldes, Zahlungszeitraum",
+      href: "https://www.gesetze-im-internet.de/estg/__66.html",
+    },
+  ],
   category: "familie",
   icon: Baby,
   status: "beta",

@@ -55,7 +55,10 @@ const sections: ContentSection[] = [
         caption: `Beitragsbemessungsgrenzen ${STEUERJAHR}, jährlich`,
         head: ["Versicherungszweig", "Grenze"],
         rows: [
-          ["Renten- und Arbeitslosenversicherung", formatEuroRounded(BBG_RENTE)],
+          [
+            "Renten- und Arbeitslosenversicherung",
+            formatEuroRounded(BBG_RENTE),
+          ],
           ["Kranken- und Pflegeversicherung", formatEuroRounded(BBG_KRANKEN)],
         ],
       },
@@ -145,6 +148,26 @@ export const bruttonetto: ToolManifest = {
   slug: "bruttonetto",
   name: "Brutto-Netto-Rechner",
   tagline: `Was vom Gehalt übrig bleibt: Lohnsteuer, Soli, Kirchensteuer und alle vier Sozialversicherungszweige einzeln – mit den Rechengrößen für ${STEUERJAHR}.`,
+  seoTitle: "Brutto-Netto-Rechner: Lohnsteuer und Sozialabgaben",
+  metaDescription:
+    "Netto aus dem Bruttogehalt berechnen: Lohnsteuer, Solidaritätszuschlag, Kirchensteuer und alle vier Sozialversicherungen einzeln ausgewiesen.",
+  sources: [
+    {
+      label: "§ 32a EStG – Einkommensteuertarif",
+      href: "https://www.gesetze-im-internet.de/estg/__32a.html",
+      note: "Grundfreibetrag und Tarifzonen der Einkommensteuer",
+    },
+    {
+      label: "§ 39b EStG – Einbehaltung der Lohnsteuer",
+      href: "https://www.gesetze-im-internet.de/estg/__39b.html",
+      note: "das Verfahren, nach dem die Lohnsteuer vom Arbeitslohn berechnet wird",
+    },
+    {
+      label: "§ 4 SolzG 1995 – Zuschlagsatz",
+      href: "https://www.gesetze-im-internet.de/solzg_1995/__4.html",
+      note: "Höhe des Solidaritätszuschlags und die Milderungszone",
+    },
+  ],
   category: "geld",
   icon: Wallet,
   status: "live",

@@ -27,6 +27,8 @@
 # eingecheckt lag dort die lokale report-only-Fassung ohne Umami-Origin.
 /public/og/
 /public/.htaccess
+# generate-last-modified.ts: Änderungsdatum je Seite aus der Git-Historie.
+/.generated/
 
 # misc
 .DS_Store

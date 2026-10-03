@@ -18,8 +18,7 @@ import type { VariantContent } from "@/tools/variants";
 export const variantenTexte: VariantContent[] = [
   {
     slug: "guenstigerpruefung-kinderfreibetrag",
-    title:
-      "Günstigerprüfung: Kinderfreibetrag oder Kindergeld – was ist besser?",
+    title: "Günstigerprüfung: Kinderfreibetrag oder Kindergeld?",
     description:
       "Die Günstigerprüfung des Finanzamts nachrechnen: Kinderfreibetrag gegen Kindergeld, inklusive der Wirkung auf Solidaritätszuschlag und Kirchensteuer.",
     heading: "Günstigerprüfung: Freibetrag oder Kindergeld",
@@ -62,12 +61,14 @@ export const variantenTexte: VariantContent[] = [
           "Nein, sie läuft automatisch bei jeder abgegebenen Einkommensteuererklärung, in der Kinder eingetragen sind – ein gesonderter Antrag ist nicht nötig und in den Steuerformularen auch nicht vorgesehen. Voraussetzung ist allein, dass überhaupt eine Steuererklärung abgegeben wird: Wer als Angestellter dazu nicht verpflichtet ist und keine freiwillige Erklärung einreicht, bekommt die Prüfung nicht und damit im Zweifel weniger, als ihm zustünde. Gerade bei höheren Einkommen mit mehreren Kindern lohnt sich deshalb eine freiwillige Steuererklärung allein wegen dieser automatischen Prüfung, selbst wenn sonst keine steuerliche Pflicht dazu besteht.",
       },
       {
-        question: "Was passiert bei drei oder mehr Kindern mit der Günstigerprüfung?",
+        question:
+          "Was passiert bei drei oder mehr Kindern mit der Günstigerprüfung?",
         answer:
           "Die Freibeträge summieren sich linear mit der Kinderzahl, das Kindergeld ebenfalls seit der Abschaffung der Staffelung nach Geschwisterreihenfolge – trotzdem verschiebt sich der Umschlagpunkt zugunsten des Freibetrags mit jedem weiteren Kind tendenziell nach unten. Der Grund liegt in der Steuerprogression: Mehrere Freibeträge zusammen mindern das zu versteuernde Einkommen stärker und wirken damit häufiger auch auf höhere Grenzsteuersätze, während das Kindergeld je Kind unverändert bleibt. Bei drei oder mehr Kindern lohnt sich die genaue Nachrechnung deshalb besonders, weil der Vorteil des Freibetrags gegenüber wenigen Kindern spürbar zunehmen kann.",
       },
       {
-        question: "Wie wirkt sich die Günstigerprüfung bei getrennter Veranlagung aus?",
+        question:
+          "Wie wirkt sich die Günstigerprüfung bei getrennter Veranlagung aus?",
         answer:
           "Bei Einzelveranlagung steht jedem Elternteil regulär nur der halbe Kinderfreibetrag zu, was den Umschlagpunkt zugunsten des Freibetrags gegenüber der Zusammenveranlagung nach oben verschiebt – es braucht ein höheres Einkommen, bis sich der halbe Freibetrag gegenüber dem hälftigen Kindergeldanspruch lohnt. Lebt ein Elternteil im Ausland oder zahlt keinen Unterhalt, kann der volle Freibetrag auf Antrag auf den anderen Elternteil übertragen werden, wodurch sich die Rechnung wieder der bei Zusammenveranlagung annähert. Diese Übertragung muss beim Finanzamt gesondert beantragt werden und geschieht nicht automatisch.",
       },
@@ -76,7 +77,7 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "kindergeld-studium",
-    title: "Kindergeld im Studium: bis 25 Jahre – Voraussetzungen und Dauer",
+    title: "Kindergeld im Studium: Anspruch bis 25 und Voraussetzungen",
     description:
       "Kindergeld für Studierende und Auszubildende bis zum 25. Geburtstag: Anspruchsdauer, Zweitausbildung und was bei einem Nebenjob gilt.",
     heading: "Kindergeld im Studium",
@@ -109,22 +110,26 @@ export const variantenTexte: VariantContent[] = [
           "In der Regel ja, wenn er inhaltlich auf dem Bachelor aufbaut und zeitlich unmittelbar folgt – dann bleibt ein Nebenjob unschädlich. Wird zwischen beiden längere Zeit gearbeitet oder ein fachfremder Master begonnen, wertet die Familienkasse ihn als Zweitausbildung mit der 20-Stunden-Grenze.",
       },
       {
-        question: "Welche Nachweise verlangt die Familienkasse während des Studiums?",
+        question:
+          "Welche Nachweise verlangt die Familienkasse während des Studiums?",
         answer:
           "In der Regel jährlich eine aktuelle Immatrikulationsbescheinigung der Hochschule, manchmal ergänzt um einen Nachweis der bisherigen Studiendauer oder eine Erklärung zum Ausbildungsstand. Ohne fristgerecht eingereichten Nachweis stellt die Familienkasse die Zahlung vorübergehend ein, bis die Unterlagen nachgereicht sind – rückwirkend wird dann aber in der Regel nachgezahlt, sofern die Voraussetzungen tatsächlich vorlagen. Bei einem Wechsel der Hochschule, einer Unterbrechung oder einem Fachwechsel ist es sinnvoll, die Familienkasse von sich aus zu informieren, statt auf die nächste turnusmäßige Nachweisanforderung zu warten.",
       },
       {
-        question: "Wer bekommt das Kindergeld ausgezahlt, wenn das Kind volljährig ist?",
+        question:
+          "Wer bekommt das Kindergeld ausgezahlt, wenn das Kind volljährig ist?",
         answer:
           "Grundsätzlich weiterhin der antragstellende Elternteil, bei dem das Kind gemeldet ist oder überwiegend lebt – die Volljährigkeit ändert daran nichts Automatisches. Zieht das Kind während des Studiums aus, etwa in eine eigene Wohnung oder ein Wohnheim am Studienort, bleibt der Anspruch beim Elternteil bestehen, solange das Kind wirtschaftlich noch nicht auf eigenen Füßen steht. Auf Antrag des volljährigen Kindes kann die Familienkasse das Kindergeld aber auch direkt an das Kind selbst auszahlen, insbesondere wenn der bisherige Berechtigte seiner Unterhaltspflicht nicht angemessen nachkommt.",
       },
       {
-        question: "Zählt ein Urlaubssemester als Unterbrechung des Kindergeldanspruchs?",
+        question:
+          "Zählt ein Urlaubssemester als Unterbrechung des Kindergeldanspruchs?",
         answer:
           "Ein Urlaubssemester wegen Krankheit, Schwangerschaft oder eines Auslandsaufenthalts unterbricht den Anspruch in der Regel nicht, solange die Immatrikulation formal bestehen bleibt. Ein Urlaubssemester allein zur freien Verfügung ohne anerkannten Grund kann dagegen als Unterbrechung der Ausbildung gewertet werden, mit der Folge, dass für diese Zeit kein Kindergeld gezahlt wird. Die Familienkasse prüft dabei den konkreten Grund, nicht allein die formale Immatrikulation – ein Nachweis über den Anlass des Urlaubssemesters ist deshalb ratsam.",
       },
       {
-        question: "Wirkt sich ein Urlaubssemester auf die Höchstdauer bis 25 Jahre aus?",
+        question:
+          "Wirkt sich ein Urlaubssemester auf die Höchstdauer bis 25 Jahre aus?",
         answer:
           "Nein, die Altersgrenze von 25 Jahren bleibt unverändert – ein anerkanntes Urlaubssemester verlängert sie nicht, verkürzt sie aber auch nicht. Es zählt lediglich als Zeit ohne Kindergeldanspruch, falls es nicht als Fortsetzung der Ausbildung anerkannt wird, während die Frist bis zum 25. Geburtstag unbeeinflusst weiterläuft.",
       },

@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
+import type { ReactNode } from "react";
 import { AffiliateBlock } from "@/components/AffiliateBlock";
 import { WegCarriedValue } from "@/components/WegCarriedValue";
-import { WegSourceTools } from "@/components/WegSourceTools";
 import { WegStep } from "@/components/WegStep";
 import { WegSteps, type WegStepDef } from "@/components/WegSteps";
 import { Disclosure } from "@/components/ui/Card";
@@ -49,7 +49,6 @@ import {
   type ImmobilienInput,
 } from "@/tools/immobilienrechner/logic";
 import { hauskaufAffiliate } from "./affiliate";
-import { hauskauf } from "./manifest";
 import {
   bewerteHauskauf,
   einstufungLabel,
@@ -168,7 +167,18 @@ const einstufungHint: Record<HauskaufEinstufung, string> = {
   eng: "Rate und Nebenkosten beanspruchen einen großen Teil des Nettos – oder es fehlt ein Nettoeinkommen.",
 };
 
-export default function HauskaufWeg({ params }: { params?: ToolParams }) {
+export default function HauskaufWeg({
+  params,
+  sourceTools,
+}: {
+  params?: ToolParams;
+  /**
+   * „Im Detail weiterrechnen“, fertig gerendert vom Server (WegPageShell).
+   * Als Knoten hereingereicht statt hier erzeugt: Die Liste braucht die
+   * Tool-Registry, und die gehört nicht in ein Client-Modul.
+   */
+  sourceTools?: ReactNode;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => {
@@ -805,7 +815,7 @@ export default function HauskaufWeg({ params }: { params?: ToolParams }) {
 
           <AffiliateBlock slots={hauskaufAffiliate} result={urteil} />
 
-          <WegSourceTools tools={hauskauf.sourceTools} />
+          {sourceTools}
         </div>
       )}
     </div>

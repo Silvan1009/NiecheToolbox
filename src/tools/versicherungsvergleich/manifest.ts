@@ -57,6 +57,9 @@ export const versicherungsvergleich: ToolManifest = {
   name: "Versicherungs-Vergleichsrechner",
   tagline:
     "Kfz-, Privathaftpflicht- und Berufsunfähigkeitsversicherung gegen den Marktdurchschnitt einordnen – mit Richtwert, Spanne und den Faktoren dahinter.",
+  seoTitle: "Versicherungsbeitrag einordnen: Kfz, Haftpflicht, BU",
+  metaDescription:
+    "Zahlst du zu viel? Den Beitrag für Kfz-, Privathaftpflicht- oder Berufsunfähigkeitsversicherung mit Richtwert und üblicher Spanne einordnen.",
   category: "geld",
   icon: ShieldCheck,
   status: "live",

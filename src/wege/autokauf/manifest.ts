@@ -24,7 +24,8 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "28.000-Euro-Auto, 5.000 Euro Anzahlung, 6 Jahre Laufzeit, 6,5 % Sollzins",
+        caption:
+          "28.000-Euro-Auto, 5.000 Euro Anzahlung, 6 Jahre Laufzeit, 6,5 % Sollzins",
         head: ["Posten", "Betrag"],
         rows: [
           ["Kreditrate", "rund 387 € / Monat"],
@@ -92,6 +93,9 @@ export const autokauf: WegManifest = {
   name: "Check: Auto",
   tagline:
     "Kreditrate, Unterhalt und Versicherung eines Autos in einem Urteil: welcher Anteil vom Netto geht dafür drauf?",
+  seoTitle: "Autokauf-Check: Was kostet das Auto wirklich im Monat?",
+  metaDescription:
+    "Autokauf durchrechnen: Kreditrate, Unterhalt und Versicherung zusammen – und welcher Anteil deines Nettoeinkommens jeden Monat für das Auto draufgeht.",
   category: "geld",
   icon: Car,
   status: "live",

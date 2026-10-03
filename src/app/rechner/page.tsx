@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import { site } from "@/config/site";
 import { JsonLd } from "@/components/JsonLd";
 import { ToolCard } from "@/components/ToolCard";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
 import {
   absoluteUrl,
   breadcrumbNode,
   jsonLdGraph,
+  pageMetadata,
+  siteNodes,
+  staticOgImagePath,
+  toolPath,
   variantPath,
+  webPageNode,
 } from "@/lib/seo";
 import { getTool, publicTools } from "@/tools/registry";
 import { toolsWithIndexedVariants, toolGroups } from "@/tools/groups";
@@ -19,12 +24,18 @@ import { toolsWithIndexedVariants, toolGroups } from "@/tools/groups";
  * (CollectionPage statt ItemList) und eigene Gruppen-Hinweistexte, damit die
  * Seite nicht wie eine reine Umsortierung derselben Karten wirkt.
  */
-export const metadata: Metadata = {
-  title: "Rechner nach Thema",
-  description:
-    "Alle Rechner nach Thema sortiert: Geld & Finanzen, Wohnen & Verträge, Arbeit & Zeit, Essen & Feiern.",
-  alternates: { canonical: "/rechner/" },
-};
+const TITLE = "Alle Rechner nach Thema sortiert";
+const DESCRIPTION = `Alle Rechner nach Anlass sortiert: ${toolGroups
+  .map((group) => group.label)
+  .join(", ")}.`;
+
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: "/rechner/",
+  image: staticOgImagePath("rechner"),
+  imageAlt: "Rechner nach Thema",
+});
 
 export default function RechnerPage() {
   return (
@@ -110,6 +121,7 @@ export default function RechnerPage() {
                             {varianten.map((variant) => (
                               <li key={variant.slug}>
                                 <Link
+                                  prefetch={false}
                                   href={variantPath(tool.slug, variant.slug)}
                                   className="group/link flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-muted transition-colors duration-(--dur-fast) hover:bg-ink-soft hover:text-ink"
                                 >
@@ -143,13 +155,13 @@ export default function RechnerPage() {
           </h2>
           <div className="mt-4 flex flex-col gap-4 text-[17px] leading-relaxed text-muted">
             <p>
-              Jeder Rechner hat in der Registry genau eine feste Kategorie –
-              für die Suche, die Meta-Beschreibung und die Karte auf der
-              Startseite. Diese Seite sortiert zusätzlich nach Anlass, und ein
-              Anlass kennt keine Fachgrenzen: Der Immobilienrechner steht
-              deshalb sowohl unter „Geld & Finanzen“ als auch unter „Wohnen &
-              Verträge“, weil eine Kaufentscheidung beides zugleich ist. Das
-              ist Absicht und kein Fehler in der Zuordnung.
+              Jeder Rechner hat in der Registry genau eine feste Kategorie – für
+              die Suche, die Meta-Beschreibung und die Karte auf der Startseite.
+              Diese Seite sortiert zusätzlich nach Anlass, und ein Anlass kennt
+              keine Fachgrenzen: Der Immobilienrechner steht deshalb sowohl
+              unter „Geld & Finanzen“ als auch unter „Wohnen & Verträge“, weil
+              eine Kaufentscheidung beides zugleich ist. Das ist Absicht und
+              kein Fehler in der Zuordnung.
             </p>
             <p>
               Innerhalb einer Gruppe stehen die Rechner nicht alphabetisch,
@@ -165,20 +177,24 @@ export default function RechnerPage() {
 
       <JsonLd
         data={jsonLdGraph([
+          ...siteNodes(),
           {
-            "@type": "CollectionPage",
-            name: "Rechner nach Thema",
-            url: absoluteUrl("/rechner/"),
-            inLanguage: "de-DE",
-            isPartOf: { "@type": "WebSite", name: site.name, url: site.url },
+            ...webPageNode({
+              type: "CollectionPage",
+              name: TITLE,
+              description: DESCRIPTION,
+              path: "/rechner/",
+              image: staticOgImagePath("rechner"),
+              dateModified: lastModified(lastModifiedKey.page("rechner")),
+            }),
             hasPart: publicTools().map((tool) => ({
               "@type": "WebApplication",
               name: tool.name,
-              url: absoluteUrl(`/tools/${tool.slug}/`),
+              url: absoluteUrl(toolPath(tool.slug)),
             })),
           },
           breadcrumbNode([
-            { name: site.name, path: "/" },
+            { name: "Start", path: "/" },
             { name: "Rechner nach Thema", path: "/rechner/" },
           ]),
         ])}

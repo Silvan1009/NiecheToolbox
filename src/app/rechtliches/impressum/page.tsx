@@ -1,18 +1,30 @@
 import type { Metadata } from "next";
 import { LegalPage, Section } from "@/components/legal/LegalPage";
 import { legal, site } from "@/config/site";
+import { pageMetadata, staticOgImagePath } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const DESCRIPTION = `Impressum von ${site.name}: Anbieterkennzeichnung nach § 5 DDG mit Name, Anschrift und Kontakt des Betreibers sowie Hinweisen zu Haftung und Urheberrecht.`;
+const PATH = "/rechtliches/impressum/";
+
+export const metadata: Metadata = pageMetadata({
   title: "Impressum",
-  description: `Impressum und Anbieterkennzeichnung nach § 5 DDG für ${site.name}.`,
-  alternates: { canonical: "/rechtliches/impressum/" },
-};
+  description: DESCRIPTION,
+  path: PATH,
+  image: staticOgImagePath("rechtliches"),
+  imageAlt: `Impressum – ${site.name}`,
+});
 
 export default function ImpressumPage() {
   const { operator } = legal;
 
   return (
-    <LegalPage title="Impressum" updated="Juli 2026">
+    <LegalPage
+      title="Impressum"
+      description={DESCRIPTION}
+      path={PATH}
+      pageKey="impressum"
+      updated="Juli 2026"
+    >
       <Section heading="Angaben gemäß § 5 DDG">
         <address className="not-italic">
           {operator.company && (
@@ -36,7 +48,7 @@ export default function ImpressumPage() {
           E-Mail:{" "}
           <a
             href={`mailto:${operator.email}`}
-            className="underline decoration-line underline-offset-2 hover:text-ink"
+            className="text-link"
           >
             {operator.email}
           </a>

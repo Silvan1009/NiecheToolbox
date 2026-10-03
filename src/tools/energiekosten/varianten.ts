@@ -16,7 +16,7 @@ import type { VariantContent } from "@/tools/variants";
 export const variantenTexte: VariantContent[] = [
   {
     slug: "abschlag-berechnen",
-    title: "Abschlag berechnen: Wie hoch sollte die monatliche Zahlung sein?",
+    title: "Abschlag berechnen: Wie hoch muss die Monatszahlung sein?",
     description:
       "Den richtigen monatlichen Abschlag für Strom oder Gas aus dem Jahresverbrauch berechnen – und sehen, ob der aktuelle Abschlag zu hoch oder zu niedrig ist.",
     heading: "Abschlag berechnen",
@@ -29,7 +29,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Wie wird der erste Abschlag in einer neuen Wohnung festgelegt?",
+        question:
+          "Wie wird der erste Abschlag in einer neuen Wohnung festgelegt?",
         answer:
           "Meist anhand von Wohnfläche und Haushaltsgröße oder anhand des Verbrauchs der Vormieter, weil dem Versorger noch keine eigene Verbrauchshistorie vorliegt. Beide Schätzgrundlagen können erheblich danebenliegen, etwa wenn die neue Wohnung anders gedämmt ist oder andere Geräte genutzt werden als vorher. Ein eigener Zählerstand-Check nach den ersten ein bis zwei Monaten, hochgerechnet auf zwölf Monate, zeigt früh, ob der voreingestellte Abschlag realistisch ist – so lässt sich noch im laufenden Jahr nachjustieren, statt am Jahresende von einer großen Nachzahlung überrascht zu werden.",
       },
@@ -60,7 +61,8 @@ export const variantenTexte: VariantContent[] = [
           "Eine feste Obergrenze gibt es nicht, wohl aber eine allgemeine Angemessenheitspflicht: Der Abschlag muss sich an den tatsächlich zu erwartenden Kosten orientieren und darf nicht willkürlich hoch angesetzt werden, um dem Versorger faktisch ein zinsloses Darlehen zu verschaffen. Weicht ein vom Versorger einseitig erhöhter Abschlag offensichtlich und deutlich von der realistischen Kostenschätzung ab, kann dagegen widersprochen werden. In der Praxis orientieren sich seriöse Versorger an der letzten Jahresabrechnung zuzüglich einer moderaten Preisanpassung, sodass überzogene Abschläge eher die Ausnahme als die Regel sind.",
       },
       {
-        question: "Sollte der Abschlag lieber etwas höher als exakt passend gewählt werden?",
+        question:
+          "Sollte der Abschlag lieber etwas höher als exakt passend gewählt werden?",
         answer:
           "Ein kleiner Puffer nach oben ist meist sinnvoller als eine exakte Punktlandung, weil Verbrauch und Preise übers Jahr schwanken können – etwa durch einen kälteren Winter, einen neuen Mitbewohner oder eine unerwartete Preiserhöhung mitten im Abrechnungsjahr. Ein Abschlag, der fünf bis zehn Euro über der reinen Zwölftel-Rechnung liegt, führt im schlechtesten Fall zu einem kleinen Guthaben am Jahresende statt zu einer unangenehmen Nachzahlung. Wer stattdessen ganz genau plant, sollte den Abschlag konsequent nach jeder Preisänderung sofort anpassen, statt bis zur nächsten Jahresabrechnung zu warten.",
       },
@@ -112,7 +114,8 @@ export const variantenTexte: VariantContent[] = [
           "Ja, nach der regulären zivilrechtlichen Verjährungsfrist von drei Jahren, die mit dem Ende des Jahres beginnt, in dem die Forderung entstanden und dem Versorger bekannt geworden ist. Stellt ein Versorger also erst nach mehreren Jahren fest, dass er zu wenig abgerechnet hat, kann eine daraus resultierende Nachforderung je nach Zeitpunkt bereits ganz oder teilweise verjährt sein. Diese Frist gilt unabhängig davon, ob der Fehler beim Versorger oder beim Kunden lag – entscheidend ist allein, wann die Forderung entstanden ist und wann der Versorger davon Kenntnis hatte oder hätte haben müssen.",
       },
       {
-        question: "Was tun, wenn die Nachzahlung wirtschaftlich gar nicht zu stemmen ist?",
+        question:
+          "Was tun, wenn die Nachzahlung wirtschaftlich gar nicht zu stemmen ist?",
         answer:
           "Zuerst frühzeitig und proaktiv mit dem Versorger Kontakt aufnehmen, statt die Zahlungsfrist verstreichen zu lassen – Versorger sind an einer Lösung interessiert und bieten in aller Regel unkompliziert eine Ratenzahlung an. Bei akuter finanzieller Notlage helfen zusätzlich Beratungsstellen der Verbraucherzentralen, die auch bei der Kommunikation mit dem Versorger unterstützen können, sowie unter Umständen kommunale Härtefallfonds für Energiekosten. Wichtig ist, nicht einfach nicht zu zahlen: Eine unangekündigte Nichtzahlung kann schneller zur Sperrandrohung führen als eine aktiv angefragte, vom Versorger genehmigte Ratenzahlung.",
       },

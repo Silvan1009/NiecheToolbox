@@ -1,35 +1,18 @@
-import { existsSync, readdirSync, rmSync, statSync } from "node:fs";
+import { existsSync, readdirSync, renameSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 /**
- * Räumt nach `next build` auf, was der Export erzeugt, aber niemand abruft.
+ * Bringt den Export nach `next build` in die Form, die ein reiner
+ * Datei-Server (Apache auf IONOS) ausliefern kann.
  *
  * ------------------------------------------------------------------------
- * 1. Client-Segment-Cache-Dateien (`__next.*`)
- * ------------------------------------------------------------------------
- *
- * Bei `output: "export"` schreibt Next für jede Route zusätzlich zur
- * `index.txt` einen kompletten Satz Segment-Prefetch-Dateien
- * (`__next._full.txt`, `__next._head.txt`, `__next._index.txt`,
- * `__next._tree.txt` sowie ein `__next.<slug>/…`-Verzeichnis pro
- * verschachteltem Layout) – Teil des in Next 16 überarbeiteten Routers für
- * "instant navigations" mit Cache Components. Diese App setzt
- * `cacheComponents` nicht, und im Netzwerk-Log eines echten Client-Navigation
- * (Browser-Test) fordert der Router beim Seitenwechsel ausschließlich die
- * normale `index.txt` an – die `__next.*`-Dateien werden nie geladen. Next
- * selbst bietet dafür kein next.config-Flag zum Abschalten (siehe
- * node_modules/next/dist/export/routes/app-page.js – der Export schreibt sie
- * unconditional). Bei ~200 vorgerenderten Seiten macht der tote Ballast rund
- * 14 MiB des 47,7-MiB-Exportlimits von IONOS Deploy Now aus.
- *
- * ------------------------------------------------------------------------
- * 2. Die Zweitfassung der 404-Seite unter `404/`
+ * 1. Die Zweitfassung der 404-Seite unter `404/`
  * ------------------------------------------------------------------------
  *
  * Next legt die Fehlerseite zweimal ab: als `404.html` und – wegen
  * `trailingSlash: true` – zusätzlich als `404/index.html`. Beide Dateien sind
  * byte-identisch. Gebraucht wird nur die erste: `.htaccess` verweist mit
- * `ErrorDocument 404 /404.html` genau dorthin (siehe generate-htaccess.ts).
+ * `ErrorDocument 404 /404.html` genau dorthin (siehe lib/htaccess.ts).
  *
  * Die zweite ist nicht nur überflüssig, sondern schädlich. Über `/404/` liefert
  * Apache sie als ganz normale Seite aus – mit Status 200 und dem Inhalt „Seite
@@ -41,37 +24,50 @@ import { join } from "node:path";
  * Client-Router seine Fehlerseite rendert, nicht bloß eine Kopie.
  *
  * ------------------------------------------------------------------------
- * 3. Die RSC-Payload jeder Route (`index.txt`)
+ * 2. Segmentdateien flach ablegen
  * ------------------------------------------------------------------------
  *
- * Anders als die `__next.*`-Dateien wird `index.txt` tatsächlich gebraucht:
- * Der Router holt genau diese Datei bei jeder Client-Navigation zwischen
- * Tool-Seiten (per <Link>, per Prefetch oder beim Klick). Sie macht trotzdem
- * mit ~9,4 MiB über ein Viertel des Exports aus – bei ~200 Seiten und einer
- * App, in der Besucher fast immer über eine Suchmaschine auf genau einer
- * Rechner-Seite landen und selten zu einer zweiten weiterklicken.
+ * Für jede Route schreibt Next die Bausteine der Client-Navigation: neben
+ * `index.txt` die Dateien `__next._tree.txt`, `__next._head.txt` und je
+ * Routensegment eine weitere. Bei verschachtelten Segmenten legt der Export
+ * sie als Verzeichnisse ab –
  *
- * Fehlt `index.txt`, bricht die Navigation nicht: im Browser-Test (echter
- * Klick auf einen internen Link nach Entfernen der Datei) beantwortet der
- * Server die `_rsc`-Anfrage mit 404, und der Client-Router fängt das ab und
- * lädt die Zielroute stattdessen als normale volle Seite nach – ganz ohne
- * Konsolenfehler, nur ohne die unterbrechungsfreie SPA-Transition. Die
- * volle Nachladung geht dabei an der Pfad-Variante ohne Trailing Slash
- * (`/rechner` statt `/rechner/`) – auf IONOS erledigt genau dafür
- * `trailingSlash: true` (next.config.ts) die Arbeit: Apache findet
- * `/rechner` als echtes Verzeichnis, schickt per `mod_dir` einen 301 auf
- * `/rechner/`, und dort liefert `DirectoryIndex` die `index.html` aus.
+ *   ueber/__next.ueber/__PAGE__.txt
+ *   tools/bmi/__next.tools/$d$slug/__PAGE__.txt
+ *
+ * – der Router im Browser fragt sie aber mit Punkten an:
+ *
+ *   /ueber/__next.ueber.__PAGE__.txt
+ *   /tools/bmi/__next.tools.$d$slug.__PAGE__.txt
+ *
+ * Ein Next-Server übersetzt das. Apache nicht: Die Anfrage läuft ins Leere,
+ * und jeder vorgeladene Link hinterlässt einen 404 in der Konsole. Deshalb
+ * werden die Dateien hier unter dem Namen abgelegt, unter dem sie angefragt
+ * werden.
+ *
+ * ------------------------------------------------------------------------
+ * Was hier NICHT mehr entfernt wird: die RSC-Payloads
+ * ------------------------------------------------------------------------
+ *
+ * Bis zur Konsolidierung löschte dieses Skript jede `index.txt` und alle
+ * `__next.*`-Segmentdateien, um unter der 47,7-MiB-Grenze von IONOS Deploy Now
+ * zu bleiben – bei 218 Seiten machten sie 23 MiB aus. Die Annahme dahinter,
+ * der Router fordere die Segmentdateien nie an, stimmte nicht: Jeder `<Link>`
+ * im Sichtfeld holt sie beim Vorladen. Fehlten sie, antwortete der Server mit
+ * 404 – rund 70 Konsolenfehler je Seitenaufruf, jeder mit der vollen
+ * 404-Seite als Antwort, und Lighthouse wertete „Browser errors were logged
+ * to the console“ als nicht bestanden. Seitenwechsel liefen außerdem als
+ * voller Neuaufbau statt als Übergang.
+ *
+ * Mit 67 Seiten wiegen dieselben Dateien noch gut 10 MiB; der Export bleibt
+ * mit Abstand unter der Grenze (scripts/content-audit.ts prüft sie bei jedem
+ * Build). Sie bleiben deshalb liegen. Als Suchtreffer tauchen sie nicht auf:
+ * lib/htaccess.ts gibt allen `.txt`-Payloads `X-Robots-Tag: noindex` mit.
  */
 
 const OUT_DIR = join(process.cwd(), "out");
-const SEGMENT_PREFIX = "__next.";
-const RSC_PAYLOAD_NAME = "index.txt";
 const DUPLICATE_404 = join(OUT_DIR, "404");
-
-let removedSegmentCount = 0;
-let removedSegmentBytes = 0;
-let removedPayloadCount = 0;
-let removedPayloadBytes = 0;
+const SEGMENT_PREFIX = "__next.";
 
 function bytesOf(path: string): number {
   const stat = statSync(path);
@@ -83,40 +79,42 @@ function bytesOf(path: string): number {
   );
 }
 
-function walk(dir: string) {
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = join(dir, entry.name);
-    if (entry.name.startsWith(SEGMENT_PREFIX)) {
-      removedSegmentBytes += bytesOf(fullPath);
-      removedSegmentCount += 1;
-      rmSync(fullPath, { recursive: true, force: true });
-      continue;
-    }
-    if (entry.isFile() && entry.name === RSC_PAYLOAD_NAME) {
-      removedPayloadBytes += bytesOf(fullPath);
-      removedPayloadCount += 1;
-      rmSync(fullPath, { force: true });
-      continue;
-    }
-    if (entry.isDirectory()) walk(fullPath);
-  }
-}
-
-walk(OUT_DIR);
-
-const segmentMib = (removedSegmentBytes / 1024 / 1024).toFixed(2);
-console.log(
-  `${removedSegmentCount} ungenutzte Segment-Prefetch-Einträge entfernt (${segmentMib} MiB).`,
-);
-
-const payloadMib = (removedPayloadBytes / 1024 / 1024).toFixed(2);
-console.log(
-  `${removedPayloadCount} RSC-Payload-Dateien (index.txt) entfernt (${payloadMib} MiB). ` +
-    "Client-Navigation zwischen Tool-Seiten lädt dadurch als volle Seite statt als SPA-Transition.",
-);
-
 if (existsSync(DUPLICATE_404)) {
   const kib = (bytesOf(DUPLICATE_404) / 1024).toFixed(0);
   rmSync(DUPLICATE_404, { recursive: true, force: true });
   console.log(`Doppelte 404-Seite unter out/404/ entfernt (${kib} KiB).`);
 }
+
+let flattened = 0;
+
+/** Verschiebt alles unter `sourceDir` nach `targetDir`, Pfadteile mit Punkt verbunden. */
+function moveFlat(sourceDir: string, targetDir: string, prefix: string) {
+  for (const entry of readdirSync(sourceDir, { withFileTypes: true })) {
+    const full = join(sourceDir, entry.name);
+    const flatName = `${prefix}.${entry.name}`;
+    if (entry.isDirectory()) {
+      moveFlat(full, targetDir, flatName);
+    } else {
+      renameSync(full, join(targetDir, flatName));
+      flattened += 1;
+    }
+  }
+}
+
+function flattenSegments(dir: string) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const full = join(dir, entry.name);
+    if (entry.name.startsWith(SEGMENT_PREFIX)) {
+      moveFlat(full, dir, entry.name);
+      rmSync(full, { recursive: true, force: true });
+    } else {
+      flattenSegments(full);
+    }
+  }
+}
+
+flattenSegments(OUT_DIR);
+console.log(
+  `${flattened} Segmentdateien flach abgelegt (z. B. __next.ueber.__PAGE__.txt).`,
+);

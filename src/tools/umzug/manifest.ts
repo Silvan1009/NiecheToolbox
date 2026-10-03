@@ -106,6 +106,9 @@ export const umzug: ToolManifest = {
   name: "Umzugs-Rechner",
   tagline:
     "Wie viele Kartons, wie viel Volumen, welcher Transporter – geschätzt aus Wohnfläche und Haushalt.",
+  seoTitle: "Umzugsrechner: Kartons, Volumen und Transporter",
+  metaDescription:
+    "Umzug planen: Anzahl der Umzugskartons, Umzugsvolumen in Kubikmetern und die passende Transportergröße aus Wohnfläche und Haushaltsgröße schätzen.",
   category: "wohnen",
   icon: Boxes,
   status: "live",

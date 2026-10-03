@@ -1,9 +1,14 @@
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import sharp from "sharp";
 import { site } from "@/config/site";
-import { toolSeo, wegSeo } from "@/lib/seo";
+import {
+  STATIC_OG_PREFIX,
+  toolSeo,
+  wegSeo,
+  type StaticPageKey,
+} from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
 import { publicWege } from "@/wege/registry";
 
@@ -101,7 +106,7 @@ function renderImage(title: string, subtitle: string) {
               justifyContent: "center",
             }}
           >
-            N
+            {site.name.charAt(0)}
           </div>
           <div
             style={{
@@ -133,10 +138,50 @@ async function writeImage(fileName: string, title: string, subtitle: string) {
   console.log(`  ${fileName}`);
 }
 
+/**
+ * Vorschaubilder für die Seiten ohne Manifest. Vorher hatten Startseite,
+ * Übersichten, Über uns und die Rechtsseiten gar kein `og:image` – ein
+ * geteilter Link zeigte dort eine leere Kachel.
+ */
+const STATIC_PAGES: Record<StaticPageKey, { title: string; subtitle: string }> =
+  {
+    start: { title: site.name, subtitle: site.tagline },
+    rechner: {
+      title: "Rechner nach Thema",
+      subtitle:
+        "Alle Rechner, sortiert nach dem Anlass, für den du sie brauchst.",
+    },
+    wege: {
+      title: "Wege",
+      subtitle:
+        "Mehrere Rechner zu einem Urteil kombiniert, statt einer Zahl allein.",
+    },
+    ueber: {
+      title: `Über ${site.name}`,
+      subtitle:
+        "Wer dahintersteht, wie die Rechner entstehen und geprüft werden.",
+    },
+    rechtliches: {
+      title: "Impressum & Datenschutz",
+      subtitle: `Rechtliche Angaben zu ${site.name}.`,
+    },
+  };
+
 async function main() {
-  if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
+  // Erst leeren: Bilder eingeschmolzener oder umbenannter Seiten blieben sonst
+  // liegen und wanderten mit in den Export.
+  rmSync(OUT_DIR, { recursive: true, force: true });
+  mkdirSync(OUT_DIR, { recursive: true });
 
   console.log("OG-Bilder werden generiert...");
+
+  for (const [key, page] of Object.entries(STATIC_PAGES)) {
+    await writeImage(
+      `${STATIC_OG_PREFIX}${key}.png`,
+      page.title,
+      page.subtitle,
+    );
+  }
 
   for (const tool of publicTools()) {
     const { heading } = toolSeo(tool);

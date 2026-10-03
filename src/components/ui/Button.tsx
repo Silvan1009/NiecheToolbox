@@ -58,7 +58,11 @@ export function ButtonLink({
   children: ReactNode;
 }) {
   return (
-    <Link className={`${buttonClasses(variant, size)} ${className}`} {...props}>
+    <Link
+      prefetch={false}
+      className={`${buttonClasses(variant, size)} ${className}`}
+      {...props}
+    >
       {children}
     </Link>
   );

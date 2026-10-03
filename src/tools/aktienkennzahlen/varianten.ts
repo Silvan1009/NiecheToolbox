@@ -54,12 +54,14 @@ export const variantenTexte: VariantContent[] = [
           "Sie ist derselbe Zusammenhang von der anderen Seite: Gewinn je Aktie geteilt durch den Kurs, in Prozent. Ein KGV von 19 entspricht 5,3 Prozent Gewinnrendite. Der Vorteil dieser Schreibweise ist die direkte Vergleichbarkeit mit Anleihen und Sparzinsen: Wenn eine zehnjährige Bundesanleihe 2,5 Prozent bringt und die Aktie 5,3 Prozent Gewinnrendite, ist der Aufschlag für das Aktienrisiko 2,8 Prozentpunkte. Anders als das KGV bleibt die Gewinnrendite auch bei Verlusten bildbar – dann eben negativ.",
       },
       {
-        question: "Warum unterscheiden sich KGVs zwischen Ländern und Börsenplätzen?",
+        question:
+          "Warum unterscheiden sich KGVs zwischen Ländern und Börsenplätzen?",
         answer:
           "Weil das durchschnittliche KGV eines Marktes auch dessen Zinsniveau, Wachstumserwartung und Risikoeinschätzung widerspiegelt. US-Aktien werden historisch mit höheren KGVs gehandelt als europäische, unter anderem weil der US-Markt einen größeren Anteil wachstumsstarker Technologieunternehmen enthält und Anleger dort traditionell bereit sind, mehr für künftiges Wachstum zu zahlen. Schwellenländer werden oft mit niedrigeren KGVs gehandelt, weil Anleger dort einen Risikoabschlag für politische Unsicherheit, schwächere Rechtsstaatlichkeit oder Währungsrisiken verlangen. Ein KGV-Vergleich über Ländergrenzen hinweg sollte diese strukturellen Unterschiede deshalb immer mitdenken, statt eine einzelne Aktie unmittelbar gegen den Marktdurchschnitt eines anderen Landes zu stellen.",
       },
       {
-        question: "Welche KGV-Variante nutzen professionelle Analysten am häufigsten?",
+        question:
+          "Welche KGV-Variante nutzen professionelle Analysten am häufigsten?",
         answer:
           "Meist das vorlaufende KGV auf Basis der Konsensschätzung für den Gewinn der kommenden zwölf Monate, weil es die Markteinschätzung der nahen Zukunft abbildet statt der bereits bekannten Vergangenheit. Für langfristige Bewertungsvergleiche über einen ganzen Konjunkturzyklus hinweg wird dagegen oft ein über mehrere Jahre geglättetes KGV bevorzugt, das einzelne außergewöhnlich gute oder schlechte Jahre nicht überproportional gewichtet.",
       },
@@ -83,7 +85,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Warum haben Technologieunternehmen fast immer ein hohes KBV?",
+        question:
+          "Warum haben Technologieunternehmen fast immer ein hohes KBV?",
         answer:
           "Weil ihr wertvollstes Vermögen in der Bilanz kaum auftaucht. Software, Markenwert, ein Netzwerk aus Kundenbeziehungen oder ein Patentportfolio werden nach den Bilanzierungsregeln meist nicht oder nur zu den historischen Entwicklungskosten aktiviert – oft ein Bruchteil dessen, was sie wirtschaftlich wert sind. Ein Unternehmen mit wenig Sachanlagen, aber hohem Marktwert bekommt dadurch praktisch zwangsläufig ein hohes KBV, unabhängig davon, ob die Aktie teuer oder günstig ist. Für solche Geschäftsmodelle ist das KBV deshalb die am wenigsten aussagekräftige der klassischen Bewertungskennzahlen.",
       },
@@ -108,7 +111,8 @@ export const variantenTexte: VariantContent[] = [
           "Ein US-amerikanischer Ökonom und Investor, der in den 1930er-Jahren nach der Weltwirtschaftskrise die Grundlagen des Value Investing entwickelte und sie 1934 zusammen mit David Dodd im Standardwerk „Security Analysis“ veröffentlichte. Sein Kerngedanke war, den inneren Wert eines Unternehmens von dessen schwankendem Börsenkurs zu trennen und nur bei einem ausreichenden Sicherheitsabstand zwischen beiden zu kaufen. Graham lehrte an der Columbia University, wo unter anderem Warren Buffett zu seinen Studenten zählte, der die Prinzipien seines Lehrers später zu einer der erfolgreichsten Anlagestrategien der Börsengeschichte weiterentwickelte.",
       },
       {
-        question: "Wie stark schwankt das KBV im Vergleich zum KGV über einen Konjunkturzyklus?",
+        question:
+          "Wie stark schwankt das KBV im Vergleich zum KGV über einen Konjunkturzyklus?",
         answer:
           "Meist deutlich weniger, weil der Buchwert eine Bestandsgröße ist und sich nur langsam verändert, während der Gewinn – die Grundlage des KGV – von Jahr zu Jahr stark schwanken kann. In einer Rezession bricht der Gewinn eines zyklischen Unternehmens oft ein oder wird sogar negativ, während das bilanzielle Eigenkapital sich nur allmählich abbaut. Deshalb bleibt das KBV in solchen Phasen oft die einzige noch sinnvoll interpretierbare klassische Bewertungskennzahl, während das KGV zeitweise gar nicht bildbar ist.",
       },
@@ -157,7 +161,8 @@ export const variantenTexte: VariantContent[] = [
           "Als Warnbeispiel: In den späten 1990er-Jahren wurden zahlreiche Internetunternehmen ohne jeden Gewinn allein über das Kurs-Umsatz-Verhältnis bewertet, weil andere Kennzahlen mangels Gewinn gar nicht anwendbar waren. Einige Aktien erreichten KUVs von 50 oder mehr, gestützt allein auf die Erwartung künftigen Wachstums. Als sich diese Wachstumserwartungen nach dem Platzen der Blase 2000 nicht erfüllten, brachen die Kurse um 80 bis 90 Prozent ein. Die Lehre daraus ist nicht, dass das KUV eine schlechte Kennzahl wäre, sondern dass ein hohes KUV ohne belastbaren Plan zur künftigen Profitabilität ein Warnsignal und kein Kaufargument ist.",
       },
       {
-        question: "Wie unterscheidet sich das KUV zwischen Branchen mit unterschiedlichen Margen?",
+        question:
+          "Wie unterscheidet sich das KUV zwischen Branchen mit unterschiedlichen Margen?",
         answer:
           "Sehr stark, weil das KUV die Gewinnspanne komplett ignoriert. Ein Lebensmitteleinzelhändler mit typischerweise 1 bis 3 Prozent Nettomarge wird selten über ein KUV von 0,5 gehandelt, weil aus jedem Umsatzeuro nur wenige Cent Gewinn werden. Ein Softwareunternehmen mit 20 bis 30 Prozent Nettomarge rechtfertigt dagegen ein deutlich höheres KUV, weil derselbe Umsatzeuro am Ende viel mehr Gewinn übrig lässt. Ein KUV-Vergleich ergibt deshalb nur innerhalb derselben oder einer margentechnisch ähnlichen Branche Sinn, niemals branchenübergreifend ohne Berücksichtigung der jeweiligen Gewinnspanne.",
       },
@@ -211,7 +216,8 @@ export const variantenTexte: VariantContent[] = [
           "Populär gemacht hat es der US-Fondsmanager Peter Lynch, der von 1977 bis 1990 den Fidelity Magellan Fund leitete und in dieser Zeit eine der besten Erfolgsbilanzen der Fondsgeschichte erzielte. In seinem Buch „One Up on Wall Street“ beschrieb er das PEG als einfache Faustregel für private Anleger: Ein fair bewertetes Wachstumsunternehmen sollte ein KGV haben, das ungefähr seiner erwarteten Wachstumsrate entspricht, also ein PEG nahe 1. Lynch betonte dabei ausdrücklich, dass die Kennzahl eine grobe Orientierung sei und niemals eine gründliche Analyse des Geschäftsmodells und der Wettbewerbsposition ersetzen könne.",
       },
       {
-        question: "Wie geht man mit sehr unsicheren Wachstumsschätzungen beim PEG um?",
+        question:
+          "Wie geht man mit sehr unsicheren Wachstumsschätzungen beim PEG um?",
         answer:
           "Am sinnvollsten mit einer bewusst konservativen Schätzung statt der optimistischsten verfügbaren Zahl. Analystenschätzungen für das Gewinnwachstum weichen zwischen verschiedenen Häusern oft erheblich voneinander ab, besonders bei jungen oder stark zyklischen Unternehmen. Wer bei der PEG-Berechnung die niedrigste plausible Wachstumsschätzung verwendet und die Aktie auch dann noch für vertretbar bewertet hält, hat einen größeren Sicherheitsabstand, als wenn nur mit der optimistischsten Prognose gerechnet wird. Ein PEG, das nur bei der höchsten verfügbaren Wachstumsannahme unter 1 fällt, sollte eher als Warnsignal denn als Kaufargument gelesen werden.",
       },
@@ -255,7 +261,8 @@ export const variantenTexte: VariantContent[] = [
           "Weil der Kurs im Nenner steht. Bei unveränderter Dividende von 1,40 Euro fällt die Rendite von 2,1 auf 1,4 Prozent, wenn der Kurs von 68 auf 100 Euro steigt. Für Aktionäre, die schon investiert sind, ändert das nichts: Sie bekommen weiterhin 1,40 Euro je Aktie. Für Neueinsteiger ist die Aktie als Dividendenanlage aber weniger attraktiv geworden.",
       },
       {
-        question: "Was ist eine Dividendenkürzung, und wie reagiert der Kurs darauf?",
+        question:
+          "Was ist eine Dividendenkürzung, und wie reagiert der Kurs darauf?",
         answer:
           "Eine Dividendenkürzung senkt die künftige Ausschüttung gegenüber dem Vorjahr, meist als Reaktion auf einen Gewinneinbruch, eine hohe Verschuldung oder eine bewusste Kurskorrektur der Unternehmensführung. Der Markt reagiert darauf häufig überproportional stark, weil eine Kürzung nicht nur weniger Bargeld bedeutet, sondern auch als Eingeständnis gelesen wird, dass die Geschäftsleitung selbst nicht mehr an eine schnelle Erholung glaubt – der Kurs kann deshalb stärker fallen, als der reine Wegfall der Dividendensumme rechnerisch erklären würde. Eine angekündigte Kürzung ist ein deutlich stärkeres Warnsignal als eine unveränderte, aber ausbleibende Erhöhung, die vom Markt meist gelassener aufgenommen wird.",
       },
@@ -310,7 +317,8 @@ export const variantenTexte: VariantContent[] = [
           "Die klassische Ausschüttungsquote nicht – sie setzt allein die Bardividende ins Verhältnis zum Gewinn. Viele Unternehmen, besonders in den USA, geben aber einen erheblichen Teil ihres Gewinns über Aktienrückkäufe statt über Dividenden an Aktionäre zurück. Wer die vollständige Kapitalrückgabe beurteilen will, addiert deshalb Dividendensumme und Rückkaufsumme und setzt beides gemeinsam ins Verhältnis zum Gewinn – als Gesamtausschüttungsquote. Ein Unternehmen mit niedriger klassischer Ausschüttungsquote kann auf diese Weise trotzdem einen Großteil seines Gewinns an Aktionäre zurückgeben, nur eben nicht in bar auf das Konto, sondern über einen tendenziell steigenden Gewinn je verbleibender Aktie.",
       },
       {
-        question: "Wie verändert sich die Ausschüttungsquote über den Lebenszyklus eines Unternehmens?",
+        question:
+          "Wie verändert sich die Ausschüttungsquote über den Lebenszyklus eines Unternehmens?",
         answer:
           "Typischerweise steigt sie mit zunehmender Reife. Ein junges Wachstumsunternehmen investiert fast den gesamten Gewinn zurück ins eigene Geschäft und schüttet wenig bis nichts aus, weil interne Projekte höhere Renditen versprechen als eine Bardividende. Mit nachlassendem Wachstumstempo und sinkendem Bedarf an neuem Kapital steigt die Quote schrittweise, bis reife Unternehmen mit begrenzten Wachstumschancen oft 50 bis 80 Prozent ihres Gewinns ausschütten. Ein plötzlicher, untypischer Anstieg der Quote bei einem eigentlich noch wachstumsstarken Unternehmen kann deshalb ein Hinweis darauf sein, dass die internen Wachstumschancen bereits nachlassen, auch wenn das noch nicht offen kommuniziert wird.",
       },
@@ -355,12 +363,14 @@ export const variantenTexte: VariantContent[] = [
           "Weil das Ergebnis sinnlos wäre. Ein Gewinn von 100 bei einem Eigenkapital von minus 200 ergäbe minus 50 Prozent – eine Zahl, die weder Verlust noch Rendite bedeutet. Negatives Eigenkapital entsteht nach langen Verlustserien oder nach sehr großen Aktienrückkäufen und ist immer ein Anlass, sich die Verschuldung genau anzusehen. Der Rechner lässt ROE, KBV und Verschuldungsgrad in diesem Fall leer und weist im Hinweisblock darauf hin.",
       },
       {
-        question: "Warum ist eine sehr hohe Eigenkapitalrendite manchmal verdächtig?",
+        question:
+          "Warum ist eine sehr hohe Eigenkapitalrendite manchmal verdächtig?",
         answer:
           "Weil sie außer aus operativer Stärke auch aus einer ungewöhnlich dünnen Eigenkapitalbasis stammen kann – etwa nach jahrelangen, aggressiven Aktienrückkäufen, die das Eigenkapital immer weiter schrumpfen lassen, während der absolute Gewinn kaum noch wächst. Ein Unternehmen mit 40 Prozent Eigenkapitalrendite, aber einer Eigenkapitalquote von nur 5 Prozent, trägt ein deutlich höheres Risiko als eines mit 20 Prozent Rendite und 40 Prozent Eigenkapitalquote, selbst wenn die reine Renditezahl beeindruckender aussieht. Wer eine hohe Eigenkapitalrendite sieht, sollte deshalb reflexartig nachschauen, wie dünn das Eigenkapital dahinter tatsächlich ist.",
       },
       {
-        question: "Wie beeinflussen Sonderposten die Eigenkapitalrendite in einzelnen Jahren?",
+        question:
+          "Wie beeinflussen Sonderposten die Eigenkapitalrendite in einzelnen Jahren?",
         answer:
           "Erheblich, und oft irreführend. Ein einmaliger Buchgewinn aus dem Verkauf einer Sparte oder eine große Wertaufholung kann den Gewinn eines einzelnen Jahres stark nach oben verzerren und damit eine Eigenkapitalrendite zeigen, die im Folgejahr ohne diesen Sondereffekt deutlich niedriger ausfällt. Umgekehrt drückt eine einmalige Abschreibung oder eine Rechtsstreit-Rückstellung den Gewinn und damit die Rendite eines Jahres künstlich nach unten, obwohl das laufende Geschäft unverändert stabil läuft. Für ein belastbares Bild lohnt sich deshalb der Blick auf die bereinigte Eigenkapitalrendite über mehrere Jahre, statt sich auf den Wert eines einzelnen, möglicherweise durch Sonderposten verzerrten Geschäftsjahres zu verlassen.",
       },
@@ -372,7 +382,7 @@ export const variantenTexte: VariantContent[] = [
   {
     params: { fokus: "evEbitda" },
     slug: "ev-ebitda-berechnen",
-    title: "EV/EBITDA berechnen: Unternehmenswert zum operativen Ergebnis",
+    title: "EV/EBITDA berechnen: Rechner für die Unternehmensbewertung",
     description:
       "Börsenwert plus Nettoschulden, geteilt durch das EBITDA – die Kennzahl, mit der ganze Unternehmen bewertet werden. Mit EV/EBIT, EV/Umsatz und Verschuldung.",
     heading: "EV/EBITDA berechnen",
@@ -384,7 +394,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Warum ist EV/EBITDA bei Firmenübernahmen die Standardkennzahl?",
+        question:
+          "Warum ist EV/EBITDA bei Firmenübernahmen die Standardkennzahl?",
         answer:
           "Weil ein Käufer, der ein ganzes Unternehmen erwirbt, sowohl den Eigenkapital- als auch den Fremdkapitalanteil übernimmt und die Finanzierung danach frei neu ordnen kann – die bisherige Kapitalstruktur des Zielunternehmens ist für den fairen Preis deshalb nachrangig. EV/EBITDA rechnet Schulden und liquide Mittel bereits in den Unternehmenswert ein und ist zudem unabhängig von Steuersätzen und Abschreibungspraktiken, die sich zwischen Ländern und Bilanzierungsstandards unterscheiden. Käufer und Verkäufer verständigen sich deshalb in Verhandlungen meist zuerst auf ein EV/EBITDA-Vielfaches und leiten daraus erst den Kaufpreis je Aktie ab, nicht umgekehrt.",
       },
@@ -405,12 +416,14 @@ export const variantenTexte: VariantContent[] = [
           "Weil die Nettoschulden negativ sein können. Liegt mehr Geld in der Kasse als Schulden in der Bilanz, ist der Unternehmenswert kleiner als der Börsenwert – der Käufer bekommt die Kasse mit und muss faktisch weniger für das Geschäft zahlen. Bei sehr großen Kassenbeständen kann der Unternehmenswert sogar negativ werden; dann lässt sich kein sinnvolles Vielfaches bilden und der Rechner weist die EV-Kennzahlen nicht aus.",
       },
       {
-        question: "Wie wird EV/EBITDA in Analystenberichten typischerweise genutzt?",
+        question:
+          "Wie wird EV/EBITDA in Analystenberichten typischerweise genutzt?",
         answer:
           "Analysten bilden aus einer Gruppe vergleichbarer Unternehmen derselben Branche einen typischen EV/EBITDA-Bereich und legen ihn als Zielwert für das eigene Bewertungsmodell an – ein Verfahren, das als Comparable-Company-Analyse bekannt ist. Notiert eine Aktie deutlich unter diesem Branchenbereich, gilt sie manchen Analysten als unterbewertet, sofern kein struktureller Grund wie eine schwächere Wachstumsaussicht oder ein höheres Risiko dagegenspricht. Notiert sie deutlich darüber, wird oft ein besonderer Vertrauensvorschuss des Marktes unterstellt, etwa wegen einer Marktführerschaft oder eines als besonders sicher geltenden Geschäftsmodells. Die Methode ersetzt keine tiefere Analyse, liefert aber einen schnellen ersten Anhaltspunkt.",
       },
       {
-        question: "Warum unterscheidet sich EV/EBITDA je nach Kapitalintensität einer Branche?",
+        question:
+          "Warum unterscheidet sich EV/EBITDA je nach Kapitalintensität einer Branche?",
         answer:
           "Weil das EBITDA Abschreibungen ausblendet, die bei kapitalintensiven Geschäften wie Telekommunikation, Energieversorgung oder Industrieproduktion einen wesentlichen und wiederkehrenden Kostenblock darstellen. Solche Unternehmen werden deshalb oft mit niedrigeren EV/EBITDA-Vielfachen gehandelt als kapitalleichte Geschäftsmodelle wie Beratung oder Software, weil ein Teil des ausgewiesenen EBITDA jedes Jahr wieder in Ersatzinvestitionen fließen muss und damit nicht frei verfügbar ist. Ein direkter EV/EBITDA-Vergleich zwischen einem Netzbetreiber und einem Softwareunternehmen führt deshalb in die Irre – aussagekräftig ist der Vergleich nur innerhalb ähnlich kapitalintensiver Branchen.",
       },
@@ -427,7 +440,7 @@ export const variantenTexte: VariantContent[] = [
   {
     params: { fokus: "fcfRendite" },
     slug: "free-cashflow-rendite-berechnen",
-    title: "Free-Cashflow-Rendite berechnen: Rechner mit Cashflow-Analyse",
+    title: "Free-Cashflow-Rendite berechnen: Rechner mit FCF-Analyse",
     description:
       "Freier Cashflow je Aktie geteilt durch den Kurs – der härteste Bewertungsmaßstab. Mit Gewinnqualität, Investitionsquote und Dividendendeckung.",
     heading: "Free-Cashflow-Rendite berechnen",
@@ -460,12 +473,14 @@ export const variantenTexte: VariantContent[] = [
           "Weil die Investitionen den operativen Cashflow übersteigen. Bei einem Ausbauprogramm ist das gewollt und vorübergehend – das Geld fließt in Anlagen, die künftig Erträge bringen. Bei einem reifen Geschäft ist es dagegen ein Warnsignal: Dividende und Zinsen müssen dann aus der Kasse oder von der Bank kommen. Wichtig ist der Blick über mehrere Jahre und darauf, ob die Investitionen dem Wachstum oder nur dem Erhalt dienen.",
       },
       {
-        question: "Wie verlässlich ist der Cashflow im Vergleich zum Gewinn wirklich?",
+        question:
+          "Wie verlässlich ist der Cashflow im Vergleich zum Gewinn wirklich?",
         answer:
           "Deutlich verlässlicher, aber nicht völlig immun gegen Gestaltung. Der Cashflow lässt sich zwar nicht über Abschreibungsdauern oder Rückstellungen verändern, wohl aber über den Zeitpunkt von Zahlungen: Wer Lieferantenrechnungen kurz vor dem Bilanzstichtag verzögert bezahlt oder Kunden zu schnellerer Zahlung drängt, verschiebt den ausgewiesenen operativen Cashflow zwischen zwei Quartalen, ohne dass sich am zugrunde liegenden Geschäft etwas ändert. Solche Verschiebungen gleichen sich über mehrere Quartale meist wieder aus. Wer den Cashflow über einen längeren Zeitraum von drei bis fünf Jahren statt eines einzelnen Quartals betrachtet, ist gegen diese Art der kurzfristigen Glättung weitgehend abgesichert.",
       },
       {
-        question: "Was ist der Unterschied zwischen Wachstums- und Erhaltungsinvestitionen?",
+        question:
+          "Was ist der Unterschied zwischen Wachstums- und Erhaltungsinvestitionen?",
         answer:
           "Erhaltungsinvestitionen sind zwingend nötig, um die bestehende Wettbewerbsposition und Produktionskapazität zu erhalten, etwa der Ersatz einer verschlissenen Maschine durch eine gleichwertige. Wachstumsinvestitionen dagegen erweitern das Geschäft über den heutigen Stand hinaus, etwa der Bau einer zusätzlichen Fabrik oder die Erschließung eines neuen Markts. Veröffentlichte Bilanzen unterscheiden zwischen beiden meist nicht, sodass die Trennung in der Praxis nur grob geschätzt werden kann. Für ein reifes Unternehmen mit stagnierendem Umsatz ist es realistisch, den Großteil der ausgewiesenen Investitionen als Erhaltungsinvestitionen zu behandeln; bei einem klar erkennbaren Wachstumskurs mit steigenden Kapazitäten ist ein größerer Teil davon als freie unternehmerische Entscheidung einzuordnen.",
       },
@@ -510,12 +525,14 @@ export const variantenTexte: VariantContent[] = [
           "Weil Eigenkapital teurer ist als Fremdkapital. Aktionäre erwarten eine höhere Rendite als Banken Zinsen verlangen, und Zinsen sind zusätzlich steuerlich abziehbar. Ein Unternehmen mit 80 Prozent Eigenkapitalquote und niedriger Kapitalrendite arbeitet ineffizient – es könnte einen Teil des Kapitals ausschütten oder investieren. Die Kunst liegt in der Balance: genug Puffer für schlechte Jahre, aber kein ungenutztes Kapital in der Bilanz.",
       },
       {
-        question: "Wie hat sich die Eigenkapitalquote deutscher Unternehmen über die Zeit entwickelt?",
+        question:
+          "Wie hat sich die Eigenkapitalquote deutscher Unternehmen über die Zeit entwickelt?",
         answer:
           "Im langfristigen Trend gestiegen: Nach Erhebungen der Deutschen Bundesbank lag die durchschnittliche Eigenkapitalquote deutscher Unternehmen in den 1990er-Jahren noch bei rund 18 bis 20 Prozent und ist seither auf Werte deutlich über 30 Prozent gewachsen. Ein wichtiger Treiber waren die Basel-Regelwerke für Banken, die höhere Eigenkapitalpuffer bei Kreditnehmern honorieren, sowie die Lehren aus mehreren Finanz- und Wirtschaftskrisen, die Unternehmen zu vorsichtigerer Bilanzpolitik bewogen haben. Für den Vergleich einer einzelnen Aktie mit einem historischen Durchschnittswert ist deshalb wichtig, welcher Zeitraum als Referenz dient – ein Vergleich mit den 1990er-Jahren würde die heutige Norm deutlich unterschätzen.",
       },
       {
-        question: "Welche Rolle spielt die Eigenkapitalquote bei einer Kreditvergabe an das Unternehmen?",
+        question:
+          "Welche Rolle spielt die Eigenkapitalquote bei einer Kreditvergabe an das Unternehmen?",
         answer:
           "Eine zentrale: Banken nutzen sie als eine der wichtigsten Kennzahlen im Rating-Prozess, weil sie unmittelbar zeigt, wie viel Verlust ein Unternehmen auffangen kann, bevor Gläubiger etwas verlieren. Eine höhere Eigenkapitalquote führt bei sonst gleichen Faktoren meist zu einem besseren internen Rating und damit zu günstigeren Kreditkonditionen, weil die Bank ein geringeres Ausfallrisiko einpreist. Unternehmen mit dünner Eigenkapitaldecke zahlen dagegen häufig einen Risikoaufschlag auf den Zins oder müssen zusätzliche Sicherheiten stellen. Dieser Zusammenhang erklärt, warum viele Unternehmen aktiv daran arbeiten, ihre Eigenkapitalquote zu stärken, auch wenn das kurzfristig auf Kosten der Eigenkapitalrendite geht.",
       },
