@@ -115,6 +115,9 @@ export const backform: ToolManifest = {
   name: "Backform-Umrechner",
   tagline:
     "Rezept für eine andere Form? Faktor berechnen und die ganze Zutatenliste mit umrechnen.",
+  seoTitle: "Backform umrechnen: Rezept auf andere Formgröße",
+  metaDescription:
+    "Rezept von einer Backform auf eine andere umrechnen: Faktor für runde und eckige Formen berechnen und die ganze Zutatenliste automatisch anpassen.",
   category: "essen",
   icon: CakeSlice,
   status: "live",

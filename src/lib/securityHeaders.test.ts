@@ -97,10 +97,10 @@ describe("securityHeaders", () => {
       );
     });
 
-    // experimental.inlineCss gibt pro Seite wechselnde <style>-Blöcke aus.
-    // Hashes müssten je Route neu erzeugt werden, ein Nonce steht ohne
-    // dynamisches Rendern nicht zur Verfügung.
-    it("erlaubt Inline-Styles wegen inlineCss", () => {
+    // Die Rechner zeichnen Balken über style-Attribute, next/font setzt seine
+    // Variablen inline. Hashes müssten je Route neu erzeugt werden, ein Nonce
+    // steht im statischen Export nicht zur Verfügung.
+    it("erlaubt Inline-Styles", () => {
       expect(csp()).toMatch(/style-src[^;]*'unsafe-inline'/);
     });
 
@@ -116,6 +116,22 @@ describe("securityHeaders", () => {
       expect(csp({ analyticsOrigin: "https://plausible.io" })).toContain(
         "https://plausible.io",
       );
+    });
+
+    // Regressionstest: Umami Cloud lädt von cloud.umami.is, sendet aber an
+    // gateway.umami.is. Fehlte der zweite Host, blockierte die CSP jeden
+    // Messpunkt – die Seite lief monatelang ohne eine einzige Zählung.
+    it("lässt den Sende-Host der Reichweitenmessung zu, nicht nur den Skript-Host", () => {
+      const policy = csp({
+        analyticsOrigin: "https://cloud.umami.is",
+        analyticsConnectOrigins: ["https://gateway.umami.is"],
+      });
+      const directive = (name: string) =>
+        policy.split("; ").find((part) => part.startsWith(`${name} `)) ?? "";
+      expect(directive("connect-src")).toContain("https://gateway.umami.is");
+      expect(directive("connect-src")).toContain("https://cloud.umami.is");
+      // Der Sende-Host liefert kein Skript aus und gehört nicht in script-src.
+      expect(directive("script-src")).not.toContain("gateway.umami.is");
     });
 
     it("braucht unsafe-eval nur in der Entwicklung", () => {
@@ -146,6 +162,12 @@ describe("securityHeaders", () => {
       expect(headerValue(headers, "Referrer-Policy")).toBe(
         "strict-origin-when-cross-origin",
       );
+    });
+
+    it("widerspricht sich beim Einbettungsverbot nicht", () => {
+      const headers = securityHeaders();
+      expect(headerValue(headers, "X-Frame-Options")).toBe("DENY");
+      expect(csp()).toContain("frame-ancestors 'none'");
     });
   });
 });

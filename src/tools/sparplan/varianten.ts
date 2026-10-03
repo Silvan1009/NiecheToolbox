@@ -18,7 +18,7 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "zinseszinsrechner",
-    title: "Zinseszinsrechner: Kapital und Sparrate über die Jahre berechnen",
+    title: "Zinseszinsrechner: Kapital und Sparrate über die Jahre",
     description:
       "Zinseszins für Einmalanlage und monatliche Sparrate – mit Kosten, Steuern, Inflation und Verdopplungsdauer. Kostenlos und ohne Anmeldung.",
     heading: "Zinseszins berechnen",
@@ -38,7 +38,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Stimmt es, dass Einstein den Zinseszins als Weltwunder bezeichnet hat?",
+        question:
+          "Stimmt es, dass Einstein den Zinseszins als Weltwunder bezeichnet hat?",
         answer:
           "Das Zitat ist populär, aber nicht zweifelsfrei belegt – es findet sich in keiner autorisierten Quelle aus Einsteins eigener Feder. Unabhängig von der Urheberschaft beschreibt es den Effekt zutreffend: Weil Erträge selbst wieder Erträge bringen, wächst ein Kapital nicht linear, sondern exponentiell. Der Effekt ist mathematisch nichts Besonderes, wirkt aber gegen die menschliche Intuition, die eher in linearen Schritten denkt – genau deshalb wird ein zehn oder zwanzig Jahre laufender Sparplan im ersten Drittel oft unterschätzt und im letzten Drittel überrascht.",
       },
@@ -63,13 +64,13 @@ export const variantenTexte: VariantContent[] = [
           "Die mathematischen Grundlagen reichen bis ins Babylon des 2. Jahrtausends vor Christus zurück, wo bereits Tontafeln mit Zinsberechnungen für Kredite gefunden wurden. In der heute gebräuchlichen Form geht die Formel auf die Entwicklung der Finanzmathematik im Italien der Renaissance zurück, unter anderem durch den Mathematiker Luca Pacioli, der Ende des 15. Jahrhunderts als Erster systematisch über Zins und Zinseszins schrieb. Der Kern der Formel – Startkapital mal Zinsfaktor hoch Anzahl der Perioden – ist seither unverändert geblieben; verändert hat sich nur, wie leicht sie sich heute mit einem Taschenrechner oder eben einem Online-Rechner auswerten lässt.",
       },
       {
-        question: "Gibt es eine einfache Faustregel für den Zinseszinseffekt ohne Rechner?",
+        question:
+          "Gibt es eine einfache Faustregel für den Zinseszinseffekt ohne Rechner?",
         answer:
           "Ja, die bereits erwähnte 72er-Regel: 72 geteilt durch den Zinssatz ergibt näherungsweise die Jahre bis zur Verdopplung. Für die Verdreifachung eines Kapitals gibt es eine ähnliche, weniger bekannte Regel mit dem Faktor 114, für die Verzehnfachung mit dem Faktor 240. Diese Faustregeln sind für Zinssätze zwischen etwa 2 und 15 Prozent erstaunlich genau und eignen sich gut für eine schnelle Kopfrechnung, ersetzen für eine belastbare Planung mit Sparraten, Kosten und Steuern aber keinen echten Rechner.",
       },
     ],
   },
-
 
   /* ----------------------------------------------------------------------- */
 
@@ -94,7 +95,8 @@ export const variantenTexte: VariantContent[] = [
     ],
     faq: [
       {
-        question: "Wie stark verändert ein Prozentpunkt mehr Rendite die nötige Sparrate?",
+        question:
+          "Wie stark verändert ein Prozentpunkt mehr Rendite die nötige Sparrate?",
         answer:
           "Deutlich mehr, als die kleine Zahl vermuten lässt. Für 100.000 Euro in zwanzig Jahren sinkt die Rate von 238 Euro bei 6 Prozent auf 197 Euro bei 7 Prozent – ein Rückgang von rund 17 Prozent für einen einzigen zusätzlichen Prozentpunkt. Der Effekt wächst mit der Laufzeit: Bei dreißig Jahren macht derselbe eine Prozentpunkt einen noch größeren relativen Unterschied. Das ist zugleich eine Warnung: Wer die nötige Rate mit einer zu optimistischen Renditeannahme berechnet, spart am Ende zu wenig für das gesteckte Ziel.",
       },
@@ -114,12 +116,14 @@ export const variantenTexte: VariantContent[] = [
           "Dann sind drei Stellschrauben da, und die Laufzeit ist die wirksamste. Fünf Jahre mehr senken die Rate stärker als jede realistische Renditeverbesserung. Die zweite ist das Ziel selbst – oft ist die runde Zahl nur geschätzt und der tatsächliche Bedarf niedriger. Die dritte ist die Dynamik: Wer heute nicht die volle Rate aufbringt, kann mit einer jährlichen Erhöhung starten, die zum erwarteten Einkommensverlauf passt.",
       },
       {
-        question: "Was passiert, wenn ich mehr einzahle als die errechnete Rate?",
+        question:
+          "Was passiert, wenn ich mehr einzahle als die errechnete Rate?",
         answer:
           "Das Ziel wird entweder früher erreicht oder am Ende steht mehr Kapital als geplant – beides ist unproblematisch, weil die Rate im Zielmodus nur die Mindestrate für das eingegebene Ziel und die eingegebene Laufzeit ist, keine Obergrenze. Wer regelmäßig mehr einzahlen kann, etwa durch eine Gehaltserhöhung, profitiert überproportional stark, wenn die zusätzlichen Beträge früh in der Laufzeit eingezahlt werden statt erst gegen Ende, weil sie dann länger vom Zinseszins profitieren. Am einfachsten lässt sich das im Rechner selbst durchspielen, indem eine höhere Rate direkt im Modus „Endkapital“ statt „Sparrate“ eingegeben wird.",
       },
       {
-        question: "Sollte das Sparziel in heutigen Euro oder in künftiger Kaufkraft angegeben werden?",
+        question:
+          "Sollte das Sparziel in heutigen Euro oder in künftiger Kaufkraft angegeben werden?",
         answer:
           "Das hängt davon ab, was tatsächlich gemeint ist. Wird ein Betrag angestrebt, der in zwanzig Jahren dieselbe Kaufkraft hat wie 100.000 Euro heute, muss das Ziel um die erwartete Inflation nach oben angepasst werden, bevor es in den Rechner eingetragen wird – bei 2 Prozent Inflation über zwanzig Jahre wären das rund 149.000 Euro nominal. Wird dagegen ein fester nominaler Betrag angestrebt, etwa weil ein konkreter Kaufpreis feststeht, genügt die direkte Eingabe. Der Rechner selbst weist unabhängig davon zusätzlich aus, was das Endkapital in heutiger Kaufkraft wert wäre, damit der Unterschied sichtbar bleibt.",
       },
@@ -130,7 +134,7 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "vorabpauschale-berechnen",
-    title: "Vorabpauschale berechnen 2026: Rechner mit Basiszins 3,20 Prozent",
+    title: "Vorabpauschale 2026 berechnen: Rechner mit Basiszins 3,20 %",
     description:
       "Vorabpauschale für thesaurierende ETFs berechnen – mit Basiszins 2026, Teilfreistellung und Sparerpauschbetrag. Was die Bank im Januar einzieht.",
     heading: "Vorabpauschale berechnen",
@@ -180,7 +184,7 @@ export const variantenTexte: VariantContent[] = [
 
   {
     slug: "abgeltungssteuer-berechnen",
-    title: "Abgeltungssteuer berechnen: 25 Prozent, Soli und Kirchensteuer",
+    title: "Abgeltungssteuer berechnen: mit Soli und Kirchensteuer",
     description:
       "Abgeltungsteuer auf Kapitalerträge berechnen – mit Sparerpauschbetrag, Teilfreistellung und der korrekten Kirchensteuerformel nach § 32d EStG.",
     heading: "Abgeltungssteuer berechnen",
@@ -213,7 +217,8 @@ export const variantenTexte: VariantContent[] = [
           "In der Regel nicht: Die deutsche Bank führt die Steuer direkt ab, damit ist sie abgegolten – daher der Name. Angeben muss man sie unter anderem bei Depots im Ausland, wenn der Sparerpauschbetrag über mehrere Banken hinweg nicht optimal verteilt wurde, wenn Verluste aus einem anderen Depot verrechnet werden sollen oder wenn die Günstigerprüfung beantragt wird. Auch die Kirchensteuer lässt sich über die Erklärung nachträglich korrigieren.",
       },
       {
-        question: "Was ist der Sparerpauschbetrag genau, und wie beantrage ich ihn?",
+        question:
+          "Was ist der Sparerpauschbetrag genau, und wie beantrage ich ihn?",
         answer:
           "Ein jährlicher Steuerfreibetrag auf Kapitalerträge von 1.000 Euro für Alleinstehende und 2.000 Euro für zusammen veranlagte Ehepaare, seit 2023 in dieser Höhe gültig. Damit er automatisch bei der Steuerberechnung berücksichtigt wird, muss bei jeder depotführenden Bank ein Freistellungsauftrag eingerichtet werden – das geht meist unkompliziert online im Kundenportal der Bank. Ohne Freistellungsauftrag zieht die Bank die Steuer zunächst auf den vollen Ertrag ein, und der Freibetrag lässt sich erst über die Steuererklärung nachträglich geltend machen. Bei mehreren Banken kann der Gesamtbetrag beliebig aufgeteilt werden, solange die Summe die persönliche Höchstgrenze nicht überschreitet.",
       },
@@ -270,12 +275,14 @@ export const variantenTexte: VariantContent[] = [
           "Der Entnahmebetrag im Rechner ist ein Bruttobetrag. Bei einem Verkauf von Fondsanteilen ist immer nur der enthaltene Gewinnanteil steuerpflichtig, nicht die gesamte Entnahme – wie hoch dieser Anteil ist, hängt davon ab, wie stark das Depot gewachsen ist. Als Näherung: Bei einem Depot, das sich verdoppelt hat, ist etwa die Hälfte jeder Entnahme Gewinn, und darauf fallen bei einem Aktien-ETF rund 18,5 Prozent an. Der Sparerpauschbetrag von 1.000 Euro im Jahr gilt auch in der Entnahmephase.",
       },
       {
-        question: "In welcher Reihenfolge sollten Fondsanteile beim Entnehmen verkauft werden?",
+        question:
+          "In welcher Reihenfolge sollten Fondsanteile beim Entnehmen verkauft werden?",
         answer:
           "Die meisten Depots verkaufen automatisch nach dem Prinzip First In, First Out: Die zuerst gekauften Anteile werden auch zuerst wieder verkauft. Das ist steuerlich meist ungünstig, weil ältere Anteile in der Regel den größten Kursgewinn und damit die höchste Steuerlast je verkauftem Anteil tragen. Manche Banken erlauben eine gezielte Auswahl einzelner Tranchen, sodass sich stattdessen Anteile mit geringerem Gewinn zuerst verkaufen lassen und die Steuerlast über die Entnahmejahre gleichmäßiger verteilt wird. Diese Möglichkeit ist nicht bei jedem Broker gegeben und lohnt einen Blick in die eigenen Depotbedingungen, bevor die Entnahmephase beginnt.",
       },
       {
-        question: "Wie unterscheidet sich ein Entnahmeplan von einer klassischen Rentenversicherung?",
+        question:
+          "Wie unterscheidet sich ein Entnahmeplan von einer klassischen Rentenversicherung?",
         answer:
           "Bei einem selbst verwalteten Entnahmeplan bleibt das Kapital im eigenen Depot und wird nach einer selbst gewählten Regel entnommen – flexibel anpassbar, aber ohne Garantie, dass das Geld bis zum Lebensende reicht, falls die Rendite schlechter ausfällt als angenommen oder ein sehr hohes Alter erreicht wird. Eine klassische Rentenversicherung dagegen garantiert eine lebenslange Zahlung unabhängig von der eigenen Lebenserwartung, verlangt dafür aber, das Kapital an den Versicherer abzugeben, und verzichtet meist auf die Möglichkeit, im Todesfall noch vorhandenes Restkapital an Erben weiterzugeben. Der Entnahmeplan-Rechner hier bildet nur die erste Variante ab: die flexible, aber nicht lebenslang garantierte Entnahme aus dem eigenen Depot.",
       },

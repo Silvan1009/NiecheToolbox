@@ -19,6 +19,7 @@ export function RelatedTools({ slug }: { slug: string }) {
           return (
             <li key={tool.slug}>
               <Link
+                prefetch={false}
                 href={toolPath(tool.slug)}
                 className="group surface-soft related-tool-link"
               >

@@ -12,10 +12,22 @@ const sections: ContentSection[] = [
         caption: "Fristen rund um Geburt, Mutterschutz und Elternzeit",
         head: ["Frist", "Zeitpunkt"],
         rows: [
-          ["Mutterschutz vor der Geburt", "6 Wochen vor dem errechneten Termin"],
-          ["Mutterschutz nach der Geburt", "8 Wochen (12 bei Mehrlings-/Frühgeburt)"],
-          ["Anmeldung Elternzeit (bis 3. Geburtstag)", "spätestens 7 Wochen vor Beginn"],
-          ["Anmeldung Elternzeit (ab 3. Geburtstag)", "spätestens 13 Wochen vor Beginn"],
+          [
+            "Mutterschutz vor der Geburt",
+            "6 Wochen vor dem errechneten Termin",
+          ],
+          [
+            "Mutterschutz nach der Geburt",
+            "8 Wochen (12 bei Mehrlings-/Frühgeburt)",
+          ],
+          [
+            "Anmeldung Elternzeit (bis 3. Geburtstag)",
+            "spätestens 7 Wochen vor Beginn",
+          ],
+          [
+            "Anmeldung Elternzeit (ab 3. Geburtstag)",
+            "spätestens 13 Wochen vor Beginn",
+          ],
           ["Rückwirkender Elterngeld-Antrag", "höchstens 3 Monate"],
         ],
       },
@@ -67,6 +79,29 @@ export const elternzeit: ToolManifest = {
   name: "Elternzeit-Planer",
   tagline:
     "Lebensmonate, Mutterschutz und Anmeldefristen als ein Zeitstrahl – vom errechneten Termin an.",
+  seoTitle: "Elternzeit-Planer: Monate, Mutterschutz und Fristen",
+  metaDescription:
+    "Elternzeit ab dem errechneten Geburtstermin planen: Lebensmonate, Mutterschutz, Partnermonate und die Anmeldefristen beim Arbeitgeber auf einem Zeitstrahl.",
+  sources: [
+    {
+      label: "§ 15 BEEG – Anspruch auf Elternzeit",
+      href: "https://www.gesetze-im-internet.de/beeg/__15.html",
+    },
+    {
+      label: "§ 16 BEEG – Inanspruchnahme der Elternzeit",
+      href: "https://www.gesetze-im-internet.de/beeg/__16.html",
+      note: "die Anmeldefristen gegenüber dem Arbeitgeber",
+    },
+    {
+      label: "§ 4 BEEG – Bezugsdauer, Anspruchsumfang",
+      href: "https://www.gesetze-im-internet.de/beeg/__4.html",
+      note: "Lebensmonate und Partnermonate beim Elterngeld",
+    },
+    {
+      label: "§ 3 MuSchG – Schutzfristen vor und nach der Entbindung",
+      href: "https://www.gesetze-im-internet.de/muschg_2018/__3.html",
+    },
+  ],
   category: "familie",
   icon: Baby,
   status: "beta",

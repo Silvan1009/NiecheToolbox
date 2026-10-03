@@ -24,7 +24,7 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "p",
-        text: "Gesetzlich vorgeschrieben ist die Angabe des effektiven Jahreszinses in jeder Werbung, die einen Zinssatz oder eine Zahl zu den Kreditkosten nennt (§ 6a PAngV) – ein reiner Sollzins ohne Effektivzins daneben darf in der Werbung nicht stehen. Trotzdem bleibt Spielraum: Kontoführungsgebühren für das Darlehenskonto zählen nur mit hinein, wenn die Kontoführung nicht unabhängig vom Kredit wählbar ist.",
+        text: "Gesetzlich vorgeschrieben ist die Angabe des effektiven Jahreszinses in jeder Werbung, die einen Zinssatz oder eine Zahl zu den Kreditkosten nennt (§ 17 PAngV) – ein reiner Sollzins ohne Effektivzins daneben darf in der Werbung nicht stehen. Trotzdem bleibt Spielraum: Kontoführungsgebühren für das Darlehenskonto zählen nur mit hinein, wenn die Kontoführung nicht unabhängig vom Kredit wählbar ist.",
       },
       {
         type: "note",
@@ -144,6 +144,30 @@ export const kreditrechner: ToolManifest = {
   name: "Kredit-Rechner",
   tagline:
     "Rate, Laufzeit und Tilgungsplan eines Kredits – mit effektivem Jahreszins nach PAngV, Restschuld zur Zinsbindung und der Wirkung von Sondertilgungen.",
+  seoTitle: "Kreditrechner: Rate, Tilgungsplan und Effektivzins",
+  metaDescription:
+    "Kredit berechnen: Monatsrate, Laufzeit und Tilgungsplan – mit effektivem Jahreszins nach PAngV, Restschuld zur Zinsbindung und Sondertilgungen.",
+  sources: [
+    {
+      label: "§ 16 PAngV – Verbraucherdarlehen",
+      href: "https://www.gesetze-im-internet.de/pangv_2022/__16.html",
+      note: "die Pflicht, den effektiven Jahreszins anzugeben",
+    },
+    {
+      label: "Anlage zu § 16 PAngV – Berechnung des effektiven Jahreszinses",
+      href: "https://www.gesetze-im-internet.de/pangv_2022/anlage.html",
+      note: "die Formel, nach der der Rechner den Effektivzins ermittelt",
+    },
+    {
+      label: "§ 489 BGB – Ordentliches Kündigungsrecht des Darlehensnehmers",
+      href: "https://www.gesetze-im-internet.de/bgb/__489.html",
+      note: "Kündigung nach zehn Jahren Zinsbindung",
+    },
+    {
+      label: "§ 502 BGB – Vorfälligkeitsentschädigung",
+      href: "https://www.gesetze-im-internet.de/bgb/__502.html",
+    },
+  ],
   category: "geld",
   icon: Landmark,
   status: "live",

@@ -26,7 +26,11 @@ export function WegCallout({
   description: string;
 }) {
   return (
-    <Link href={href} className="group surface-soft related-tool-link">
+    <Link
+      prefetch={false}
+      href={href}
+      className="group surface-soft related-tool-link"
+    >
       <span className="related-tool-icon">
         <Icon className="size-4" aria-hidden="true" />
       </span>

@@ -6,9 +6,9 @@ import { wegeForTool } from "@/wege/registry";
  * Rückverweis von einem Tool auf jeden Weg, der es verkettet.
  *
  * Bewusst kein "use client": importiert wege/registry.ts (reine Manifest-
- * Daten), niemals wege/components.ts – sonst zöge jede Tool-Seite den
+ * Daten), niemals wege/components.tsx – sonst zöge jede Tool-Seite den
  * Stepper-Client-Code aller Wege mit. Derselbe Grund, aus dem
- * tools/components.ts von tools/registry.ts getrennt ist.
+ * tools/components.tsx von tools/registry.ts getrennt ist.
  */
 export function WegBacklinks({ slug }: { slug: string }) {
   const wege = wegeForTool(slug);

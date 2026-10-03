@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { WegSourceTools } from "@/components/WegSourceTools";
+import type { ReactNode } from "react";
 import { WegStep } from "@/components/WegStep";
 import { WegSteps, type WegStepDef } from "@/components/WegSteps";
 import { Disclosure } from "@/components/ui/Card";
@@ -19,7 +19,6 @@ import { STEUERJAHR } from "@/lib/steuerdaten";
 import type { ToolParams } from "@/tools/types";
 import { calculateRentenabschlag } from "@/tools/rentenabschlag/logic";
 import { calculateRentenluecke } from "@/tools/rentenluecke/logic";
-import { ruhestand } from "./manifest";
 import { bewerteRuhestand } from "./urteil";
 
 interface State extends Record<string, unknown> {
@@ -81,7 +80,18 @@ const urteilTon: Record<"gedeckt" | "fehlbetrag", PayoffTone> = {
   fehlbetrag: "accent",
 };
 
-export default function RuhestandWeg({ params }: { params?: ToolParams }) {
+export default function RuhestandWeg({
+  params,
+  sourceTools,
+}: {
+  params?: ToolParams;
+  /**
+   * „Im Detail weiterrechnen“, fertig gerendert vom Server (WegPageShell).
+   * Als Knoten hereingereicht statt hier erzeugt: Die Liste braucht die
+   * Tool-Registry, und die gehört nicht in ein Client-Modul.
+   */
+  sourceTools?: ReactNode;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => ({
@@ -527,7 +537,7 @@ export default function RuhestandWeg({ params }: { params?: ToolParams }) {
             </section>
           )}
 
-          <WegSourceTools tools={ruhestand.sourceTools} />
+          {sourceTools}
         </div>
       )}
     </div>

@@ -10,7 +10,8 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "Typische Größenordnung für Angestellte im mittleren Einkommensbereich",
+        caption:
+          "Typische Größenordnung für Angestellte im mittleren Einkommensbereich",
         head: ["Kennzahl", "Übliche Spanne"],
         rows: [
           ["Durchschnittssteuersatz auf das gesamte Gehalt", "30–35 %"],
@@ -41,7 +42,8 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "3.500 € auf 3.675 € brutto (+5 %), Steuerklasse I, NRW, ohne Kirchensteuer, kein Kind",
+        caption:
+          "3.500 € auf 3.675 € brutto (+5 %), Steuerklasse I, NRW, ohne Kirchensteuer, kein Kind",
         head: ["Größe", "Betrag"],
         rows: [
           ["Netto vorher", "2.333 € / Monat"],
@@ -102,6 +104,20 @@ export const gehalt: WegManifest = {
   name: "Check: Gehaltserhöhung",
   tagline:
     "Brutto-Plus, Netto-Plus und Grenzbelastung einer Gehaltserhöhung in einem Zug – plus die Wirkung über die Jahre angelegt.",
+  seoTitle: "Gehaltserhöhung berechnen: Was bleibt netto übrig?",
+  metaDescription:
+    "Gehaltserhöhung durchrechnen: Brutto-Plus, Netto-Plus und Grenzbelastung in einem Zug – und was das zusätzliche Netto über die Jahre angelegt ergibt.",
+  sources: [
+    {
+      label: "§ 32a EStG – Einkommensteuertarif",
+      href: "https://www.gesetze-im-internet.de/estg/__32a.html",
+      note: "die Tarifzonen, aus denen sich die Grenzbelastung ergibt",
+    },
+    {
+      label: "§ 39b EStG – Einbehaltung der Lohnsteuer",
+      href: "https://www.gesetze-im-internet.de/estg/__39b.html",
+    },
+  ],
   category: "geld",
   icon: TrendingUp,
   status: "live",

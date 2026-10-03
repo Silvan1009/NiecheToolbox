@@ -2,8 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { WegCard } from "@/components/WegCard";
-import { site } from "@/config/site";
-import { absoluteUrl, breadcrumbNode, jsonLdGraph, wegPath } from "@/lib/seo";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
+import {
+  absoluteUrl,
+  breadcrumbNode,
+  jsonLdGraph,
+  pageMetadata,
+  siteNodes,
+  staticOgImagePath,
+  webPageNode,
+  wegPath,
+} from "@/lib/seo";
 import { publicWege } from "@/wege/registry";
 
 /**
@@ -11,12 +20,17 @@ import { publicWege } from "@/wege/registry";
  * nur über den Abschnitt auf der Startseite erreichbar; diese Seite macht
  * /wege/ selbst verlinkbar und indexierbar.
  */
-export const metadata: Metadata = {
-  title: "Wege – mehrere Rechner zu einem Urteil",
-  description:
-    "Jeder Weg verkettet mehrere Rechner der Rechnerkiste zu einem Urteil, statt einer isolierten Zahl.",
-  alternates: { canonical: "/wege/" },
-};
+const TITLE = "Wege: mehrere Rechner zu einem Urteil";
+const DESCRIPTION =
+  "Ein Weg verkettet mehrere Rechner zu einem Urteil statt einer einzelnen Zahl: Hauskauf, Autokauf, Gehaltserhöhung, Nachwuchs und früherer Ruhestand.";
+
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: "/wege/",
+  image: staticOgImagePath("wege"),
+  imageAlt: "Wege – mehrere Rechner zu einem Urteil",
+});
 
 export default function WegePage() {
   const wege = publicWege();
@@ -33,6 +47,9 @@ export default function WegePage() {
         </p>
       </div>
 
+      {/* Die Karten tragen <h3>. Ohne diese Zwischenstufe folgte <h3> direkt
+          auf <h1> – für Screenreader eine fehlende Gliederungsebene. */}
+      <h2 className="sr-only">Alle Wege</h2>
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {wege.map((weg) => (
           <li key={weg.slug} className="flex">
@@ -59,13 +76,14 @@ export default function WegePage() {
               den nächsten, statt sie erneut abzufragen.
             </p>
             <p>
-              Jeder Schritt bleibt trotzdem ein vollständiger, einzeln
-              nutzbarer Rechner: Ein Weg führt zu ihm hin und zurück, ersetzt
-              ihn aber nicht. Wer nur eine der Teilfragen hat, findet den
-              passenden Rechner auch direkt über die{" "}
+              Jeder Schritt bleibt trotzdem ein vollständiger, einzeln nutzbarer
+              Rechner: Ein Weg führt zu ihm hin und zurück, ersetzt ihn aber
+              nicht. Wer nur eine der Teilfragen hat, findet den passenden
+              Rechner auch direkt über die{" "}
               <Link
+                prefetch={false}
                 href="/rechner/"
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 Übersicht nach Thema
               </Link>
@@ -77,12 +95,16 @@ export default function WegePage() {
 
       <JsonLd
         data={jsonLdGraph([
+          ...siteNodes(),
           {
-            "@type": "CollectionPage",
-            name: "Wege",
-            url: absoluteUrl("/wege/"),
-            inLanguage: "de-DE",
-            isPartOf: { "@type": "WebSite", name: site.name, url: site.url },
+            ...webPageNode({
+              type: "CollectionPage",
+              name: TITLE,
+              description: DESCRIPTION,
+              path: "/wege/",
+              image: staticOgImagePath("wege"),
+              dateModified: lastModified(lastModifiedKey.page("wege")),
+            }),
             hasPart: wege.map((weg) => ({
               "@type": "WebApplication",
               name: weg.name,
@@ -90,7 +112,7 @@ export default function WegePage() {
             })),
           },
           breadcrumbNode([
-            { name: site.name, path: "/" },
+            { name: "Start", path: "/" },
             { name: "Wege", path: "/wege/" },
           ]),
         ])}

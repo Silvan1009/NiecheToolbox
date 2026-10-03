@@ -18,8 +18,9 @@ export const site = {
   shortName: "Rechnerkiste",
   tagline: "Kleine Rechner für echte Alltagsfragen.",
   // Bewusst ohne Aufzählung aller Tools: die Liste wächst, der Text nicht mit.
+  // 120 bis 160 Zeichen – die Grenzen aus lib/seo.ts gelten auch hier.
   description:
-    "Kostenlose Mini-Rechner ohne Anmeldung für echte Alltagsfragen – Brückentage, Kündigungsfristen, Arbeitstage, Backformen, Umzug, Partymengen und Stromkosten. Alles rechnet direkt im Browser, jedes Ergebnis ist teilbar.",
+    "Kostenlose Online-Rechner ohne Anmeldung: Brutto-Netto, Kredit, Sparplan, Brückentage, Kündigungsfrist und mehr. Alles rechnet direkt in deinem Browser.",
   lang: "de",
   locale: "de-DE",
   /** Ohne abschließenden Slash. Für canonical-URLs, Sitemap und OG-Bilder. */

@@ -4,7 +4,7 @@ import { publicTools, tools } from "./registry";
 
 /**
  * Component und Manifest liegen bewusst in getrennten Dateien (siehe
- * components.ts). Der Preis dafür ist, dass beide auseinanderlaufen können –
+ * components.tsx). Der Preis dafür ist, dass beide auseinanderlaufen können –
  * ohne diesen Test würde ein neu registriertes Tool erst beim Aufruf seiner
  * Seite als leere Stelle auffallen.
  */
@@ -13,7 +13,7 @@ describe("toolComponents", () => {
     for (const tool of publicTools()) {
       expect(
         toolComponents[tool.slug],
-        `Tool "${tool.slug}" fehlt in tools/components.ts`,
+        `Tool "${tool.slug}" fehlt in tools/components.tsx`,
       ).toBeDefined();
     }
   });
@@ -23,7 +23,7 @@ describe("toolComponents", () => {
     for (const slug of Object.keys(toolComponents)) {
       expect(
         slugs.has(slug),
-        `"${slug}" steht in tools/components.ts, aber in keinem Manifest`,
+        `"${slug}" steht in tools/components.tsx, aber in keinem Manifest`,
       ).toBe(true);
     }
   });

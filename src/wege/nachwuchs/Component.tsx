@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { WegSourceTools } from "@/components/WegSourceTools";
+import type { ReactNode } from "react";
 import { WegStep } from "@/components/WegStep";
 import { WegSteps, type WegStepDef } from "@/components/WegSteps";
 import { Disclosure } from "@/components/ui/Card";
@@ -48,7 +48,6 @@ import {
 } from "@/tools/elterngeld/logic";
 import { calculateElternzeit } from "@/tools/elternzeit/logic";
 import { kindergeldSatz } from "@/tools/kindergeld/saetze";
-import { nachwuchs } from "./manifest";
 import { bewerteNachwuchs } from "./urteil";
 
 interface State extends Record<string, unknown>, BruttoNettoInput {
@@ -131,7 +130,18 @@ const einstufungTon: Record<
   eng: "accent",
 };
 
-export default function NachwuchsWeg({ params }: { params?: ToolParams }) {
+export default function NachwuchsWeg({
+  params,
+  sourceTools,
+}: {
+  params?: ToolParams;
+  /**
+   * „Im Detail weiterrechnen“, fertig gerendert vom Server (WegPageShell).
+   * Als Knoten hereingereicht statt hier erzeugt: Die Liste braucht die
+   * Tool-Registry, und die gehört nicht in ein Client-Modul.
+   */
+  sourceTools?: ReactNode;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => {
@@ -797,7 +807,7 @@ export default function NachwuchsWeg({ params }: { params?: ToolParams }) {
             </ul>
           </section>
 
-          <WegSourceTools tools={nachwuchs.sourceTools} />
+          {sourceTools}
         </div>
       )}
     </div>

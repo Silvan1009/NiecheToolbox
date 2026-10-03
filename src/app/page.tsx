@@ -5,15 +5,28 @@ import { JsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/legal/LegalPage";
 import { ToolCard } from "@/components/ToolCard";
 import { WegCard } from "@/components/WegCard";
-import { absoluteUrl, jsonLdGraph, toolPath, websiteNode } from "@/lib/seo";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
+import {
+  absoluteUrl,
+  jsonLdGraph,
+  pageMetadata,
+  siteNodes,
+  staticOgImagePath,
+  toolPath,
+  webPageNode,
+} from "@/lib/seo";
 import { publicTools } from "@/tools/registry";
 import { publicWege } from "@/wege/registry";
 
-export const metadata: Metadata = {
-  title: `${site.name} – ${site.tagline}`,
+const TITLE = `${site.name} – Kostenlose Online-Rechner für den Alltag`;
+
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
   description: site.description,
-  alternates: { canonical: "/" },
-};
+  path: "/",
+  image: staticOgImagePath("start"),
+  imageAlt: `${site.name} – ${site.tagline}`,
+});
 
 export default function HomePage() {
   const tools = publicTools();
@@ -99,12 +112,12 @@ export default function HomePage() {
             </p>
             <p>
               Das hat eine Kehrseite: Ein Rechner ist immer so gut wie das
-              Modell dahinter. Wo eine Frage einen echten Ermessensspielraum
-              hat – etwa bei einer Kündigungsfrist mit tarifvertraglicher
-              Sonderregel oder einer Steuerlast mit individuellen
-              Freibeträgen – bildet der Rechner den Regelfall ab und sagt das
-              auch dazu. Die Grenzen jedes Modells stehen im Abschnitt
-              „So funktioniert’s“ auf der jeweiligen Tool-Seite.
+              Modell dahinter. Wo eine Frage einen echten Ermessensspielraum hat
+              – etwa bei einer Kündigungsfrist mit tarifvertraglicher
+              Sonderregel oder einer Steuerlast mit individuellen Freibeträgen –
+              bildet der Rechner den Regelfall ab und sagt das auch dazu. Die
+              Grenzen jedes Modells stehen im Abschnitt „So funktioniert’s“ auf
+              der jeweiligen Tool-Seite.
             </p>
           </Section>
 
@@ -132,20 +145,21 @@ export default function HomePage() {
           <Section heading="Was die Rechner nicht sind">
             <p>
               Jedes Ergebnis ist rechnerische Orientierung, keine Rechts-,
-              Steuer-, Finanz- oder medizinische Beratung. Bei arbeits-,
-              miet- und sozialrechtlichen Fragen entscheidet am Ende der
-              Einzelfall, und regionale oder individuelle Sonderregelungen
-              sind nicht in jedem Rechner abgebildet. Wer eine verbindliche
-              Auskunft braucht, sollte sie bei einer Steuerberatung, einer
-              Rechtsberatung oder – je nach Rechner – bei Arbeitgeber,
-              Krankenkasse oder Rentenversicherung einholen.
+              Steuer-, Finanz- oder medizinische Beratung. Bei arbeits-, miet-
+              und sozialrechtlichen Fragen entscheidet am Ende der Einzelfall,
+              und regionale oder individuelle Sonderregelungen sind nicht in
+              jedem Rechner abgebildet. Wer eine verbindliche Auskunft braucht,
+              sollte sie bei einer Steuerberatung, einer Rechtsberatung oder –
+              je nach Rechner – bei Arbeitgeber, Krankenkasse oder
+              Rentenversicherung einholen.
             </p>
             <p>
               Mehr zu Betreiber, Finanzierung über Werbung und Empfehlungen
               sowie zum Prüfverfahren hinter den Rechnern steht auf der{" "}
               <Link
+                prefetch={false}
                 href="/ueber/"
-                className="underline decoration-line underline-offset-2 hover:text-ink"
+                className="text-link"
               >
                 Über-uns-Seite
               </Link>
@@ -157,13 +171,12 @@ export default function HomePage() {
             <p>
               Die Auswahl der Rechner folgt einer einfachen Regel: Ein Thema
               kommt dazu, wenn eine Alltagsfrage sich in einem Satz stellen
-              lässt und keine befriedigende, kostenlose Antwort dafür
-              existiert – entweder, weil vorhandene Rechner zu grob rechnen,
-              zu viele Werbeklicks brauchen oder ein Konto verlangen, bevor
-              sie ein Ergebnis zeigen. Brückentage, Kaufnebenkosten je
-              Bundesland oder die Fünftelregelung bei einer Abfindung sind
-              typische Beispiele: Fragen, die selten, aber dann sehr konkret
-              gestellt werden.
+              lässt und keine befriedigende, kostenlose Antwort dafür existiert
+              – entweder, weil vorhandene Rechner zu grob rechnen, zu viele
+              Werbeklicks brauchen oder ein Konto verlangen, bevor sie ein
+              Ergebnis zeigen. Brückentage, Kaufnebenkosten je Bundesland oder
+              die Fünftelregelung bei einer Abfindung sind typische Beispiele:
+              Fragen, die selten, aber dann sehr konkret gestellt werden.
             </p>
             <p>
               Werbung und Empfehlungslinks finanzieren die Seite, ändern aber
@@ -178,22 +191,22 @@ export default function HomePage() {
 
           <Section heading="Für wen die Seite gedacht ist">
             <p>
-              Die Rechner richten sich an alle, die eine konkrete Zahl
-              brauchen, nicht an eine Fachöffentlichkeit: an Angestellte, die
-              eine Gehaltserhöhung einordnen wollen, an Paare, die vor einem
+              Die Rechner richten sich an alle, die eine konkrete Zahl brauchen,
+              nicht an eine Fachöffentlichkeit: an Angestellte, die eine
+              Gehaltserhöhung einordnen wollen, an Paare, die vor einem
               Immobilienkauf stehen, an Eltern, die Elterngeld und Kindergeld
-              zusammenrechnen, und an alle, die einfach wissen wollen, wie
-              viele Brückentage das nächste Jahr hergibt. Fachbegriffe wie
-              „Vorabpauschale“ oder „Beitragsbemessungsgrenze“ tauchen dort
-              auf, wo sie zur Frage gehören – erklärt im Fließtext, nicht
+              zusammenrechnen, und an alle, die einfach wissen wollen, wie viele
+              Brückentage das nächste Jahr hergibt. Fachbegriffe wie
+              „Vorabpauschale“ oder „Beitragsbemessungsgrenze“ tauchen dort auf,
+              wo sie zur Frage gehören – erklärt im Fließtext, nicht
               vorausgesetzt.
             </p>
             <p>
               Jeder Rechner funktioniert auf dem Smartphone genauso wie am
-              Rechner, ohne App und ohne Installation: Ein Link genügt, und
-              die Eingaben stehen darin, sodass ein einmal ausgefülltes
-              Ergebnis sich direkt weiterschicken lässt – an eine Partnerin,
-              einen Steuerberater oder einfach als Gedankenstütze für später.
+              Rechner, ohne App und ohne Installation: Ein Link genügt, und die
+              Eingaben stehen darin, sodass ein einmal ausgefülltes Ergebnis
+              sich direkt weiterschicken lässt – an eine Partnerin, einen
+              Steuerberater oder einfach als Gedankenstütze für später.
             </p>
           </Section>
 
@@ -203,36 +216,35 @@ export default function HomePage() {
               automatisiert getesteten Baustein – erst danach kommt die
               Eingabemaske dazu. Dieser Aufbau erzwingt, dass jede Formel für
               sich nachvollziehbar bleibt: Ein Rechenfehler zeigt sich im Test,
-              bevor er auf der Seite landet, und lässt sich an genau der
-              Formel beheben, ohne die Eingabefelder anzufassen. Bei
-              gesetzlich geregelten Werten – Steuersätzen,
-              Beitragsbemessungsgrenzen, Kindergeldbeträgen – trägt die
-              zugrunde liegende Tabelle ein Stand-Datum, damit sichtbar bleibt,
-              für welches Jahr eine Zahl gilt.
+              bevor er auf der Seite landet, und lässt sich an genau der Formel
+              beheben, ohne die Eingabefelder anzufassen. Bei gesetzlich
+              geregelten Werten – Steuersätzen, Beitragsbemessungsgrenzen,
+              Kindergeldbeträgen – trägt die zugrunde liegende Tabelle ein
+              Stand-Datum, damit sichtbar bleibt, für welches Jahr eine Zahl
+              gilt.
             </p>
             <p>
               Ändert sich ein Gesetz oder ein Grenzwert zum Jahreswechsel, wird
               die betroffene Tabelle nachgezogen und nicht stillschweigend
-              fortgeschrieben – ein Rechner, der zwei Jahre alte Werte
-              ausgibt, ist schlechter als gar keiner. Wer eine veraltete Zahl
-              oder einen Rechenfehler findet, kann das über die Kontaktseite
-              melden; solche Hinweise fließen direkt in die jeweilige Tabelle
-              oder Formel ein.
+              fortgeschrieben – ein Rechner, der zwei Jahre alte Werte ausgibt,
+              ist schlechter als gar keiner. Wer eine veraltete Zahl oder einen
+              Rechenfehler findet, kann das über die Kontaktseite melden; solche
+              Hinweise fließen direkt in die jeweilige Tabelle oder Formel ein.
             </p>
           </Section>
 
           <Section heading="Rechner, die zusammengehören">
             <p>
               Manche Fragen lassen sich nicht mit einem einzigen Rechner
-              beantworten, sondern erst, wenn mehrere Ergebnisse
-              zusammenkommen: Was eine Gehaltserhöhung netto bringt, hängt vom
-              Brutto-Netto-Rechner ab und davon, was sich aus der Differenz
-              über Jahre ansparen lässt. Ob sich ein Auto leisten lässt, hängt
-              von Kreditrate, laufenden Kosten und Versicherung gemeinsam ab,
-              nicht von einer dieser Zahlen allein. Für solche
-              zusammengesetzten Fragen gibt es die Wege weiter oben auf dieser
-              Seite – sie verketten mehrere Rechner zu einem einzigen Urteil,
-              statt mehrere Ergebnisse von Hand zusammenzählen zu müssen.
+              beantworten, sondern erst, wenn mehrere Ergebnisse zusammenkommen:
+              Was eine Gehaltserhöhung netto bringt, hängt vom
+              Brutto-Netto-Rechner ab und davon, was sich aus der Differenz über
+              Jahre ansparen lässt. Ob sich ein Auto leisten lässt, hängt von
+              Kreditrate, laufenden Kosten und Versicherung gemeinsam ab, nicht
+              von einer dieser Zahlen allein. Für solche zusammengesetzten
+              Fragen gibt es die Wege weiter oben auf dieser Seite – sie
+              verketten mehrere Rechner zu einem einzigen Urteil, statt mehrere
+              Ergebnisse von Hand zusammenzählen zu müssen.
             </p>
           </Section>
         </section>
@@ -240,7 +252,15 @@ export default function HomePage() {
 
       <JsonLd
         data={jsonLdGraph([
-          websiteNode(),
+          ...siteNodes(),
+          webPageNode({
+            type: "CollectionPage",
+            name: TITLE,
+            description: site.description,
+            path: "/",
+            image: staticOgImagePath("start"),
+            dateModified: lastModified(lastModifiedKey.page("start")),
+          }),
           {
             "@type": "ItemList",
             name: `Alle Rechner auf ${site.name}`,

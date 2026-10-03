@@ -25,25 +25,22 @@ const bricolage = Bricolage_Grotesque({
 // hier, ist aber keine Variable-Font und stellte allein 11 der 23 @font-face-
 // Regeln – für eine Schrift, die nur Ziffern trägt.
 
+/*
+ * Nur, was für jede Seite gleich ist. Titel, Beschreibung, Canonical und
+ * Open Graph setzt jede Seite selbst über pageMetadata() aus lib/seo.ts.
+ *
+ * Bewusst kein `alternates.canonical` und kein `openGraph.url` hier: Beides
+ * vererbt sich auf jede Seite, die es nicht überschreibt. Genau so zeigten
+ * acht Seiten mit ihrem Canonical und ihrer Vorschau auf die Startseite.
+ */
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – ${site.tagline}`,
+    default: site.name,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "de_DE",
-    siteName: site.name,
-    title: `${site.name} – ${site.tagline}`,
-    description: site.description,
-    url: site.url,
-  },
-  twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },
   formatDetection: { telephone: false },
   other: {
     // Seitenverifizierung für AdSense. Cookielos und ohne Einwilligung nötig –

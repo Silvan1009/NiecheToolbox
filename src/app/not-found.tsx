@@ -26,6 +26,8 @@ export default function NotFound() {
         </div>
       </div>
 
+      {/* Die Karten tragen <h3> – ohne <h2> dazwischen fehlte eine Ebene. */}
+      {tools.length > 0 && <h2 className="sr-only">Rechner zum Einstieg</h2>}
       {tools.length > 0 && (
         <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (

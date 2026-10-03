@@ -118,6 +118,17 @@ export const kalorienbedarf: ToolManifest = {
   name: "Kalorienbedarf-Rechner",
   tagline:
     "Grundumsatz nach Mifflin-St Jeor und Gesamtumsatz über dein Aktivitätslevel – in Kalorien pro Tag.",
+  seoTitle: "Kalorienbedarf berechnen: Grundumsatz und Gesamtumsatz",
+  metaDescription:
+    "Kalorienbedarf pro Tag berechnen: Grundumsatz nach der Mifflin-St-Jeor-Formel und Gesamtumsatz passend zu deinem Aktivitätslevel.",
+  sources: [
+    {
+      label:
+        "Mifflin MD, St Jeor ST u. a. (1990): A new predictive equation for resting energy expenditure in healthy individuals. American Journal of Clinical Nutrition",
+      href: "https://pubmed.ncbi.nlm.nih.gov/2305711/",
+      note: "die Originalveröffentlichung der Formel für den Grundumsatz",
+    },
+  ],
   category: "gesundheit",
   icon: Flame,
   status: "live",

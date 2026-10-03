@@ -94,6 +94,9 @@ export const stromkosten: ToolManifest = {
   name: "Stromkosten-Rechner",
   tagline:
     "Was kostet ein einzelnes Gerät im Jahr? Mit Standby, echten Nutzungsmustern und CO₂.",
+  seoTitle: "Stromkosten-Rechner: Was kostet ein Gerät im Jahr?",
+  metaDescription:
+    "Stromkosten eines einzelnen Geräts berechnen: Leistung, Nutzungsdauer und Standby ergeben den Verbrauch in kWh, die Kosten pro Jahr und den CO₂-Ausstoß.",
   category: "geld",
   icon: Zap,
   status: "live",

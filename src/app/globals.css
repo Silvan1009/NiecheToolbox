@@ -113,6 +113,12 @@
     @apply transition-colors duration-(--dur-fast) hover:text-ink;
   }
 
+  /* Links im Fließtext: erkennbar an der Unterstreichung, nicht erst beim
+     Überfahren. Farbe siehe --link-line in design/tokens.css. */
+  .text-link {
+    @apply underline decoration-(--link-line) underline-offset-2 transition-colors duration-(--dur-fast) hover:text-ink hover:decoration-accent;
+  }
+
   /* Button.tsx: Basis, auf die variants/sizes aufsetzen. */
   .btn-base {
     @apply inline-flex items-center justify-center gap-2 rounded-control font-semibold transition-[background-color,box-shadow,color] duration-(--dur-fast) ease-(--ease-out) disabled:cursor-not-allowed disabled:opacity-50;

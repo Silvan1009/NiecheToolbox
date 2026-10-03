@@ -11,6 +11,7 @@ export function FavoritesNavLink() {
 
   return (
     <Link
+      prefetch={false}
       href="/favoriten/"
       aria-label={count > 0 ? `Favoriten (${count})` : "Favoriten"}
       className="header-icon-btn"

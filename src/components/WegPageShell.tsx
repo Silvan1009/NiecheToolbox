@@ -4,17 +4,23 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { BugReportButton } from "@/components/BugReportButton";
 import { Faq } from "@/components/Faq";
 import { JsonLd } from "@/components/JsonLd";
+import { PageStand, sourcesSection } from "@/components/PageStand";
 import { Prose } from "@/components/Prose";
+import { WegSourceTools } from "@/components/WegSourceTools";
 import { site } from "@/config/site";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
 import {
+  applicationNode,
   breadcrumbNode,
   faqNode,
   jsonLdGraph,
-  wegNode,
+  ogImagePath,
+  siteNodes,
+  webPageNode,
   wegPath,
   wegSeo,
 } from "@/lib/seo";
-import { wegComponents } from "@/wege/components";
+import { WegRenderer } from "@/wege/components";
 import type { WegManifest } from "@/wege/types";
 import type { ToolVariant } from "@/tools/types";
 
@@ -22,7 +28,7 @@ import type { ToolVariant } from "@/tools/types";
  * Generischer Rahmen für jede Weg- und Variantenseite – Gegenstück zu
  * ToolPageShell.tsx, mit denselben Bausteinen (Brotkrumen, AdSlot, Erklärtext,
  * FAQ, JSON-LD), aber eigenem Pfadraum (`/wege/` statt `/tools/`) und eigener
- * Component-Registry (wege/components.ts statt tools/components.ts).
+ * Component-Registry (wege/components.tsx statt tools/components.tsx).
  *
  * Bewusst ohne RelatedTools: Ein Weg verlinkt seine Quell-Tools bereits
  * gezielt im Urteil selbst (WegCallout), eine zusätzliche generische
@@ -35,15 +41,18 @@ export function WegPageShell({
   weg: WegManifest;
   variant?: ToolVariant;
 }) {
-  const { heading, description, path } = wegSeo(weg, variant);
+  const { title, heading, description, lead, path } = wegSeo(weg, variant);
   const density = weg.monetization?.adDensity ?? "low";
-  const Component = wegComponents[weg.slug];
+  const updated = lastModified(lastModifiedKey.weg(weg.slug));
 
   const about = variant?.about ?? weg.about;
   const faq = variant?.faq ?? weg.faq;
   // Auf der Weg-Seite selbst (kein variant) die eigenen sections des Wegs;
   // auf einer Variantenseite kein Fallback darauf – siehe ToolPageShell.tsx.
-  const sections = variant ? variant.sections : weg.sections;
+  const sections = [
+    ...((variant ? variant.sections : weg.sections) ?? []),
+    ...sourcesSection(weg.sources),
+  ];
 
   const params = { ...weg.getDefaultParams?.(), ...variant?.params };
 
@@ -68,7 +77,11 @@ export function WegPageShell({
                   {isLast ? (
                     <span aria-current="page">{crumb.name}</span>
                   ) : (
-                    <Link href={crumb.path} className="link-hover-ink">
+                    <Link
+                      prefetch={false}
+                      href={crumb.path}
+                      className="link-hover-ink"
+                    >
                       {crumb.name}
                     </Link>
                   )}
@@ -85,13 +98,19 @@ export function WegPageShell({
         <h1 className="font-display text-[clamp(1.75rem,6vw,2.75rem)] font-bold tracking-tight">
           {heading}
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">
-          {description}
-        </p>
+        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">{lead}</p>
       </header>
 
       <div className="tool-column mt-10">
-        <Component params={params} />
+        {/* Die Liste der verketteten Rechner entsteht hier auf dem Server und
+            wird als fertiger Knoten hineingereicht. Importierte der Weg sie
+            selbst, zöge er die Tool-Registry – die Texte aller 29 Rechner –
+            in sein Client-Bundle: 461 KiB auf jeder Weg-Seite. */}
+        <WegRenderer
+          slug={weg.slug}
+          params={params}
+          sourceTools={<WegSourceTools tools={weg.sourceTools} />}
+        />
       </div>
 
       <div className="tool-column mt-10">
@@ -116,13 +135,16 @@ export function WegPageShell({
 
         {faq && faq.length > 0 && <Faq entries={faq} />}
 
+        <PageStand date={updated} />
+
         <AdSlot placement="below-content" density={density} />
 
         {variant && (
           <p className="text-sm text-muted">
             <Link
+              prefetch={false}
               href={wegPath(weg.slug)}
-              className="underline decoration-line underline-offset-2 hover:text-ink"
+              className="text-link"
             >
               Zum {weg.name} mit allen Einstellungen
             </Link>
@@ -132,7 +154,15 @@ export function WegPageShell({
 
       <JsonLd
         data={jsonLdGraph([
-          wegNode(weg, { name: heading, description, path }),
+          ...siteNodes(),
+          webPageNode({
+            name: title,
+            description,
+            path,
+            image: ogImagePath(weg.slug, variant?.slug),
+            dateModified: updated,
+          }),
+          applicationNode({ name: heading, description, path }),
           breadcrumbNode(crumbs),
           ...(faq && faq.length > 0 ? [faqNode(faq)] : []),
         ])}

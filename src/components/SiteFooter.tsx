@@ -30,6 +30,7 @@ export function SiteFooter() {
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
                   <Link
+                    prefetch={false}
                     href="/rechner/"
                     className="font-medium text-ink transition-colors duration-(--dur-fast) hover:text-accent"
                   >
@@ -39,6 +40,7 @@ export function SiteFooter() {
                 {wege.length > 0 && (
                   <li>
                     <Link
+                      prefetch={false}
                       href="/wege/"
                       className="font-medium text-ink transition-colors duration-(--dur-fast) hover:text-accent"
                     >
@@ -49,6 +51,7 @@ export function SiteFooter() {
                 {tools.map((tool) => (
                   <li key={tool.slug}>
                     <Link
+                      prefetch={false}
                       href={toolPath(tool.slug)}
                       className="text-muted link-hover-ink"
                     >
@@ -69,17 +72,26 @@ export function SiteFooter() {
             </h2>
             <ul className="mt-3 space-y-2 text-sm text-muted">
               <li>
-                <Link href="/ueber/" className="link-hover-ink">
+                <Link
+                  prefetch={false}
+                  href="/ueber/"
+                  className="link-hover-ink"
+                >
                   Über uns &amp; Kontakt
                 </Link>
               </li>
               <li>
-                <Link href="/rechtliches/impressum/" className="link-hover-ink">
+                <Link
+                  prefetch={false}
+                  href="/rechtliches/impressum/"
+                  className="link-hover-ink"
+                >
                   Impressum
                 </Link>
               </li>
               <li>
                 <Link
+                  prefetch={false}
                   href="/rechtliches/datenschutz/"
                   className="link-hover-ink"
                 >

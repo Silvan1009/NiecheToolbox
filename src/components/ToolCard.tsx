@@ -23,6 +23,7 @@ export function ToolCard({
     <div className="relative w-full">
       <FavoriteButton slug={tool.slug} name={tool.name} />
       <Link
+        prefetch={false}
         href={toolPath(tool.slug)}
         className="group surface-soft flex h-full w-full flex-col p-6 transition-[box-shadow,transform] duration-(--dur-base) ease-(--ease-out) hover:-translate-y-0.5 hover:shadow-lift"
       >

@@ -103,7 +103,8 @@ const sections: ContentSection[] = [
     ],
   },
   {
-    heading: "Warum sich der Termin nach dem ersten Ultraschall manchmal ändert",
+    heading:
+      "Warum sich der Termin nach dem ersten Ultraschall manchmal ändert",
     blocks: [
       {
         type: "p",
@@ -118,6 +119,16 @@ export const geburtstermin: ToolManifest = {
   name: "Geburtstermin-Rechner",
   tagline:
     "Errechneter Termin und Schwangerschaftswoche ab dem ersten Tag der letzten Periode – nach der Naegele-Regel.",
+  seoTitle: "Geburtstermin-Rechner: ET und SSW berechnen",
+  metaDescription:
+    "Geburtstermin nach der Naegele-Regel berechnen: errechneter Termin und aktuelle Schwangerschaftswoche ab dem ersten Tag der letzten Periode.",
+  sources: [
+    {
+      label: "§ 3 MuSchG – Schutzfristen vor und nach der Entbindung",
+      href: "https://www.gesetze-im-internet.de/muschg_2018/__3.html",
+      note: "Beginn und Ende des Mutterschutzes, gerechnet vom errechneten Termin",
+    },
+  ],
   category: "gesundheit",
   icon: CalendarHeart,
   status: "live",

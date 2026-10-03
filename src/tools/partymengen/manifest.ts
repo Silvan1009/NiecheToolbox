@@ -83,6 +83,9 @@ export const partymengen: ToolManifest = {
   name: "Party- und Grillmengen",
   tagline:
     "Wie viel Fleisch, Salat und Getränke pro Person? Einkaufsliste für die ganze Runde.",
+  seoTitle: "Party- und Grillmengen pro Person berechnen",
+  metaDescription:
+    "Mengen für Party und Grillfest berechnen: Fleisch, Salat und Getränke pro Person – als fertige Einkaufsliste für die gesamte Runde.",
   category: "essen",
   icon: PartyPopper,
   status: "live",

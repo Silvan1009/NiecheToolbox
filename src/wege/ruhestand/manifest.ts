@@ -8,7 +8,8 @@ const sections: ContentSection[] = [
     blocks: [
       {
         type: "table",
-        caption: "40-Jährige/r, Renteneintritt mit 63 statt Regelaltersgrenze 67",
+        caption:
+          "40-Jährige/r, Renteneintritt mit 63 statt Regelaltersgrenze 67",
         head: ["Kennzahl", "Wert"],
         rows: [
           ["Rentenabschlag (48 Monate × 0,3 %)", "14,4 %"],
@@ -94,6 +95,21 @@ export const ruhestand: WegManifest = {
   name: "Check: Ruhestand",
   tagline:
     "Rente nach Abschlag, Kapitalbedarf und projiziertes Kapital in einem Urteil: trägt die Sparrate den früheren Ruhestand?",
+  seoTitle: "Früher in Rente: Reicht das Kapital für den Ruhestand?",
+  metaDescription:
+    "Früheren Ruhestand prüfen: Rente nach Abschlag, Kapitalbedarf für die Lücke und das bis dahin angesparte Kapital – trägt deine Sparrate den Plan?",
+  sources: [
+    {
+      label: "§ 77 SGB VI – Zugangsfaktor",
+      href: "https://www.gesetze-im-internet.de/sgb_6/__77.html",
+      note: "der Abschlag bei vorgezogenem Rentenbeginn",
+    },
+    {
+      label: "§ 235 SGB VI – Regelaltersrente",
+      href: "https://www.gesetze-im-internet.de/sgb_6/__235.html",
+      note: "die Regelaltersgrenze nach Geburtsjahrgang",
+    },
+  ],
   category: "geld",
   icon: Landmark,
   status: "live",

@@ -4,20 +4,25 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { BugReportButton } from "@/components/BugReportButton";
 import { Faq } from "@/components/Faq";
 import { JsonLd } from "@/components/JsonLd";
+import { PageStand, sourcesSection } from "@/components/PageStand";
 import { Prose } from "@/components/Prose";
 import { RelatedTools } from "@/components/RelatedTools";
 import { VariantList } from "@/components/VariantList";
 import { WegBacklinks } from "@/components/WegBacklinks";
 import { site } from "@/config/site";
+import { lastModified, lastModifiedKey } from "@/lib/lastModified";
 import {
+  applicationNode,
   breadcrumbNode,
   faqNode,
   jsonLdGraph,
-  toolNode,
+  ogImagePath,
+  siteNodes,
   toolPath,
   toolSeo,
+  webPageNode,
 } from "@/lib/seo";
-import { toolComponents } from "@/tools/components";
+import { ToolRenderer } from "@/tools/components";
 import type { ToolManifest, ToolVariant } from "@/tools/types";
 
 /**
@@ -37,9 +42,9 @@ export function ToolPageShell({
   tool: ToolManifest;
   variant?: ToolVariant;
 }) {
-  const { heading, description, path } = toolSeo(tool, variant);
+  const { title, heading, description, lead, path } = toolSeo(tool, variant);
   const density = tool.monetization?.adDensity ?? "low";
-  const Component = toolComponents[tool.slug];
+  const updated = lastModified(lastModifiedKey.tool(tool.slug));
 
   // Eine Variante darf eigenen Text mitbringen. Tut sie es nicht, gilt der des
   // Tools – so bleiben alle bestehenden Varianten unverändert.
@@ -51,7 +56,13 @@ export function ToolPageShell({
   // durch und läge identisch auf allen ihren Seiten – genau die
   // Duplizierung, die scripts/content-audit.ts misst. Eine Variante ohne
   // eigene sections hat schlicht keine.
-  const sections = variant ? variant.sections : tool.sections;
+  //
+  // Die Quellen dagegen gelten für Tool und Variante gleichermaßen: Der
+  // Rechenweg ist derselbe, also auch das, worauf er sich stützt.
+  const sections = [
+    ...((variant ? variant.sections : tool.sections) ?? []),
+    ...sourcesSection(tool.sources),
+  ];
 
   // Startparameter: Laufzeit-Defaults vom Server, von der Variante überschrieben.
   const params = { ...tool.getDefaultParams?.(), ...variant?.params };
@@ -77,7 +88,11 @@ export function ToolPageShell({
                   {isLast ? (
                     <span aria-current="page">{crumb.name}</span>
                   ) : (
-                    <Link href={crumb.path} className="link-hover-ink">
+                    <Link
+                      prefetch={false}
+                      href={crumb.path}
+                      className="link-hover-ink"
+                    >
                       {crumb.name}
                     </Link>
                   )}
@@ -94,13 +109,11 @@ export function ToolPageShell({
         <h1 className="font-display text-[clamp(1.75rem,6vw,2.75rem)] font-bold tracking-tight">
           {heading}
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">
-          {description}
-        </p>
+        <p className="mx-auto mt-3 max-w-xl text-lg text-muted">{lead}</p>
       </header>
 
       <div className="tool-column mt-10">
-        <Component params={params} />
+        <ToolRenderer slug={tool.slug} params={params} />
       </div>
 
       <div className="tool-column mt-10">
@@ -125,6 +138,8 @@ export function ToolPageShell({
 
         {faq && faq.length > 0 && <Faq entries={faq} />}
 
+        <PageStand date={updated} />
+
         <AdSlot placement="below-content" density={density} />
 
         <VariantList tool={tool} currentSlug={variant?.slug} />
@@ -136,8 +151,9 @@ export function ToolPageShell({
         {variant && (
           <p className="text-sm text-muted">
             <Link
+              prefetch={false}
               href={toolPath(tool.slug)}
-              className="underline decoration-line underline-offset-2 hover:text-ink"
+              className="text-link"
             >
               Zum {tool.name} mit allen Einstellungen
             </Link>
@@ -147,7 +163,15 @@ export function ToolPageShell({
 
       <JsonLd
         data={jsonLdGraph([
-          toolNode(tool, { name: heading, description, path }),
+          ...siteNodes(),
+          webPageNode({
+            name: title,
+            description,
+            path,
+            image: ogImagePath(tool.slug, variant?.slug),
+            dateModified: updated,
+          }),
+          applicationNode({ name: heading, description, path }),
           breadcrumbNode(crumbs),
           ...(faq && faq.length > 0 ? [faqNode(faq)] : []),
         ])}

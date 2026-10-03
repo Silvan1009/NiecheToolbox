@@ -30,8 +30,14 @@ const sections: ContentSection[] = [
         caption: "Welche Zahl in welchem Teil des Geschäftsberichts steht",
         head: ["Kapitel", "Enthält"],
         rows: [
-          ["Gewinn- und Verlustrechnung", "Umsatz, EBITDA, EBIT, Jahresüberschuss"],
-          ["Bilanz", "Eigenkapital, Bilanzsumme, Finanzschulden, liquide Mittel"],
+          [
+            "Gewinn- und Verlustrechnung",
+            "Umsatz, EBITDA, EBIT, Jahresüberschuss",
+          ],
+          [
+            "Bilanz",
+            "Eigenkapital, Bilanzsumme, Finanzschulden, liquide Mittel",
+          ],
           ["Kapitalflussrechnung", "Operativer Cashflow, Investitionen"],
         ],
       },
@@ -152,6 +158,9 @@ export const aktienkennzahlen: ToolManifest = {
   name: "Aktien-Kennzahlen-Rechner",
   tagline:
     "Dreißig Kennzahlen aus einem Geschäftsbericht: Bewertung, Rentabilität, Bilanz, Cashflow – mit fairem Wert und erwarteter Rendite.",
+  seoTitle: "Aktien-Kennzahlen-Rechner: KGV, KBV und fairer Wert",
+  metaDescription:
+    "Aktien mit dreißig Kennzahlen aus dem Geschäftsbericht bewerten: KGV, KBV, Dividendenrendite, Verschuldung und Cashflow – mit fairem Wert.",
   category: "geld",
   icon: ChartCandlestick,
   status: "live",

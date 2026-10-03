@@ -17,7 +17,7 @@ env:
   DEPLOYMENT_FOLDER: out
 
 jobs:
-# Please do not rename this job
+  # Please do not rename this job
   build-project:
     name: build NiecheToolbox
     runs-on: ubuntu-latest
@@ -25,7 +25,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
+          # Vollstaendige Historie statt nur des letzten Commits:
+          # scripts/generate-last-modified.ts liest daraus je Seite das Datum
+          # der letzten Aenderung (Sitemap-lastmod, dateModified, sichtbare
+          # Zeile "Zuletzt aktualisiert"). Im flachen Klon haette jede Seite
+          # das Datum des letzten Commits - das Skript bricht dann ab.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -50,7 +56,7 @@ jobs:
       - name: Build Node assets
         env:
           CI: true
-          CSP_MODE : enforce
+          CSP_MODE: enforce
           # Haelt die AdSense-Konsolidierung (Aug/Sep 2026) dauerhaft fest:
           # ein Rueckfall unter die drei Zielwerte (eindeutige Wortfolgen,
           # Seitenueberlappung, Mindestwortzahl je Seite) bricht den Build,
@@ -58,11 +64,11 @@ jobs:
           # und docs/adsense/etappe-0-ausgangslage.md.
           CONTENT_AUDIT: enforce
           NEXT_PUBLIC_ADS_ENABLED: false
-          NEXT_PUBLIC_ADSENSE_CLIENT : ca-pub-4379452218973991
-          NEXT_PUBLIC_ANALYTICS_PROVIDER : umami
-          NEXT_PUBLIC_UMAMI_SCRIPT_URL : https://cloud.umami.is/script.js
-          NEXT_PUBLIC_UMAMI_WEBSITE_ID : 90a65a5b-0e64-4135-82ec-094c0d8e80cc
-          GOOGLE_SITE_VERIFICATION : 8EBDaNWwLjSCWpJrGQ_6tYLCGmw_PWU-5dzQujdD_44
+          NEXT_PUBLIC_ADSENSE_CLIENT: ca-pub-4379452218973991
+          NEXT_PUBLIC_ANALYTICS_PROVIDER: umami
+          NEXT_PUBLIC_UMAMI_SCRIPT_URL: https://cloud.umami.is/script.js
+          NEXT_PUBLIC_UMAMI_WEBSITE_ID: 90a65a5b-0e64-4135-82ec-094c0d8e80cc
+          GOOGLE_SITE_VERIFICATION: 8EBDaNWwLjSCWpJrGQ_6tYLCGmw_PWU-5dzQujdD_44
           # Bewusst NICHT ${{ inputs.site-url }}: Deploy Now reicht dort den
           # Platzhalter https://IONOS_DEPLOY_NOW_SITE_URL durch und ersetzt ihn
           # erst nach dem Build per `sed` in allen Dateien. Das zerstört den
@@ -77,7 +83,7 @@ jobs:
           SITE_URL: https://rechnerkiste.app
         run: npm run build
 
-# Please do not touch the following action
+      # Please do not touch the following action
       - name: Store deployment content
         uses: ionos-deploy-now/artifact-action@v1
         with:

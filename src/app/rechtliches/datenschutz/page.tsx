@@ -2,18 +2,30 @@ import type { Metadata } from "next";
 import { LegalPage, Section } from "@/components/legal/LegalPage";
 import { ConsentSettingsButton } from "@/components/consent/ConsentSettingsButton";
 import { affiliate, ads, analytics, legal, site } from "@/config/site";
+import { pageMetadata, staticOgImagePath } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const DESCRIPTION = `Wie ${site.name} mit Daten umgeht: Alle Berechnungen laufen im Browser, die Statistik kommt ohne Cookies aus, Werbung lädt erst nach Einwilligung.`;
+const PATH = "/rechtliches/datenschutz/";
+
+export const metadata: Metadata = pageMetadata({
   title: "Datenschutzerklärung",
-  description: `Wie ${site.name} mit Daten umgeht: Berechnungen im Browser, cookiefreie Statistik, Werbung nur nach Einwilligung.`,
-  alternates: { canonical: "/rechtliches/datenschutz/" },
-};
+  description: DESCRIPTION,
+  path: PATH,
+  image: staticOgImagePath("rechtliches"),
+  imageAlt: `Datenschutzerklärung – ${site.name}`,
+});
 
 export default function DatenschutzPage() {
   const { operator } = legal;
 
   return (
-    <LegalPage title="Datenschutzerklärung" updated="Juli 2026">
+    <LegalPage
+      title="Datenschutzerklärung"
+      description={DESCRIPTION}
+      path={PATH}
+      pageKey="datenschutz"
+      updated="Juli 2026"
+    >
       <Section heading="Das Wichtigste in drei Sätzen">
         <p>
           Alle Rechner arbeiten vollständig in deinem Browser – deine Eingaben
@@ -37,7 +49,7 @@ export default function DatenschutzPage() {
           E-Mail:{" "}
           <a
             href={`mailto:${operator.email}`}
-            className="underline decoration-line underline-offset-2 hover:text-ink"
+            className="text-link"
           >
             {operator.email}
           </a>
@@ -138,7 +150,7 @@ export default function DatenschutzPage() {
             href="https://policies.google.com/privacy"
             target="_blank"
             rel="noopener"
-            className="underline decoration-line underline-offset-2 hover:text-ink"
+            className="text-link"
           >
             Datenschutzerklärung
           </a>
@@ -219,7 +231,7 @@ export default function DatenschutzPage() {
           Für Anfragen genügt eine E-Mail an{" "}
           <a
             href={`mailto:${operator.email}`}
-            className="underline decoration-line underline-offset-2 hover:text-ink"
+            className="text-link"
           >
             {operator.email}
           </a>

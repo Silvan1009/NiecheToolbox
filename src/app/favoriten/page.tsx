@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FavoritesView } from "@/components/FavoritesView";
 import { ToolCard } from "@/components/ToolCard";
+import { pageMetadata, staticOgImagePath } from "@/lib/seo";
 import { WegCard } from "@/components/WegCard";
 import { publicTools } from "@/tools/registry";
 import { publicWege } from "@/wege/registry";
@@ -9,12 +10,15 @@ import { publicWege } from "@/wege/registry";
  * Rein clientseitiger Inhalt (Favoriten liegen im localStorage) – für
  * Suchmaschinen gibt es hier nie etwas Individuelles zu indexieren.
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Favoriten",
   description:
-    "Deine gemerkten Rechner – gespeichert in diesem Browser, ohne Konto.",
-  robots: { index: false, follow: true },
-};
+    "Deine gemerkten Rechner auf einen Blick – gespeichert nur in diesem Browser, ohne Konto, ohne Synchronisierung und ohne dass etwas übertragen wird.",
+  path: "/favoriten/",
+  image: staticOgImagePath("start"),
+  imageAlt: "Favoriten",
+  index: false,
+});
 
 export default function FavoritenPage() {
   // Jede Karte fertig serverseitig gerendert, damit FavoritesView (Client)

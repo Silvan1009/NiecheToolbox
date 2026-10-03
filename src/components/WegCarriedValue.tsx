@@ -14,7 +14,7 @@ export function WegCarriedValue({
       <button
         type="button"
         onClick={onChange}
-        className="underline decoration-line underline-offset-2 hover:text-ink"
+        className="text-link"
       >
         Ändern
       </button>

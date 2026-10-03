@@ -2,10 +2,12 @@
 # "Deploy Now"-Dateien in diesem Ordner darf diese Datei frei geändert
 # werden.
 #
-# Prüft nach jedem Deploy die tatsächlich ausgelieferte Seite:
-# /ads.txt, /robots.txt, den google-adsense-account-Meta-Tag auf der
-# Startseite und eine Stichprobe der 301-Redirects aus src/lib/retiredPaths.ts
-# (siehe scripts/check-live.ts). Der Export selbst kann fehlerfrei sein und
+# Prüft nach jedem Deploy die tatsächlich ausgelieferte Seite: ads.txt,
+# robots.txt, Kompression und Caching, die CSP gegen das Mess-Skript, die
+# Navigationsdateien des Routers, die Sitemap und eine Stichprobe der
+# 301-Redirects (siehe scripts/check-live.ts).
+#
+# Der Export selbst kann fehlerfrei sein und
 # live trotzdem etwas anderes zeigen – ein vergessenes .htaccess-Deployment,
 # ein falsch konfigurierter Apache, ein CDN mit alter Fassung.
 
@@ -43,4 +45,8 @@ jobs:
         env:
           SITE_URL: https://rechnerkiste.app
           NEXT_PUBLIC_ADSENSE_CLIENT: ca-pub-4379452218973991
+          # Dieselben Werte wie im Build: check-live.ts prueft damit, ob die CSP
+          # der Live-Seite jeden Host zulaesst, an den das Mess-Skript sendet.
+          NEXT_PUBLIC_ANALYTICS_PROVIDER: umami
+          NEXT_PUBLIC_UMAMI_SCRIPT_URL: https://cloud.umami.is/script.js
         run: npx tsx scripts/check-live.ts

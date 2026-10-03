@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { WegSourceTools } from "@/components/WegSourceTools";
+import type { ReactNode } from "react";
 import { WegStep } from "@/components/WegStep";
 import { WegSteps, type WegStepDef } from "@/components/WegSteps";
 import { Disclosure } from "@/components/ui/Card";
@@ -55,7 +55,6 @@ import {
   type KfzRegion,
   type KfzSfKlasse,
 } from "@/tools/versicherungsvergleich/logic";
-import { autokauf } from "./manifest";
 import { bewerteAutokauf } from "./urteil";
 
 interface State extends Record<string, unknown>, BruttoNettoInput {
@@ -167,7 +166,18 @@ const einstufungTon: Record<
   eng: "accent",
 };
 
-export default function AutokaufWeg({ params }: { params?: ToolParams }) {
+export default function AutokaufWeg({
+  params,
+  sourceTools,
+}: {
+  params?: ToolParams;
+  /**
+   * „Im Detail weiterrechnen“, fertig gerendert vom Server (WegPageShell).
+   * Als Knoten hereingereicht statt hier erzeugt: Die Liste braucht die
+   * Tool-Registry, und die gehört nicht in ein Client-Modul.
+   */
+  sourceTools?: ReactNode;
+}) {
   const [state, update] = useUrlState<State>({
     initialState: initialState(params),
     parse: (search, fallback) => {
@@ -963,7 +973,7 @@ export default function AutokaufWeg({ params }: { params?: ToolParams }) {
             </section>
           )}
 
-          <WegSourceTools tools={autokauf.sourceTools} />
+          {sourceTools}
         </div>
       )}
     </div>

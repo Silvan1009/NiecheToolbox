@@ -78,6 +78,21 @@ export const abfindung: ToolManifest = {
   name: "Abfindungsrechner",
   tagline:
     "Steuer auf eine Abfindung mit der Fünftelregelung nach § 34 EStG – im Vergleich zur vollen Versteuerung im selben Jahr.",
+  seoTitle: "Abfindungsrechner: Steuer mit Fünftelregelung",
+  metaDescription:
+    "Steuer auf die Abfindung berechnen: die Fünftelregelung nach § 34 EStG im direkten Vergleich zur vollen Versteuerung im selben Jahr.",
+  sources: [
+    {
+      label: "§ 34 EStG – Außerordentliche Einkünfte",
+      href: "https://www.gesetze-im-internet.de/estg/__34.html",
+      note: "die Fünftelregelung, nach der der Rechner die ermäßigte Steuer ermittelt",
+    },
+    {
+      label: "§ 32a EStG – Einkommensteuertarif",
+      href: "https://www.gesetze-im-internet.de/estg/__32a.html",
+      note: "die Tarifformel, auf der beide Vergleichsrechnungen beruhen",
+    },
+  ],
   category: "geld",
   icon: DoorOpen,
   status: "live",
